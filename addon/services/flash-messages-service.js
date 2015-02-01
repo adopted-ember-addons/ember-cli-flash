@@ -1,9 +1,11 @@
 import Ember from 'ember';
 import FlashMessage from 'ember-cli-flash/flash/object';
 
-var computed = Ember.computed;
-var get      = Ember.get;
-var run      = Ember.run;
+var {
+  computed,
+  get,
+  run
+} = Ember;
 
 export default Ember.Object.extend({
   queue          : Ember.A([]),
