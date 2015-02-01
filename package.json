@@ -1,6 +1,6 @@
 {
   "name": "ember-cli-flash",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Flash messages for ember-cli",
   "directories": {
     "doc": "doc",
