@@ -1,10 +1,12 @@
 import Ember from 'ember';
 
-var computed       = Ember.computed;
-var get            = Ember.get;
-var set            = Ember.set;
-var getWithDefault = Ember.getWithDefault;
-var run            = Ember.run;
+var {
+  computed,
+  get,
+  set,
+  getWithDefault,
+  run
+} = Ember;
 
 export default Ember.Object.extend({
   isSuccess      : computed.equal('type', 'success'),
