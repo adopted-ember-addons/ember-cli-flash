@@ -4,7 +4,7 @@ var computed = Ember.computed;
 var get      = Ember.get;
 
 export default Ember.Component.extend({
-  classNames:        [ 'alert' ],
+  classNames:        [ 'alert', 'flashMessage' ],
   classNameBindings: [ 'alertType' ],
 
   alertType: computed('flash.type', function() {
