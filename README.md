@@ -1,6 +1,71 @@
-# Ember-cli-flash
+# ember-cli-flash
+This `ember-cli` addon adds a simple flash message service to your app. It's injected into all controllers and routes by default.
 
-This README outlines the details of collaborating on this Ember addon.
+## Installation
+You can install either with `npm`:
+
+```shell
+npm install ember-cli-flash --save
+```
+
+or `ember install:addon`:
+
+```shell
+ember install:addon ember-cli-flash
+```
+
+## Usage
+Usage is very simple. From within a `Controller` or `Route`:
+
+```javascript
+actions: {
+  successAction() {
+    Ember.get(this, 'flashes').success('Success!', 2000);
+  },
+
+  warningAction() {
+    Ember.get(this, 'flashes').warning('This is a warning message'); // timeout is optional
+  },
+
+  infoAction() {
+    Ember.get(this, 'flashes').info('You just did something...', 500);
+  },
+
+  dangerAction() {
+    Ember.get(this, 'flashes').danger('So danger');
+  },
+
+  customAction() {
+    Ember.get(this, 'flashes').addMessage('This is a flash with a custom type', 'myCustomType', 3000)
+  },
+
+  clearMessages() {
+    Ember.get(this, 'flashes').clear(); // clears all visible flash messages 
+  }
+}
+```
+
+Then, to display somewhere in your app, add this to your template:
+
+```handlebars
+{{#each flash in flashes.queue}}
+  {{flash-message flash=flash}}
+{{/each}}
+```
+
+It also accepts your own template: 
+
+```handlebars
+{{#each flash in flashes.queue}}
+  {{#flash-message flash=flash}}
+    <h6>{{flash.flashType}}</h6>
+    <p>{{flash.message}}</p>
+  {{/flash-message}}
+{{/each}}
+```
+
+## Contributing
+Please read the [Contributing guidelines](CONTRIBUTING.md) for information on how to contribute.
 
 ## Installation
 

@@ -7,7 +7,6 @@ var run      = Ember.run;
 
 export default Ember.Object.extend({
   queue          : Ember.A([]),
-  content        : computed.alias('queue'),
   isEmpty        : computed.equal('queue.length', 0),
 
   defaultTimeout : 2000,
