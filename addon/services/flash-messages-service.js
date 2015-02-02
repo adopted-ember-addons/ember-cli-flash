@@ -14,23 +14,23 @@ export default Ember.Object.extend({
   defaultTimeout : 2000,
 
   success(message, timeout=get(this, 'defaultTimeout')) {
-    this._add(message, 'success', timeout);
+    this._addToQueue(message, 'success', timeout);
   },
 
   info(message, timeout=get(this, 'defaultTimeout')) {
-    this._add(message, 'info', timeout);
+    this._addToQueue(message, 'info', timeout);
   },
 
   warning(message, timeout=get(this, 'defaultTimeout')) {
-    this._add(message, 'warning', timeout);
+    this._addToQueue(message, 'warning', timeout);
   },
 
   danger(message, timeout=get(this, 'defaultTimeout')) {
-    this._add(message, 'danger', timeout);
+    this._addToQueue(message, 'danger', timeout);
   },
 
   addMessage(message, type='info', timeout=get(this, 'defaultTimeout')) {
-    this._add(message, type, timeout);
+    this._addToQueue(message, type, timeout);
   },
 
   clearMessages() {
@@ -42,7 +42,7 @@ export default Ember.Object.extend({
   },
 
   // private
-  _add(message, type, timeout) {
+  _addToQueue(message, type, timeout) {
     let flashes = get(this, 'queue');
     let flash   = this._newFlashMessage(this, message, type, timeout);
 
@@ -51,12 +51,9 @@ export default Ember.Object.extend({
     });
   },
 
-  _newFlashMessage(service, message, type, timeout) {
+  _newFlashMessage(service, message, type='info', timeout=get(this, 'defaultTimeout')) {
     Ember.assert('Must pass a valid flash service', service);
     Ember.assert('Must pass a valid flash message', message);
-
-    type    = (typeof type === 'undefined') ? 'info' : type;
-    timeout = timeout || Ember.get(this, 'defaultTimeout');
 
     return FlashMessage.create({
       type         : type,
