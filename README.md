@@ -1,6 +1,8 @@
 # ember-cli-flash
 [![Circle CI](https://circleci.com/gh/poteto/ember-cli-flash.svg?style=svg)](https://circleci.com/gh/poteto/ember-cli-flash)
 
+[![Build Status](https://travis-ci.org/poteto/ember-cli-flash.svg)](https://travis-ci.org/poteto/ember-cli-flash)
+
 This `ember-cli` addon adds a simple flash message service to your app. It's injected into all controllers and routes by default.
 
 ## Installation
