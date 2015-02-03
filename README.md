@@ -65,6 +65,7 @@ actions: {
 }
 ```
 
+## Displaying flash messages
 Then, to display somewhere in your app, add this to your template:
 
 ```handlebars
@@ -84,8 +85,18 @@ It also accepts your own template:
 {{/each}}
 ```
 
+## Styling
+You can style flash messages by targetting `.flashMessage` or `.alert` in your CSS. You can specifically target flash messages of different type by adding `.alert-{type}` to your CSS, where `{type}` is `success`, `info`, etc. 
+
 ## Contributing
 Please read the [Contributing guidelines](CONTRIBUTING.md) for information on how to contribute.
+
+## Backlog
+
+- [ ] Bundled themes for flash messages
+- [ ] Prevent duplicate flash messages
+- [ ] Progress bar showing how much time is left
+- [ ] Sort options 
 
 ## Installation
 
