@@ -42,11 +42,30 @@ actions: {
   },
 
   clearMessages() {
-    Ember.get(this, 'flashes').clear(); // clears all visible flash messages 
+    Ember.get(this, 'flashes').clearMessages(); // clears all visible flash messages 
   }
 }
 ```
 
+You can also take advantage of Promises, and their `.then` and `.catch` methods. To add a flash message after saving a model (or when it fails):
+
+```javascript
+actions: {
+  saveFoo() {
+    var flash = Ember.get(this, 'flashes');
+    
+    Ember.get(this, 'model').save()
+    .then(function(res) {
+      flash.success('Successfully saved!');
+    })
+    .catch(function(err) {
+      flash.danger('Something went wrong!');
+    });
+  }
+}
+```
+
+## Displaying flash messages
 Then, to display somewhere in your app, add this to your template:
 
 ```handlebars
@@ -66,8 +85,18 @@ It also accepts your own template:
 {{/each}}
 ```
 
+## Styling
+You can style flash messages by targetting `.flashMessage` or `.alert` in your CSS. You can specifically target flash messages of different type by adding `.alert-{type}` to your CSS, where `{type}` is `success`, `info`, etc. 
+
 ## Contributing
 Please read the [Contributing guidelines](CONTRIBUTING.md) for information on how to contribute.
+
+## Backlog
+
+- [ ] Bundled themes for flash messages
+- [ ] Prevent duplicate flash messages
+- [ ] Progress bar showing how much time is left
+- [ ] Sort options 
 
 ## Installation
 
