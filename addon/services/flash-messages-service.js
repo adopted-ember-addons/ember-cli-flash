@@ -12,33 +12,40 @@ export default Ember.Object.extend({
 
   success: function(message, timeout) {
     timeout = (timeout === undefined) ? get(this, 'defaultTimeout') : timeout;
-    this._addToQueue(message, 'success', timeout);
+
+    return this._addToQueue(message, 'success', timeout);
   },
 
   info: function(message, timeout) {
     timeout = (timeout === undefined) ? get(this, 'defaultTimeout') : timeout;
-    this._addToQueue(message, 'info', timeout);
+
+    return this._addToQueue(message, 'info', timeout);
   },
 
   warning: function(message, timeout) {
     timeout = (timeout === undefined) ? get(this, 'defaultTimeout') : timeout;
-    this._addToQueue(message, 'warning', timeout);
+
+    return this._addToQueue(message, 'warning', timeout);
   },
 
   danger: function(message, timeout) {
     timeout = (timeout === undefined) ? get(this, 'defaultTimeout') : timeout;
-    this._addToQueue(message, 'danger', timeout);
+
+    return this._addToQueue(message, 'danger', timeout);
   },
 
   addMessage: function(message, type, timeout) {
     type    = (type === undefined) ? 'info' : type;
     timeout = (timeout === undefined) ? get(this, 'defaultTimeout') : timeout;
-    this._addToQueue(message, type, timeout);
+
+    return this._addToQueue(message, type, timeout);
   },
 
   clearMessages: function() {
     var flashes = get(this, 'queue');
     flashes.clear();
+
+    return flashes;
   },
 
   // private
@@ -47,6 +54,7 @@ export default Ember.Object.extend({
     var flash   = this._newFlashMessage(this, message, type, timeout);
 
     flashes.pushObject(flash);
+    return flash;
   },
 
   _newFlashMessage: function(service, message, type, timeout) {
