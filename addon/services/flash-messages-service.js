@@ -3,7 +3,6 @@ import FlashMessage from 'ember-cli-flash/flash/object';
 
 var computed = Ember.computed;
 var get      = Ember.get;
-var run      = Ember.run;
 
 export default Ember.Object.extend({
   queue          : Ember.A([]),
@@ -39,10 +38,7 @@ export default Ember.Object.extend({
 
   clearMessages: function() {
     var flashes = get(this, 'queue');
-
-    run.next(this, function() {
-      flashes.clear();
-    });
+    flashes.clear();
   },
 
   // private
@@ -50,9 +46,7 @@ export default Ember.Object.extend({
     var flashes = get(this, 'queue');
     var flash   = this._newFlashMessage(this, message, type, timeout);
 
-    run.next(this, function() {
-      flashes.pushObject(flash);
-    });
+    flashes.pushObject(flash);
   },
 
   _newFlashMessage: function(service, message, type, timeout) {
