@@ -1,4 +1,5 @@
 .flashMessage {
+  cursor: pointer;
   -webkit-animation: animation 1000ms linear both;
   animation: animation 1000ms linear both;
 }

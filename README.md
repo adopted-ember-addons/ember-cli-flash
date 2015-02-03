@@ -42,7 +42,7 @@ actions: {
   },
 
   clearMessages() {
-    Ember.get(this, 'flashes').clear(); // clears all visible flash messages 
+    Ember.get(this, 'flashes').clearMessages(); // clears all visible flash messages 
   }
 }
 ```
