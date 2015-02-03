@@ -28,9 +28,11 @@ export default Ember.Object.extend({
   }.on('init'),
 
   _destroyMessage: function() {
-    run.next(this, function() {
-      set(this, 'isDestroyed', true);
-      get(this, 'queue').removeObject(this);
-    });
+    var queue = get(this, 'queue');
+    set(this, 'isDestroyed', true);
+
+    if (queue) {
+      queue.removeObject(this);
+    }
   }
 });
