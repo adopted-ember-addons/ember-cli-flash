@@ -47,6 +47,24 @@ actions: {
 }
 ```
 
+You can also take advantage of Promises, and their `.then` and `.catch` methods. To add a flash message after saving a model (or when it fails):
+
+```javascript
+actions: {
+  saveFoo() {
+    var flash = Ember.get(this, 'flashes');
+    
+    Ember.get(this, 'model').save()
+    .then(function(res) {
+      flash.success('Successfully saved!');
+    })
+    .catch(function(err) {
+      flash.danger('Something went wrong!');
+    });
+  }
+}
+```
+
 Then, to display somewhere in your app, add this to your template:
 
 ```handlebars
