@@ -11,12 +11,4 @@ This repo uses the `gitflow` [branching model](http://danielkummer.github.io/git
 
 Please avoid working on `master`!
 
-## Backlog
-
-- [ ] Bundled themes for flash messages
-- [ ] Prevent duplicate flash messages
-- [ ] Progress bar showing how much time is left
-- [ ] Sort options 
-- [ ] Custom behavior on click
-
 Feel free to submit a pull request for changes to this document.
