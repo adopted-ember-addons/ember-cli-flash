@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 var computed = Ember.computed;
 var get      = Ember.get;
+var on       = Ember.on;
 
 export default Ember.Component.extend({
   classNames:        [ 'alert', 'flashMessage' ],
@@ -20,6 +21,15 @@ export default Ember.Component.extend({
   }),
 
   click: function() {
+    this._destroyFlashMessage();
+  },
+
+  //private
+  _destroyOnTeardown: on('willDestroyElement', function() {
+    this._destroyFlashMessage();
+  }),
+
+  _destroyFlashMessage: function() {
     var flash = get(this, 'flash');
 
     flash.destroyMessage();
