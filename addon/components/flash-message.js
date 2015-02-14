@@ -32,6 +32,8 @@ export default Ember.Component.extend({
   _destroyFlashMessage: function() {
     var flash = get(this, 'flash');
 
-    flash.destroyMessage();
+    if (flash) {
+      flash.destroyMessage();
+    }
   }
 });

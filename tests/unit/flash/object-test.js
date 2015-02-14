@@ -1,9 +1,9 @@
 /* global sinon */
-
 import Ember from 'ember';
 import FlashMessage from 'ember-cli-flash/flash/object';
 import {
-  test
+  test,
+  module
 } from 'ember-qunit';
 
 var testTimerDuration = 500;
@@ -27,29 +27,29 @@ module('Flash Message Object', {
   }
 });
 
-test('#_destroyLater sets a timer', function() {
-  ok(flash.get('timer'));
+test('#_destroyLater sets a timer', function(assert) {
+  assert.ok(flash.get('timer'));
 });
 
-test('#_destroyLater destroys the message after the timer has elapsed', function() {
-  expect(2);
-  stop();
+test('#_destroyLater destroys the message after the timer has elapsed', function(assert) {
+  assert.expect(2);
+  assert.stop();
 
   run.later(function() {
-    start();
-    equal(flash.get('isDestroyed'), true);
-    equal(flash.get('timer'), null);
+    assert.start();
+    assert.equal(flash.get('isDestroyed'), true);
+    assert.equal(flash.get('timer'), null);
   }, testTimerDuration * 2);
 });
 
-test('#destroyMessage deletes the message and timer', function() {
-  expect(2);
+test('#destroyMessage deletes the message and timer', function(assert) {
+  assert.expect(2);
 
   run(function() {
     flash.destroyMessage();
   });
 
-  equal(flash.get('isDestroyed'), true);
-  equal(flash.get('timer'), null);
+  assert.equal(flash.get('isDestroyed'), true);
+  assert.equal(flash.get('timer'), null);
 });
 
