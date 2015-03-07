@@ -1,9 +1,9 @@
 /* global sinon */
+import QUnit from 'qunit';
 import Ember from 'ember';
 import FlashMessage from 'ember-cli-flash/flash/object';
 import {
-  test,
-  module
+  test
 } from 'ember-qunit';
 
 var testTimerDuration = 500;
@@ -11,7 +11,7 @@ var run               = Ember.run;
 var flash             = null;
 var SANDBOX           = {};
 
-module('Flash Message Object', {
+QUnit.module('Flash Message Object', {
   beforeEach: function() {
     flash = FlashMessage.create({
       type    : 'test',
@@ -32,13 +32,13 @@ test('#_destroyLater sets a timer', function(assert) {
 });
 
 test('#_destroyLater destroys the message after the timer has elapsed', function(assert) {
+  var done = assert.async();
   assert.expect(2);
-  assert.stop();
 
   run.later(function() {
-    assert.start();
     assert.equal(flash.get('isDestroyed'), true);
     assert.equal(flash.get('timer'), null);
+    done();
   }, testTimerDuration * 2);
 });
 
