@@ -4,7 +4,7 @@ import FlashMessage from 'ember-cli-flash/flash/object';
 var computed = Ember.computed;
 var get      = Ember.get;
 
-export default Ember.Object.extend({
+export default Ember.Service.extend({
   queue          : Ember.A([]),
   isEmpty        : computed.equal('queue.length', 0),
 
