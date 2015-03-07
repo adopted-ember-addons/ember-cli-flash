@@ -72,7 +72,11 @@ test('#_addToQueue adds a message to queue', function(assert) {
   assert.expect(3);
 
   run(function() {
-    SANDBOX.flash = service._addToQueue('test', 'test', 500);
+    SANDBOX.flash = service._addToQueue({
+      message : 'test',
+      type    : 'test',
+      timeout : 500
+    });
   });
 
   assert.equal(service.get('queue.length'), 1);
@@ -84,7 +88,11 @@ test('#_newFlashMessage returns a new flash message', function(assert) {
   assert.expect(3);
 
   run(function() {
-    SANDBOX.flash = service._newFlashMessage(service, 'test', 'test', 500);
+    SANDBOX.flash = service._newFlashMessage({
+      message : 'test',
+      type    : 'test',
+      timeout : 500
+    });
   });
 
   assert.ok(SANDBOX.flash);
