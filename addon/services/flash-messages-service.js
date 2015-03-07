@@ -1,8 +1,9 @@
 import Ember from 'ember';
 import FlashMessage from 'ember-cli-flash/flash/object';
 
-var computed = Ember.computed;
-var get      = Ember.get;
+var computed    = Ember.computed;
+var get         = Ember.get;
+var aliasMethod = Ember.aliasMethod;
 
 export default Ember.Service.extend({
   queue          : Ember.A([]),
@@ -13,33 +14,55 @@ export default Ember.Service.extend({
   success: function(message, timeout) {
     timeout = (timeout === undefined) ? get(this, 'defaultTimeout') : timeout;
 
-    return this._addToQueue(message, 'success', timeout);
+    return this._addToQueue({
+      message : message,
+      type    : 'success',
+      timeout : timeout
+    });
   },
 
   info: function(message, timeout) {
     timeout = (timeout === undefined) ? get(this, 'defaultTimeout') : timeout;
 
-    return this._addToQueue(message, 'info', timeout);
+    return this._addToQueue({
+      message : message,
+      type    : 'info',
+      timeout : timeout
+    });
   },
 
   warning: function(message, timeout) {
     timeout = (timeout === undefined) ? get(this, 'defaultTimeout') : timeout;
 
-    return this._addToQueue(message, 'warning', timeout);
+    return this._addToQueue({
+      message : message,
+      type    : 'warning',
+      timeout : timeout
+    });
   },
 
   danger: function(message, timeout) {
     timeout = (timeout === undefined) ? get(this, 'defaultTimeout') : timeout;
 
-    return this._addToQueue(message, 'danger', timeout);
+    return this._addToQueue({
+      message : message,
+      type    : 'danger',
+      timeout : timeout
+    });
   },
 
   addMessage: function(message, type, timeout) {
     type    = (type === undefined) ? 'info' : type;
     timeout = (timeout === undefined) ? get(this, 'defaultTimeout') : timeout;
 
-    return this._addToQueue(message, type, timeout);
+    return this._addToQueue({
+      message : message,
+      type    : type,
+      timeout : timeout
+    });
   },
+
+  add: aliasMethod('addMessage'),
 
   clearMessages: function() {
     var flashes = get(this, 'queue');
@@ -49,25 +72,25 @@ export default Ember.Service.extend({
   },
 
   // private
-  _addToQueue: function(message, type, timeout) {
+  _addToQueue: function(options) {
     var flashes = get(this, 'queue');
-    var flash   = this._newFlashMessage(this, message, type, timeout);
+    var flash   = this._newFlashMessage(options);
 
     flashes.pushObject(flash);
     return flash;
   },
 
-  _newFlashMessage: function(service, message, type, timeout) {
-    type    = (type === undefined) ? 'info' : type;
-    timeout = (timeout === undefined) ? get(this, 'defaultTimeout') : timeout;
+  _newFlashMessage: function(options) {
+    Ember.assert('Must pass a valid flash message', options.message);
+    Ember.assert('Must pass a valid type', options.type);
+    Ember.assert('Must pass a valid timeout', options.timeout);
 
-    Ember.assert('Must pass a valid flash service', service);
-    Ember.assert('Must pass a valid flash message', message);
+    var service = this;
 
     return FlashMessage.create({
-      type         : type,
-      message      : message,
-      timeout      : timeout,
+      message      : options.message,
+      type         : options.type,
+      timeout      : options.timeout,
       flashService : service
     });
   }

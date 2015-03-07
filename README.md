@@ -19,7 +19,7 @@ ember install:addon ember-cli-flash
 ```
 
 ## Usage
-Usage is very simple. From within a `Controller` or `Route`:
+Usage is very simple. From within a `Controller`, `Route`, `View` or `Component`:
 
 ```javascript
 actions: {
@@ -40,13 +40,24 @@ actions: {
   },
 
   customAction() {
-    Ember.get(this, 'flashes').addMessage('This is a flash with a custom type', 'myCustomType', 3000)
+    // `add` is an alias for `addMessage`, and can be used interchangeably
+    Ember.get(this, 'flashes').addMessage({
+      message : 'My message',
+      type    : 'myCustomType',
+      timeout : 3000
+    })
   },
 
   clearMessages() {
     Ember.get(this, 'flashes').clearMessages(); // clears all visible flash messages 
   }
 }
+```
+
+If you're using Ember `1.10.0` or higher, you can also inject the service manually:
+
+```javascript
+  flashes: Ember.inject.service('flash-messages')
 ```
 
 You can also take advantage of Promises, and their `.then` and `.catch` methods. To add a flash message after saving a model (or when it fails):
@@ -98,7 +109,7 @@ Please read the [Contributing guidelines](CONTRIBUTING.md) for information on ho
 - [ ] Bundled themes for flash messages
 - [ ] Prevent duplicate flash messages
 - [ ] Progress bar showing how much time is left
-- [ ] Sort options 
+- [ ] Sort options by priority
 
 ## Installation
 
