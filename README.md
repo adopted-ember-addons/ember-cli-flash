@@ -1,7 +1,5 @@
 # ember-cli-flash
-[![Circle CI](https://circleci.com/gh/poteto/ember-cli-flash.svg?style=svg)](https://circleci.com/gh/poteto/ember-cli-flash)
-
-[![Build Status](https://travis-ci.org/poteto/ember-cli-flash.svg)](https://travis-ci.org/poteto/ember-cli-flash)
+[![npm version](https://badge.fury.io/js/ember-cli-flash.svg)](http://badge.fury.io/js/ember-cli-flash) [![Circle CI](https://circleci.com/gh/poteto/ember-cli-flash.svg?style=svg)](https://circleci.com/gh/poteto/ember-cli-flash) [![Build Status](https://travis-ci.org/poteto/ember-cli-flash.svg)](https://travis-ci.org/poteto/ember-cli-flash) 
 
 This `ember-cli` addon adds a simple flash message service to your app. It's injected into all controllers and routes by default.
 
@@ -32,11 +30,11 @@ Ember.get(this, 'flashes').success('Success!');
 You can also pass in options for `timeout` and `priority`. The best practise is to use priority values in multiples of `100` (`100` being the lowest priority):
 
 ```javascript
-Ember.get(this, 'flashes').warning('Something went wrong', { 
+Ember.get(this, 'flashes').warning('Something went wrong', {
   priority : 1000
 });
 
-Ember.get(this, 'flashes').success('Successfully signed in', { 
+Ember.get(this, 'flashes').success('Successfully signed in', {
   timeout  : 500,
   priority : 200
 });
@@ -64,7 +62,7 @@ Ember.get(this, 'flashes').add({
 It's best practise to use flash messages sparingly, only when you need to notify the user of something. If you're sending too many messages, and need a way for your users to clear all messages from screen, you can use this method:
 
 ```javascript
-Ember.get(this, 'flashes').clearMessages(); // clears all visible flash messages 
+Ember.get(this, 'flashes').clearMessages(); // clears all visible flash messages
 ```
 
 ### Lazy service injection
@@ -81,7 +79,7 @@ You can also take advantage of Promises, and their `.then` and `.catch` methods.
 actions: {
   saveFoo() {
     var flash = Ember.get(this, 'flashes');
-    
+
     Ember.get(this, 'model').save()
     .then(function(res) {
       flash.success('Successfully saved!');
@@ -102,7 +100,7 @@ Then, to display somewhere in your app, add this to your template:
 {{/each}}
 ```
 
-It also accepts your own template: 
+It also accepts your own template:
 
 ```handlebars
 {{#each flash in flashes.queue}}
@@ -123,7 +121,7 @@ To display messages sorted by priority, add this to your template:
 ```
 
 ## Styling
-You can style flash messages by targetting `.flashMessage` or `.alert` in your CSS. You can specifically target flash messages of different type by adding `.alert-{type}` to your CSS, where `{type}` is `success`, `info`, etc. 
+You can style flash messages by targetting `.flashMessage` or `.alert` in your CSS. You can specifically target flash messages of different type by adding `.alert-{type}` to your CSS, where `{type}` is `success`, `info`, etc.
 
 ## Contributing
 Please read the [Contributing guidelines](CONTRIBUTING.md) for information on how to contribute.
