@@ -21,45 +21,60 @@ ember install:addon ember-cli-flash
 ## Usage
 Usage is very simple. From within a `Controller`, `Route`, `View` or `Component`:
 
+### API
+#### Convenience methods (Bootstrap style)
+You can quickly add flash messages using `.success`, `.warning`, `.info`, and `.danger`. For example:
+
 ```javascript
-actions: {
-  successAction() {
-    Ember.get(this, 'flashes').success('Success!', 2000);
-  },
-
-  warningAction() {
-    Ember.get(this, 'flashes').warning('This is a warning message'); // timeout is optional
-  },
-
-  infoAction() {
-    Ember.get(this, 'flashes').info('You just did something...', 500);
-  },
-
-  dangerAction() {
-    Ember.get(this, 'flashes').danger('So danger');
-  },
-
-  customAction() {
-    // `add` is an alias for `addMessage`, and can be used interchangeably
-    Ember.get(this, 'flashes').addMessage({
-      message : 'My message',
-      type    : 'myCustomType',
-      timeout : 3000
-    })
-  },
-
-  clearMessages() {
-    Ember.get(this, 'flashes').clearMessages(); // clears all visible flash messages 
-  }
-}
+Ember.get(this, 'flashes').success('Success!');
 ```
 
+You can also pass in options for `timeout` and `priority`. The best practise is to use priority values in multiples of `100` (`100` being the lowest priority):
+
+```javascript
+Ember.get(this, 'flashes').warning('Something went wrong', { 
+  priority : 1000
+});
+
+Ember.get(this, 'flashes').success('Successfully signed in', { 
+  timeout  : 500,
+  priority : 200
+});
+```
+
+The `warning` message will appear on top of the `success` message. Messages with the highest `priority` values will appear at the top of the queue.
+
+#### Custom messages
+If the convenience methods don't fit your needs, you can add custom messages:
+
+```javascript
+Ember.get(this, 'flashes').addMessage('You won!', {
+  type    : 'congratulations',
+  timeout : 3000
+});
+
+Ember.get(this, 'flashes').add({
+  message  : 'Custom message'
+  type     : 'customType',
+  priority : 500
+});
+```
+
+#### Clearing all messages on screen
+It's best practise to use flash messages sparingly, only when you need to notify the user of something. If you're sending too many messages, and need a way for your users to clear all messages from screen, you can use this method:
+
+```javascript
+Ember.get(this, 'flashes').clearMessages(); // clears all visible flash messages 
+```
+
+### Lazy service injection
 If you're using Ember `1.10.0` or higher, you can also inject the service manually:
 
 ```javascript
   flashes: Ember.inject.service('flash-messages')
 ```
 
+### Promises
 You can also take advantage of Promises, and their `.then` and `.catch` methods. To add a flash message after saving a model (or when it fails):
 
 ```javascript
@@ -98,6 +113,15 @@ It also accepts your own template:
 {{/each}}
 ```
 
+### Sort messages by priority
+To display messages sorted by priority, add this to your template:
+
+```handlebars
+{{#each flash in flashes.arrangedQueue}}
+  {{flash-message flash=flash}}
+{{/each}}
+```
+
 ## Styling
 You can style flash messages by targetting `.flashMessage` or `.alert` in your CSS. You can specifically target flash messages of different type by adding `.alert-{type}` to your CSS, where `{type}` is `success`, `info`, etc. 
 
@@ -106,10 +130,10 @@ Please read the [Contributing guidelines](CONTRIBUTING.md) for information on ho
 
 ## Backlog
 
+- [x] Sort options by priority
 - [ ] Bundled themes for flash messages
 - [ ] Prevent duplicate flash messages
 - [ ] Progress bar showing how much time is left
-- [ ] Sort options by priority
 
 ## Installation
 

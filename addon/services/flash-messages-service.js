@@ -1,68 +1,90 @@
 import Ember from 'ember';
 import FlashMessage from 'ember-cli-flash/flash/object';
 
-var computed    = Ember.computed;
-var get         = Ember.get;
-var aliasMethod = Ember.aliasMethod;
+var computed = Ember.computed;
+var get      = Ember.get;
 
 export default Ember.Service.extend({
   queue          : Ember.A([]),
   isEmpty        : computed.equal('queue.length', 0),
-
   defaultTimeout : 2000,
+  defaultPriority: 100,
 
-  success: function(message, timeout) {
-    timeout = (timeout === undefined) ? get(this, 'defaultTimeout') : timeout;
+  arrangedQueue  : computed.sort('queue', function(a, b) {
+    if (a.priority < b.priority) {
+      return 1;
+    } else if (a.priority > b.priority) {
+      return -1;
+    }
+
+    return 0;
+  }),
+
+  success: function(message, options) {
+    options = (typeof options === 'undefined') ? {} : options;
 
     return this._addToQueue({
       message : message,
       type    : 'success',
-      timeout : timeout
+      timeout : options.timeout,
+      priority: options.priority
     });
   },
 
-  info: function(message, timeout) {
-    timeout = (timeout === undefined) ? get(this, 'defaultTimeout') : timeout;
+  info: function(message, options) {
+    options = (typeof options === 'undefined') ? {} : options;
 
     return this._addToQueue({
       message : message,
       type    : 'info',
-      timeout : timeout
+      timeout : options.timeout,
+      priority: options.priority
     });
   },
 
-  warning: function(message, timeout) {
-    timeout = (timeout === undefined) ? get(this, 'defaultTimeout') : timeout;
+  warning: function(message, options) {
+    options = (typeof options === 'undefined') ? {} : options;
 
     return this._addToQueue({
       message : message,
       type    : 'warning',
-      timeout : timeout
+      timeout : options.timeout,
+      priority: options.priority
     });
   },
 
-  danger: function(message, timeout) {
-    timeout = (timeout === undefined) ? get(this, 'defaultTimeout') : timeout;
+  danger: function(message, options) {
+    options = (typeof options === 'undefined') ? {} : options;
 
     return this._addToQueue({
       message : message,
       type    : 'danger',
-      timeout : timeout
+      timeout : options.timeout,
+      priority: options.priority
     });
   },
 
-  addMessage: function(message, type, timeout) {
-    type    = (type === undefined) ? 'info' : type;
-    timeout = (timeout === undefined) ? get(this, 'defaultTimeout') : timeout;
+  addMessage: function(message, options) {
+    options = (typeof options === 'undefined') ? {} : options;
 
     return this._addToQueue({
       message : message,
-      type    : type,
-      timeout : timeout
+      type    : options.type,
+      timeout : options.timeout,
+      priority: options.priority
     });
   },
 
-  add: aliasMethod('addMessage'),
+  add: function(options) {
+    options = (typeof options === 'undefined') ? {} : options;
+
+    return this._addToQueue({
+      message : options.message,
+      type    : options.type,
+      timeout : options.timeout,
+      priority: options.priority
+    });
+  },
 
   clearMessages: function() {
     var flashes = get(this, 'queue');
@@ -82,15 +104,17 @@ export default Ember.Service.extend({
 
   _newFlashMessage: function(options) {
     Ember.assert('Must pass a valid flash message', options.message);
-    Ember.assert('Must pass a valid type', options.type);
-    Ember.assert('Must pass a valid timeout', options.timeout);
 
-    var service = this;
+    var timeout  = (options.timeout === undefined) ? get(this, 'defaultTimeout') : options.timeout;
+    var type     = (options.type === undefined) ? 'info' : options.type;
+    var priority = (options.priority === undefined) ? get(this, 'defaultPriority') : options.priority;
+    var service  = this;
 
     return FlashMessage.create({
       message      : options.message,
-      type         : options.type,
-      timeout      : options.timeout,
+      type         : type,
+      timeout      : timeout,
+      priority     : priority,
       flashService : service
     });
   }
