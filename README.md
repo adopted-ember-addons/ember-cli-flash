@@ -69,7 +69,7 @@ Ember.get(this, 'flashes').clearMessages(); // clears all visible flash messages
 If you're using Ember `1.10.0` or higher, you can also inject the service manually:
 
 ```javascript
-  flashes: Ember.inject.service('flash-messages')
+flashes: Ember.inject.service('flash-messages')
 ```
 
 ### Promises
