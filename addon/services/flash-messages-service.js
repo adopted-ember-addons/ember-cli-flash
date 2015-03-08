@@ -4,41 +4,86 @@ import FlashMessage from 'ember-cli-flash/flash/object';
 var computed = Ember.computed;
 var get      = Ember.get;
 
-export default Ember.Object.extend({
+export default Ember.Service.extend({
   queue          : Ember.A([]),
   isEmpty        : computed.equal('queue.length', 0),
-
   defaultTimeout : 2000,
+  defaultPriority: 100,
 
-  success: function(message, timeout) {
-    timeout = (timeout === undefined) ? get(this, 'defaultTimeout') : timeout;
+  arrangedQueue  : computed.sort('queue', function(a, b) {
+    if (a.priority < b.priority) {
+      return 1;
+    } else if (a.priority > b.priority) {
+      return -1;
+    }
 
-    return this._addToQueue(message, 'success', timeout);
+    return 0;
+  }),
+
+  success: function(message, options) {
+    options = (typeof options === 'undefined') ? {} : options;
+
+    return this._addToQueue({
+      message : message,
+      type    : 'success',
+      timeout : options.timeout,
+      priority: options.priority
+    });
   },
 
-  info: function(message, timeout) {
-    timeout = (timeout === undefined) ? get(this, 'defaultTimeout') : timeout;
+  info: function(message, options) {
+    options = (typeof options === 'undefined') ? {} : options;
 
-    return this._addToQueue(message, 'info', timeout);
+    return this._addToQueue({
+      message : message,
+      type    : 'info',
+      timeout : options.timeout,
+      priority: options.priority
+    });
   },
 
-  warning: function(message, timeout) {
-    timeout = (timeout === undefined) ? get(this, 'defaultTimeout') : timeout;
+  warning: function(message, options) {
+    options = (typeof options === 'undefined') ? {} : options;
 
-    return this._addToQueue(message, 'warning', timeout);
+    return this._addToQueue({
+      message : message,
+      type    : 'warning',
+      timeout : options.timeout,
+      priority: options.priority
+    });
   },
 
-  danger: function(message, timeout) {
-    timeout = (timeout === undefined) ? get(this, 'defaultTimeout') : timeout;
+  danger: function(message, options) {
+    options = (typeof options === 'undefined') ? {} : options;
 
-    return this._addToQueue(message, 'danger', timeout);
+    return this._addToQueue({
+      message : message,
+      type    : 'danger',
+      timeout : options.timeout,
+      priority: options.priority
+    });
   },
 
-  addMessage: function(message, type, timeout) {
-    type    = (type === undefined) ? 'info' : type;
-    timeout = (timeout === undefined) ? get(this, 'defaultTimeout') : timeout;
+  addMessage: function(message, options) {
+    options = (typeof options === 'undefined') ? {} : options;
 
-    return this._addToQueue(message, type, timeout);
+    return this._addToQueue({
+      message : message,
+      type    : options.type,
+      timeout : options.timeout,
+      priority: options.priority
+    });
+  },
+
+  add: function(options) {
+    options = (typeof options === 'undefined') ? {} : options;
+
+    return this._addToQueue({
+      message : options.message,
+      type    : options.type,
+      timeout : options.timeout,
+      priority: options.priority
+    });
   },
 
   clearMessages: function() {
@@ -49,25 +94,27 @@ export default Ember.Object.extend({
   },
 
   // private
-  _addToQueue: function(message, type, timeout) {
+  _addToQueue: function(options) {
     var flashes = get(this, 'queue');
-    var flash   = this._newFlashMessage(this, message, type, timeout);
+    var flash   = this._newFlashMessage(options);
 
     flashes.pushObject(flash);
     return flash;
   },
 
-  _newFlashMessage: function(service, message, type, timeout) {
-    type    = (type === undefined) ? 'info' : type;
-    timeout = (timeout === undefined) ? get(this, 'defaultTimeout') : timeout;
+  _newFlashMessage: function(options) {
+    Ember.assert('Must pass a valid flash message', options.message);
 
-    Ember.assert('Must pass a valid flash service', service);
-    Ember.assert('Must pass a valid flash message', message);
+    var timeout  = (options.timeout === undefined) ? get(this, 'defaultTimeout') : options.timeout;
+    var type     = (options.type === undefined) ? 'info' : options.type;
+    var priority = (options.priority === undefined) ? get(this, 'defaultPriority') : options.priority;
+    var service  = this;
 
     return FlashMessage.create({
+      message      : options.message,
       type         : type,
-      message      : message,
       timeout      : timeout,
+      priority     : priority,
       flashService : service
     });
   }
