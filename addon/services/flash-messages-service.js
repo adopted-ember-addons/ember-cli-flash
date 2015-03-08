@@ -5,12 +5,13 @@ var computed = Ember.computed;
 var get      = Ember.get;
 
 export default Ember.Service.extend({
-  queue          : Ember.A([]),
-  isEmpty        : computed.equal('queue.length', 0),
-  defaultTimeout : 2000,
-  defaultPriority: 100,
+  queue           : Ember.A([]),
+  isEmpty         : computed.equal('queue.length', 0),
+  defaultTimeout  : 2000,
+  defaultPriority : 100,
+  defaultType     : 'info',
 
-  arrangedQueue  : computed.sort('queue', function(a, b) {
+  arrangedQueue: computed.sort('queue', function(a, b) {
     if (a.priority < b.priority) {
       return 1;
     } else if (a.priority > b.priority) {
@@ -24,10 +25,10 @@ export default Ember.Service.extend({
     options = (typeof options === 'undefined') ? {} : options;
 
     return this._addToQueue({
-      message : message,
-      type    : 'success',
-      timeout : options.timeout,
-      priority: options.priority
+      message  : message,
+      type     : 'success',
+      timeout  : options.timeout,
+      priority : options.priority
     });
   },
 
@@ -35,10 +36,10 @@ export default Ember.Service.extend({
     options = (typeof options === 'undefined') ? {} : options;
 
     return this._addToQueue({
-      message : message,
-      type    : 'info',
-      timeout : options.timeout,
-      priority: options.priority
+      message  : message,
+      type     : 'info',
+      timeout  : options.timeout,
+      priority : options.priority
     });
   },
 
@@ -46,10 +47,10 @@ export default Ember.Service.extend({
     options = (typeof options === 'undefined') ? {} : options;
 
     return this._addToQueue({
-      message : message,
-      type    : 'warning',
-      timeout : options.timeout,
-      priority: options.priority
+      message  : message,
+      type     : 'warning',
+      timeout  : options.timeout,
+      priority : options.priority
     });
   },
 
@@ -57,10 +58,10 @@ export default Ember.Service.extend({
     options = (typeof options === 'undefined') ? {} : options;
 
     return this._addToQueue({
-      message : message,
-      type    : 'danger',
-      timeout : options.timeout,
-      priority: options.priority
+      message  : message,
+      type     : 'danger',
+      timeout  : options.timeout,
+      priority : options.priority
     });
   },
 
@@ -68,10 +69,10 @@ export default Ember.Service.extend({
     options = (typeof options === 'undefined') ? {} : options;
 
     return this._addToQueue({
-      message : message,
-      type    : options.type,
-      timeout : options.timeout,
-      priority: options.priority
+      message  : message,
+      type     : options.type,
+      timeout  : options.timeout,
+      priority : options.priority
     });
   },
 
@@ -79,10 +80,10 @@ export default Ember.Service.extend({
     options = (typeof options === 'undefined') ? {} : options;
 
     return this._addToQueue({
-      message : options.message,
-      type    : options.type,
-      timeout : options.timeout,
-      priority: options.priority
+      message  : options.message,
+      type     : options.type,
+      timeout  : options.timeout,
+      priority : options.priority
     });
   },
 
@@ -106,7 +107,7 @@ export default Ember.Service.extend({
     Ember.assert('Must pass a valid flash message', options.message);
 
     var timeout  = (options.timeout === undefined) ? get(this, 'defaultTimeout') : options.timeout;
-    var type     = (options.type === undefined) ? 'info' : options.type;
+    var type     = (options.type === undefined) ? get(this, 'defaultType') : options.type;
     var priority = (options.priority === undefined) ? get(this, 'defaultPriority') : options.priority;
     var service  = this;
 
