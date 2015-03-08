@@ -1,17 +1,14 @@
 /* global sinon */
-import QUnit from 'qunit';
+import { module, test } from 'qunit';
 import Ember from 'ember';
 import FlashMessage from 'ember-cli-flash/flash/object';
-import {
-  test
-} from 'ember-qunit';
 
 var testTimerDuration = 500;
 var run               = Ember.run;
 var flash             = null;
 var SANDBOX           = {};
 
-QUnit.module('Flash Message Object', {
+module('Flash Message Object', {
   beforeEach: function() {
     flash = FlashMessage.create({
       type    : 'test',

@@ -1,15 +1,12 @@
-import QUnit from 'qunit';
+import { module, test } from 'qunit';
 import Ember from 'ember';
 import FlashMessagesService from 'ember-cli-flash/services/flash-messages-service';
-import {
-  test
-} from 'ember-qunit';
 
 var service;
 var SANDBOX = {};
 var run     = Ember.run;
 
-QUnit.module('FlashMessagesService', {
+module('FlashMessagesService', {
   beforeEach: function() {
     service = FlashMessagesService.create({});
     service.get('queue').clear();
