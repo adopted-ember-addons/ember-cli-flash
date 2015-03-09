@@ -148,7 +148,7 @@ To display messages sorted by priority, add this to your template:
 ```
 
 ### Rounded corners (Foundation)
-To add `radius` or `round` type corners in Foundation with:
+To add `radius` or `round` type corners in Foundation:
 
 ```handlebars
 {{#each flashes.arrangedQueue as |flash|}}
@@ -163,7 +163,7 @@ To add `radius` or `round` type corners in Foundation with:
 ```
 
 ## Styling
-You can style flash messages by targetting `.flashMessage` or `.alert` in your CSS. You can specifically target flash messages of different type by adding `.alert-{type}` to your CSS, where `{type}` is `success`, `info`, etc.
+You can style flash messages by targetting `.flashMessage` or the appropriate alert class (Foundation or Bootstrap) in your CSS.
 
 ## Contributing
 Please read the [Contributing guidelines](CONTRIBUTING.md) for information on how to contribute.
