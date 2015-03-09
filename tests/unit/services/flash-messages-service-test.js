@@ -14,6 +14,7 @@ module('FlashMessagesService', {
 
   afterEach: function() {
     service = null;
+    SANDBOX = {};
   }
 });
 
