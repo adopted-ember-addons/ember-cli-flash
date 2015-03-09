@@ -1,3 +1,10 @@
 <h2 id="title">Welcome to Ember.js</h2>
 
+{{#each flashes.arrangedQueue as |flash|}}
+  {{#flash-message flash=flash}}
+    <h6>{{flash.type}}</h6>
+    <p>{{flash.message}}</p>
+  {{/flash-message}}
+{{/each}}
+
 {{outlet}}

@@ -3,7 +3,7 @@ import FlashMessagesService from 'ember-cli-flash/services/flash-messages-servic
 export function initialize(_container, application) {
   application.register('service:flash-messages', FlashMessagesService, { singleton: true });
 
-  [ 'route', 'controller', 'view', 'component' ].forEach(function(factory) {
+  [ 'route', 'controller', 'view', 'component' ].forEach((factory) => {
     application.inject(factory, 'flashes', 'service:flash-messages');
   });
 }

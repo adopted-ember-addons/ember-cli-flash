@@ -1,28 +1,32 @@
 import Ember from 'ember';
 
-var computed       = Ember.computed;
-var get            = Ember.get;
-var set            = Ember.set;
-var getWithDefault = Ember.getWithDefault;
-var run            = Ember.run;
+const {
+  computed,
+  get,
+  set,
+  getWithDefault,
+  run,
+  on
+} = Ember;
 
 export default Ember.Object.extend({
-  isSuccess      : computed.equal('type', 'success'),
-  isInfo         : computed.equal('type', 'info'),
-  isWarning      : computed.equal('type', 'warning'),
-  isDanger       : computed.equal('type', 'danger'),
+  isSuccessType  : computed.equal('type', 'success'),
+  isInfoType     : computed.equal('type', 'info'),
+  isWarningType  : computed.equal('type', 'warning'),
+  isDangerType   : computed.equal('type', 'danger'),
+  isErrorType    : computed.equal('type', 'error'),
 
   defaultTimeout : computed.alias('flashService.defaultTimeout'),
   queue          : computed.alias('flashService.queue'),
   timer          : null,
 
-  destroyMessage: function() {
+  destroyMessage() {
     this._destroyMessage();
   },
 
-  willDestroy: function() {
+  willDestroy() {
     this._super();
-    var timer = get(this, 'timer');
+    const timer = get(this, 'timer');
 
     if (timer) {
       run.cancel(timer);
@@ -31,21 +35,22 @@ export default Ember.Object.extend({
   },
 
   // private
-  _destroyLater: function() {
-    var defaultTimeout = get(this, 'defaultTimeout');
-    var timeout        = getWithDefault(this, 'timeout', defaultTimeout);
-    var destroyTimer   = run.later(this, '_destroyMessage', timeout);
+  _destroyLater: on('init', function() {
+    const defaultTimeout = get(this, 'defaultTimeout');
+    const timeout        = getWithDefault(this, 'timeout', defaultTimeout);
+    const destroyTimer   = run.later(this, '_destroyMessage', timeout);
 
     set(this, 'timer', destroyTimer);
-  }.on('init'),
+  }),
 
-  _destroyMessage: function() {
-    var queue = get(this, 'queue');
+  _destroyMessage() {
+    const queue        = get(this, 'queue');
+    const flashMessage = this;
 
     if (queue) {
-      queue.removeObject(this);
+      queue.removeObject(flashMessage);
     }
 
-    this.destroy();
+    flashMessage.destroy();
   }
 });

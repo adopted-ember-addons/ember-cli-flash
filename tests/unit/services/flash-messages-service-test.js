@@ -1,29 +1,27 @@
-import QUnit from 'qunit';
+import { module, test } from 'qunit';
 import Ember from 'ember';
 import FlashMessagesService from 'ember-cli-flash/services/flash-messages-service';
-import {
-  test
-} from 'ember-qunit';
 
 var service;
 var SANDBOX = {};
-var run     = Ember.run;
+var { run } = Ember;
 
-QUnit.module('FlashMessagesService', {
-  beforeEach: function() {
+module('FlashMessagesService', {
+  beforeEach() {
     service = FlashMessagesService.create({});
     service.get('queue').clear();
   },
 
-  afterEach: function() {
+  afterEach() {
     service = null;
+    SANDBOX = {};
   }
 });
 
 test('#queue returns an array of flash messages', function(assert) {
   assert.expect(1);
 
-  run(function() {
+  run(() => {
     service.success('success 1');
     service.success('success 2');
     service.success('success 3');
@@ -35,7 +33,7 @@ test('#queue returns an array of flash messages', function(assert) {
 test('#arrangedQueue returns an array of flash messages, sorted by priority', function(assert) {
   assert.expect(2);
 
-  run(function() {
+  run(() => {
     service.success('success 1', { priority: 100 });
     service.success('success 2', { priority: 200 });
     service.success('success 3', { priority: 300 });
@@ -48,7 +46,7 @@ test('#arrangedQueue returns an array of flash messages, sorted by priority', fu
 test('#success adds a success message', function(assert) {
   assert.expect(3);
 
-  run(function() {
+  run(() => {
     SANDBOX.flash = service.success('success');
   });
 
@@ -60,7 +58,7 @@ test('#success adds a success message', function(assert) {
 test('#info adds a info message', function(assert) {
   assert.expect(3);
 
-  run(function() {
+  run(() => {
     SANDBOX.flash = service.info('info');
   });
 
@@ -72,7 +70,7 @@ test('#info adds a info message', function(assert) {
 test('#warning adds a warning message', function(assert) {
   assert.expect(3);
 
-  run(function() {
+  run(() => {
     SANDBOX.flash = service.warning('warning');
   });
 
@@ -81,10 +79,46 @@ test('#warning adds a warning message', function(assert) {
   assert.equal(service.get('queue.0.type'), 'warning');
 });
 
+test('#danger adds a danger message', function(assert) {
+  assert.expect(3);
+
+  run(() => {
+    SANDBOX.flash = service.danger('danger');
+  });
+
+  assert.equal(service.get('queue.length'), 1);
+  assert.equal(service.get('queue.0'), SANDBOX.flash);
+  assert.equal(service.get('queue.0.type'), 'danger');
+});
+
+test('#alert adds a alert message', function(assert) {
+  assert.expect(3);
+
+  run(() => {
+    SANDBOX.flash = service.alert('alert');
+  });
+
+  assert.equal(service.get('queue.length'), 1);
+  assert.equal(service.get('queue.0'), SANDBOX.flash);
+  assert.equal(service.get('queue.0.type'), 'alert');
+});
+
+test('#secondary adds a secondary message', function(assert) {
+  assert.expect(3);
+
+  run(() => {
+    SANDBOX.flash = service.secondary('secondary');
+  });
+
+  assert.equal(service.get('queue.length'), 1);
+  assert.equal(service.get('queue.0'), SANDBOX.flash);
+  assert.equal(service.get('queue.0.type'), 'secondary');
+});
+
 test('#addMessage adds a custom message', function(assert) {
   assert.expect(3);
 
-  run(function() {
+  run(() => {
     SANDBOX.flash = service.addMessage('custom', { type: 'test' });
   });
 
@@ -96,7 +130,7 @@ test('#addMessage adds a custom message', function(assert) {
 test('#add adds a custom message', function(assert) {
   assert.expect(3);
 
-  run(function() {
+  run(() => {
     SANDBOX.flash = service.add({
       message: 'Test message please ignore',
       type: 'test'
@@ -111,7 +145,7 @@ test('#add adds a custom message', function(assert) {
 test('#_addToQueue adds a message to queue', function(assert) {
   assert.expect(3);
 
-  run(function() {
+  run(() => {
     SANDBOX.flash = service._addToQueue({
       message : 'test',
       type    : 'test',
@@ -127,11 +161,12 @@ test('#_addToQueue adds a message to queue', function(assert) {
 test('#_newFlashMessage returns a new flash message', function(assert) {
   assert.expect(3);
 
-  run(function() {
+  run(() => {
     SANDBOX.flash = service._newFlashMessage({
-      message : 'test',
-      type    : 'test',
-      timeout : 500
+      message  : 'test',
+      type     : 'test',
+      timeout  : 500,
+      priority : 500
     });
   });
 

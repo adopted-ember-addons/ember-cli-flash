@@ -1,9 +1,7 @@
 # ember-cli-flash
-[![Circle CI](https://circleci.com/gh/poteto/ember-cli-flash.svg?style=svg)](https://circleci.com/gh/poteto/ember-cli-flash)
+[![npm version](https://badge.fury.io/js/ember-cli-flash.svg)](http://badge.fury.io/js/ember-cli-flash) [![Circle CI](https://circleci.com/gh/poteto/ember-cli-flash.svg?style=svg)](https://circleci.com/gh/poteto/ember-cli-flash) [![Build Status](https://travis-ci.org/poteto/ember-cli-flash.svg)](https://travis-ci.org/poteto/ember-cli-flash)
 
-[![Build Status](https://travis-ci.org/poteto/ember-cli-flash.svg)](https://travis-ci.org/poteto/ember-cli-flash)
-
-This `ember-cli` addon adds a simple flash message service to your app. It's injected into all controllers and routes by default.
+This `ember-cli` addon adds a simple flash message service to your app. It's injected into all Controllers, Routes, Views and Components by default. It can also be lazily injected.
 
 ## Installation
 You can install either with `npm`:
@@ -22,21 +20,38 @@ ember install:addon ember-cli-flash
 Usage is very simple. From within a `Controller`, `Route`, `View` or `Component`:
 
 ### API
-#### Convenience methods (Bootstrap style)
-You can quickly add flash messages using `.success`, `.warning`, `.info`, and `.danger`. For example:
+#### Convenience methods (Bootstrap / Foundation alerts)
+You can quickly add flash messages using:
+
+##### Bootstrap
+- `.success`
+- `.warning`
+- `.info`
+- `.danger`
+
+##### Foundation
+- `.success`
+- `.warning`
+- `.info`
+- `.alert`
+- `.secondary` 
+
+These will add the appropriate classes to the flash message component for styling in Bootstrap or Foundation. For example:
 
 ```javascript
+// the flash message component will have 'alert alert-success' classes
+// the flash message component will have 'alert-box success' classes
 Ember.get(this, 'flashes').success('Success!');
 ```
 
 You can also pass in options for `timeout` and `priority`. The best practise is to use priority values in multiples of `100` (`100` being the lowest priority):
 
 ```javascript
-Ember.get(this, 'flashes').warning('Something went wrong', { 
+Ember.get(this, 'flashes').warning('Something went wrong', {
   priority : 1000
 });
 
-Ember.get(this, 'flashes').success('Successfully signed in', { 
+Ember.get(this, 'flashes').success('Successfully signed in', {
   timeout  : 500,
   priority : 200
 });
@@ -56,6 +71,7 @@ Ember.get(this, 'flashes').addMessage('You won!', {
 Ember.get(this, 'flashes').add({
   message  : 'Custom message'
   type     : 'customType',
+  timeout  : 2000,
   priority : 500
 });
 ```
@@ -64,14 +80,14 @@ Ember.get(this, 'flashes').add({
 It's best practise to use flash messages sparingly, only when you need to notify the user of something. If you're sending too many messages, and need a way for your users to clear all messages from screen, you can use this method:
 
 ```javascript
-Ember.get(this, 'flashes').clearMessages(); // clears all visible flash messages 
+Ember.get(this, 'flashes').clearMessages(); // clears all visible flash messages
 ```
 
 ### Lazy service injection
 If you're using Ember `1.10.0` or higher, you can also inject the service manually:
 
 ```javascript
-  flashes: Ember.inject.service('flash-messages')
+flashes: Ember.inject.service('flash-messages')
 ```
 
 ### Promises
@@ -81,7 +97,7 @@ You can also take advantage of Promises, and their `.then` and `.catch` methods.
 actions: {
   saveFoo() {
     var flash = Ember.get(this, 'flashes');
-    
+
     Ember.get(this, 'model').save()
     .then(function(res) {
       flash.success('Successfully saved!');
@@ -97,19 +113,28 @@ actions: {
 Then, to display somewhere in your app, add this to your template:
 
 ```handlebars
-{{#each flash in flashes.queue}}
+{{#each flashes.queue as |flash|}}
   {{flash-message flash=flash}}
 {{/each}}
 ```
 
-It also accepts your own template: 
+It also accepts your own template:
 
 ```handlebars
-{{#each flash in flashes.queue}}
+{{#each flashes.queue as |flash|}}
   {{#flash-message flash=flash}}
-    <h6>{{flash.flashType}}</h6>
+    <h6>{{flashType}}</h6>
     <p>{{flash.message}}</p>
   {{/flash-message}}
+{{/each}}
+```
+
+### Styling with Foundation or Boostrap
+By default, flash messages will have Bootstrap style class names. If you want to use Foundation, simply specify the `messageStyle` on the component:
+
+```handlebars
+{{#each flashes.queue as |flash|}}
+  {{flash-message flash=flash messageStyle='foundation'}}
 {{/each}}
 ```
 
@@ -117,23 +142,31 @@ It also accepts your own template:
 To display messages sorted by priority, add this to your template:
 
 ```handlebars
-{{#each flash in flashes.arrangedQueue}}
+{{#each flashes.arrangedQueue as |flash|}}
   {{flash-message flash=flash}}
 {{/each}}
 ```
 
+### Rounded corners (Foundation)
+To add `radius` or `round` type corners in Foundation:
+
+```handlebars
+{{#each flashes.arrangedQueue as |flash|}}
+  {{flash-message flash=flash messageStyle='foundation' class='radius'}}
+{{/each}}
+```
+
+```handlebars
+{{#each flashes.arrangedQueue as |flash|}}
+  {{flash-message flash=flash messageStyle='foundation' class='round'}}
+{{/each}}
+```
+
 ## Styling
-You can style flash messages by targetting `.flashMessage` or `.alert` in your CSS. You can specifically target flash messages of different type by adding `.alert-{type}` to your CSS, where `{type}` is `success`, `info`, etc. 
+You can style flash messages by targetting `.flashMessage` or the appropriate alert class (Foundation or Bootstrap) in your CSS.
 
 ## Contributing
 Please read the [Contributing guidelines](CONTRIBUTING.md) for information on how to contribute.
-
-## Backlog
-
-- [x] Sort options by priority
-- [ ] Bundled themes for flash messages
-- [ ] Prevent duplicate flash messages
-- [ ] Progress bar showing how much time is left
 
 ## Installation
 
