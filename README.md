@@ -21,7 +21,7 @@ Usage is very simple. From within a `Controller`, `Route`, `View` or `Component`
 
 ### API
 #### Convenience methods (Bootstrap style)
-You can quickly add flash messages using `.success`, `.warning`, `.info`, and `.danger`. For example:
+You can quickly add flash messages using `.success`, `.warning`, `.info`, `.danger`, and `.error` For example:
 
 ```javascript
 Ember.get(this, 'flashes').success('Success!');
@@ -54,6 +54,7 @@ Ember.get(this, 'flashes').addMessage('You won!', {
 Ember.get(this, 'flashes').add({
   message  : 'Custom message'
   type     : 'customType',
+  timeout  : 2000,
   priority : 500
 });
 ```
@@ -95,7 +96,7 @@ actions: {
 Then, to display somewhere in your app, add this to your template:
 
 ```handlebars
-{{#each flash in flashes.queue}}
+{{#each flashes.queue as |flash|}}
   {{flash-message flash=flash}}
 {{/each}}
 ```
@@ -103,9 +104,9 @@ Then, to display somewhere in your app, add this to your template:
 It also accepts your own template:
 
 ```handlebars
-{{#each flash in flashes.queue}}
+{{#each flashes.queue as |flash|}}
   {{#flash-message flash=flash}}
-    <h6>{{flash.flashType}}</h6>
+    <h6>{{flashType}}</h6>
     <p>{{flash.message}}</p>
   {{/flash-message}}
 {{/each}}
@@ -115,7 +116,7 @@ It also accepts your own template:
 To display messages sorted by priority, add this to your template:
 
 ```handlebars
-{{#each flash in flashes.arrangedQueue}}
+{{#each flashes.arrangedQueue as |flash|}}
   {{flash-message flash=flash}}
 {{/each}}
 ```
@@ -125,13 +126,6 @@ You can style flash messages by targetting `.flashMessage` or `.alert` in your C
 
 ## Contributing
 Please read the [Contributing guidelines](CONTRIBUTING.md) for information on how to contribute.
-
-## Backlog
-
-- [x] Sort options by priority
-- [ ] Bundled themes for flash messages
-- [ ] Prevent duplicate flash messages
-- [ ] Progress bar showing how much time is left
 
 ## Installation
 

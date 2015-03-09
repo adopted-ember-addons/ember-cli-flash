@@ -1,26 +1,24 @@
 import Ember from 'ember';
 
-var computed = Ember.computed;
-var get      = Ember.get;
-var on       = Ember.on;
+const { computed, get, on } = Ember;
 
 export default Ember.Component.extend({
-  classNames:        [ 'alert', 'flashMessage' ],
-  classNameBindings: [ 'alertType' ],
+  classNames        : [ 'flashMessage', 'alert' ],
+  classNameBindings : [ 'alertType' ],
 
   alertType: computed('flash.type', function() {
-    var flashType = get(this, 'flash.type');
+    const flashType = get(this, 'flash.type');
 
-    return 'alert-' + flashType;
+    return `alert-${flashType}`;
   }),
 
   flashType: computed('flash.type', function() {
-    var flashType = get(this, 'flash.type');
+    const flashType = get(this, 'flash.type');
 
     return flashType.classify();
   }),
 
-  click: function() {
+  click() {
     this._destroyFlashMessage();
   },
 
@@ -29,8 +27,8 @@ export default Ember.Component.extend({
     this._destroyFlashMessage();
   }),
 
-  _destroyFlashMessage: function() {
-    var flash = get(this, 'flash');
+  _destroyFlashMessage() {
+    const flash = get(this, 'flash');
 
     if (flash) {
       flash.destroyMessage();
