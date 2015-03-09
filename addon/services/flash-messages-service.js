@@ -19,6 +19,7 @@ export default Ember.Service.extend({
     return 0;
   }),
 
+  // bootstrap
   success(message, options={}) {
     return this._addToQueue({
       message  : message,
@@ -55,15 +56,26 @@ export default Ember.Service.extend({
     });
   },
 
-  error: function(message, options={}) {
+  // foundation
+  alert: function(message, options={}) {
     return this._addToQueue({
       message  : message,
-      type     : 'error',
+      type     : 'alert',
       timeout  : options.timeout,
       priority : options.priority
     });
   },
 
+  secondary: function(message, options={}) {
+    return this._addToQueue({
+      message  : message,
+      type     : 'secondary',
+      timeout  : options.timeout,
+      priority : options.priority
+    });
+  },
+
+  // custom
   addMessage: function(message, options={}) {
     return this._addToQueue({
       message  : message,

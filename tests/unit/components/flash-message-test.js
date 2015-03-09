@@ -40,7 +40,7 @@ test('#alertType returns the right type', function(assert) {
   component.set('flash', flash);
 
   this.render();
-  assert.equal(component.get('alertType'), 'alert-test');
+  assert.equal(component.get('alertType'), 'alert alert-test');
 });
 
 test('#flashType returns the right classified alert type', function(assert) {

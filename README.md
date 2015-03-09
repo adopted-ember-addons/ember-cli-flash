@@ -20,10 +20,27 @@ ember install:addon ember-cli-flash
 Usage is very simple. From within a `Controller`, `Route`, `View` or `Component`:
 
 ### API
-#### Convenience methods (Bootstrap style)
-You can quickly add flash messages using `.success`, `.warning`, `.info`, `.danger`, and `.error` For example:
+#### Convenience methods (Bootstrap / Foundation alerts)
+You can quickly add flash messages using:
+
+##### Bootstrap
+- `.success`
+- `.warning`
+- `.info`
+- `.danger`
+
+##### Foundation
+- `.success`
+- `.warning`
+- `.info`
+- `.alert`
+- `.secondary` 
+
+These will add the appropriate classes to the flash message component for styling in Bootstrap or Foundation. For example:
 
 ```javascript
+// the flash message component will have 'alert alert-success' classes
+// the flash message component will have 'alert-box success' classes
 Ember.get(this, 'flashes').success('Success!');
 ```
 
@@ -112,12 +129,36 @@ It also accepts your own template:
 {{/each}}
 ```
 
+### Styling with Foundation or Boostrap
+By default, flash messages will have Bootstrap style class names. If you want to use Foundation, simply specify the `messageStyle` on the component:
+
+```handlebars
+{{#each flashes.queue as |flash|}}
+  {{flash-message flash=flash messageStyle='foundation'}}
+{{/each}}
+```
+
 ### Sort messages by priority
 To display messages sorted by priority, add this to your template:
 
 ```handlebars
 {{#each flashes.arrangedQueue as |flash|}}
   {{flash-message flash=flash}}
+{{/each}}
+```
+
+### Rounded corners (Foundation)
+To add `radius` or `round` type corners in Foundation with:
+
+```handlebars
+{{#each flashes.arrangedQueue as |flash|}}
+  {{flash-message flash=flash messageStyle='foundation' class='radius'}}
+{{/each}}
+```
+
+```handlebars
+{{#each flashes.arrangedQueue as |flash|}}
+  {{flash-message flash=flash messageStyle='foundation' class='round'}}
 {{/each}}
 ```
 

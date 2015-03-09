@@ -91,16 +91,28 @@ test('#danger adds a danger message', function(assert) {
   assert.equal(service.get('queue.0.type'), 'danger');
 });
 
-test('#error adds a error message', function(assert) {
+test('#alert adds a alert message', function(assert) {
   assert.expect(3);
 
   run(() => {
-    SANDBOX.flash = service.error('error');
+    SANDBOX.flash = service.alert('alert');
   });
 
   assert.equal(service.get('queue.length'), 1);
   assert.equal(service.get('queue.0'), SANDBOX.flash);
-  assert.equal(service.get('queue.0.type'), 'error');
+  assert.equal(service.get('queue.0.type'), 'alert');
+});
+
+test('#secondary adds a secondary message', function(assert) {
+  assert.expect(3);
+
+  run(() => {
+    SANDBOX.flash = service.secondary('secondary');
+  });
+
+  assert.equal(service.get('queue.length'), 1);
+  assert.equal(service.get('queue.0'), SANDBOX.flash);
+  assert.equal(service.get('queue.0.type'), 'secondary');
 });
 
 test('#addMessage adds a custom message', function(assert) {
