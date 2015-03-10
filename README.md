@@ -1,7 +1,7 @@
 # ember-cli-flash
 [![npm version](https://badge.fury.io/js/ember-cli-flash.svg)](http://badge.fury.io/js/ember-cli-flash) [![Circle CI](https://circleci.com/gh/poteto/ember-cli-flash.svg?style=svg)](https://circleci.com/gh/poteto/ember-cli-flash) [![Build Status](https://travis-ci.org/poteto/ember-cli-flash.svg)](https://travis-ci.org/poteto/ember-cli-flash)
 
-[Statistics for `ember-cli-flash`](www.npm-stats.com/~packages/ember-cli-flash)
+[Statistics for `ember-cli-flash`](http://www.npm-stats.com/~packages/ember-cli-flash)
 
 This `ember-cli` addon adds a simple flash message service to your app. It's injected into all Controllers, Routes, Views and Components by default. It can also be lazily injected.
 
