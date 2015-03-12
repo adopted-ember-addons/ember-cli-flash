@@ -34,7 +34,7 @@ export default Ember.Service.extend({
   },
 
   // custom
-  addMessage: function(message, options={}) {
+  addMessage(message, options={}) {
     return this._addToQueue({
       message  : message,
       type     : options.type,
@@ -43,7 +43,7 @@ export default Ember.Service.extend({
     });
   },
 
-  add: function(options={}) {
+  add(options={}) {
     return this._addToQueue({
       message  : options.message,
       type     : options.type,
