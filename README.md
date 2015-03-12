@@ -78,6 +78,14 @@ Ember.get(this, 'flashes').add({
 });
 ```
 
+#### Registering new types
+If you find yourself creating many custom messages with the same custom type, you can register it with the service and use that method instead.
+
+```javascript
+Ember.get(this, 'flashes').registerType('birthday');
+Ember.get(this, 'flashes').birthday("Hey shawty, it's your birthday")
+```
+
 #### Clearing all messages on screen
 It's best practise to use flash messages sparingly, only when you need to notify the user of something. If you're sending too many messages, and need a way for your users to clear all messages from screen, you can use this method:
 

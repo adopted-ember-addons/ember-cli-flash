@@ -174,3 +174,49 @@ test('#_newFlashMessage returns a new flash message', function(assert) {
   assert.equal(Ember.typeOf(SANDBOX.flash), 'instance');
   assert.equal(SANDBOX.flash.get('type'), 'test');
 });
+
+test('#registerType registers a new type', function(assert) {
+  assert.expect(5);
+
+  run(() => {
+    service.registerType('test');
+    SANDBOX.type  = service.test;
+    SANDBOX.flash = service.test('foo');
+  });
+
+  assert.ok(SANDBOX.type);
+  assert.ok(SANDBOX.flash);
+  assert.equal(Ember.typeOf(SANDBOX.type), 'function');
+  assert.equal(Ember.typeOf(SANDBOX.flash), 'instance');
+  assert.equal(SANDBOX.flash.get('type'), 'test');
+});
+
+test('#_registerTypes registers new types', function(assert) {
+  assert.expect(4);
+
+  run(() => {
+    service.registerType('foo');
+    service.registerType('bar');
+    SANDBOX.type1 = service.foo;
+    SANDBOX.type2 = service.bar;
+  });
+
+  assert.ok(SANDBOX.type1);
+  assert.ok(SANDBOX.type2);
+  assert.equal(Ember.typeOf(SANDBOX.type1), 'function');
+  assert.equal(Ember.typeOf(SANDBOX.type2), 'function');
+});
+
+test('#_initTypes registers default types on init', function(assert) {
+  const defaultTypes = [ 'success', 'info', 'warning', 'danger', 'alert', 'secondary' ];
+  let expectLength   = defaultTypes.length * 2;
+
+  assert.expect(expectLength);
+
+  defaultTypes.forEach((type) => {
+    let method = service[type];
+
+    assert.ok(method);
+    assert.equal(Ember.typeOf(method), 'function');
+  });
+});
