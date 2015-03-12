@@ -83,7 +83,7 @@ If you find yourself creating many custom messages with the same custom type, yo
 
 ```javascript
 Ember.get(this, 'flashes').registerType('birthday');
-Ember.get(this, 'flashes').birthday("Hey shawty, it's your birthday")
+Ember.get(this, 'flashes').birthday("Hey shawty, it's your birthday");
 ```
 
 #### Clearing all messages on screen
