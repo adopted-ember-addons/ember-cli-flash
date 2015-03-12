@@ -1,6 +1,8 @@
 # ember-cli-flash
 [![npm version](https://badge.fury.io/js/ember-cli-flash.svg)](http://badge.fury.io/js/ember-cli-flash) [![Circle CI](https://circleci.com/gh/poteto/ember-cli-flash.svg?style=svg)](https://circleci.com/gh/poteto/ember-cli-flash) [![Build Status](https://travis-ci.org/poteto/ember-cli-flash.svg)](https://travis-ci.org/poteto/ember-cli-flash)
 
+[Statistics for `ember-cli-flash`](http://www.npm-stats.com/~packages/ember-cli-flash)
+
 This `ember-cli` addon adds a simple flash message service to your app. It's injected into all Controllers, Routes, Views and Components by default. It can also be lazily injected.
 
 ## Installation
@@ -74,6 +76,14 @@ Ember.get(this, 'flashes').add({
   timeout  : 2000,
   priority : 500
 });
+```
+
+#### Registering new types
+If you find yourself creating many custom messages with the same custom type, you can register it with the service and use that method instead.
+
+```javascript
+Ember.get(this, 'flashes').registerType('birthday');
+Ember.get(this, 'flashes').birthday("Hey shawty, it's your birthday");
 ```
 
 #### Clearing all messages on screen

@@ -1,13 +1,14 @@
 import Ember from 'ember';
 import FlashMessage from 'ember-cli-flash/flash/object';
 
-const { computed, get, A: emberArray } = Ember;
+const { computed, get, getWithDefault, A: emberArray, on } = Ember;
 
 export default Ember.Service.extend({
   queue           : emberArray([]),
   isEmpty         : computed.equal('queue.length', 0),
   defaultTimeout  : 2000,
   defaultPriority : 100,
+  defaultTypes    : [ 'success', 'info', 'warning', 'danger', 'alert', 'secondary' ],
   defaultType     : 'info',
 
   arrangedQueue: computed.sort('queue', function(a, b) {
@@ -19,59 +20,16 @@ export default Ember.Service.extend({
     return 0;
   }),
 
-  // bootstrap
-  success(message, options={}) {
-    return this._addToQueue({
-      message  : message,
-      type     : 'success',
-      timeout  : options.timeout,
-      priority : options.priority
-    });
-  },
+  registerType(type) {
+    Ember.assert('The flash type cannot be undefined', type);
 
-  info: function(message, options={}) {
-    return this._addToQueue({
-      message  : message,
-      type     : 'info',
-      timeout  : options.timeout,
-      priority : options.priority
-    });
-  },
-
-  warning: function(message, options={}) {
-    return this._addToQueue({
-      message  : message,
-      type     : 'warning',
-      timeout  : options.timeout,
-      priority : options.priority
-    });
-  },
-
-  danger: function(message, options={}) {
-    return this._addToQueue({
-      message  : message,
-      type     : 'danger',
-      timeout  : options.timeout,
-      priority : options.priority
-    });
-  },
-
-  // foundation
-  alert: function(message, options={}) {
-    return this._addToQueue({
-      message  : message,
-      type     : 'alert',
-      timeout  : options.timeout,
-      priority : options.priority
-    });
-  },
-
-  secondary: function(message, options={}) {
-    return this._addToQueue({
-      message  : message,
-      type     : 'secondary',
-      timeout  : options.timeout,
-      priority : options.priority
+    this[type] = ((message, options={}) => {
+      return this._addToQueue({
+        message  : message,
+        type     : type,
+        timeout  : options.timeout,
+        priority : options.priority
+      });
     });
   },
 
@@ -111,7 +69,7 @@ export default Ember.Service.extend({
   },
 
   _newFlashMessage(options={}) {
-    Ember.assert('Must pass a valid flash message', options.message);
+    Ember.assert('The flash message cannot be empty.', options.message);
 
     const timeout  = (options.timeout  === undefined) ? get(this, 'defaultTimeout')  : options.timeout;
     const type     = (options.type     === undefined) ? get(this, 'defaultType')     : options.type;
@@ -125,5 +83,15 @@ export default Ember.Service.extend({
       priority     : priority,
       flashService : service
     });
-  }
+  },
+
+  _registerTypes(types=[]) {
+    types.forEach(type => this.registerType(type));
+  },
+
+  _initTypes: on('init', function() {
+    const defaultTypes = getWithDefault(this, 'defaultTypes', []);
+
+    this._registerTypes(defaultTypes);
+  })
 });
