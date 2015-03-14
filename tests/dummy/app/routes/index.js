@@ -15,5 +15,7 @@ export default Ember.Route.extend({
       timeout  : 50,
       priority : 1000
     });
+
+    flashes.danger('You went offline', { sticky: true });
   }
 });
