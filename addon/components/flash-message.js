@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { computed, get, on } = Ember;
+const { computed, getWithDefault } = Ember;
 
 export default Ember.Component.extend({
   classNames        : [ 'flashMessage' ],
@@ -8,9 +8,9 @@ export default Ember.Component.extend({
   messageStyle      : 'bootstrap',
 
   alertType: computed('flash.type', function() {
-    const flashType    = get(this, 'flash.type');
-    const messageStyle = get(this, 'messageStyle');
-    var prefix         = 'alert alert-';
+    const flashType    = getWithDefault(this, 'flash.type', '');
+    const messageStyle = getWithDefault(this, 'messageStyle', '');
+    let prefix         = 'alert alert-';
 
     if (messageStyle === 'foundation') {
       prefix = 'alert-box ';
@@ -20,7 +20,7 @@ export default Ember.Component.extend({
   }),
 
   flashType: computed('flash.type', function() {
-    const flashType = get(this, 'flash.type');
+    const flashType = getWithDefault(this, 'flash.type', '');
 
     return flashType.classify();
   }),
@@ -29,13 +29,12 @@ export default Ember.Component.extend({
     this._destroyFlashMessage();
   },
 
-  //private
-  _destroyOnTeardown: on('willDestroyElement', function() {
+  willDestroy() {
     this._destroyFlashMessage();
-  }),
+  },
 
   _destroyFlashMessage() {
-    const flash = get(this, 'flash');
+    const flash = getWithDefault(this, 'flash', false);
 
     if (flash) {
       flash.destroyMessage();

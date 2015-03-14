@@ -6,8 +6,9 @@ const { computed, get, getWithDefault, A: emberArray, on } = Ember;
 export default Ember.Service.extend({
   queue           : emberArray([]),
   isEmpty         : computed.equal('queue.length', 0),
-  defaultTimeout  : 2000,
+  defaultTimeout  : 3000,
   defaultPriority : 100,
+  defaultSticky   : false,
   defaultTypes    : [ 'success', 'info', 'warning', 'danger', 'alert', 'secondary' ],
   defaultType     : 'info',
 
@@ -28,27 +29,32 @@ export default Ember.Service.extend({
         message  : message,
         type     : type,
         timeout  : options.timeout,
-        priority : options.priority
+        priority : options.priority,
+        sticky   : options.sticky
       });
     });
   },
 
   // custom
-  addMessage: function(message, options={}) {
+  addMessage(message, options={}) {
+    Ember.deprecate('[ember-cli-flash] `addMessage() will be deprecated in 1.0.0. Please use `add()` instead.`');
+
     return this._addToQueue({
       message  : message,
       type     : options.type,
       timeout  : options.timeout,
-      priority : options.priority
+      priority : options.priority,
+      sticky   : options.sticky
     });
   },
 
-  add: function(options={}) {
+  add(options={}) {
     return this._addToQueue({
       message  : options.message,
       type     : options.type,
       timeout  : options.timeout,
-      priority : options.priority
+      priority : options.priority,
+      sticky   : options.sticky
     });
   },
 
@@ -74,14 +80,16 @@ export default Ember.Service.extend({
     const timeout  = (options.timeout  === undefined) ? get(this, 'defaultTimeout')  : options.timeout;
     const type     = (options.type     === undefined) ? get(this, 'defaultType')     : options.type;
     const priority = (options.priority === undefined) ? get(this, 'defaultPriority') : options.priority;
+    const sticky   = (options.sticky   === undefined) ? get(this, 'defaultSticky')   : options.sticky;
     const service  = this;
 
     return FlashMessage.create({
+      flashService : service,
       message      : options.message,
       type         : type,
       timeout      : timeout,
       priority     : priority,
-      flashService : service
+      sticky       : sticky
     });
   },
 
