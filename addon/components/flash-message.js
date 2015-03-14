@@ -5,11 +5,11 @@ const { computed, getWithDefault } = Ember;
 export default Ember.Component.extend({
   classNames        : [ 'flashMessage' ],
   classNameBindings : [ 'alertType' ],
-  messageStyle      : 'bootstrap',
+  messageStyle      : undefined,
 
   alertType: computed('flash.type', function() {
     const flashType    = getWithDefault(this, 'flash.type', '');
-    const messageStyle = getWithDefault(this, 'messageStyle', '');
+    const messageStyle = getWithDefault(this, 'messageStyle', Ember.ENV.flashTheme || 'bootstrap');
     let prefix         = 'alert alert-';
 
     if (messageStyle === 'foundation') {
