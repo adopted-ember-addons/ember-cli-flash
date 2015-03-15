@@ -9,10 +9,11 @@ var flash;
 moduleForComponent('flash-message', 'FlashMessageComponent', {
   beforeEach() {
     flash = FlashMessage.create({
-      message  : 'test',
-      type     : 'test',
-      timeout  : 500,
-      priority : 500
+      message      : 'test',
+      type         : 'test',
+      timeout      : 1,
+      priority     : 500,
+      showProgress : true
     });
   },
 
@@ -21,25 +22,19 @@ moduleForComponent('flash-message', 'FlashMessageComponent', {
   }
 });
 
-test('it renders', function(assert) {
-  assert.expect(2);
+test('it renders with the right props', function(assert) {
+  assert.expect(6);
 
   // creates the component instance
   const component = this.subject();
+  component.set('flash', flash);
   assert.equal(component._state, 'preRender');
 
   // render the component on the page
   this.render();
   assert.equal(component._state, 'inDOM');
-});
-
-test('#alertType returns the right type', function(assert) {
-  assert.expect(2);
-
-  const component = this.subject();
-  component.set('flash', flash);
-
-  this.render();
+  assert.equal(component.get('active'), true);
   assert.equal(component.get('alertType'), 'alert alert-test');
   assert.equal(component.get('flashType'), 'Test');
+  assert.equal(component.get('progressDuration'), 'transition-duration: 1ms');
 });

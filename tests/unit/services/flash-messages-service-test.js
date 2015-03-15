@@ -10,6 +10,7 @@ module('FlashMessagesService', {
   beforeEach() {
     service = FlashMessagesService.create({});
     service.get('queue').clear();
+    service.set('defaultTimeout', 1);
   },
 
   afterEach() {
@@ -43,12 +44,11 @@ test('#arrangedQueue returns an array of flash messages, sorted by priority', fu
   assert.equal(service.get('arrangedQueue.0.priority'), 300);
 });
 
-test('#add adds a custom message', function(assert) {
+test('#addMessage adds a custom message', function(assert) {
   assert.expect(3);
 
   run(() => {
-    SANDBOX.flash = service.add({
-      message: 'Test message please ignore',
+    SANDBOX.flash = service.addMessage('Yo ho ho and a bottle of rum', {
       type: 'test'
     });
   });
@@ -58,20 +58,40 @@ test('#add adds a custom message', function(assert) {
   assert.equal(service.get('queue.0.type'), 'test');
 });
 
-test('#_addToQueue adds a message to queue', function(assert) {
+test('#add adds a custom message', function(assert) {
   assert.expect(3);
 
   run(() => {
-    SANDBOX.flash = service._addToQueue({
-      message : 'test',
-      type    : 'test',
-      timeout : 500
+    SANDBOX.flash = service.add({
+      message : 'Test message please ignore',
+      type    : 'test'
     });
   });
 
   assert.equal(service.get('queue.length'), 1);
   assert.equal(service.get('queue.0'), SANDBOX.flash);
   assert.equal(service.get('queue.0.type'), 'test');
+});
+
+test('#_addToQueue adds a message to queue', function(assert) {
+  assert.expect(6);
+
+  run(() => {
+    SANDBOX.flash = service._addToQueue({
+      message      : 'test',
+      type         : 'test',
+      timeout      : 1,
+      sticky       : true,
+      showProgress : true
+    });
+  });
+
+  assert.equal(service.get('queue.length'), 1);
+  assert.equal(service.get('queue.0'), SANDBOX.flash);
+  assert.equal(service.get('queue.0.type'), 'test');
+  assert.equal(service.get('queue.0.timeout'), 1);
+  assert.equal(service.get('queue.0.sticky'), true);
+  assert.equal(service.get('queue.0.showProgress'), true);
 });
 
 test('#_newFlashMessage returns a new flash message', function(assert) {
@@ -81,7 +101,7 @@ test('#_newFlashMessage returns a new flash message', function(assert) {
     SANDBOX.flash = service._newFlashMessage({
       message  : 'test',
       type     : 'test',
-      timeout  : 500,
+      timeout  : 1,
       priority : 500
     });
   });

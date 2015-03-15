@@ -1,5 +1,10 @@
 {{#if template}}
-  {{yield}}
+  {{yield this flash}}
 {{else}}
   {{flash.message}}
+  {{#if showProgressBar}}
+    <div class="alert-progress">
+      <div class="alert-progressBar" {{bind-attr style="progressDuration"}}></div>
+    </div>
+  {{/if}}
 {{/if}}
