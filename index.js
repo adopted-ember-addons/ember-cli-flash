@@ -20,7 +20,7 @@ module.exports = {
 
   included: function(app) {
     this._super.included(app);
-    app.import('vendor/flash/styles.css');
+    app.import('vendor/flash-message/style.css');
   }
 };
 

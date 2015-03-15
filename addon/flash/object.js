@@ -2,8 +2,8 @@ import Ember from 'ember';
 
 const {
   computed,
-  get,
-  set,
+  get: get,
+  set: set,
   getWithDefault,
   run,
   on
