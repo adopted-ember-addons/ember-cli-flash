@@ -1,5 +1,5 @@
 # ember-cli-flash
-[![npm version](https://badge.fury.io/js/ember-cli-flash.svg)](http://badge.fury.io/js/ember-cli-flash) [![Build Status](https://travis-ci.org/poteto/ember-cli-flash.svg)](https://travis-ci.org/poteto/ember-cli-flash) [![Ember Observer Score](http://emberobserver.com/badges/ember-cli-flash.svg)](http://emberobserver.com/addons/ember-cli-flash) [![Circle CI](https://circleci.com/gh/poteto/ember-cli-flash.svg?style=svg)](https://circleci.com/gh/poteto/ember-cli-flash)
+[![npm version](https://badge.fury.io/js/ember-cli-flash.svg)](http://badge.fury.io/js/ember-cli-flash) [![Build Status](https://travis-ci.org/poteto/ember-cli-flash.svg)](https://travis-ci.org/poteto/ember-cli-flash) [![Ember Observer Score](http://emberobserver.com/badges/ember-cli-flash.svg)](http://emberobserver.com/addons/ember-cli-flash) [![Code Climate](https://codeclimate.com/github/poteto/ember-cli-flash/badges/gpa.svg)](https://codeclimate.com/github/poteto/ember-cli-flash) [![Circle CI](https://circleci.com/gh/poteto/ember-cli-flash.svg?style=svg)](https://circleci.com/gh/poteto/ember-cli-flash)
 
 [Statistics for `ember-cli-flash`](http://www.npm-stats.com/~packages/ember-cli-flash)
 
@@ -59,17 +59,19 @@ You can also pass in options:
 
 ```javascript
 Ember.get(this, 'flashes').add({
-  message  : 'I like alpacas',
-  type     : 'alpaca'
-  timeout  : 500,
-  priority : 200,
-  sticky   : true
+  message      : 'I like alpacas',
+  type         : 'alpaca'
+  timeout      : 500,
+  priority     : 200,
+  sticky       : true,
+  showProgress : true
 });
 
 Ember.get(this, 'flashes').success('This is amazing', {
-  timeout  : 100,
-  priority : 100,
-  sticky   : false
+  timeout      : 100,
+  priority     : 100,
+  sticky       : false,
+  showProgress : true
 });
 ```
 
@@ -100,6 +102,12 @@ Ember.get(this, 'flashes').success('This is amazing', {
   Default: `false`
 
   By default, flash messages disappear after a certain amount of time. To disable this and make flash messages permanent (they can still be dismissed by click), set `sticky` to true.
+
+- `showProgress?: boolean`
+  
+  Default: `false`
+
+  To show a progress bar in the flash message, set this to true.
 
 ### Registering new types
 If you find yourself creating many custom messages with the same custom type, you can register it with the service and use that method instead.
@@ -155,9 +163,14 @@ It also accepts your own template:
 
 ```handlebars
 {{#each flashes.queue as |flash|}}
-  {{#flash-message flash=flash}}
-    <h6>{{flashType}}</h6>
+  {{#flash-message flash=flash as |component flash|}}
+    <h6>{{component.flashType}}</h6>
     <p>{{flash.message}}</p>
+    {{#if component.showProgressBar}}
+      <div class="alert-progress">
+        <div class="alert-progressBar" {{bind-attr style="component.progressDuration"}}></div>
+      </div>
+    {{/if}}
   {{/flash-message}}
 {{/each}}
 ```
@@ -196,7 +209,7 @@ To add `radius` or `round` type corners in Foundation:
 ```
 
 ## Styling
-You can style flash messages by targetting `.flashMessage` or the appropriate alert class (Foundation or Bootstrap) in your CSS.
+You can style flash messages by targetting the appropriate alert class (Foundation or Bootstrap) in your CSS.
 
 ## Contributing
 Please read the [Contributing guidelines](CONTRIBUTING.md) for information on how to contribute.
