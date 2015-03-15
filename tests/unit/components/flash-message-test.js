@@ -34,21 +34,12 @@ test('it renders', function(assert) {
 });
 
 test('#alertType returns the right type', function(assert) {
-  assert.expect(1);
+  assert.expect(2);
 
   const component = this.subject();
   component.set('flash', flash);
 
   this.render();
   assert.equal(component.get('alertType'), 'alert alert-test');
-});
-
-test('#flashType returns the right classified alert type', function(assert) {
-  assert.expect(1);
-
-  const component = this.subject();
-  component.set('flash', flash);
-
-  this.render();
   assert.equal(component.get('flashType'), 'Test');
 });
