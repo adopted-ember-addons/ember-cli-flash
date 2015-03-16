@@ -23,6 +23,14 @@ export default Ember.Object.extend({
   destroyMessage() {
     this._destroyMessage();
   },
+  preventDestroy() {
+    //cancel the destruction
+    this._cancel();
+  },
+  prepareDestroy() {
+    //prepare to destroy again
+    this._destroyLater();
+  },
 
   willDestroy() {
     const timer = get(this, 'timer');
@@ -43,6 +51,14 @@ export default Ember.Object.extend({
 
     set(this, 'timer', destroyTimer);
   }),
+  _cancel() {
+    const timer = get(this, 'timer');
+    
+    if (timer) {
+      run.cancel(timer);
+      set(this, 'timer', null);
+    }
+  },
 
   _destroyMessage() {
     const queue        = get(this, 'queue');
