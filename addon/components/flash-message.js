@@ -46,6 +46,7 @@ export default Ember.Component.extend({
   },
   mouseEnter() {
     const flash = getWithDefault(this, 'flash', false);
+    throw "bollocks!";
     Ember.Logger.debug('mouseEnter!');
     if (flash) {
       flash.preventDestroy();
