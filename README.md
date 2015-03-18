@@ -40,8 +40,8 @@ You can quickly add flash messages using:
 These will add the appropriate classes to the flash message component for styling in Bootstrap or Foundation. For example:
 
 ```javascript
-// the flash message component will have 'alert alert-success' classes
-// the flash message component will have 'alert-box success' classes
+// Bootstrap: the flash message component will have 'alert alert-success' classes
+// Foundation: the flash message component will have 'alert-box success' classes
 Ember.get(this, 'flashes').success('Success!');
 ```
 
