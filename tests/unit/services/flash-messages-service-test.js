@@ -10,7 +10,8 @@ var flashMessageDefaults = {
   priority     : 200,
   sticky       : true,
   showProgress : true,
-  type         : 'foobar'
+  type         : 'foobar',
+  types        : [ 'success', 'info', 'warning', 'danger', 'alert', 'secondary' ]
 };
 
 module('FlashMessagesService', {

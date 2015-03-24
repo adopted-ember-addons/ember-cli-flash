@@ -13,7 +13,6 @@ const {
 export default Ember.Service.extend({
   queue               : emberArray([]),
   isEmpty             : computed.equal('queue.length', 0),
-  defaultTypes        : [ 'success', 'info', 'warning', 'danger', 'alert', 'secondary' ],
 
   arrangedQueue: computed.sort('queue', function(a, b) {
     if (a.priority < b.priority) {
@@ -97,7 +96,8 @@ export default Ember.Service.extend({
       priority     : 100,
       sticky       : false,
       showProgress : false,
-      type         : 'info'
+      type         : 'info',
+      types        : [ 'success', 'info', 'warning', 'danger', 'alert', 'secondary' ]
     };
 
     var defaults = Ember.ENV.flashMessageDefaults || {};
@@ -114,15 +114,12 @@ export default Ember.Service.extend({
 
       set(this, defaultKey, defaults[key]);
     });
+
+    const defaultTypes = getWithDefault(this, 'defaultTypes', []);
+    this._registerTypes(defaultTypes);
   }),
 
   _registerTypes(types=[]) {
     types.forEach(type => this.registerType(type));
-  },
-
-  _initTypes: on('init', function() {
-    const defaultTypes = getWithDefault(this, 'defaultTypes', []);
-
-    this._registerTypes(defaultTypes);
-  })
+  }
 });
