@@ -40,8 +40,8 @@ You can quickly add flash messages using:
 These will add the appropriate classes to the flash message component for styling in Bootstrap or Foundation. For example:
 
 ```javascript
-// the flash message component will have 'alert alert-success' classes
-// the flash message component will have 'alert-box success' classes
+// Bootstrap: the flash message component will have 'alert alert-success' classes
+// Foundation: the flash message component will have 'alert-box success' classes
 Ember.get(this, 'flashes').success('Success!');
 ```
 
@@ -109,19 +109,35 @@ Ember.get(this, 'flashes').success('This is amazing', {
 
   To show a progress bar in the flash message, set this to true.
 
-### Registering new types
-If you find yourself creating many custom messages with the same custom type, you can register it with the service and use that method instead.
+### Global options
+In `config/environment`, you can set global configuration options in the `flashMessageDefaults` object:
 
-```javascript
-Ember.get(this, 'flashes').registerType('birthday');
-Ember.get(this, 'flashes').birthday("Hey shawty, it's your birthday");
+```js
+module.exports = function(environment) {
+  var ENV = {
+    // ...
+
+    flashMessageDefaults: {
+      timeout      : 10000,
+      priority     : 200,
+      sticky       : true,
+      showProgress : true,
+      type         : 'foobar',
+      types        : [ 'warning', 'notice', 'foobar' ]
+    },
+
+    // ...
+  }
+}
 ```
+
+See the [options](#options) section for detailed option information. This lets you override defaults for various options – most notably, you can specify exactly what types you need, which means in the above example, you can do `Ember.get('flashes').{warning,notice,foobar}`.
 
 ### Clearing all messages on screen
 It's best practise to use flash messages sparingly, only when you need to notify the user of something. If you're sending too many messages, and need a way for your users to clear all messages from screen, you can use this method:
 
 ```javascript
-Ember.get(this, 'flashes').clearMessages(); // clears all visible flash messages
+Ember.get(this, 'flashes').clearMessages();
 ```
 
 ### Lazy service injection
@@ -209,7 +225,7 @@ To add `radius` or `round` type corners in Foundation:
 ```
 
 ## Styling
-You can style flash messages by targetting the appropriate alert class (Foundation or Bootstrap) in your CSS.
+This addon is minimal and does not currently ship with a stylesheet. You can style flash messages by targetting the appropriate alert class (Foundation or Bootstrap) in your CSS.
 
 ## Contributing
 Please read the [Contributing guidelines](CONTRIBUTING.md) for information on how to contribute.

@@ -18,9 +18,19 @@ module.exports = {
     registry.add('js', plugin);
   },
 
-  included: function(app) {
-    this._super.included(app);
-    app.import('vendor/flash-message/style.css');
+  config: function(environment /*, appConfig*/) {
+    var ENV = {
+      flashMessageDefaults: {
+        timeout      : 3000,
+        priority     : 100,
+        sticky       : false,
+        showProgress : false,
+        type         : 'info',
+        types        : [ 'success', 'info', 'warning', 'danger', 'alert', 'secondary' ]
+      }
+    };
+
+    return ENV;
   }
 };
 
