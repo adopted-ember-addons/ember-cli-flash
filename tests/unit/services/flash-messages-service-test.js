@@ -112,11 +112,11 @@ test('#_newFlashMessage returns a new flash message', function(assert) {
   assert.equal(SANDBOX.flash.get('type'), 'test');
 });
 
-test('#registerType registers a new type', function(assert) {
+test('#_registerType registers a new type', function(assert) {
   assert.expect(5);
 
   run(() => {
-    service.registerType('test');
+    service._registerType('test');
     SANDBOX.type  = service.test;
     SANDBOX.flash = service.test('foo');
   });

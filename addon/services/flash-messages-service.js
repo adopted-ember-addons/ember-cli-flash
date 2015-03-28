@@ -24,18 +24,9 @@ export default Ember.Service.extend({
   }),
 
   registerType(type) {
-    Ember.assert('The flash type cannot be undefined', type);
+    Ember.deprecate(`[ember-cli-flash] registerType() is a private method and will be deprecated in 1.0.0. Please add your type to the global config instead.`);
 
-    this[type] = ((message, options={}) => {
-      return this._addToQueue({
-        message      : message,
-        type         : type,
-        timeout      : options.timeout,
-        priority     : options.priority,
-        sticky       : options.sticky,
-        showProgress : options.showProgress
-      });
-    });
+    this._registerType(type);
   },
 
   // custom
@@ -118,6 +109,21 @@ export default Ember.Service.extend({
     const defaultTypes = getWithDefault(this, 'defaultTypes', []);
     this._registerTypes(defaultTypes);
   }),
+
+  _registerType(type) {
+    Ember.assert('The flash type cannot be undefined', type);
+
+    this[type] = ((message, options={}) => {
+      return this._addToQueue({
+        message      : message,
+        type         : type,
+        timeout      : options.timeout,
+        priority     : options.priority,
+        sticky       : options.sticky,
+        showProgress : options.showProgress
+      });
+    });
+  },
 
   _registerTypes(types=[]) {
     types.forEach((type) => {
