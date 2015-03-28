@@ -28,7 +28,7 @@ module.exports = {
         type         : 'info',
         types        : [ 'success', 'info', 'warning', 'danger', 'alert', 'secondary' ]
       }
-    }
+    };
 
     return ENV;
   },

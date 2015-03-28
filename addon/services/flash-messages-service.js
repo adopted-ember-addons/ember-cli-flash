@@ -100,13 +100,13 @@ export default Ember.Service.extend({
       types        : [ 'success', 'info', 'warning', 'danger', 'alert', 'secondary' ]
     };
 
-    var defaults = Ember.ENV.flashMessageDefaults || {};
+    const defaults = Ember.ENV.flashMessageDefaults || {};
     Ember.merge(defaults, serviceDefaults);
     return defaults;
   },
 
   _setDefaults: on('init', function() {
-    var defaults = this._getDefaults();
+    const defaults = this._getDefaults();
 
     Object.keys(defaults).map((key) => {
       const classifiedKey = key.classify();
@@ -120,6 +120,8 @@ export default Ember.Service.extend({
   }),
 
   _registerTypes(types=[]) {
-    types.forEach(type => this.registerType(type));
+    types.forEach((type) => {
+      this.registerType(type);
+    });
   }
 });

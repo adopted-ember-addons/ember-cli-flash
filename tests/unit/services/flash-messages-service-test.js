@@ -1,18 +1,11 @@
 import { module, test } from 'qunit';
 import Ember from 'ember';
+import config from '../../../config/environment';
 import FlashMessagesService from 'ember-cli-flash/services/flash-messages-service';
 
 var service;
 var SANDBOX = {};
 var { run } = Ember;
-var flashMessageDefaults = {
-  timeout      : 10000,
-  priority     : 200,
-  sticky       : true,
-  showProgress : true,
-  type         : 'foobar',
-  types        : [ 'success', 'info', 'warning', 'danger', 'alert', 'secondary' ]
-};
 
 module('FlashMessagesService', {
   beforeEach() {
@@ -166,15 +159,20 @@ test('#_initTypes registers default types on init', function(assert) {
 });
 
 test('#_setDefaults sets the correct defaults for service properties', function(assert) {
-  Ember.ENV.flashMessageDefaults = flashMessageDefaults;
   service = FlashMessagesService.create({});
+
+  const flashMessageDefaults = config.flashMessageDefaults;
 
   const defaultOptions = Object.keys(flashMessageDefaults);
   const expectLength   = defaultOptions.length;
 
   assert.expect(expectLength);
 
-  defaultOptions.forEach(function(defaultOption) {
-    assert.equal(service.get(`default${defaultOption.classify()}`), flashMessageDefaults[defaultOption]);
+  defaultOptions.forEach((defaultOption) => {
+    const classifiedKey       = `default${defaultOption.classify()}`;
+    const isServiceKeyDefined = !!service[classifiedKey];
+    const isConfigKeyDefined  = !!flashMessageDefaults[defaultOption];
+
+    assert.equal(isServiceKeyDefined, isConfigKeyDefined);
   });
 });
