@@ -131,21 +131,13 @@ module.exports = function(environment) {
 }
 ```
 
-See the [options](#options) section for detailed option information.
-
-### Registering new types
-If you find yourself creating many custom messages with the same custom type, you can register it with the service and use that method instead.
-
-```javascript
-Ember.get(this, 'flashes').registerType('birthday');
-Ember.get(this, 'flashes').birthday("Hey shawty, it's your birthday");
-```
+See the [options](#options) section for detailed option information. This lets you override defaults for various options – most notably, you can specify exactly what types you need, which means in the above example, you can do `Ember.get('flashes').{warning,notice,foobar}`.
 
 ### Clearing all messages on screen
 It's best practise to use flash messages sparingly, only when you need to notify the user of something. If you're sending too many messages, and need a way for your users to clear all messages from screen, you can use this method:
 
 ```javascript
-Ember.get(this, 'flashes').clearMessages(); // clears all visible flash messages
+Ember.get(this, 'flashes').clearMessages();
 ```
 
 ### Lazy service injection
