@@ -3,9 +3,9 @@ import FlashMessage from 'ember-cli-flash/flash/object';
 
 const {
   computed,
-  get: get,
   getWithDefault,
-  set,
+  get: get,
+  set: set,
   A: emberArray,
   on
 } = Ember;
