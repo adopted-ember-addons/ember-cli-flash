@@ -31,11 +31,6 @@ module.exports = {
     };
 
     return ENV;
-  },
-
-  included: function(app) {
-    this._super.included(app);
-    app.import('vendor/flash-message/style.css');
   }
 };
 

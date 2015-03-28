@@ -225,7 +225,7 @@ To add `radius` or `round` type corners in Foundation:
 ```
 
 ## Styling
-You can style flash messages by targetting the appropriate alert class (Foundation or Bootstrap) in your CSS.
+This addon is minimal and does not currently ship with a stylesheet. You can style flash messages by targetting the appropriate alert class (Foundation or Bootstrap) in your CSS.
 
 ## Contributing
 Please read the [Contributing guidelines](CONTRIBUTING.md) for information on how to contribute.
