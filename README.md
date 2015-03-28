@@ -109,6 +109,30 @@ Ember.get(this, 'flashes').success('This is amazing', {
 
   To show a progress bar in the flash message, set this to true.
 
+### Global options
+In `config/environment`, you can set global configuration options in the `flashMessageDefaults` object:
+
+```js
+module.exports = function(environment) {
+  var ENV = {
+    // ...
+
+    flashMessageDefaults: {
+      timeout      : 10000,
+      priority     : 200,
+      sticky       : true,
+      showProgress : true,
+      type         : 'foobar',
+      types        : [ 'warning', 'notice', 'foobar' ]
+    },
+
+    // ...
+  }
+}
+```
+
+See the [options](#options) section for detailed option information.
+
 ### Registering new types
 If you find yourself creating many custom messages with the same custom type, you can register it with the service and use that method instead.
 
