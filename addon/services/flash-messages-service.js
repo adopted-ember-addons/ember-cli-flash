@@ -3,8 +3,9 @@ import FlashMessage from 'ember-cli-flash/flash/object';
 
 const {
   computed,
-  get: get,
   getWithDefault,
+  get: get,
+  set: set,
   A: emberArray,
   on
 } = Ember;
@@ -12,14 +13,6 @@ const {
 export default Ember.Service.extend({
   queue               : emberArray([]),
   isEmpty             : computed.equal('queue.length', 0),
-
-  // refactor
-  defaultTimeout      : 3000,
-  defaultPriority     : 100,
-  defaultSticky       : false,
-  defaultShowProgress : false,
-  defaultTypes        : [ 'success', 'info', 'warning', 'danger', 'alert', 'secondary' ],
-  defaultType         : 'info',
 
   arrangedQueue: computed.sort('queue', function(a, b) {
     if (a.priority < b.priority) {
@@ -97,13 +90,38 @@ export default Ember.Service.extend({
     });
   },
 
-  _registerTypes(types=[]) {
-    types.forEach(type => this.registerType(type));
+  _getDefaults() {
+    const serviceDefaults = {
+      timeout      : 3000,
+      priority     : 100,
+      sticky       : false,
+      showProgress : false,
+      type         : 'info',
+      types        : [ 'success', 'info', 'warning', 'danger', 'alert', 'secondary' ]
+    };
+
+    const defaults = Ember.ENV.flashMessageDefaults || {};
+    Ember.merge(defaults, serviceDefaults);
+    return defaults;
   },
 
-  _initTypes: on('init', function() {
-    const defaultTypes = getWithDefault(this, 'defaultTypes', []);
+  _setDefaults: on('init', function() {
+    const defaults = this._getDefaults();
 
+    Object.keys(defaults).map((key) => {
+      const classifiedKey = key.classify();
+      const defaultKey    = `default${classifiedKey}`;
+
+      set(this, defaultKey, defaults[key]);
+    });
+
+    const defaultTypes = getWithDefault(this, 'defaultTypes', []);
     this._registerTypes(defaultTypes);
-  })
+  }),
+
+  _registerTypes(types=[]) {
+    types.forEach((type) => {
+      this.registerType(type);
+    });
+  }
 });

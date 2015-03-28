@@ -1,5 +1,6 @@
 import { module, test } from 'qunit';
 import Ember from 'ember';
+import config from '../../../config/environment';
 import FlashMessagesService from 'ember-cli-flash/services/flash-messages-service';
 
 var service;
@@ -154,5 +155,24 @@ test('#_initTypes registers default types on init', function(assert) {
 
     assert.ok(method);
     assert.equal(Ember.typeOf(method), 'function');
+  });
+});
+
+test('#_setDefaults sets the correct defaults for service properties', function(assert) {
+  service = FlashMessagesService.create({});
+
+  const flashMessageDefaults = config.flashMessageDefaults;
+
+  const defaultOptions = Object.keys(flashMessageDefaults);
+  const expectLength   = defaultOptions.length;
+
+  assert.expect(expectLength);
+
+  defaultOptions.forEach((defaultOption) => {
+    const classifiedKey       = `default${defaultOption.classify()}`;
+    const isServiceKeyDefined = !!service[classifiedKey];
+    const isConfigKeyDefined  = !!flashMessageDefaults[defaultOption];
+
+    assert.equal(isServiceKeyDefined, isConfigKeyDefined);
   });
 });
