@@ -48,5 +48,11 @@
   ],
   "ember-addon": {
     "configPath": "tests/dummy/config"
-  }
+  },
+  "contributors": [
+    {
+      "name": "John Otander",
+      "url": "https://github.com/johnotander"
+    }
+  ]
 }
