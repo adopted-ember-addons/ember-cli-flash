@@ -92,8 +92,8 @@ export default Ember.Service.extend({
     };
 
     const defaults = Ember.ENV.flashMessageDefaults || {};
-    Ember.merge(defaults, serviceDefaults);
-    return defaults;
+    Ember.merge(serviceDefaults, defaults);
+    return serviceDefaults;
   },
 
   _setDefaults: on('init', function() {
