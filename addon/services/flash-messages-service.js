@@ -11,8 +11,8 @@ const {
 } = Ember;
 
 export default Ember.Service.extend({
-  queue               : emberArray([]),
-  isEmpty             : computed.equal('queue.length', 0),
+  queue   : emberArray([]),
+  isEmpty : computed.equal('queue.length', 0),
 
   arrangedQueue: computed.sort('queue', function(a, b) {
     if (a.priority < b.priority) {
@@ -127,7 +127,7 @@ export default Ember.Service.extend({
 
   _registerTypes(types=[]) {
     types.forEach((type) => {
-      this.registerType(type);
+      this._registerType(type);
     });
   }
 });
