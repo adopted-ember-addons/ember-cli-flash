@@ -5,26 +5,26 @@
 
 [Statistics for `ember-cli-flash`](http://www.npm-stats.com/~packages/ember-cli-flash)
 
-This `ember-cli` addon adds a simple flash message service to your app. It's injected into all `Controllers`, `Routes`, `Views` and `Components` by default. It can also be lazily injected.
+This `ember-cli` addon adds a simple flash message service to your app. It's injected into all `Controllers`, `Routes`, `Views` and `Components` by default ([you can change this](#service-defaults)), or lazily injected with `Ember.inject.service`.
 
 ## Installation
-You can install either with `npm`:
-
-```shell
-npm install ember-cli-flash --save
-```
-
-or `ember install:addon`:
+You can install either with `ember install:addon`:
 
 ```shell
 ember install:addon ember-cli-flash
 ```
 
+or `npm`:
+
+```shell
+npm install ember-cli-flash --save
+```
+
 ## Usage
-Usage is very simple. From within a `Controller`, `Route`, `View` or `Component`:
+Usage is very simple. From within the factories you injected to (defaults to `Controller`, `Route`, `View` and `Component`):
 
 ### Convenience methods (Bootstrap / Foundation alerts)
-You can quickly add flash messages using:
+You can quickly add flash messages using these methods from the service:
 
 #### Bootstrap
 - `.success`
@@ -44,23 +44,23 @@ These will add the appropriate classes to the flash message component for stylin
 ```javascript
 // Bootstrap: the flash message component will have 'alert alert-success' classes
 // Foundation: the flash message component will have 'alert-box success' classes
-Ember.get(this, 'flashes').success('Success!');
+Ember.get(this, 'flashMessages').success('Success!');
 ```
 
 ### Custom messages
 If the convenience methods don't fit your needs, you can add custom messages with `add`:
 
 ```javascript
-Ember.get(this, 'flashes').add({
+Ember.get(this, 'flashMessages').add({
   message: 'Custom message'
 });
 ```
 
-### Options
-You can also pass in options:
+#### Custom messages API
+You can also pass in options to custom messages:
 
 ```javascript
-Ember.get(this, 'flashes').add({
+Ember.get(this, 'flashMessages').add({
   message      : 'I like alpacas',
   type         : 'alpaca'
   timeout      : 500,
@@ -69,7 +69,7 @@ Ember.get(this, 'flashes').add({
   showProgress : true
 });
 
-Ember.get(this, 'flashes').success('This is amazing', {
+Ember.get(this, 'flashMessages').success('This is amazing', {
   timeout      : 100,
   priority     : 100,
   sticky       : false,
@@ -111,21 +111,22 @@ Ember.get(this, 'flashes').success('This is amazing', {
 
   To show a progress bar in the flash message, set this to true.
 
-### Global options
-In `config/environment`, you can set global configuration options in the `flashMessageDefaults` object:
+### Service defaults 
+In `config/environment.js`, you can override service defaults in the `flashMessageDefaults` object:
 
-```js
+```javascript
 module.exports = function(environment) {
   var ENV = {
     // ...
 
     flashMessageDefaults: {
-      timeout      : 10000,
-      priority     : 200,
-      sticky       : true,
-      showProgress : true,
-      type         : 'foobar',
-      types        : [ 'warning', 'notice', 'foobar' ]
+      timeout            : 5000,
+      priority           : 200,
+      sticky             : true,
+      showProgress       : true,
+      type               : 'alpaca',
+      types              : [ 'alpaca', 'notice', 'foobar' ],
+      injectionFactories : [ 'route', 'controller', 'view', 'component' ]
     },
 
     // ...
@@ -133,36 +134,42 @@ module.exports = function(environment) {
 }
 ```
 
-See the [options](#options) section for detailed option information. This lets you override defaults for various options – most notably, you can specify exactly what types you need, which means in the above example, you can do `Ember.get('flashes').{warning,notice,foobar}`.
+See the [options](#options) section for detailed option information. This lets you override defaults for various options – most notably, you can specify exactly what types you need, which means in the above example, you can do `Ember.get('flashes').{alpaca,notice,foobar}`. 
 
-### Clearing all messages on screen
-It's best practise to use flash messages sparingly, only when you need to notify the user of something. If you're sending too many messages, and need a way for your users to clear all messages from screen, you can use this method:
+#### Injection factories
+The key `injectionFactories` lets you choose which factories the service injects itself into. 
+If you only need to access the flash message service from inside `controllers`, you can do so by changing the `injectionFactories` prop to `[ 'controller' ]`. Note that this will also work with any valid registry name on the container, e.g. `[ 'component:foo', 'controller:bar', 'route:baz' ]`.
 
-```javascript
-Ember.get(this, 'flashes').clearMessages();
-```
-
-### Lazy service injection
-If you're using Ember `1.10.0` or higher, you can also inject the service manually on any `Ember.Object` registered in the container:
+##### Lazy service injection
+If you're using Ember `1.10.0` or higher, you can opt to inject the service manually on any `Ember.Object` registered in the container:
 
 ```javascript
 flashes: Ember.inject.service('flash-messages')
 ```
 
+### Clearing all messages on screen
+It's best practise to use flash messages sparingly, only when you need to notify the user of something. If you're sending too many messages, and need a way for your users to clear all messages from screen, you can use this method:
+
+```javascript
+Ember.get(this, 'flashMessages').clearMessages();
+```
+
 ### Promises
-You can also take advantage of Promises, and their `.then` and `.catch` methods. To add a flash message after saving a model (or when it fails):
+You can take advantage of Promises, and their `.then` and `.catch` methods. To add a flash message after saving a model (or when it fails):
 
 ```javascript
 actions: {
   saveFoo() {
-    var flash = Ember.get(this, 'flashes');
+    const flashMessages = Ember.get(this, 'flashMessages');
 
     Ember.get(this, 'model').save()
-    .then(function(res) {
-      flash.success('Successfully saved!');
+    .then((res) => {
+      flashMessages.success('Successfully saved!');
+      doSomething(res);
     })
-    .catch(function(err) {
-      flash.danger('Something went wrong!');
+    .catch((err) => {
+      flashMessages.danger('Something went wrong!');
+      handleError(err);
     });
   }
 }
@@ -231,6 +238,9 @@ This addon is minimal and does not currently ship with a stylesheet. You can sty
 
 ## Contributing
 Please read the [Contributing guidelines](CONTRIBUTING.md) for information on how to contribute.
+
+## License
+MIT
 
 ## Installation
 
