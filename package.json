@@ -44,7 +44,8 @@
     "flash",
     "growl",
     "toastr",
-    "notifications"
+    "notifications",
+    "notify"
   ],
   "ember-addon": {
     "configPath": "tests/dummy/config"
