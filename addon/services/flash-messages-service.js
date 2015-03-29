@@ -7,6 +7,7 @@ const {
   get: get,
   set: set,
   A: emberArray,
+  keys: objectKeys,
   on
 } = Ember;
 
@@ -81,29 +82,14 @@ export default Ember.Service.extend({
     });
   },
 
-  _getDefaults() {
-    const serviceDefaults = {
-      timeout      : 3000,
-      priority     : 100,
-      sticky       : false,
-      showProgress : false,
-      type         : 'info',
-      types        : [ 'success', 'info', 'warning', 'danger', 'alert', 'secondary' ]
-    };
-
-    const defaults = Ember.ENV.flashMessageDefaults || {};
-    Ember.merge(serviceDefaults, defaults);
-    return serviceDefaults;
-  },
-
   _setDefaults: on('init', function() {
-    const defaults = this._getDefaults();
+    const defaults = getWithDefault(this, 'flashMessageDefaults', {});
 
-    Object.keys(defaults).map((key) => {
+   objectKeys(defaults).map((key) => {
       const classifiedKey = key.classify();
       const defaultKey    = `default${classifiedKey}`;
 
-      set(this, defaultKey, defaults[key]);
+      return set(this, defaultKey, defaults[key]);
     });
 
     const defaultTypes = getWithDefault(this, 'defaultTypes', []);

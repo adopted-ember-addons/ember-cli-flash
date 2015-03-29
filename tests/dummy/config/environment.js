@@ -18,12 +18,13 @@ module.exports = function(environment) {
       // when it is created
     },
     flashMessageDefaults: {
-      timeout      : 5000,
-      priority     : 200,
-      sticky       : true,
-      showProgress : true,
-      type         : 'foo',
-      types        : [ 'foo', 'bar', 'baz' ]
+      timeout            : 1,
+      priority           : 100,
+      sticky             : false,
+      showProgress       : false,
+      type               : 'info',
+      types              : [ 'success', 'info', 'warning', 'danger', 'alert', 'secondary', 'foo' ],
+      injectionFactories : [ 'route', 'controller', 'view', 'component' ]
     }
   };
 
