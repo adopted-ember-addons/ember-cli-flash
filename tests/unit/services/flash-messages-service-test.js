@@ -9,13 +9,14 @@ var { run } = Ember;
 
 module('FlashMessagesService', {
   beforeEach() {
-    service = FlashMessagesService.create({});
-    service.get('queue').clear();
-    service.set('defaultTimeout', 1);
+    service = FlashMessagesService.create({
+      flashMessageDefaults: config.flashMessageDefaults
+    });
   },
 
   afterEach() {
     run(() => {
+      service.get('queue').clear();
       service.destroy();
     });
     service = null;
@@ -135,8 +136,7 @@ test('#_registerTypes registers new types', function(assert) {
   assert.expect(4);
 
   run(() => {
-    service.registerType('foo');
-    service.registerType('bar');
+    service._registerTypes(['foo', 'bar']);
     SANDBOX.type1 = service.foo;
     SANDBOX.type2 = service.bar;
   });
@@ -163,16 +163,16 @@ test('#_initTypes registers default types on init', function(assert) {
 
 test('#_setDefaults sets the correct defaults for service properties', function(assert) {
   const flashMessageDefaults = config.flashMessageDefaults;
-  const defaultOptions       = Object.keys(flashMessageDefaults);
-  const expectLength         = defaultOptions.length;
+  const configOptions        = Ember.keys(flashMessageDefaults);
+  let expectLength           = configOptions.length;
 
   assert.expect(expectLength);
 
-  defaultOptions.forEach((defaultOption) => {
-    const classifiedKey       = `default${defaultOption.classify()}`;
-    const isServiceKeyDefined = service.hasOwnProperty(classifiedKey);
-    const isConfigKeyDefined  = flashMessageDefaults.hasOwnProperty(defaultOption);
+  configOptions.forEach((option) => {
+    const classifiedKey = `default${option.classify()}`;
+    const defaultValue  = service[classifiedKey];
+    const configValue   = flashMessageDefaults[option];
 
-    assert.equal(isServiceKeyDefined, isConfigKeyDefined);
+    assert.equal(defaultValue, configValue);
   });
 });
