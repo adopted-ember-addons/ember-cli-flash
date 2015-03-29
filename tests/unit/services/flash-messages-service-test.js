@@ -15,6 +15,9 @@ module('FlashMessagesService', {
   },
 
   afterEach() {
+    run(() => {
+      service.destroy();
+    });
     service = null;
     SANDBOX = {};
   }
@@ -159,19 +162,16 @@ test('#_initTypes registers default types on init', function(assert) {
 });
 
 test('#_setDefaults sets the correct defaults for service properties', function(assert) {
-  service = FlashMessagesService.create({});
-
   const flashMessageDefaults = config.flashMessageDefaults;
-
-  const defaultOptions = Object.keys(flashMessageDefaults);
-  const expectLength   = defaultOptions.length;
+  const defaultOptions       = Object.keys(flashMessageDefaults);
+  const expectLength         = defaultOptions.length;
 
   assert.expect(expectLength);
 
   defaultOptions.forEach((defaultOption) => {
     const classifiedKey       = `default${defaultOption.classify()}`;
-    const isServiceKeyDefined = !!service[classifiedKey];
-    const isConfigKeyDefined  = !!flashMessageDefaults[defaultOption];
+    const isServiceKeyDefined = service.hasOwnProperty(classifiedKey);
+    const isConfigKeyDefined  = flashMessageDefaults.hasOwnProperty(defaultOption);
 
     assert.equal(isServiceKeyDefined, isConfigKeyDefined);
   });
