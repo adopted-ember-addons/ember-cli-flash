@@ -49,20 +49,6 @@ test('#arrangedQueue returns an array of flash messages, sorted by priority', fu
   assert.equal(service.get('arrangedQueue.0.priority'), 300);
 });
 
-test('#addMessage adds a custom message', function(assert) {
-  assert.expect(3);
-
-  run(() => {
-    SANDBOX.flash = service.addMessage('Yo ho ho and a bottle of rum', {
-      type: 'test'
-    });
-  });
-
-  assert.equal(service.get('queue.length'), 1);
-  assert.equal(service.get('queue.0'), SANDBOX.flash);
-  assert.equal(service.get('queue.0.type'), 'test');
-});
-
 test('#add adds a custom message', function(assert) {
   assert.expect(3);
 

@@ -1,6 +1,6 @@
 <h2 id="title">Welcome to Ember.js</h2>
 
-{{#each flashes.arrangedQueue as |flash|}}
+{{#each flashMessages.arrangedQueue as |flash|}}
   {{#flash-message flash=flash as |component flash|}}
     <h6>{{component.flashType}}</h6>
     <p>{{flash.message}}</p>

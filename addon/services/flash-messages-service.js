@@ -4,10 +4,10 @@ import FlashMessage from 'ember-cli-flash/flash/object';
 const {
   computed,
   getWithDefault,
-  get: get,
-  set: set,
-  A: emberArray,
-  keys: objectKeys,
+  get  : get,
+  set  : set,
+  A    : emberArray,
+  keys : objectKeys,
   on
 } = Ember;
 
@@ -23,20 +23,6 @@ export default Ember.Service.extend({
     }
     return 0;
   }),
-
-  registerType(type) {
-    Ember.deprecate(`[ember-cli-flash] registerType() is a private method and will be deprecated in 1.0.0. Please add your type to the global config instead.`);
-
-    this._registerType(type);
-  },
-
-  // custom
-  addMessage(message, options={}) {
-    Ember.deprecate(`[ember-cli-flash] addMessage() will be deprecated in 1.0.0. Please use add() instead.`);
-
-    options.message = message;
-    return this._addToQueue(options);
-  },
 
   add(options={}) {
     return this._addToQueue(options);
