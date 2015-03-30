@@ -117,8 +117,6 @@ In `config/environment.js`, you can override service defaults in the `flashMessa
 ```javascript
 module.exports = function(environment) {
   var ENV = {
-    // ...
-
     flashMessageDefaults: {
       timeout            : 5000,
       priority           : 200,
@@ -127,14 +125,12 @@ module.exports = function(environment) {
       type               : 'alpaca',
       types              : [ 'alpaca', 'notice', 'foobar' ],
       injectionFactories : [ 'route', 'controller', 'view', 'component' ]
-    },
-
-    // ...
+    }
   }
 }
 ```
 
-See the [options](#options) section for detailed option information. This lets you override defaults for various options – most notably, you can specify exactly what types you need, which means in the above example, you can do `Ember.get('flashes').{alpaca,notice,foobar}`. 
+See the [options](#options) section for detailed option information. This lets you override defaults for various options – most notably, you can specify exactly what types you need, which means in the above example, you can do `Ember.get('flashMessages').{alpaca,notice,foobar}`. 
 
 #### Injection factories
 The key `injectionFactories` lets you choose which factories the service injects itself into. 
@@ -144,7 +140,9 @@ If you only need to access the flash message service from inside `controllers`, 
 If you're using Ember `1.10.0` or higher, you can opt to inject the service manually on any `Ember.Object` registered in the container:
 
 ```javascript
-flashes: Ember.inject.service('flash-messages')
+export default {
+  flashMessages: Ember.inject.service()
+}
 ```
 
 ### Clearing all messages on screen
@@ -179,7 +177,7 @@ actions: {
 Then, to display somewhere in your app, add this to your template:
 
 ```handlebars
-{{#each flashes.queue as |flash|}}
+{{#each flashMessages.queue as |flash|}}
   {{flash-message flash=flash}}
 {{/each}}
 ```
@@ -187,7 +185,7 @@ Then, to display somewhere in your app, add this to your template:
 It also accepts your own template:
 
 ```handlebars
-{{#each flashes.queue as |flash|}}
+{{#each flashMessages.queue as |flash|}}
   {{#flash-message flash=flash as |component flash|}}
     <h6>{{component.flashType}}</h6>
     <p>{{flash.message}}</p>
@@ -204,7 +202,7 @@ It also accepts your own template:
 By default, flash messages will have Bootstrap style class names. If you want to use Foundation, simply specify the `messageStyle` on the component:
 
 ```handlebars
-{{#each flashes.queue as |flash|}}
+{{#each flashMessages.queue as |flash|}}
   {{flash-message flash=flash messageStyle='foundation'}}
 {{/each}}
 ```
@@ -213,7 +211,7 @@ By default, flash messages will have Bootstrap style class names. If you want to
 To display messages sorted by priority, add this to your template:
 
 ```handlebars
-{{#each flashes.arrangedQueue as |flash|}}
+{{#each flashMessages.arrangedQueue as |flash|}}
   {{flash-message flash=flash}}
 {{/each}}
 ```
@@ -222,13 +220,13 @@ To display messages sorted by priority, add this to your template:
 To add `radius` or `round` type corners in Foundation:
 
 ```handlebars
-{{#each flashes.arrangedQueue as |flash|}}
+{{#each flashMessages.arrangedQueue as |flash|}}
   {{flash-message flash=flash messageStyle='foundation' class='radius'}}
 {{/each}}
 ```
 
 ```handlebars
-{{#each flashes.arrangedQueue as |flash|}}
+{{#each flashMessages.arrangedQueue as |flash|}}
   {{flash-message flash=flash messageStyle='foundation' class='round'}}
 {{/each}}
 ```

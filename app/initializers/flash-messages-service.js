@@ -3,14 +3,14 @@ import config from '../config/environment';
 
 export function initialize(_container, application) {
   const { flashMessageDefaults } = config;
-  const { injectionFactories}    = flashMessageDefaults;
+  const { injectionFactories }   = flashMessageDefaults;
 
   application.register('config:flash-messages', flashMessageDefaults, { instantiate: false });
   application.register('service:flash-messages', FlashMessagesService, { singleton: true });
   application.inject('service:flash-messages', 'flashMessageDefaults', 'config:flash-messages');
 
   injectionFactories.forEach((factory) => {
-    application.inject(factory, 'flashes', 'service:flash-messages');
+    application.inject(factory, 'flashMessages', 'service:flash-messages');
   });
 }
 
