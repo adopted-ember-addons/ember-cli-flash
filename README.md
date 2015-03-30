@@ -130,7 +130,7 @@ module.exports = function(environment) {
 }
 ```
 
-See the [options](#options) section for detailed option information. This lets you override defaults for various options – most notably, you can specify exactly what types you need, which means in the above example, you can do `Ember.get('flashes').{alpaca,notice,foobar}`. 
+See the [options](#options) section for detailed option information. This lets you override defaults for various options – most notably, you can specify exactly what types you need, which means in the above example, you can do `Ember.get('flashMessages').{alpaca,notice,foobar}`. 
 
 #### Injection factories
 The key `injectionFactories` lets you choose which factories the service injects itself into. 
