@@ -4,19 +4,19 @@ const { get: get } = Ember;
 
 export default Ember.Route.extend({
   activate() {
-    const flashes = get(this, 'flashes');
+    const flashMessages = get(this, 'flashMessages');
 
-    flashes.success('Route transitioned successfully', {
+    flashMessages.success('Route transitioned successfully', {
       timeout      : 50,
       priority     : 500,
       showProgress : true
     });
 
-    flashes.warning('It is going to rain tomorrow', {
+    flashMessages.warning('It is going to rain tomorrow', {
       timeout  : 50,
       priority : 1000
     });
 
-    flashes.danger('You went offline', { sticky: true });
+    flashMessages.danger('You went offline', { sticky: true });
   }
 });
