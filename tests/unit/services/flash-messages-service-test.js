@@ -147,6 +147,30 @@ test('#_initTypes registers default types on init', function(assert) {
   });
 });
 
+test("passing applications specific options via add()", function(assert) {
+  run(()=> {
+    SANDBOX.flash = service.add({
+      message: "here's an option you may or may not know",
+      appOption: 'ohai'
+    });
+  });
+
+  assert.equal(service.get('queue.length'), 1);
+  assert.equal(service.get('queue.0'), SANDBOX.flash);
+  assert.equal(service.get('queue.0.appOption'), 'ohai');
+});
+
+test("passing application specific options via specific message type", function(assert) {
+  run(()=> {
+    SANDBOX.flash = service.info("you can pass app options this way too", {
+      appOption: 'we meet again app-option'
+    });
+  });
+  assert.equal(service.get('queue.length'), 1);
+  assert.equal(service.get('queue.0'), SANDBOX.flash);
+  assert.equal(service.get('queue.0.appOption'), 'we meet again app-option');
+});
+
 test('#_setDefaults sets the correct defaults for service properties', function(assert) {
   const flashMessageDefaults = config.flashMessageDefaults;
   const configOptions        = Ember.keys(flashMessageDefaults);

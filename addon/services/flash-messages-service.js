@@ -4,6 +4,7 @@ import FlashMessage from 'ember-cli-flash/flash/object';
 const {
   computed,
   getWithDefault,
+  merge,
   get  : get,
   set  : set,
   A    : emberArray,
@@ -57,7 +58,8 @@ export default Ember.Service.extend({
       showProgress
     } = options;
 
-    return FlashMessage.create({
+
+    return FlashMessage.create(merge(options, {
       flashService : service,
       message      : message,
       type         : type         || get(this, 'defaultType'),
@@ -65,7 +67,7 @@ export default Ember.Service.extend({
       priority     : priority     || get(this, 'defaultPriority'),
       sticky       : sticky       || get(this, 'defaultSticky'),
       showProgress : showProgress || get(this, 'defaultShowProgress')
-    });
+    }));
   },
 
   _setDefaults: on('init', function() {
@@ -86,14 +88,14 @@ export default Ember.Service.extend({
     Ember.assert('The flash type cannot be undefined', type);
 
     this[type] = ((message, options={}) => {
-      return this._addToQueue({
+      return this._addToQueue(merge(options, {
         message      : message,
         type         : type,
         timeout      : options.timeout,
         priority     : options.priority,
         sticky       : options.sticky,
         showProgress : options.showProgress
-      });
+      }));
     });
   },
 
