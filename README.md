@@ -1,4 +1,4 @@
-# ember-cli-flash
+﻿# ember-cli-flash
 *Simple, highly configurable flash messages for ember-cli.*
 
 [![npm version](https://badge.fury.io/js/ember-cli-flash.svg)](http://badge.fury.io/js/ember-cli-flash) [![Build Status](https://travis-ci.org/poteto/ember-cli-flash.svg)](https://travis-ci.org/poteto/ember-cli-flash) [![Ember Observer Score](http://emberobserver.com/badges/ember-cli-flash.svg)](http://emberobserver.com/addons/ember-cli-flash) [![Code Climate](https://codeclimate.com/github/poteto/ember-cli-flash/badges/gpa.svg)](https://codeclimate.com/github/poteto/ember-cli-flash) [![Circle CI](https://circleci.com/gh/poteto/ember-cli-flash.svg?style=svg)](https://circleci.com/gh/poteto/ember-cli-flash)
@@ -198,7 +198,7 @@ It also accepts your own template:
 {{/each}}
 ```
 
-### Styling with Foundation or Boostrap
+### Styling with Foundation or Bootstrap
 By default, flash messages will have Bootstrap style class names. If you want to use Foundation, simply specify the `messageStyle` on the component:
 
 ```handlebars
