@@ -16,11 +16,6 @@ module.exports = {
     };
 
     registry.add('js', plugin);
-  },
-
-  included: function(app) {
-    this._super.included(app);
-    app.import('vendor/flash/styles.css');
   }
 };
 

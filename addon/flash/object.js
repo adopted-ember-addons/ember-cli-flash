@@ -2,8 +2,8 @@ import Ember from 'ember';
 
 const {
   computed,
-  get,
-  set,
+  get: get,
+  set: set,
   getWithDefault,
   run,
   on
@@ -25,7 +25,6 @@ export default Ember.Object.extend({
   },
 
   willDestroy() {
-    this._super();
     const timer = get(this, 'timer');
 
     if (timer) {
@@ -36,6 +35,8 @@ export default Ember.Object.extend({
 
   // private
   _destroyLater: on('init', function() {
+    if (get(this, 'sticky')) { return; }
+
     const defaultTimeout = get(this, 'defaultTimeout');
     const timeout        = getWithDefault(this, 'timeout', defaultTimeout);
     const destroyTimer   = run.later(this, '_destroyMessage', timeout);

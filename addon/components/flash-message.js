@@ -1,16 +1,23 @@
 import Ember from 'ember';
 
-const { computed, get, on } = Ember;
+const {
+  computed,
+  getWithDefault,
+  get: get,
+  set: set,
+  on,
+  run
+} = Ember;
 
 export default Ember.Component.extend({
-  classNames        : [ 'flashMessage' ],
-  classNameBindings : [ 'alertType' ],
+  classNameBindings : [ 'alertType', 'active' ],
   messageStyle      : 'bootstrap',
+  showProgressBar   : computed.alias('flash.showProgress'),
 
   alertType: computed('flash.type', function() {
-    const flashType    = get(this, 'flash.type');
-    const messageStyle = get(this, 'messageStyle');
-    var prefix         = 'alert alert-';
+    const flashType    = getWithDefault(this, 'flash.type', '');
+    const messageStyle = getWithDefault(this, 'messageStyle', '');
+    let prefix         = 'alert alert-';
 
     if (messageStyle === 'foundation') {
       prefix = 'alert-box ';
@@ -20,25 +27,40 @@ export default Ember.Component.extend({
   }),
 
   flashType: computed('flash.type', function() {
-    const flashType = get(this, 'flash.type');
+    const flashType = getWithDefault(this, 'flash.type', '');
 
     return flashType.classify();
+  }),
+
+  progressDuration: computed('flash.showProgress', function() {
+    if (!get(this, 'flash.showProgress')) {
+      return false;
+    }
+
+    const duration = getWithDefault(this, 'flash.timeout', 0);
+    return `transition-duration: ${duration}ms`;
   }),
 
   click() {
     this._destroyFlashMessage();
   },
 
-  //private
-  _destroyOnTeardown: on('willDestroyElement', function() {
+  willDestroy() {
     this._destroyFlashMessage();
-  }),
+  },
 
+  // private
   _destroyFlashMessage() {
-    const flash = get(this, 'flash');
+    const flash = getWithDefault(this, 'flash', false);
 
     if (flash) {
       flash.destroyMessage();
     }
-  }
+  },
+
+  _activeAfterRender: on('didInsertElement', function() {
+    run.scheduleOnce('afterRender', this, () => {
+      set(this, 'active', true);
+    });
+  })
 });
