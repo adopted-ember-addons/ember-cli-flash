@@ -7,13 +7,11 @@ export default Ember.Route.extend({
     const flashMessages = get(this, 'flashMessages');
 
     flashMessages.success('Route transitioned successfully', {
-      timeout      : 50,
       priority     : 500,
       showProgress : true
     });
 
     flashMessages.warning('It is going to rain tomorrow', {
-      timeout  : 50,
       priority : 1000
     });
 

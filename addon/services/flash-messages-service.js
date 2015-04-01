@@ -12,6 +12,8 @@ const {
   on
 } = Ember;
 
+const { classify } = Ember.String;
+
 export default Ember.Service.extend({
   queue   : emberArray([]),
   isEmpty : computed.equal('queue.length', 0),
@@ -74,7 +76,7 @@ export default Ember.Service.extend({
     const defaults = getWithDefault(this, 'flashMessageDefaults', {});
 
    objectKeys(defaults).map((key) => {
-      const classifiedKey = key.classify();
+      const classifiedKey = classify(key);
       const defaultKey    = `default${classifiedKey}`;
 
       return set(this, defaultKey, defaults[key]);
