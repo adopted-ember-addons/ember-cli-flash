@@ -5,7 +5,9 @@ import FlashMessagesService from 'ember-cli-flash/services/flash-messages-servic
 
 var service;
 var SANDBOX = {};
-var { run } = Ember;
+const { run } = Ember;
+
+const { classify } = Ember.String;
 
 module('FlashMessagesService', {
   beforeEach() {
@@ -179,7 +181,7 @@ test('#_setDefaults sets the correct defaults for service properties', function(
   assert.expect(expectLength);
 
   configOptions.forEach((option) => {
-    const classifiedKey = `default${option.classify()}`;
+    const classifiedKey = `default${classify(option)}`;
     const defaultValue  = service[classifiedKey];
     const configValue   = flashMessageDefaults[option];
 
