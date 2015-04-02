@@ -20,6 +20,10 @@ or `npm`:
 npm install ember-cli-flash --save
 ```
 
+## Compatibility
+This addon is compatible with:
+- `"ember": ~1.11.0`
+
 ## Usage
 Usage is very simple. From within the factories you injected to (defaults to `Controller`, `Route`, `View` and `Component`):
 
@@ -191,14 +195,14 @@ It also accepts your own template:
     <p>{{flash.message}}</p>
     {{#if component.showProgressBar}}
       <div class="alert-progress">
-        <div class="alert-progressBar" {{bind-attr style="component.progressDuration"}}></div>
+        <div class="alert-progressBar" style="{{component.progressDuration}}"></div>
       </div>
     {{/if}}
   {{/flash-message}}
 {{/each}}
 ```
 
-### Styling with Foundation or Boostrap
+### Styling with Foundation or Bootstrap
 By default, flash messages will have Bootstrap style class names. If you want to use Foundation, simply specify the `messageStyle` on the component:
 
 ```handlebars
