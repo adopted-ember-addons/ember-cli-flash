@@ -4,9 +4,12 @@ import {
   test
 } from 'qunit';
 import startApp from '../helpers/start-app';
+import Flash from 'ember-cli-flash/flash/object';
 
 var application;
 const { run } = Ember;
+
+const flashBackup = Flash.extend();
 
 module('Acceptance: Integration', {
   beforeEach() {
@@ -54,7 +57,7 @@ test('sticky messages are not removed automatically', function(assert) {
 });
 test('sticky messages are still removed when clicked', function(assert) {
   assert.expect(5);
-  
+
   visit('/');
 
   andThen(() => {
@@ -63,7 +66,7 @@ test('sticky messages are still removed when clicked', function(assert) {
     assert.equal(find('.alert.alert-danger h6').text(), 'Danger');
     assert.equal(find('.alert.alert-danger p').text(), 'You went offline');
   });
-  
+
   // click('.alert.alert-danger');
   triggerEvent('.alert.alert-danger', $(document), 'click');
   andThen(() => {
@@ -72,22 +75,51 @@ test('sticky messages are still removed when clicked', function(assert) {
 });
 
 test('mouseover-ed messages are not removed automatically', function (assert) {
-  assert.expect(8);
+
+  let wasCanceled = false, wasRescheduled = false;
+  let _destroyMessage, _cancel, prepareDestroy;
+  Flash.reopen({
+    __destroyMessage: Flash._destroyMessage,
+    __cancel: Flash._cancel,
+    _prepareDestroy: Flash.prepareDestroy
+  });
+  Flash.reopen({
+    _destroyMessage() {
+      //do not acctually destroy them!
+      //just do nothing;
+    },
+    _cancel() {
+      //this method should only be called by the mouseover-ed message
+      //aka the success message
+      assert.ok(this.get('isSuccessType'), 'the success message was mouseovered and its destruction has been canceled!');
+      assert.equal(wasRescheduled, false, 'this destruction should not be rescheduled just yet');
+      //to make sure of the tests order:
+      wasCanceled = true;
+    },
+    prepareDestroy() {
+      //should be called when the mouseover is over.
+      assert.ok(wasCanceled, 'the cancel method should have been called previously');
+      assert.ok(this.get('isSuccessType'), 'again, the rescheduling of the flash destruction should only occure for the success message');
+      wasRescheduled = true;
+    }
+  });
+  assert.expect(6);
   visit('/');
   triggerEvent('.alert.alert-success', 'mouseenter');
-  
-  assert.ok(find('.alert.alert-success'), 'right after the rendering the flash message is there!');
+
   andThen(() => {
-    assert.ok(find('.alert.alert-success'), 'the success message received the mouseenter and stayed on display');
-    assert.equal(find('.alert').length, 2); //there should be the sticky and the mouseover-ed
-    assert.equal(find('.alert.alert-success h6').text(), 'Success');
-    assert.equal(find('.alert.alert-success p').text(), 'Route transitioned successfully');
+    assert.ok(wasCanceled, 'at this point the flash destruction should have been canceled');
   });
   triggerEvent('.alert.alert-success', 'mouseleave');
   andThen(() => {
-    assert.equal(find('.alert').length, 1);//only the sicky one should be there now...
-    assert.ok(find('.alert.alert-danger'));
-    assert.equal(find('.alert.alert-danger h6').text(), 'Danger');
-    assert.equal(find('.alert.alert-danger p').text(), 'You went offline');
+    assert.ok(wasRescheduled, 'at this point the flash destruction should have been rescheduled');
   });
+  Flash.reopen({
+    _destroyMessage: function () {
+      this.__destroyMessage();
+    },
+    _cancel: function () { this.__cancel(); },
+    prepareDestroy: function () { this._prepareDestroy(); }
+  });
+  // Flash.reopen(flashBackup.create());
 });
