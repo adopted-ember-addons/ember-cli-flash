@@ -60,7 +60,6 @@ export default Ember.Service.extend({
       showProgress
     } = options;
 
-
     return FlashMessage.create(merge(options, {
       flashService : service,
       message      : message,
