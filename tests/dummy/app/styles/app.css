@@ -504,18 +504,20 @@ hr {
 }
 
 /* dummy */
-.alert-progress {
-  height: 20px;
-  background: #000;
+.alert.active .alert-progressBar {
+  width: 100%;
 }
-.alert-progressBar {
-  background: #fff;
-  height: 100%;
+
+.alert .alert-progress {
+  height: 7px;
+  line-height: 7px;
+}
+
+.alert .alert-progressBar {
+  background: white;
+  width: 0%;
   transform-property: width;
   transition-timing-function: linear;
   -webkit-transform-property: width;
   -webkit-transition-timing-function: linear;
-}
-.alert.active .alert-progressBar {
-  width: 100%;
 }

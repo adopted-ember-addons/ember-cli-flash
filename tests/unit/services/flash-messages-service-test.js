@@ -1,19 +1,26 @@
 import { module, test } from 'qunit';
 import Ember from 'ember';
+import config from '../../../config/environment';
 import FlashMessagesService from 'ember-cli-flash/services/flash-messages-service';
 
 var service;
 var SANDBOX = {};
-var { run } = Ember;
+const { run } = Ember;
+
+const { classify } = Ember.String;
 
 module('FlashMessagesService', {
   beforeEach() {
-    service = FlashMessagesService.create({});
-    service.get('queue').clear();
-    service.set('defaultTimeout', 1);
+    service = FlashMessagesService.create({
+      flashMessageDefaults: config.flashMessageDefaults
+    });
   },
 
   afterEach() {
+    run(() => {
+      service.get('queue').clear();
+      service.destroy();
+    });
     service = null;
     SANDBOX = {};
   }
@@ -42,20 +49,6 @@ test('#arrangedQueue returns an array of flash messages, sorted by priority', fu
 
   assert.equal(service.get('arrangedQueue.length'), 3);
   assert.equal(service.get('arrangedQueue.0.priority'), 300);
-});
-
-test('#addMessage adds a custom message', function(assert) {
-  assert.expect(3);
-
-  run(() => {
-    SANDBOX.flash = service.addMessage('Yo ho ho and a bottle of rum', {
-      type: 'test'
-    });
-  });
-
-  assert.equal(service.get('queue.length'), 1);
-  assert.equal(service.get('queue.0'), SANDBOX.flash);
-  assert.equal(service.get('queue.0.type'), 'test');
 });
 
 test('#add adds a custom message', function(assert) {
@@ -111,11 +104,11 @@ test('#_newFlashMessage returns a new flash message', function(assert) {
   assert.equal(SANDBOX.flash.get('type'), 'test');
 });
 
-test('#registerType registers a new type', function(assert) {
+test('#_registerType registers a new type', function(assert) {
   assert.expect(5);
 
   run(() => {
-    service.registerType('test');
+    service._registerType('test');
     SANDBOX.type  = service.test;
     SANDBOX.flash = service.test('foo');
   });
@@ -131,8 +124,7 @@ test('#_registerTypes registers new types', function(assert) {
   assert.expect(4);
 
   run(() => {
-    service.registerType('foo');
-    service.registerType('bar');
+    service._registerTypes(['foo', 'bar']);
     SANDBOX.type1 = service.foo;
     SANDBOX.type2 = service.bar;
   });
@@ -154,5 +146,45 @@ test('#_initTypes registers default types on init', function(assert) {
 
     assert.ok(method);
     assert.equal(Ember.typeOf(method), 'function');
+  });
+});
+
+test("passing applications specific options via add()", function(assert) {
+  run(()=> {
+    SANDBOX.flash = service.add({
+      message: "here's an option you may or may not know",
+      appOption: 'ohai'
+    });
+  });
+
+  assert.equal(service.get('queue.length'), 1);
+  assert.equal(service.get('queue.0'), SANDBOX.flash);
+  assert.equal(service.get('queue.0.appOption'), 'ohai');
+});
+
+test("passing application specific options via specific message type", function(assert) {
+  run(()=> {
+    SANDBOX.flash = service.info("you can pass app options this way too", {
+      appOption: 'we meet again app-option'
+    });
+  });
+  assert.equal(service.get('queue.length'), 1);
+  assert.equal(service.get('queue.0'), SANDBOX.flash);
+  assert.equal(service.get('queue.0.appOption'), 'we meet again app-option');
+});
+
+test('#_setDefaults sets the correct defaults for service properties', function(assert) {
+  const flashMessageDefaults = config.flashMessageDefaults;
+  const configOptions        = Ember.keys(flashMessageDefaults);
+  let expectLength           = configOptions.length;
+
+  assert.expect(expectLength);
+
+  configOptions.forEach((option) => {
+    const classifiedKey = `default${classify(option)}`;
+    const defaultValue  = service[classifiedKey];
+    const configValue   = flashMessageDefaults[option];
+
+    assert.equal(defaultValue, configValue);
   });
 });

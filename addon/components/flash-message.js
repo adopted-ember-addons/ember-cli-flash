@@ -9,6 +9,9 @@ const {
   run
 } = Ember;
 
+const { escapeExpression } = Ember.Handlebars.Utils;
+const { SafeString }       = Ember.Handlebars;
+
 export default Ember.Component.extend({
   classNameBindings : [ 'alertType', 'active' ],
   messageStyle      : 'bootstrap',
@@ -27,9 +30,10 @@ export default Ember.Component.extend({
   }),
 
   flashType: computed('flash.type', function() {
+    const classify  = Ember.String.classify;
     const flashType = getWithDefault(this, 'flash.type', '');
 
-    return flashType.classify();
+    return classify(flashType);
   }),
 
   progressDuration: computed('flash.showProgress', function() {
@@ -37,8 +41,9 @@ export default Ember.Component.extend({
       return false;
     }
 
-    const duration = getWithDefault(this, 'flash.timeout', 0);
-    return `transition-duration: ${duration}ms`;
+    const duration   = getWithDefault(this, 'flash.timeout', 0);
+    const escapedCSS = escapeExpression(`transition-duration: ${duration}ms`);
+    return new SafeString(escapedCSS);
   }),
 
   click() {

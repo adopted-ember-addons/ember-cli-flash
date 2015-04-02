@@ -1,12 +1,12 @@
 <h2 id="title">Welcome to Ember.js</h2>
 
-{{#each flashes.arrangedQueue as |flash|}}
+{{#each flashMessages.arrangedQueue as |flash|}}
   {{#flash-message flash=flash as |component flash|}}
     <h6>{{component.flashType}}</h6>
     <p>{{flash.message}}</p>
     {{#if component.showProgressBar}}
       <div class="alert-progress">
-        <div class="alert-progressBar" {{bind-attr style="component.progressDuration"}}></div>
+        <div class="alert-progressBar" style="{{component.progressDuration}}"></div>
       </div>
     {{/if}}
   {{/flash-message}}
