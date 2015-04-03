@@ -20,6 +20,10 @@ or `npm`:
 npm install ember-cli-flash --save
 ```
 
+## Compatibility
+This addon is compatible with:
+- `"ember": ~1.11.0`
+
 ## Usage
 Usage is very simple. From within the factories you injected to (defaults to `Controller`, `Route`, `View` and `Component`):
 
@@ -111,6 +115,38 @@ Ember.get(this, 'flashMessages').success('This is amazing', {
 
   To show a progress bar in the flash message, set this to true.
 
+### Arbitrary options
+You can also add arbitrary options to messages:
+
+```javascript
+Ember.get('flashMessages').success('Cool story bro', {
+  someOption : 'hello'
+});
+
+Ember.get('flashMessages').add({
+  message  : 'hello',
+  type     : 'foo',
+  template : 'some-template',
+  context  : customContext
+});
+```
+
+#### Example use case
+For example, this allows the template that ultimately renders the flash to be as rich as it needs to be:
+
+```handlebars
+{{#each flashMessages.queue as |flash|}}
+  {{#flash-message flash=flash as |component flash|}}
+    {{#if flash.template}}
+      {{render flash.template flash.context}}
+    {{else}}
+      <h6>{{component.flashType}}</h6>
+      <p>{{flash.message}}</p>
+    {{/if}}
+  {{/flash-message}}
+{{/each}}
+```
+
 ### Service defaults 
 In `config/environment.js`, you can override service defaults in the `flashMessageDefaults` object:
 
@@ -191,14 +227,14 @@ It also accepts your own template:
     <p>{{flash.message}}</p>
     {{#if component.showProgressBar}}
       <div class="alert-progress">
-        <div class="alert-progressBar" {{bind-attr style="component.progressDuration"}}></div>
+        <div class="alert-progressBar" style="{{component.progressDuration}}"></div>
       </div>
     {{/if}}
   {{/flash-message}}
 {{/each}}
 ```
 
-### Styling with Foundation or Boostrap
+### Styling with Foundation or Bootstrap
 By default, flash messages will have Bootstrap style class names. If you want to use Foundation, simply specify the `messageStyle` on the component:
 
 ```handlebars

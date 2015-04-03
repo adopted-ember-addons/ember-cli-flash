@@ -1,6 +1,6 @@
 {
   "name": "ember-cli-flash",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Simple, highly configurable flash messages for ember-cli",
   "directories": {
     "doc": "doc",
@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.0.2",
-    "ember-cli": "^0.2.1",
+    "ember-cli": "0.2.2",
     "ember-cli-app-version": "0.3.3",
     "ember-cli-content-security-policy": "0.4.0",
     "ember-cli-dependency-checker": "0.0.8",
@@ -32,7 +32,8 @@
     "ember-cli-inject-live-reload": "^1.3.0",
     "ember-cli-qunit": "0.3.9",
     "ember-cli-uglify": "1.0.1",
-    "ember-data": "1.0.0-beta.16",
+    "ember-data": "1.0.0-beta.16.1",
+    "ember-disable-prototype-extensions": "^1.0.0",
     "ember-export-application-global": "^1.0.2",
     "ember-sinon": "0.0.3"
   },
