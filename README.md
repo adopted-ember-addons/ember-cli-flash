@@ -115,6 +115,38 @@ Ember.get(this, 'flashMessages').success('This is amazing', {
 
   To show a progress bar in the flash message, set this to true.
 
+### Arbitrary options
+You can also add arbitrary options to messages:
+
+```javascript
+Ember.get('flashMessages').success('Cool story bro', {
+  someOption : 'hello'
+});
+
+Ember.get('flashMessages').add({
+  message  : 'hello',
+  type     : 'foo',
+  template : 'some-template',
+  context  : customContext
+});
+```
+
+#### Example use case
+For example, this allows the template that ultimately renders the flash to be as rich as it needs to be:
+
+```handlebars
+{{#each flashMessages.queue as |flash|}}
+  {{#flash-message flash=flash as |component flash|}}
+    {{#if flash.template}}
+      {{render flash.template flash.context}}
+    {{else}}
+      <h6>{{component.flashType}}</h6>
+      <p>{{flash.message}}</p>
+    {{/if}}
+  {{/flash-message}}
+{{/each}}
+```
+
 ### Service defaults 
 In `config/environment.js`, you can override service defaults in the `flashMessageDefaults` object:
 
