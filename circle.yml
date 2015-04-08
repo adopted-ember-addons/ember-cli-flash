@@ -11,6 +11,6 @@ test:
 
 dependencies:
   override:
-    - npm install -g bower ember-cli
+    - npm install -g bower ember-cli@0.2.3
     - npm install
     - bower install
