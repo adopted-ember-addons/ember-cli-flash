@@ -8,11 +8,13 @@ export default Ember.Route.extend({
 
     flashMessages.success('Route transitioned successfully', {
       priority     : 500,
-      showProgress : true
+      showProgress : true,
+      sticky       : false
     });
 
     flashMessages.warning('It is going to rain tomorrow', {
-      priority : 1000
+      priority : 1000,
+      sticky   : false
     });
 
     flashMessages.danger('You went offline', { sticky: true });
