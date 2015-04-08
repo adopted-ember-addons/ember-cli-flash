@@ -4,8 +4,13 @@ machine:
   node:
     version: 0.12
 
+test:
+  post:
+    - mkdir -p $CIRCLE_TEST_REPORTS/QUnit
+    - cp tests/reports/* $CIRCLE_TEST_REPORTS/QUnit/
+
 dependencies:
   override:
-    - npm install -g bower
+    - npm install -g bower ember-cli
     - npm install
     - bower install
