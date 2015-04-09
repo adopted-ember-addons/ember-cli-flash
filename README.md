@@ -8,7 +8,15 @@
 This `ember-cli` addon adds a simple flash message service to your app. It's injected into all `Controllers`, `Routes`, `Views` and `Components` by default ([you can change this](#service-defaults)), or lazily injected with `Ember.inject.service`.
 
 ## Installation
-You can install either with `ember install:addon`:
+You can install either with `ember install`:
+
+For Ember CLI >= 0.2.3:
+
+```shell
+ember install ember-cli-flash
+```
+
+For Ember CLI < 0.2.3:
 
 ```shell
 ember install:addon ember-cli-flash
