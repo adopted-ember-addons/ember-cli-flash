@@ -20,7 +20,7 @@ module.exports = function(environment) {
     flashMessageDefaults: {
       timeout            : 1,
       priority           : 100,
-      sticky             : false,
+      sticky             : true,
       showProgress       : false,
       type               : 'info',
       types              : [ 'success', 'info', 'warning', 'danger', 'alert', 'secondary', 'foo' ],

@@ -12,11 +12,11 @@ const {
   on
 } = Ember;
 
-const { classify } = Ember.String;
+const { classify }     = Ember.String;
+const { map, forEach } = Ember.EnumerableUtils;
 
 export default Ember.Service.extend({
-  queue   : emberArray([]),
-  isEmpty : computed.equal('queue.length', 0),
+  isEmpty: computed.equal('queue.length', 0),
 
   arrangedQueue: computed.sort('queue', function(a, b) {
     if (a.priority < b.priority) {
@@ -25,7 +25,7 @@ export default Ember.Service.extend({
       return -1;
     }
     return 0;
-  }),
+  }).readOnly(),
 
   add(options={}) {
     return this._addToQueue(options);
@@ -50,7 +50,7 @@ export default Ember.Service.extend({
   _newFlashMessage(options={}) {
     Ember.assert('The flash message cannot be empty.', options.message);
 
-    const service = this;
+    const flashService = this;
     const {
       message,
       timeout,
@@ -61,8 +61,8 @@ export default Ember.Service.extend({
     } = options;
 
     return FlashMessage.create(merge(options, {
-      flashService : service,
-      message      : message,
+      message,
+      flashService,
       type         : type         || get(this, 'defaultType'),
       timeout      : timeout      || get(this, 'defaultTimeout'),
       priority     : priority     || get(this, 'defaultPriority'),
@@ -71,10 +71,15 @@ export default Ember.Service.extend({
     }));
   },
 
-  _setDefaults: on('init', function() {
+  _setInitialState: on('init', function() {
+    this._setDefaults();
+    this._resetQueue();
+  }),
+
+  _setDefaults() {
     const defaults = getWithDefault(this, 'flashMessageDefaults', {});
 
-   objectKeys(defaults).map((key) => {
+    map(objectKeys(defaults), (key) => {
       const classifiedKey = classify(key);
       const defaultKey    = `default${classifiedKey}`;
 
@@ -83,26 +88,32 @@ export default Ember.Service.extend({
 
     const defaultTypes = getWithDefault(this, 'defaultTypes', []);
     this._registerTypes(defaultTypes);
-  }),
+  },
+
+  _resetQueue() {
+    set(this, 'queue', emberArray([]));
+  },
 
   _registerType(type) {
     Ember.assert('The flash type cannot be undefined', type);
 
     this[type] = ((message, options={}) => {
+      const { timeout, priority, sticky, showProgress } = options;
+
       return this._addToQueue(merge(options, {
-        message      : message,
-        type         : type,
-        timeout      : options.timeout,
-        priority     : options.priority,
-        sticky       : options.sticky,
-        showProgress : options.showProgress
+        message,
+        type,
+        timeout,
+        priority,
+        sticky,
+        showProgress
       }));
     });
   },
 
   _registerTypes(types=[]) {
-    types.forEach((type) => {
+    forEach(types, (type) => {
       this._registerType(type);
     });
-  }
+  },
 });

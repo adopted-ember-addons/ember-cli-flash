@@ -3,10 +3,7 @@ import Ember from 'ember';
 const {
   computed,
   getWithDefault,
-  get: get,
-  set: set,
-  on,
-  run
+  get: get
 } = Ember;
 
 const { escapeExpression } = Ember.Handlebars.Utils;
@@ -14,8 +11,9 @@ const { SafeString }       = Ember.Handlebars;
 
 export default Ember.Component.extend({
   classNameBindings : [ 'alertType', 'active' ],
+  active            : true,
   messageStyle      : 'bootstrap',
-  showProgressBar   : computed.alias('flash.showProgress'),
+  showProgressBar   : computed.readOnly('flash.showProgress'),
 
   alertType: computed('flash.type', function() {
     const flashType    = getWithDefault(this, 'flash.type', '');
@@ -27,14 +25,14 @@ export default Ember.Component.extend({
     }
 
     return `${prefix}${flashType}`;
-  }),
+  }).readOnly(),
 
   flashType: computed('flash.type', function() {
     const classify  = Ember.String.classify;
     const flashType = getWithDefault(this, 'flash.type', '');
 
     return classify(flashType);
-  }),
+  }).readOnly(),
 
   progressDuration: computed('flash.showProgress', function() {
     if (!get(this, 'flash.showProgress')) {
@@ -44,13 +42,14 @@ export default Ember.Component.extend({
     const duration   = getWithDefault(this, 'flash.timeout', 0);
     const escapedCSS = escapeExpression(`transition-duration: ${duration}ms`);
     return new SafeString(escapedCSS);
-  }),
+  }).readOnly(),
 
   click() {
     this._destroyFlashMessage();
   },
 
   willDestroy() {
+    this._super();
     this._destroyFlashMessage();
   },
 
@@ -61,11 +60,5 @@ export default Ember.Component.extend({
     if (flash) {
       flash.destroyMessage();
     }
-  },
-
-  _activeAfterRender: on('didInsertElement', function() {
-    run.scheduleOnce('afterRender', this, () => {
-      set(this, 'active', true);
-    });
-  })
+  }
 });
