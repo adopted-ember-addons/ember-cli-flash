@@ -3,11 +3,12 @@ import Ember from 'ember';
 import config from '../../../config/environment';
 import FlashMessagesService from 'ember-cli-flash/services/flash-messages-service';
 
-var service;
-var SANDBOX = {};
-const { run } = Ember;
-
+const { run }      = Ember;
 const { classify } = Ember.String;
+const { forEach }  = Ember.EnumerableUtils;
+
+let service;
+let SANDBOX = {};
 
 module('FlashMessagesService', {
   beforeEach() {
@@ -21,6 +22,7 @@ module('FlashMessagesService', {
       service.get('queue').clear();
       service.destroy();
     });
+
     service = null;
     SANDBOX = {};
   }
@@ -49,6 +51,19 @@ test('#arrangedQueue returns an array of flash messages, sorted by priority', fu
 
   assert.equal(service.get('arrangedQueue.length'), 3);
   assert.equal(service.get('arrangedQueue.0.priority'), 300);
+});
+
+test('#arrangedQueue is read only', function(assert) {
+  assert.expect(2);
+
+  run(() => {
+    service.success('foo');
+    assert.throws(() => {
+      service.set('arrangedQueue', []);
+    });
+  });
+
+  assert.equal(service.get('arrangedQueue.length'), 1);
 });
 
 test('#add adds a custom message', function(assert) {
@@ -137,12 +152,12 @@ test('#_registerTypes registers new types', function(assert) {
 
 test('#_initTypes registers default types on init', function(assert) {
   const defaultTypes = [ 'success', 'info', 'warning', 'danger', 'alert', 'secondary' ];
-  let expectLength   = defaultTypes.length * 2;
+  const expectLength   = defaultTypes.length * 2;
 
   assert.expect(expectLength);
 
-  defaultTypes.forEach((type) => {
-    let method = service[type];
+  forEach(defaultTypes, (type) => {
+    const method = service[type];
 
     assert.ok(method);
     assert.equal(Ember.typeOf(method), 'function');
@@ -150,10 +165,10 @@ test('#_initTypes registers default types on init', function(assert) {
 });
 
 test("passing applications specific options via add()", function(assert) {
-  run(()=> {
+  run(() => {
     SANDBOX.flash = service.add({
-      message: "here's an option you may or may not know",
-      appOption: 'ohai'
+      message   : "here's an option you may or may not know",
+      appOption : 'ohai'
     });
   });
 
@@ -163,11 +178,12 @@ test("passing applications specific options via add()", function(assert) {
 });
 
 test("passing application specific options via specific message type", function(assert) {
-  run(()=> {
-    SANDBOX.flash = service.info("you can pass app options this way too", {
+  run(() => {
+    SANDBOX.flash = service.info('you can pass app options this way too', {
       appOption: 'we meet again app-option'
     });
   });
+
   assert.equal(service.get('queue.length'), 1);
   assert.equal(service.get('queue.0'), SANDBOX.flash);
   assert.equal(service.get('queue.0.appOption'), 'we meet again app-option');
@@ -176,11 +192,11 @@ test("passing application specific options via specific message type", function(
 test('#_setDefaults sets the correct defaults for service properties', function(assert) {
   const flashMessageDefaults = config.flashMessageDefaults;
   const configOptions        = Ember.keys(flashMessageDefaults);
-  let expectLength           = configOptions.length;
+  const expectLength           = configOptions.length;
 
   assert.expect(expectLength);
 
-  configOptions.forEach((option) => {
+  forEach(configOptions, (option) => {
     const classifiedKey = `default${classify(option)}`;
     const defaultValue  = service[classifiedKey];
     const configValue   = flashMessageDefaults[option];

@@ -5,24 +5,25 @@
 
 [Statistics for `ember-cli-flash`](http://www.npm-stats.com/~packages/ember-cli-flash)
 
-This `ember-cli` addon adds a simple flash message service to your app. It's injected into all `Controllers`, `Routes`, `Views` and `Components` by default ([you can change this](#service-defaults)), or lazily injected with `Ember.inject.service`.
+This `ember-cli` addon adds a simple flash message service and component to your app. The servce is injected into all `Controllers`, `Routes`, `Views` and `Components` by default ([you can change this](#service-defaults)), or lazily injected with `Ember.inject.service`.
 
 ## Installation
-You can install either with `ember install:addon`:
+You can install either with `ember install`:
+
+For Ember CLI >= `0.2.3`:
+
+```shell
+ember install ember-cli-flash
+```
+
+For Ember CLI < `0.2.3`:
 
 ```shell
 ember install:addon ember-cli-flash
 ```
 
-or `npm`:
-
-```shell
-npm install ember-cli-flash --save
-```
-
 ## Compatibility
-This addon is compatible with:
-- `"ember": ~1.11.0`
+This addon is tested against `1.11.1` as well as `release`, `beta` and `canary` channels. 
 
 ## Usage
 Usage is very simple. From within the factories you injected to (defaults to `Controller`, `Route`, `View` and `Component`):
@@ -209,6 +210,15 @@ actions: {
 }
 ```
 
+### Custom flash message component
+If the provided component isn't to your liking, you can easily create your own. All you need to do is pass in the `flash` object to that component:
+
+```handlebars
+{{#each flashMessages.queue as |flash|}}
+  {{custom-component flash=flash}}
+{{/each}}
+```
+
 ## Displaying flash messages
 Then, to display somewhere in your app, add this to your template:
 
@@ -265,6 +275,30 @@ To add `radius` or `round` type corners in Foundation:
 {{#each flashMessages.arrangedQueue as |flash|}}
   {{flash-message flash=flash messageStyle='foundation' class='round'}}
 {{/each}}
+```
+
+## Acceptance / Integration tests
+When you install the addon, it should automatically generate a helper located at `tests/helpers/flash-message.js`. You can do this manually as well:
+
+```shell
+$ ember generate ember-cli-flash
+```
+
+This also adds the helper to `tests/test-helper.js`. You won't actually need to import this into your tests, but it's good to know what the blueprint does. Basically, the helper overrides the `_destroyLater` method so that the flash messages behave intuitively in a testing environment. 
+
+An example integration test:
+
+```javascript
+// tests/acceptance/foo-test.js
+
+test('flash message is rendered', function(assert) {
+  assert.expect(1);
+  visit('/');
+
+  andThen(() => {
+    assert.ok(find('.alert.alert-success'));
+  });
+});
 ```
 
 ## Styling

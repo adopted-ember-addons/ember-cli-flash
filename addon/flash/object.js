@@ -6,25 +6,41 @@ const {
   set: set,
   getWithDefault,
   run,
-  on
+  on,
+  Evented
 } = Ember;
 
-export default Ember.Object.extend({
-  isSuccessType  : computed.equal('type', 'success'),
-  isInfoType     : computed.equal('type', 'info'),
-  isWarningType  : computed.equal('type', 'warning'),
-  isDangerType   : computed.equal('type', 'danger'),
-  isErrorType    : computed.equal('type', 'error'),
+export default Ember.Object.extend(Evented, {
+  isSuccessType  : computed.equal('type', 'success').readOnly(),
+  isInfoType     : computed.equal('type', 'info').readOnly(),
+  isWarningType  : computed.equal('type', 'warning').readOnly(),
+  isDangerType   : computed.equal('type', 'danger').readOnly(),
+  isErrorType    : computed.equal('type', 'error').readOnly(),
 
-  defaultTimeout : computed.alias('flashService.defaultTimeout'),
-  queue          : computed.alias('flashService.queue'),
+  defaultTimeout : computed.readOnly('flashService.defaultTimeout'),
+  queue          : computed.readOnly('flashService.queue'),
   timer          : null,
 
   destroyMessage() {
-    this._destroyMessage();
+    const queue        = get(this, 'queue');
+    const flashMessage = this;
+
+    if (queue) {
+      queue.removeObject(flashMessage);
+    }
+
+    flashMessage.destroy();
+
+    const {
+      isDestroying,
+      isDestroyed
+    } = flashMessage.getProperties('isDestroying', 'isDestroyed');
+
+    this.trigger('destroyMessage',  isDestroyed || isDestroying);
   },
 
   willDestroy() {
+    this._super();
     const timer = get(this, 'timer');
 
     if (timer) {
@@ -39,19 +55,8 @@ export default Ember.Object.extend({
 
     const defaultTimeout = get(this, 'defaultTimeout');
     const timeout        = getWithDefault(this, 'timeout', defaultTimeout);
-    const destroyTimer   = run.later(this, '_destroyMessage', timeout);
+    const destroyTimer   = run.later(this, 'destroyMessage', timeout);
 
     set(this, 'timer', destroyTimer);
-  }),
-
-  _destroyMessage() {
-    const queue        = get(this, 'queue');
-    const flashMessage = this;
-
-    if (queue) {
-      queue.removeObject(flashMessage);
-    }
-
-    flashMessage.destroy();
-  }
+  })
 });
