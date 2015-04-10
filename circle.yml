@@ -14,3 +14,7 @@ dependencies:
     - npm install -g bower ember-cli@0.2.3
     - npm install
     - bower install
+
+notify:
+  webhooks:
+    - url: https://webhooks.gitter.im/e/77cfd25de83430ea669a
