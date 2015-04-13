@@ -13,7 +13,5 @@ module.exports = {
     return this.insertIntoFile(TEST_HELPER_PATH, IMPORT_STATEMENT, { after: INSERT_AFTER });
   },
 
-  normalizeEntityName: function(entityName) {
-    return entityName;
-  }
+  normalizeEntityName: function() {}
 };
