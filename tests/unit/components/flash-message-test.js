@@ -37,8 +37,8 @@ test('it renders with the right props', function(assert) {
   assert.equal(component.get('progressDuration'), `transition-duration: ${flash.get('timeout')}ms`);
 });
 
-test('#showProgressBar is read only', function(assert) {
-  assert.expect(2);
+test('read only methods cannot be set', function(assert) {
+  assert.expect(3);
 
   const component = this.subject({ flash });
   this.render();
@@ -47,32 +47,11 @@ test('#showProgressBar is read only', function(assert) {
     component.set('showProgressBar', false);
   });
 
-  assert.equal(component.get('showProgressBar'), true);
-});
-
-
-test('#flashType is read only', function(assert) {
-  assert.expect(2);
-
-  const component = this.subject({ flash });
-  this.render();
-
   assert.throws(() => {
     component.set('flashType', 'invalid');
   });
 
-  assert.equal(component.get('flashType'), 'Test');
-});
-
-test('#progressDuration is read only', function(assert) {
-  assert.expect(2);
-
-  const component = this.subject({ flash });
-  this.render();
-
   assert.throws(() => {
     component.set('progressDuration', 'derp');
   });
-
-  assert.equal(component.get('progressDuration'), `transition-duration: ${flash.get('timeout')}ms`);
 });
