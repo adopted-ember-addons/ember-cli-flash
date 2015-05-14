@@ -15,6 +15,3 @@
 /libpeerconnection.log
 npm-debug.log
 testem.log
-
-# generated reports
-/tests/reports
