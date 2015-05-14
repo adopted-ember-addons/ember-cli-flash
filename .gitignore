@@ -16,5 +16,5 @@
 npm-debug.log
 testem.log
 
-# generated reports
-/tests/reports
+# test reports
+QUnit.xml
