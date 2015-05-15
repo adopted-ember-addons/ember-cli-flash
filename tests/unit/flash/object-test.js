@@ -5,23 +5,23 @@ import FlashMessage from 'ember-cli-flash/flash/object';
 
 const { forEach } = Ember.EnumerableUtils;
 
-let testTimerDuration = 50;
-let { run }           = Ember;
-let flash             = null;
-let SANDBOX           = {};
+const testTimerDuration = 50;
+const { run } = Ember;
+let flash = null;
+let SANDBOX = {};
 
 module('FlashMessageObject', {
   beforeEach() {
     flash = FlashMessage.create({
-      type    : 'test',
-      message : 'Cool story brah',
-      timeout : testTimerDuration,
-      service : {}
+      type: 'test',
+      message: 'Cool story brah',
+      timeout: testTimerDuration,
+      service: {}
     });
   },
 
   afterEach() {
-    flash   = null;
+    flash = null;
     SANDBOX = {};
   }
 });
@@ -50,11 +50,11 @@ test('#_destroyLater does not destroy the message if it is sticky', function(ass
   assert.expect(1);
 
   const stickyFlash = FlashMessage.create({
-    type    : 'test',
-    message : 'Cool story brah',
-    timeout : testTimerDuration,
-    service : {},
-    sticky  : true
+    type: 'test',
+    message: 'Cool story brah',
+    timeout: testTimerDuration,
+    service: {},
+    sticky: true
   });
 
   run.later(() => {
