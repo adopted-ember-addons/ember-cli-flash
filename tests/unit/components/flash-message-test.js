@@ -7,12 +7,14 @@ import FlashMessage from 'ember-cli-flash/flash/object';
 let flash;
 
 moduleForComponent('flash-message', 'FlashMessageComponent', {
+  unit: true,
+
   beforeEach() {
     flash = FlashMessage.create({
-      message      : 'test',
-      type         : 'test',
-      timeout      : 50,
-      showProgress : true
+      message: 'test',
+      type: 'test',
+      timeout: 50,
+      showProgress: true
     });
   },
 

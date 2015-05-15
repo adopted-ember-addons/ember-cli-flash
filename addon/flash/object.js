@@ -1,9 +1,10 @@
 import Ember from 'ember';
 
+const get = Ember.get;
+const set = Ember.set;
+
 const {
   computed,
-  get: get,
-  set: set,
   getWithDefault,
   run,
   on,
@@ -11,18 +12,18 @@ const {
 } = Ember;
 
 export default Ember.Object.extend(Evented, {
-  isSuccessType  : computed.equal('type', 'success').readOnly(),
-  isInfoType     : computed.equal('type', 'info').readOnly(),
-  isWarningType  : computed.equal('type', 'warning').readOnly(),
-  isDangerType   : computed.equal('type', 'danger').readOnly(),
-  isErrorType    : computed.equal('type', 'error').readOnly(),
+  isSuccessType: computed.equal('type', 'success').readOnly(),
+  isInfoType: computed.equal('type', 'info').readOnly(),
+  isWarningType: computed.equal('type', 'warning').readOnly(),
+  isDangerType: computed.equal('type', 'danger').readOnly(),
+  isErrorType: computed.equal('type', 'error').readOnly(),
 
-  defaultTimeout : computed.readOnly('flashService.defaultTimeout'),
-  queue          : computed.readOnly('flashService.queue'),
-  timer          : null,
+  defaultTimeout: computed.readOnly('flashService.defaultTimeout'),
+  queue: computed.readOnly('flashService.queue'),
+  timer: null,
 
   destroyMessage() {
-    const queue        = get(this, 'queue');
+    const queue = get(this, 'queue');
     const flashMessage = this;
 
     if (queue) {
@@ -51,11 +52,13 @@ export default Ember.Object.extend(Evented, {
 
   // private
   _destroyLater: on('init', function() {
-    if (get(this, 'sticky')) { return; }
+    if (get(this, 'sticky')) {
+      return;
+    }
 
     const defaultTimeout = get(this, 'defaultTimeout');
-    const timeout        = getWithDefault(this, 'timeout', defaultTimeout);
-    const destroyTimer   = run.later(this, 'destroyMessage', timeout);
+    const timeout = getWithDefault(this, 'timeout', defaultTimeout);
+    const destroyTimer = run.later(this, 'destroyMessage', timeout);
 
     set(this, 'timer', destroyTimer);
   })

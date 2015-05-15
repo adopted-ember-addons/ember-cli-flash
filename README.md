@@ -120,11 +120,11 @@ Ember.get(this, 'flashMessages').success('This is amazing', {
 You can also add arbitrary options to messages:
 
 ```javascript
-Ember.get('flashMessages').success('Cool story bro', {
+Ember.get(this, 'flashMessages').success('Cool story bro', {
   someOption : 'hello'
 });
 
-Ember.get('flashMessages').add({
+Ember.get(this, 'flashMessages').add({
   message  : 'hello',
   type     : 'foo',
   template : 'some-template',

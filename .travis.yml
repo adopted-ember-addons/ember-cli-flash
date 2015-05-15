@@ -1,17 +1,28 @@
 ---
 language: node_js
-
-sudo: false
-
 node_js:
   - "0.12"
   - "iojs"
+
+sudo: false
 
 cache:
   directories:
     - node_modules
 
+env:
+  - EMBER_TRY_SCENARIO=default
+  - EMBER_TRY_SCENARIO=ember-release
+  - EMBER_TRY_SCENARIO=ember-beta
+  - EMBER_TRY_SCENARIO=ember-canary
+
+matrix:
+  fast_finish: true
+  allow_failures:
+    - env: EMBER_TRY_SCENARIO=ember-canary
+
 before_install:
+  - export PATH=/usr/local/phantomjs-2.0.0/bin:$PATH
   - "npm config set spin false"
   - "npm install -g npm@^2"
 
@@ -21,7 +32,7 @@ install:
   - bower install
 
 script:
-  - npm test
+  - ember try $EMBER_TRY_SCENARIO test
 
 notifications:
   webhooks:

@@ -1,18 +1,19 @@
 import Ember from 'ember';
 import FlashMessage from 'ember-cli-flash/flash/object';
 
+const get = Ember.get;
+const set = Ember.set;
+
 const {
   computed,
   getWithDefault,
   merge,
-  get  : get,
-  set  : set,
-  A    : emberArray,
-  keys : objectKeys,
+  A: emberArray,
+  keys: objectKeys,
   on
 } = Ember;
 
-const { classify }     = Ember.String;
+const { classify } = Ember.String;
 const { map, forEach } = Ember.EnumerableUtils;
 
 export default Ember.Service.extend({
@@ -27,7 +28,7 @@ export default Ember.Service.extend({
     return 0;
   }).readOnly(),
 
-  add(options={}) {
+  add(options = {}) {
     return this._addToQueue(options);
   },
 
@@ -39,7 +40,7 @@ export default Ember.Service.extend({
   },
 
   // private
-  _addToQueue(options={}) {
+  _addToQueue(options = {}) {
     const flashes = get(this, 'queue');
     const flash   = this._newFlashMessage(options);
 
@@ -47,7 +48,7 @@ export default Ember.Service.extend({
     return flash;
   },
 
-  _newFlashMessage(options={}) {
+  _newFlashMessage(options = {}) {
     Ember.assert('The flash message cannot be empty.', options.message);
 
     const flashService = this;
@@ -63,11 +64,11 @@ export default Ember.Service.extend({
     return FlashMessage.create(merge(options, {
       message,
       flashService,
-      type         : type         || get(this, 'defaultType'),
-      timeout      : timeout      || get(this, 'defaultTimeout'),
-      priority     : priority     || get(this, 'defaultPriority'),
-      sticky       : sticky       || get(this, 'defaultSticky'),
-      showProgress : showProgress || get(this, 'defaultShowProgress')
+      type: type || get(this, 'defaultType'),
+      timeout: timeout || get(this, 'defaultTimeout'),
+      priority: priority || get(this, 'defaultPriority'),
+      sticky: sticky || get(this, 'defaultSticky'),
+      showProgress: showProgress || get(this, 'defaultShowProgress')
     }));
   },
 
@@ -81,7 +82,7 @@ export default Ember.Service.extend({
 
     map(objectKeys(defaults), (key) => {
       const classifiedKey = classify(key);
-      const defaultKey    = `default${classifiedKey}`;
+      const defaultKey = `default${classifiedKey}`;
 
       return set(this, defaultKey, defaults[key]);
     });
@@ -111,9 +112,7 @@ export default Ember.Service.extend({
     });
   },
 
-  _registerTypes(types=[]) {
-    forEach(types, (type) => {
-      this._registerType(type);
-    });
-  },
+  _registerTypes(types = []) {
+    forEach(types, (type) => this._registerType(type));
+  }
 });
