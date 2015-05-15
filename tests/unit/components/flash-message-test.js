@@ -11,10 +11,10 @@ moduleForComponent('flash-message', 'FlashMessageComponent', {
 
   beforeEach() {
     flash = FlashMessage.create({
-      message      : 'test',
-      type         : 'test',
-      timeout      : 50,
-      showProgress : true
+      message: 'test',
+      type: 'test',
+      timeout: 50,
+      showProgress: true
     });
   },
 

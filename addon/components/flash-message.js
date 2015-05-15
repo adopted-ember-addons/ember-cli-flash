@@ -1,24 +1,26 @@
 import Ember from 'ember';
 
+const get = Ember.get;
+
 const {
   computed,
-  getWithDefault,
-  get: get
+  getWithDefault
 } = Ember;
 
+const { classify } = Ember.String;
 const { escapeExpression } = Ember.Handlebars.Utils;
-const { SafeString }       = Ember.Handlebars;
+const { SafeString } = Ember.Handlebars;
 
 export default Ember.Component.extend({
-  classNameBindings : [ 'alertType', 'active' ],
-  active            : true,
-  messageStyle      : 'bootstrap',
-  showProgressBar   : computed.readOnly('flash.showProgress'),
+  classNameBindings: [ 'alertType', 'active' ],
+  active: true,
+  messageStyle: 'bootstrap',
+  showProgressBar: computed.readOnly('flash.showProgress'),
 
   alertType: computed('flash.type', function() {
-    const flashType    = getWithDefault(this, 'flash.type', '');
+    const flashType = getWithDefault(this, 'flash.type', '');
     const messageStyle = getWithDefault(this, 'messageStyle', '');
-    let prefix         = 'alert alert-';
+    let prefix = 'alert alert-';
 
     if (messageStyle === 'foundation') {
       prefix = 'alert-box ';
@@ -28,7 +30,6 @@ export default Ember.Component.extend({
   }).readOnly(),
 
   flashType: computed('flash.type', function() {
-    const classify  = Ember.String.classify;
     const flashType = getWithDefault(this, 'flash.type', '');
 
     return classify(flashType);
@@ -39,7 +40,7 @@ export default Ember.Component.extend({
       return false;
     }
 
-    const duration   = getWithDefault(this, 'flash.timeout', 0);
+    const duration = getWithDefault(this, 'flash.timeout', 0);
     const escapedCSS = escapeExpression(`transition-duration: ${duration}ms`);
     return new SafeString(escapedCSS);
   }).readOnly(),
