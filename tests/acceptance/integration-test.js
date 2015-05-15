@@ -8,7 +8,7 @@ import {
 import startApp from '../helpers/start-app';
 import { lookupService } from '../helpers/utils/lookup';
 
-var application;
+let application;
 const { run } = Ember;
 const { timeout: defaultTimeout } = config.flashMessageDefaults;
 
