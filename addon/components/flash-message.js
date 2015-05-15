@@ -61,5 +61,7 @@ export default Ember.Component.extend({
     if (flash) {
       flash.destroyMessage();
     }
-  }
+  },
+
+  hasBlock: computed.bool('template')
 });
