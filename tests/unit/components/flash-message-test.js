@@ -1,8 +1,13 @@
+import Ember from 'ember';
 import {
   moduleForComponent,
   test
 } from 'ember-qunit';
 import FlashMessage from 'ember-cli-flash/flash/object';
+
+const {
+  run
+} = Ember;
 
 let flash;
 
@@ -26,11 +31,9 @@ moduleForComponent('flash-message', 'FlashMessageComponent', {
 test('it renders with the right props', function(assert) {
   assert.expect(6);
 
-  // creates the component instance
   const component = this.subject({ flash });
   assert.equal(component._state, 'preRender');
 
-  // render the component on the page
   this.render();
   assert.equal(component._state, 'inDOM');
   assert.equal(component.get('active'), true);
@@ -45,15 +48,19 @@ test('read only methods cannot be set', function(assert) {
   const component = this.subject({ flash });
   this.render();
 
-  assert.throws(() => {
-    component.set('showProgressBar', false);
+  run(() => {
+    component.setProperties({
+      alertType: 'invalid',
+      flashType: 'invalid',
+      progressDuration: 'derp'
+    });
   });
 
+  assert.deepEqual(component.get('flash'), flash);
   assert.throws(() => {
-    component.set('flashType', 'invalid');
+    component.set('showProgressBar', true);
   });
-
   assert.throws(() => {
-    component.set('progressDuration', 'derp');
+    component.set('hasBlock', true);
   });
 });

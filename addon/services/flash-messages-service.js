@@ -17,7 +17,7 @@ const { classify } = Ember.String;
 const { map, forEach } = Ember.EnumerableUtils;
 
 export default Ember.Service.extend({
-  isEmpty: computed.equal('queue.length', 0),
+  isEmpty: computed.equal('queue.length', 0).readOnly(),
 
   arrangedQueue: computed.sort('queue', function(a, b) {
     if (a.priority < b.priority) {
@@ -42,7 +42,7 @@ export default Ember.Service.extend({
   // private
   _addToQueue(options = {}) {
     const flashes = get(this, 'queue');
-    const flash   = this._newFlashMessage(options);
+    const flash = this._newFlashMessage(options);
 
     flashes.pushObject(flash);
     return flash;
@@ -87,8 +87,7 @@ export default Ember.Service.extend({
       return set(this, defaultKey, defaults[key]);
     });
 
-    const defaultTypes = getWithDefault(this, 'defaultTypes', []);
-    this._registerTypes(defaultTypes);
+    this._registerTypes(getWithDefault(this, 'defaultTypes', []));
   },
 
   _resetQueue() {
@@ -98,7 +97,7 @@ export default Ember.Service.extend({
   _registerType(type) {
     Ember.assert('The flash type cannot be undefined', type);
 
-    this[type] = ((message, options={}) => {
+    this[type] = ((message, options = {}) => {
       const { timeout, priority, sticky, showProgress } = options;
 
       return this._addToQueue(merge(options, {
