@@ -3,7 +3,7 @@ import config from '../config/environment';
 
 export function initialize(_container, application) {
   const { flashMessageDefaults } = config;
-  const { injectionFactories }   = flashMessageDefaults;
+  const { injectionFactories } = flashMessageDefaults;
 
   application.register('config:flash-messages', flashMessageDefaults, { instantiate: false });
   application.register('service:flash-messages', FlashMessagesService, { singleton: true });
@@ -15,6 +15,6 @@ export function initialize(_container, application) {
 }
 
 export default {
-  name       : 'flash-messages-service',
-  initialize : initialize
+  name: 'flash-messages-service',
+  initialize: initialize
 };

@@ -4,7 +4,8 @@ const get = Ember.get;
 
 const {
   computed,
-  getWithDefault
+  getWithDefault,
+  warn
 } = Ember;
 
 const { classify } = Ember.String;
@@ -17,33 +18,55 @@ export default Ember.Component.extend({
   messageStyle: 'bootstrap',
   showProgressBar: computed.readOnly('flash.showProgress'),
 
-  alertType: computed('flash.type', function() {
-    const flashType = getWithDefault(this, 'flash.type', '');
-    const messageStyle = getWithDefault(this, 'messageStyle', '');
-    let prefix = 'alert alert-';
+  alertType: computed('flash.type', {
+    get() {
+      const flashType = getWithDefault(this, 'flash.type', '');
+      const messageStyle = getWithDefault(this, 'messageStyle', '');
+      let prefix = 'alert alert-';
 
-    if (messageStyle === 'foundation') {
-      prefix = 'alert-box ';
+      if (messageStyle === 'foundation') {
+        prefix = 'alert-box ';
+      }
+
+      return `${prefix}${flashType}`;
+    },
+
+    set() {
+      warn('`alertType` is read only');
+
+      return this;
     }
+  }),
 
-    return `${prefix}${flashType}`;
-  }).readOnly(),
+  flashType: computed('flash.type', {
+    get() {
+      const flashType = getWithDefault(this, 'flash.type', '');
 
-  flashType: computed('flash.type', function() {
-    const flashType = getWithDefault(this, 'flash.type', '');
+      return classify(flashType);
+    },
 
-    return classify(flashType);
-  }).readOnly(),
+    set() {
+      warn('`flashType` is read only');
 
-  progressDuration: computed('flash.showProgress', function() {
-    if (!get(this, 'flash.showProgress')) {
-      return false;
+      return this;
     }
+  }),
 
-    const duration = getWithDefault(this, 'flash.timeout', 0);
-    const escapedCSS = escapeExpression(`transition-duration: ${duration}ms`);
-    return new SafeString(escapedCSS);
-  }).readOnly(),
+  progressDuration: computed('flash.showProgress', {
+    get() {
+      if (!get(this, 'flash.showProgress')) {
+        return false;
+      }
+
+      const duration = getWithDefault(this, 'flash.timeout', 0);
+      const escapedCSS = escapeExpression(`transition-duration: ${duration}ms`);
+      return new SafeString(escapedCSS);
+    },
+
+    set() {
+      warn('`progressDuration` is read only');
+    }
+  }),
 
   click() {
     this._destroyFlashMessage();
@@ -63,5 +86,5 @@ export default Ember.Component.extend({
     }
   },
 
-  hasBlock: computed.bool('template')
+  hasBlock: computed.bool('template').readOnly()
 });
