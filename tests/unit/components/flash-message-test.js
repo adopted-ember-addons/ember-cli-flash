@@ -19,6 +19,7 @@ moduleForComponent('flash-message', 'FlashMessageComponent', {
       message: 'test',
       type: 'test',
       timeout: 50,
+      extendedTimeout: 5000,
       showProgress: true
     });
   },
@@ -52,7 +53,8 @@ test('read only methods cannot be set', function(assert) {
     component.setProperties({
       alertType: 'invalid',
       flashType: 'invalid',
-      progressDuration: 'derp'
+      progressDuration: 'derp',
+      extendedTimeout: 'nope'
     });
   });
 
@@ -62,5 +64,17 @@ test('read only methods cannot be set', function(assert) {
   });
   assert.throws(() => {
     component.set('hasBlock', true);
+  });
+});
+
+test('exiting the flash object sets exiting on the component', function(assert) {
+  assert.expect(2);
+
+  const component = this.subject({ flash });
+  this.render();
+  assert.ok(!component.get('exiting'));
+  run(() => {
+    flash.set('exiting' , true);
+    assert.ok(component.get('exiting'));
   });
 });

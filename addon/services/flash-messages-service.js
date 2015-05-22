@@ -58,7 +58,8 @@ export default Ember.Service.extend({
       type,
       priority,
       sticky,
-      showProgress
+      showProgress,
+      extendedTimeout,
     } = options;
 
     return FlashMessage.create(merge(options, {
@@ -68,7 +69,8 @@ export default Ember.Service.extend({
       timeout: timeout || get(this, 'defaultTimeout'),
       priority: priority || get(this, 'defaultPriority'),
       sticky: sticky || get(this, 'defaultSticky'),
-      showProgress: showProgress || get(this, 'defaultShowProgress')
+      showProgress: showProgress || get(this, 'defaultShowProgress'),
+      extendedTimeout: extendedTimeout || get(this, 'defaultExtendedTimeout')
     }));
   },
 
@@ -98,7 +100,7 @@ export default Ember.Service.extend({
     Ember.assert('The flash type cannot be undefined', type);
 
     this[type] = ((message, options = {}) => {
-      const { timeout, priority, sticky, showProgress } = options;
+      const { timeout, priority, sticky, showProgress, extendedTimeout } = options;
 
       return this._addToQueue(merge(options, {
         message,
@@ -106,7 +108,8 @@ export default Ember.Service.extend({
         timeout,
         priority,
         sticky,
-        showProgress
+        showProgress,
+        extendedTimeout
       }));
     });
   },

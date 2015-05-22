@@ -7,6 +7,7 @@ module.exports = function(/* environment, appConfig */) {
       priority           : 100,
       sticky             : false,
       showProgress       : false,
+      extendedTimeout    : 0,
       type               : 'info',
       types              : [ 'success', 'info', 'warning', 'danger', 'alert', 'secondary' ],
       injectionFactories : [ 'route', 'controller', 'view', 'component' ]

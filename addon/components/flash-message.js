@@ -13,10 +13,11 @@ const { escapeExpression } = Ember.Handlebars.Utils;
 const { SafeString } = Ember.Handlebars;
 
 export default Ember.Component.extend({
-  classNameBindings: [ 'alertType', 'active' ],
+  classNameBindings: [ 'alertType', 'active', 'exiting'],
   active: true,
   messageStyle: 'bootstrap',
   showProgressBar: computed.readOnly('flash.showProgress'),
+  exiting: computed.readOnly('flash.exiting'),
 
   alertType: computed('flash.type', {
     get() {

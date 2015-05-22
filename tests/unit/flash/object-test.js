@@ -94,3 +94,27 @@ test('#is{type}Type aliases are read only', function(assert) {
   });
 });
 
+test('#_destroyLater sets a exitingTimer when extendedTimeout is set', function(assert) {
+  const exitFlash = FlashMessage.create({
+    extendedTimeout: 1000
+  });
+  assert.ok(exitFlash.get('exitingTimer'));
+});
+
+test('#_destroyLater sets exiting after the timer has elapsed', function(assert) {
+  const done = assert.async();
+  const oneSecond = 1000;
+
+  const exitFlash = FlashMessage.create({
+    timeout: oneSecond,
+    extendedTimeout: oneSecond
+  });
+  assert.expect(3);
+  assert.equal(exitFlash.get('exiting'), false);
+
+  run.later(() => {
+    assert.equal(exitFlash.get('exiting'), true);
+    assert.equal(exitFlash.get('exitingTimer'), null);
+    done();
+  }, oneSecond + 50);
+});
