@@ -66,12 +66,13 @@ You can also pass in options to custom messages:
 
 ```javascript
 Ember.get(this, 'flashMessages').add({
-  message      : 'I like alpacas',
-  type         : 'alpaca'
-  timeout      : 500,
-  priority     : 200,
-  sticky       : true,
-  showProgress : true
+  message            : 'I like alpacas',
+  type               : 'alpaca'
+  timeout            : 500,
+  priority           : 200,
+  sticky             : true,
+  showProgress       : true,
+  extendedTimeout    : 500,
 });
 
 Ember.get(this, 'flashMessages').success('This is amazing', {
@@ -115,6 +116,13 @@ Ember.get(this, 'flashMessages').success('This is amazing', {
   Default: `false`
 
   To show a progress bar in the flash message, set this to true.
+
+- `extendedTimeout?: number`
+
+  Default: `0`
+
+  Number of milliseconds before a flash message is removed to add the class 'exiting' to the element.  This can be used to animate the removal of messages with a transition.
+
 
 ### Arbitrary options
 You can also add arbitrary options to messages:
