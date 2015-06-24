@@ -1,16 +1,22 @@
 import Ember from 'ember';
 
 const get = Ember.get;
-
 const {
+  Handlebars,
   computed,
   getWithDefault,
-  warn
+  warn,
+  String: emberString
 } = Ember;
-
-const { classify } = Ember.String;
-const { escapeExpression } = Ember.Handlebars.Utils;
-const { SafeString } = Ember.Handlebars;
+const {
+  classify
+} = emberString;
+const {
+  escapeExpression
+} = Handlebars.Utils;
+const {
+  SafeString
+} = Handlebars;
 
 export default Ember.Component.extend({
   classNameBindings: [ 'alertType', 'active', 'exiting'],
@@ -61,6 +67,7 @@ export default Ember.Component.extend({
 
       const duration = getWithDefault(this, 'flash.timeout', 0);
       const escapedCSS = escapeExpression(`transition-duration: ${duration}ms`);
+
       return new SafeString(escapedCSS);
     },
 
