@@ -14,7 +14,7 @@ const {
 } = Ember;
 
 const { classify } = Ember.String;
-const { map, forEach } = Ember.EnumerableUtils;
+const { map, forEach } = Array.prototype;
 
 export default Ember.Service.extend({
   isEmpty: computed.equal('queue.length', 0).readOnly(),
