@@ -23,7 +23,7 @@ ember install:addon ember-cli-flash
 ```
 
 ## Compatibility
-This addon is tested against `1.11.1` as well as `release`, `beta` and `canary` channels. 
+This addon is tested against the `release`, `beta` and `canary` channels. 
 
 ## Usage
 Usage is very simple. From within the factories you injected to (defaults to `Controller`, `Route`, `View` and `Component`):
