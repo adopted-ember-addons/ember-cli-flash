@@ -5,8 +5,6 @@
   "launch_in_ci": [
     "PhantomJS"
   ],
-  "reporter": "xunit",
-  "report_file": "tests/reports/QUnit.xml",
   "launch_in_dev": [
     "PhantomJS",
     "Chrome"

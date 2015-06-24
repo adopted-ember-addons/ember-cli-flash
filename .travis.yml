@@ -2,7 +2,6 @@
 language: node_js
 node_js:
   - "0.12"
-  - "iojs"
 
 sudo: false
 
@@ -33,11 +32,3 @@ install:
 
 script:
   - ember try $EMBER_TRY_SCENARIO test
-
-notifications:
-  webhooks:
-    urls:
-      - https://webhooks.gitter.im/e/7f880585c8b4d7599ac0
-    on_success: change
-    on_failure: always
-    on_start: false

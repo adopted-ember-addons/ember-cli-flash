@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import layout from '../templates/components/flash-message';
 
 const get = Ember.get;
 const {
@@ -19,6 +20,7 @@ const {
 } = Handlebars;
 
 export default Ember.Component.extend({
+  layout,
   classNameBindings: [ 'alertType', 'active', 'exiting'],
   active: true,
   messageStyle: 'bootstrap',
