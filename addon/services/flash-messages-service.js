@@ -8,13 +8,11 @@ const {
   computed,
   getWithDefault,
   merge,
-  A: emberArray,
-  keys: objectKeys,
-  on
+  on,
+  A: emberArray
 } = Ember;
 
 const { classify } = Ember.String;
-const { map, forEach } = Ember.EnumerableUtils;
 
 export default Ember.Service.extend({
   isEmpty: computed.equal('queue.length', 0).readOnly(),
@@ -29,7 +27,11 @@ export default Ember.Service.extend({
   }).readOnly(),
 
   add(options = {}) {
-    return this._addToQueue(options);
+    const flashes = get(this, 'queue');
+    const flash = this._newFlashMessage(options);
+
+    flashes.pushObject(flash);
+    return flash;
   },
 
   clearMessages() {
@@ -37,15 +39,6 @@ export default Ember.Service.extend({
     flashes.clear();
 
     return flashes;
-  },
-
-  // private
-  _addToQueue(options = {}) {
-    const flashes = get(this, 'queue');
-    const flash = this._newFlashMessage(options);
-
-    flashes.pushObject(flash);
-    return flash;
   },
 
   _newFlashMessage(options = {}) {
@@ -82,12 +75,12 @@ export default Ember.Service.extend({
   _setDefaults() {
     const defaults = getWithDefault(this, 'flashMessageDefaults', {});
 
-    map(objectKeys(defaults), (key) => {
+    for (let key in defaults) {
       const classifiedKey = classify(key);
       const defaultKey = `default${classifiedKey}`;
 
-      return set(this, defaultKey, defaults[key]);
-    });
+      set(this, defaultKey, defaults[key]);
+    }
 
     this._registerTypes(getWithDefault(this, 'defaultTypes', []));
   },
@@ -102,7 +95,7 @@ export default Ember.Service.extend({
     this[type] = ((message, options = {}) => {
       const { timeout, priority, sticky, showProgress, extendedTimeout } = options;
 
-      return this._addToQueue(merge(options, {
+      return this.add(merge(options, {
         message,
         type,
         timeout,
@@ -115,6 +108,6 @@ export default Ember.Service.extend({
   },
 
   _registerTypes(types = []) {
-    forEach(types, (type) => this._registerType(type));
+    types.forEach((type) => this._registerType(type));
   }
 });

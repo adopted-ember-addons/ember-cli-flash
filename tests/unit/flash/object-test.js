@@ -3,8 +3,6 @@ import { module, test } from 'qunit';
 import Ember from 'ember';
 import FlashMessage from 'ember-cli-flash/flash/object';
 
-const { forEach } = Ember.EnumerableUtils;
-
 const testTimerDuration = 50;
 const { run } = Ember;
 let flash = null;
@@ -86,7 +84,7 @@ test('#is{type}Type aliases are read only', function(assert) {
   assert.expect(typeAliases.length);
 
   run(() => {
-    forEach(typeAliases, (alias) => {
+    typeAliases.forEach((alias) => {
       assert.throws(() => {
         flash.set(alias, 'derp');
       });

@@ -5,7 +5,6 @@ import FlashMessagesService from 'ember-cli-flash/services/flash-messages-servic
 
 const { run } = Ember;
 const { classify } = Ember.String;
-const { forEach } = Ember.EnumerableUtils;
 
 let service;
 let SANDBOX = {};
@@ -67,25 +66,10 @@ test('#arrangedQueue is read only', function(assert) {
 });
 
 test('#add adds a custom message', function(assert) {
-  assert.expect(3);
-
-  run(() => {
-    SANDBOX.flash = service.add({
-      message: 'Test message please ignore',
-      type: 'test'
-    });
-  });
-
-  assert.equal(service.get('queue.length'), 1);
-  assert.equal(service.get('queue.0'), SANDBOX.flash);
-  assert.equal(service.get('queue.0.type'), 'test');
-});
-
-test('#_addToQueue adds a message to queue', function(assert) {
   assert.expect(6);
 
   run(() => {
-    SANDBOX.flash = service._addToQueue({
+    SANDBOX.flash = service.add({
       message: 'test',
       type: 'test',
       timeout: 1,
@@ -156,7 +140,7 @@ test('#_initTypes registers default types on init', function(assert) {
 
   assert.expect(expectLength);
 
-  forEach(defaultTypes, (type) => {
+  defaultTypes.forEach((type) => {
     const method = service[type];
 
     assert.ok(method);
@@ -196,7 +180,7 @@ test('#_setDefaults sets the correct defaults for service properties', function(
 
   assert.expect(expectLength);
 
-  forEach(configOptions, (option) => {
+  configOptions.forEach((option) => {
     const classifiedKey = `default${classify(option)}`;
     const defaultValue = service[classifiedKey];
     const configValue = flashMessageDefaults[option];
