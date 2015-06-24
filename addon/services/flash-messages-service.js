@@ -14,7 +14,6 @@ const {
 } = Ember;
 
 const { classify } = Ember.String;
-const { map, forEach } = Ember.EnumerableUtils;
 
 export default Ember.Service.extend({
   isEmpty: computed.equal('queue.length', 0).readOnly(),
@@ -82,7 +81,7 @@ export default Ember.Service.extend({
   _setDefaults() {
     const defaults = getWithDefault(this, 'flashMessageDefaults', {});
 
-    map(objectKeys(defaults), (key) => {
+    objectKeys(defaults).map(key => {
       const classifiedKey = classify(key);
       const defaultKey = `default${classifiedKey}`;
 
@@ -115,6 +114,6 @@ export default Ember.Service.extend({
   },
 
   _registerTypes(types = []) {
-    forEach(types, (type) => this._registerType(type));
+    types.forEach(type => this._registerType(type));
   }
 });
