@@ -121,7 +121,6 @@ Ember.get(this, 'flashMessages').success('This is amazing', {
 
   Number of milliseconds before a flash message is removed to add the class 'exiting' to the element.  This can be used to animate the removal of messages with a transition.
 
-
 ### Arbitrary options
 You can also add arbitrary options to messages:
 
