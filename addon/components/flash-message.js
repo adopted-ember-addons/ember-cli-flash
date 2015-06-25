@@ -1,49 +1,82 @@
 import Ember from 'ember';
+import layout from '../templates/components/flash-message';
 
 const get = Ember.get;
-
 const {
+  Handlebars,
   computed,
-  getWithDefault
+  getWithDefault,
+  warn,
+  String: emberString
 } = Ember;
-
-const { classify } = Ember.String;
-const { escapeExpression } = Ember.Handlebars.Utils;
-const { SafeString } = Ember.Handlebars;
+const {
+  classify
+} = emberString;
+const {
+  escapeExpression
+} = Handlebars.Utils;
+const {
+  SafeString
+} = Handlebars;
 
 export default Ember.Component.extend({
-  classNameBindings: [ 'alertType', 'active' ],
+  layout,
+  classNameBindings: [ 'alertType', 'active', 'exiting'],
   active: true,
   messageStyle: 'bootstrap',
   showProgressBar: computed.readOnly('flash.showProgress'),
+  exiting: computed.readOnly('flash.exiting'),
 
-  alertType: computed('flash.type', function() {
-    const flashType = getWithDefault(this, 'flash.type', '');
-    const messageStyle = getWithDefault(this, 'messageStyle', '');
-    let prefix = 'alert alert-';
+  alertType: computed('flash.type', {
+    get() {
+      const flashType = getWithDefault(this, 'flash.type', '');
+      const messageStyle = getWithDefault(this, 'messageStyle', '');
+      let prefix = 'alert alert-';
 
-    if (messageStyle === 'foundation') {
-      prefix = 'alert-box ';
+      if (messageStyle === 'foundation') {
+        prefix = 'alert-box ';
+      }
+
+      return `${prefix}${flashType}`;
+    },
+
+    set() {
+      warn('`alertType` is read only');
+
+      return this;
     }
+  }),
 
-    return `${prefix}${flashType}`;
-  }).readOnly(),
+  flashType: computed('flash.type', {
+    get() {
+      const flashType = getWithDefault(this, 'flash.type', '');
 
-  flashType: computed('flash.type', function() {
-    const flashType = getWithDefault(this, 'flash.type', '');
+      return classify(flashType);
+    },
 
-    return classify(flashType);
-  }).readOnly(),
+    set() {
+      warn('`flashType` is read only');
 
-  progressDuration: computed('flash.showProgress', function() {
-    if (!get(this, 'flash.showProgress')) {
-      return false;
+      return this;
     }
+  }),
 
-    const duration = getWithDefault(this, 'flash.timeout', 0);
-    const escapedCSS = escapeExpression(`transition-duration: ${duration}ms`);
-    return new SafeString(escapedCSS);
-  }).readOnly(),
+  progressDuration: computed('flash.showProgress', {
+    get() {
+      if (!get(this, 'flash.showProgress')) {
+        return false;
+      }
+
+      const duration = getWithDefault(this, 'flash.timeout', 0);
+      const escapedCSS = escapeExpression(`transition-duration: ${duration}ms`);
+
+      return new SafeString(escapedCSS);
+    },
+
+    set() {
+      warn('`progressDuration` is read only');
+    }
+  }),
 
   click() {
     this._destroyFlashMessage();
@@ -63,5 +96,5 @@ export default Ember.Component.extend({
     }
   },
 
-  hasBlock: computed.bool('template')
+  hasBlock: computed.bool('template').readOnly()
 });

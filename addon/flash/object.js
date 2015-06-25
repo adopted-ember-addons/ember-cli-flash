@@ -1,65 +1,72 @@
 import Ember from 'ember';
+import customComputed from '../utils/computed';
 
 const get = Ember.get;
 const set = Ember.set;
-
 const {
+  Evented,
   computed,
-  getWithDefault,
-  run,
   on,
-  Evented
+  run,
 } = Ember;
 
 export default Ember.Object.extend(Evented, {
-  isSuccessType: computed.equal('type', 'success').readOnly(),
-  isInfoType: computed.equal('type', 'info').readOnly(),
-  isWarningType: computed.equal('type', 'warning').readOnly(),
-  isDangerType: computed.equal('type', 'danger').readOnly(),
-  isErrorType: computed.equal('type', 'error').readOnly(),
-
-  defaultTimeout: computed.readOnly('flashService.defaultTimeout'),
   queue: computed.readOnly('flashService.queue'),
+  totalTimeout: customComputed.add('timeout', 'extendedTimeout').readOnly(),
   timer: null,
+  exitTimer: null,
+  exiting: false,
 
   destroyMessage() {
     const queue = get(this, 'queue');
-    const flashMessage = this;
 
     if (queue) {
-      queue.removeObject(flashMessage);
+      queue.removeObject(this);
     }
 
-    flashMessage.destroy();
+    this.destroy();
+    this.trigger('didDestroyMessage');
+  },
 
-    const {
-      isDestroying,
-      isDestroyed
-    } = flashMessage.getProperties('isDestroying', 'isDestroyed');
+  exitMessage() {
+    set(this, 'exiting', true);
 
-    this.trigger('destroyMessage',  isDestroyed || isDestroying);
+    this._cancelTimer('exitTimer');
+    this.trigger('didExitMessage');
   },
 
   willDestroy() {
-    this._super();
-    const timer = get(this, 'timer');
+    const timers = [ 'timer', 'exitTimer' ];
 
-    if (timer) {
-      run.cancel(timer);
-      set(this, 'timer', null);
-    }
+    timers.forEach((timer) => {
+      this._cancelTimer(timer);
+    });
+
+    this._super(...arguments);
   },
 
   // private
-  _destroyLater: on('init', function() {
+  _setInitialState: on('init', function() {
     if (get(this, 'sticky')) {
       return;
     }
 
-    const defaultTimeout = get(this, 'defaultTimeout');
-    const timeout = getWithDefault(this, 'timeout', defaultTimeout);
-    const destroyTimer = run.later(this, 'destroyMessage', timeout);
+    this._setTimer('exitTimer', 'exitMessage', get(this, 'timeout'));
+    this._setTimer('timer', 'destroyMessage', get(this, 'totalTimeout'));
+  }),
 
-    set(this, 'timer', destroyTimer);
-  })
+  _setTimer(name, methodName, timeout) {
+    const timer = run.later(this, methodName, timeout);
+
+    set(this, name, timer);
+  },
+
+  _cancelTimer(name) {
+    const timer = get(this, name);
+
+    if (timer) {
+      run.cancel(timer);
+      set(this, name, null);
+    }
+  }
 });

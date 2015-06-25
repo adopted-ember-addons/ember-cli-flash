@@ -1,0 +1,1 @@
+export { default } from 'ember-cli-flash/utils/object-only';

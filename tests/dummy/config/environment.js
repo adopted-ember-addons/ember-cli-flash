@@ -22,6 +22,7 @@ module.exports = function(environment) {
       priority           : 100,
       sticky             : true,
       showProgress       : false,
+      extendedTimeout    : 0,
       type               : 'info',
       types              : [ 'success', 'info', 'warning', 'danger', 'alert', 'secondary', 'foo' ],
       injectionFactories : [ 'route', 'controller', 'view', 'component' ]

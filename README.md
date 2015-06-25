@@ -3,9 +3,7 @@
 
 [![npm version](https://badge.fury.io/js/ember-cli-flash.svg)](http://badge.fury.io/js/ember-cli-flash) [![Build Status](https://travis-ci.org/poteto/ember-cli-flash.svg)](https://travis-ci.org/poteto/ember-cli-flash) [![Ember Observer Score](http://emberobserver.com/badges/ember-cli-flash.svg)](http://emberobserver.com/addons/ember-cli-flash) [![Code Climate](https://codeclimate.com/github/poteto/ember-cli-flash/badges/gpa.svg)](https://codeclimate.com/github/poteto/ember-cli-flash) [![Circle CI](https://circleci.com/gh/poteto/ember-cli-flash.svg?style=svg)](https://circleci.com/gh/poteto/ember-cli-flash) 
 
-[![Join the chat at https://gitter.im/poteto/ember-cli-flash](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/poteto/ember-cli-flash?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
-This `ember-cli` addon adds a simple flash message service and component to your app. The servce is injected into all `Controllers`, `Routes`, `Views` and `Components` by default ([you can change this](#service-defaults)), or lazily injected with `Ember.inject.service`.
+This `ember-cli` addon adds a simple flash message service and component to your app. The service is injected into all `Controllers`, `Routes`, `Views` and `Components` by default ([you can change this](#service-defaults)), or lazily injected with `Ember.inject.service`.
 
 ## Installation
 You can install either with `ember install`:
@@ -23,7 +21,7 @@ ember install:addon ember-cli-flash
 ```
 
 ## Compatibility
-This addon is tested against `1.11.1` as well as `release`, `beta` and `canary` channels. 
+This addon is tested against the `release`, `beta` and `canary` channels. 
 
 ## Usage
 Usage is very simple. From within the factories you injected to (defaults to `Controller`, `Route`, `View` and `Component`):
@@ -66,12 +64,13 @@ You can also pass in options to custom messages:
 
 ```javascript
 Ember.get(this, 'flashMessages').add({
-  message      : 'I like alpacas',
-  type         : 'alpaca'
-  timeout      : 500,
-  priority     : 200,
-  sticky       : true,
-  showProgress : true
+  message            : 'I like alpacas',
+  type               : 'alpaca'
+  timeout            : 500,
+  priority           : 200,
+  sticky             : true,
+  showProgress       : true,
+  extendedTimeout    : 500,
 });
 
 Ember.get(this, 'flashMessages').success('This is amazing', {
@@ -115,6 +114,12 @@ Ember.get(this, 'flashMessages').success('This is amazing', {
   Default: `false`
 
   To show a progress bar in the flash message, set this to true.
+
+- `extendedTimeout?: number`
+
+  Default: `0`
+
+  Number of milliseconds before a flash message is removed to add the class 'exiting' to the element.  This can be used to animate the removal of messages with a transition.
 
 ### Arbitrary options
 You can also add arbitrary options to messages:
