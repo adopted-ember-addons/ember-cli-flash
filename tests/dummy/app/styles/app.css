@@ -516,8 +516,8 @@ hr {
 .alert .alert-progressBar {
   background: white;
   width: 0%;
-  transform-property: width;
-  transition-timing-function: linear;
-  -webkit-transform-property: width;
+  -webkit-transition-property: width;
+  transition-property: width;
   -webkit-transition-timing-function: linear;
+  transition-timing-function: linear;
 }

@@ -17,6 +17,13 @@ module.exports = function(environment) {
       // Here you can pass flags/options to your application instance
       // when it is created
     },
+    contentSecurityPolicy: {
+      'img-src': '*',
+      'connect-src': '*',
+      'font-src': '*',
+      'script-src': '\'unsafe-inline\' *',
+      'style-src': '\'unsafe-inline\' *'
+    },
     flashMessageDefaults: {
       timeout            : 1,
       priority           : 100,

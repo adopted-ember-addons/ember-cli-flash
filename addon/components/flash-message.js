@@ -22,7 +22,7 @@ const {
 export default Ember.Component.extend({
   layout,
   classNameBindings: [ 'alertType', 'active', 'exiting'],
-  active: true,
+  active: false,
   messageStyle: 'bootstrap',
   showProgressBar: computed.readOnly('flash.showProgress'),
   exiting: computed.readOnly('flash.exiting'),
@@ -60,6 +60,13 @@ export default Ember.Component.extend({
       return this;
     }
   }),
+
+  didInsertElement() {
+    this._super(...arguments);
+    Ember.run.later(() => {
+      this.set('active', true);
+    }, 0);
+  },
 
   progressDuration: computed('flash.showProgress', {
     get() {
