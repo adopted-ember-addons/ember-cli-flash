@@ -30,17 +30,21 @@ moduleForComponent('flash-message', 'FlashMessageComponent', {
 });
 
 test('it renders with the right props', function(assert) {
-  assert.expect(6);
+  assert.expect(7);
 
   const component = this.subject({ flash });
   assert.equal(component._state, 'preRender');
 
   this.render();
   assert.equal(component._state, 'inDOM');
-  assert.equal(component.get('active'), true);
+  assert.equal(component.get('active'), false);
   assert.equal(component.get('alertType'), 'alert alert-test');
   assert.equal(component.get('flashType'), 'Test');
   assert.equal(component.get('progressDuration'), `transition-duration: ${flash.get('timeout')}ms`);
+
+  Ember.run.later(() => {
+    assert.equal(component.get('active'), true);
+  }, 0);
 });
 
 test('read only methods cannot be set', function(assert) {
