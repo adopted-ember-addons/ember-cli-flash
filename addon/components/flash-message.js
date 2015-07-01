@@ -2,11 +2,14 @@ import Ember from 'ember';
 import layout from '../templates/components/flash-message';
 
 const get = Ember.get;
+const set = Ember.set;
 const {
   Handlebars,
   computed,
   getWithDefault,
   warn,
+  run,
+  on,
   String: emberString
 } = Ember;
 const {
@@ -61,12 +64,11 @@ export default Ember.Component.extend({
     }
   }),
 
-  didInsertElement() {
-    this._super(...arguments);
-    Ember.run.later(() => {
-      this.set('active', true);
-    }, 0);
-  },
+  _setActive: on('didInsertElement', function() {
+    run.scheduleOnce('afterRender', this, () => {
+      set(this, 'active', true);
+    });
+  }),
 
   progressDuration: computed('flash.showProgress', {
     get() {
