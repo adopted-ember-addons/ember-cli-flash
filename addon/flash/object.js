@@ -7,7 +7,7 @@ const {
   Evented,
   computed,
   on,
-  run,
+  run
 } = Ember;
 
 export default Ember.Object.extend(Evented, {
@@ -46,6 +46,8 @@ export default Ember.Object.extend(Evented, {
   },
 
   // private
+  _guid: customComputed.guidFor('message').readOnly(),
+
   _setInitialState: on('init', function() {
     if (get(this, 'sticky')) {
       return;
