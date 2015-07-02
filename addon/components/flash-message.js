@@ -2,11 +2,14 @@ import Ember from 'ember';
 import layout from '../templates/components/flash-message';
 
 const get = Ember.get;
+const set = Ember.set;
 const {
   Handlebars,
   computed,
   getWithDefault,
   warn,
+  run,
+  on,
   String: emberString
 } = Ember;
 const {
@@ -22,7 +25,7 @@ const {
 export default Ember.Component.extend({
   layout,
   classNameBindings: [ 'alertType', 'active', 'exiting'],
-  active: true,
+  active: false,
   messageStyle: 'bootstrap',
   showProgressBar: computed.readOnly('flash.showProgress'),
   exiting: computed.readOnly('flash.exiting'),
@@ -59,6 +62,12 @@ export default Ember.Component.extend({
 
       return this;
     }
+  }),
+
+  _setActive: on('didInsertElement', function() {
+    run.scheduleOnce('afterRender', this, () => {
+      set(this, 'active', true);
+    });
   }),
 
   progressDuration: computed('flash.showProgress', {

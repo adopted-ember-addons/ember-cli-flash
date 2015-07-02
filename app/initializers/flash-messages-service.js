@@ -16,5 +16,5 @@ export function initialize(_container, application) {
 
 export default {
   name: 'flash-messages-service',
-  initialize: initialize
+  initialize
 };

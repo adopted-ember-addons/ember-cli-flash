@@ -4,10 +4,13 @@ import config from '../../../config/environment';
 import FlashMessagesService from 'ember-cli-flash/services/flash-messages-service';
 
 const get = Ember.get;
+const set = Ember.set;
 const {
   run,
   typeOf,
-  String: emberString
+  guidFor,
+  String: emberString,
+  A: emberArray
 } = Ember;
 const {
   classify
@@ -85,6 +88,16 @@ test('#add adds a custom message', function(assert) {
   assert.equal(get(service, 'queue.0.showProgress'), true, 'it has the correct show progress');
 });
 
+test('#add adds a custom message with default type', function(assert) {
+  assert.expect(1);
+
+  SANDBOX.flash = service.add({
+    message: 'test'
+  });
+
+  assert.equal(get(service, 'queue.0.type'), 'info', 'it has the correct type');
+});
+
 test('#clearMessages clears the queue', function(assert) {
   assert.expect(2);
 
@@ -145,7 +158,7 @@ test('it adds specific options via specific message type', function(assert) {
   assert.equal(get(service, 'queue.0.appOption'), 'we meet again app-option');
 });
 
-test('#it sets the correct defaults for service properties', function(assert) {
+test('it sets the correct defaults for service properties', function(assert) {
   const { flashMessageDefaults } = config;
   const configOptions = Object.keys(flashMessageDefaults);
   const expectLength = configOptions.length;
@@ -159,4 +172,25 @@ test('#it sets the correct defaults for service properties', function(assert) {
 
     assert.equal(defaultValue, configValue);
   }
+});
+
+test('it adds duplicate messages to the queue if preventDuplicates is `false`', function(assert) {
+  set(service, 'defaultPreventDuplicates', false);
+  const expectedResult = emberArray([ 'foo', 'foo', 'bar' ]);
+  expectedResult.forEach((message) => service.success(message));
+  const result = get(service, 'queue').mapBy('message');
+
+  assert.deepEqual(result, expectedResult, 'it adds duplicate messages to the queue');
+  assert.equal(get(service, 'queue').length, 3, 'it adds duplicate messages to the queue');
+});
+
+test('it does not add duplicate messages to the queue if preventDuplicates is `true`', function(assert) {
+  set(service, 'defaultPreventDuplicates', true);
+  const messages = emberArray([ 'foo', 'foo', 'bar' ]);
+  const expectedResult = messages.uniq();
+  messages.forEach((message) => service.success(message));
+  const result = get(service, 'queue').mapBy('message');
+
+  assert.deepEqual(result, expectedResult, 'it does not add duplicate messages to the queue');
+  assert.equal(get(service, 'queue').length, 2, 'it does not add duplicate messages to the queue');
 });

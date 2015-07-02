@@ -17,15 +17,36 @@ module.exports = function(environment) {
       // Here you can pass flags/options to your application instance
       // when it is created
     },
+    contentSecurityPolicy: {
+      'img-src': '*',
+      'connect-src': '*',
+      'font-src': '*',
+      'script-src': '\'unsafe-inline\' *',
+      'style-src': '\'unsafe-inline\' *'
+    },
     flashMessageDefaults: {
-      timeout            : 1,
-      priority           : 100,
-      sticky             : true,
-      showProgress       : false,
-      extendedTimeout    : 0,
-      type               : 'info',
-      types              : [ 'success', 'info', 'warning', 'danger', 'alert', 'secondary', 'foo' ],
-      injectionFactories : [ 'route', 'controller', 'view', 'component' ]
+      timeout: 1,
+      extendedTimeout: 0,
+      priority: 100,
+      sticky: true,
+      showProgress: false,
+      type: 'info',
+      types: [
+        'success',
+        'info',
+        'warning',
+        'danger',
+        'alert',
+        'secondary',
+        'foo'
+      ],
+      injectionFactories: [
+        'route',
+        'controller',
+        'view',
+        'component'
+      ],
+      preventDuplicates: false
     }
   };
 

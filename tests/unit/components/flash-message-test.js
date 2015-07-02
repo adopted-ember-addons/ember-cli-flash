@@ -5,10 +5,12 @@ import {
 } from 'ember-qunit';
 import FlashMessage from 'ember-cli-flash/flash/object';
 
+const get = Ember.get;
+const set = Ember.set;
 const {
+  setProperties,
   run
 } = Ember;
-
 let flash;
 
 moduleForComponent('flash-message', 'FlashMessageComponent', {
@@ -25,22 +27,28 @@ moduleForComponent('flash-message', 'FlashMessageComponent', {
   },
 
   afterEach() {
+    run(() => {
+      flash.destroy();
+    });
+
     flash = null;
   }
 });
 
 test('it renders with the right props', function(assert) {
-  assert.expect(6);
+  assert.expect(5);
 
   const component = this.subject({ flash });
-  assert.equal(component._state, 'preRender');
+  assert.equal(get(component, 'active'), false, 'it initializes with `active` set to false');
 
   this.render();
-  assert.equal(component._state, 'inDOM');
-  assert.equal(component.get('active'), true);
-  assert.equal(component.get('alertType'), 'alert alert-test');
-  assert.equal(component.get('flashType'), 'Test');
-  assert.equal(component.get('progressDuration'), `transition-duration: ${flash.get('timeout')}ms`);
+  assert.equal(get(component, 'alertType'), 'alert alert-test', 'it has the right `alertType`');
+  assert.equal(get(component, 'flashType'), 'Test', 'it has the right `flashType`');
+  assert.equal(get(component, 'progressDuration'), `transition-duration: ${flash.get('timeout')}ms`, 'it has the right `progressDuration`');
+
+  run(() => {
+    assert.equal(get(component, 'active'), true, 'it sets `active` to true after rendering');
+  });
 });
 
 test('read only methods cannot be set', function(assert) {
@@ -50,7 +58,7 @@ test('read only methods cannot be set', function(assert) {
   this.render();
 
   run(() => {
-    component.setProperties({
+    setProperties(component, {
       alertType: 'invalid',
       flashType: 'invalid',
       progressDuration: 'derp',
@@ -58,12 +66,12 @@ test('read only methods cannot be set', function(assert) {
     });
   });
 
-  assert.deepEqual(component.get('flash'), flash);
+  assert.deepEqual(get(component, 'flash'), flash);
   assert.throws(() => {
-    component.set('showProgressBar', true);
+    set(component, 'showProgressBar', true);
   });
   assert.throws(() => {
-    component.set('hasBlock', true);
+    set(component, 'hasBlock', true);
   });
 });
 
@@ -72,9 +80,10 @@ test('exiting the flash object sets exiting on the component', function(assert) 
 
   const component = this.subject({ flash });
   this.render();
-  assert.ok(!component.get('exiting'));
+  assert.equal(get(component, 'exiting'), false, 'it initializes with `exiting` set to false');
+
   run(() => {
-    flash.set('exiting' , true);
-    assert.ok(component.get('exiting'));
+    set(flash, 'exiting' , true);
+    assert.ok(get(component, 'exiting', 'it sets `exiting` to true when the flash object is exiting'));
   });
 });
