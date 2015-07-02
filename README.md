@@ -24,7 +24,7 @@ ember install:addon ember-cli-flash
 This addon is tested against the `release`, `beta` and `canary` channels. 
 
 ## Usage
-Usage is very simple. From within the factories you injected to (defaults to `Controller`, `Route`, `View` and `Component`):
+Usage is very simple. First, add one of the [template examples](#displaying-flash-messages) to your app. Then, from within the factories you injected to (defaults to `Controller`, `Route`, `View` and `Component`):
 
 ### Convenience methods (Bootstrap / Foundation alerts)
 You can quickly add flash messages using these methods from the service:
@@ -48,6 +48,26 @@ These will add the appropriate classes to the flash message component for stylin
 // Bootstrap: the flash message component will have 'alert alert-success' classes
 // Foundation: the flash message component will have 'alert-box success' classes
 Ember.get(this, 'flashMessages').success('Success!');
+```
+
+You can take advantage of Promises, and their `.then` and `.catch` methods. To add a flash message after saving a model (or when it fails):
+
+```javascript
+actions: {
+  saveFoo() {
+    const flashMessages = Ember.get(this, 'flashMessages');
+
+    Ember.get(this, 'model').save()
+    .then((res) => {
+      flashMessages.success('Successfully saved!');
+      doSomething(res);
+    })
+    .catch((err) => {
+      flashMessages.danger('Something went wrong!');
+      handleError(err);
+    });
+  }
+}
 ```
 
 ### Custom messages
@@ -153,40 +173,6 @@ For example, this allows the template that ultimately renders the flash to be as
 {{/each}}
 ```
 
-### Service defaults 
-In `config/environment.js`, you can override service defaults in the `flashMessageDefaults` object:
-
-```javascript
-module.exports = function(environment) {
-  var ENV = {
-    flashMessageDefaults: {
-      timeout            : 5000,
-      priority           : 200,
-      sticky             : true,
-      showProgress       : true,
-      type               : 'alpaca',
-      types              : [ 'alpaca', 'notice', 'foobar' ],
-      injectionFactories : [ 'route', 'controller', 'view', 'component' ]
-    }
-  }
-}
-```
-
-See the [options](#options) section for detailed option information. This lets you override defaults for various options – most notably, you can specify exactly what types you need, which means in the above example, you can do `Ember.get('flashMessages').{alpaca,notice,foobar}`. 
-
-#### Injection factories
-The key `injectionFactories` lets you choose which factories the service injects itself into. 
-If you only need to access the flash message service from inside `controllers`, you can do so by changing the `injectionFactories` prop to `[ 'controller' ]`. Note that this will also work with any valid registry name on the container, e.g. `[ 'component:foo', 'controller:bar', 'route:baz' ]`.
-
-##### Lazy service injection
-If you're using Ember `1.10.0` or higher, you can opt to inject the service manually on any `Ember.Object` registered in the container:
-
-```javascript
-export default {
-  flashMessages: Ember.inject.service()
-}
-```
-
 ### Clearing all messages on screen
 It's best practise to use flash messages sparingly, only when you need to notify the user of something. If you're sending too many messages, and need a way for your users to clear all messages from screen, you can use this method:
 
@@ -194,35 +180,74 @@ It's best practise to use flash messages sparingly, only when you need to notify
 Ember.get(this, 'flashMessages').clearMessages();
 ```
 
-### Promises
-You can take advantage of Promises, and their `.then` and `.catch` methods. To add a flash message after saving a model (or when it fails):
+## Service defaults 
+In `config/environment.js`, you can override service defaults in the `flashMessageDefaults` object:
 
 ```javascript
-actions: {
-  saveFoo() {
-    const flashMessages = Ember.get(this, 'flashMessages');
+module.exports = function(environment) {
+  var ENV = {
+    flashMessageDefaults: {
+      // flash message defaults
+      timeout            : 5000,
+      extendedTimeout    : 0,
+      priority           : 200,
+      sticky             : true,
+      showProgress       : true,
 
-    Ember.get(this, 'model').save()
-    .then((res) => {
-      flashMessages.success('Successfully saved!');
-      doSomething(res);
-    })
-    .catch((err) => {
-      flashMessages.danger('Something went wrong!');
-      handleError(err);
-    });
+      // service defaults
+      type               : 'alpaca',
+      types              : [ 'alpaca', 'notice', 'foobar' ],
+      injectionFactories : [ 'route', 'controller', 'view', 'component' ],
+      preventDuplicates  : false
+    }
   }
 }
 ```
 
-### Custom flash message component
-If the provided component isn't to your liking, you can easily create your own. All you need to do is pass in the `flash` object to that component:
+See the [options](#options) section for information about flash message specific options. 
 
-```handlebars
-{{#each flashMessages.queue as |flash|}}
-  {{custom-component flash=flash}}
-{{/each}}
-```
+- `type?: string`
+
+  Default: `info`
+
+  When adding a custom message with `add`, if no `type` is specified, this default is used.
+
+- `types?: array`
+
+  Default: `[ 'success', 'info', 'warning', 'danger', 'alert', 'secondary' ]`
+
+  This option lets you specify exactly what types you need, which means in the above example, you can do `Ember.get('flashMessages').{alpaca,notice,foobar}`. 
+
+- `injectionFactories?: array`
+
+  Default: `[ 'route', 'controller', 'view', 'component' ]`
+
+  The key `injectionFactories` lets you choose which factories the service injects itself into. 
+  If you only need to access the flash message service from inside `controllers`, you can do so by changing the `injectionFactories` prop to `[ 'controller' ]`. Note that this will also work with any valid registry name on the container, e.g. `[ 'component:foo', 'controller:bar', 'route:baz' ]`.
+
+  If you'd prefer not to automatically inject the service into all factories, you can opt to inject the service manually on any `Ember.Object` registered in the container (Ember `1.10.0` or higher):
+
+  ```javascript
+  module.exports = function(environment) {
+    var ENV = {
+      flashMessageDefaults: {
+        injectionFactories: []
+      }
+    }
+  }
+  ```
+
+  ```javascript
+  export default Ember.Component.extend({
+    flashMessages: Ember.inject.service()
+  })
+  ```
+
+- `preventDuplicates?: boolean`
+
+  Default: `false`
+
+  If `true`, only 1 instance of a flash message (based on its `message`) can be added at a time. For example, adding two flash messages with the message `"Great success!"` would only add the first instance into the queue, and the second is ignored.
 
 ## Displaying flash messages
 Then, to display somewhere in your app, add this to your template:
@@ -282,6 +307,15 @@ To add `radius` or `round` type corners in Foundation:
 {{/each}}
 ```
 
+### Custom flash message component
+If the provided component isn't to your liking, you can easily create your own. All you need to do is pass in the `flash` object to that component:
+
+```handlebars
+{{#each flashMessages.queue as |flash|}}
+  {{custom-component flash=flash}}
+{{/each}}
+```
+
 ## Acceptance / Integration tests
 When you install the addon, it should automatically generate a helper located at `tests/helpers/flash-message.js`. You can do this manually as well:
 
@@ -289,7 +323,7 @@ When you install the addon, it should automatically generate a helper located at
 $ ember generate ember-cli-flash
 ```
 
-This also adds the helper to `tests/test-helper.js`. You won't actually need to import this into your tests, but it's good to know what the blueprint does. Basically, the helper overrides the `_destroyLater` method so that the flash messages behave intuitively in a testing environment. 
+This also adds the helper to `tests/test-helper.js`. You won't actually need to import this into your tests, but it's good to know what the blueprint does. Basically, the helper overrides the `_setInitialState` method so that the flash messages behave intuitively in a testing environment. 
 
 An example integration test:
 

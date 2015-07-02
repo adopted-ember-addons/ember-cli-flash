@@ -25,14 +25,28 @@ module.exports = function(environment) {
       'style-src': '\'unsafe-inline\' *'
     },
     flashMessageDefaults: {
-      timeout            : 1,
-      priority           : 100,
-      sticky             : true,
-      showProgress       : false,
-      extendedTimeout    : 0,
-      type               : 'info',
-      types              : [ 'success', 'info', 'warning', 'danger', 'alert', 'secondary', 'foo' ],
-      injectionFactories : [ 'route', 'controller', 'view', 'component' ]
+      timeout: 1,
+      extendedTimeout: 0,
+      priority: 100,
+      sticky: true,
+      showProgress: false,
+      type: 'info',
+      types: [
+        'success',
+        'info',
+        'warning',
+        'danger',
+        'alert',
+        'secondary',
+        'foo'
+      ],
+      injectionFactories: [
+        'route',
+        'controller',
+        'view',
+        'component'
+      ],
+      preventDuplicates: false
     }
   };
 

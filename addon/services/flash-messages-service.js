@@ -15,6 +15,7 @@ const {
   on,
   setProperties,
   typeOf,
+  warn,
   A: emberArray
 } = Ember;
 
@@ -33,11 +34,9 @@ export default Service.extend({
   }).readOnly(),
 
   add(options = {}) {
-    const flashes = get(this, 'queue');
     const flash = this._newFlashMessage(options);
 
-    flashes.pushObject(flash);
-    return flash;
+    return this._pushToQueue(flash);
   },
 
   clearMessages() {
@@ -62,9 +61,9 @@ export default Service.extend({
     const flashService = this;
     const allDefaults = getWithDefault(this, 'flashMessageDefaults', {});
     const defaults = objectWithout(allDefaults, [
-      'type',
       'types',
-      'injectionFactories'
+      'injectionFactories',
+      'preventDuplicates'
     ]);
 
     const flashMessageOptions = merge(copy(defaults), { flashService });
@@ -117,5 +116,28 @@ export default Service.extend({
 
       return this.add(flashMessageOptions);
     });
+  },
+
+  _guids: computed.mapBy('queue', '_guid').readOnly(),
+
+  _hasDuplicate(guid) {
+    const guids = get(this, '_guids');
+
+    return guids.contains(guid);
+  },
+
+  _pushToQueue(flashInstance) {
+    const preventDuplicates = get(this, 'defaultPreventDuplicates');
+    const flashes = get(this, 'queue');
+    const guid = get(flashInstance, '_guid');
+
+    if (preventDuplicates && this._hasDuplicate(guid)) {
+      warn('Attempting to add a duplicate message to the Flash Messages Service');
+      return;
+    }
+
+    flashes.pushObject(flashInstance);
+
+    return flashInstance;
   }
 });

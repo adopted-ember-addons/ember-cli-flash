@@ -4,6 +4,7 @@ const get = Ember.get;
 const {
   computed,
   typeOf,
+  guidFor: emberGuidFor,
   A: emberArray
 } = Ember;
 
@@ -27,4 +28,14 @@ export function add(...dependentKeys) {
   });
 
   return computedFunc.property.apply(computedFunc, dependentKeys);
+}
+
+export function guidFor(dependentKey) {
+  return computed(dependentKey, {
+    get() {
+      const value = get(this, dependentKey);
+
+      return emberGuidFor(value);
+    }
+  });
 }
