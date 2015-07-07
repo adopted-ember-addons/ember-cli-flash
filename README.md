@@ -340,6 +340,19 @@ test('flash message is rendered', function(assert) {
 });
 ```
 
+## Unit testing
+For unit tests that require the `flashMessages` service, you'll need to do a small bit of setup:
+
+```js
+moduleFor('route:foo', 'Unit | Route | foo', {
+  needs: [ 'service:flash-messages' ],
+  beforeEach() {
+    const typesUsed = [ 'warning', 'success' ];
+    this.container.lookup('service:flash-messages').registerTypes(typesUsed);
+  }
+});
+```
+
 ## Styling
 This addon is minimal and does not currently ship with a stylesheet. You can style flash messages by targetting the appropriate alert class (Foundation or Bootstrap) in your CSS.
 
