@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import Ember from 'ember';
 import config from '../../../config/environment';
-import FlashMessagesService from 'ember-cli-flash/services/flash-messages-service';
+import FlashMessagesService from 'ember-cli-flash/services/flash-messages';
 
 const get = Ember.get;
 const set = Ember.set;
