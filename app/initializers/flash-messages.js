@@ -1,4 +1,3 @@
-import FlashMessagesService from 'ember-cli-flash/services/flash-messages-service';
 import config from '../config/environment';
 
 export function initialize(_container, application) {
@@ -6,7 +5,6 @@ export function initialize(_container, application) {
   const { injectionFactories } = flashMessageDefaults;
 
   application.register('config:flash-messages', flashMessageDefaults, { instantiate: false });
-  application.register('service:flash-messages', FlashMessagesService, { singleton: true });
   application.inject('service:flash-messages', 'flashMessageDefaults', 'config:flash-messages');
 
   injectionFactories.forEach((factory) => {
@@ -15,6 +13,6 @@ export function initialize(_container, application) {
 }
 
 export default {
-  name: 'flash-messages-service',
+  name: 'flash-messages',
   initialize
 };
