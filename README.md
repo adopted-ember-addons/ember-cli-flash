@@ -21,7 +21,9 @@ ember install:addon ember-cli-flash
 ```
 
 ## Compatibility
-This addon is tested against the `release`, `beta` and `canary` channels. 
+This addon is tested against the `release`, `beta` and `canary` channels, and `1.12.1`. Because of changes to Computed Properties introduced in Ember `1.12`, the latest version of this addon is not compatible with versions below `1.12`. 
+
+If upgrading your Ember versions is not possible, you can downgrade to `ember-cli-flash` [`1.1.2`](https://github.com/poteto/ember-cli-flash/releases/tag/1.1.2).
 
 ## Usage
 Usage is very simple. First, add one of the [template examples](#displaying-flash-messages) to your app. Then, from within the factories you injected to (defaults to `Controller`, `Route`, `View` and `Component`):
