@@ -8,7 +8,6 @@ const set = Ember.set;
 const {
   run,
   typeOf,
-  guidFor,
   String: emberString,
   A: emberArray
 } = Ember;

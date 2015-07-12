@@ -2,14 +2,11 @@ import Ember from 'ember';
 import config from '../../config/environment';
 import {
   module,
-  test,
-  skip
+  test
 } from 'qunit';
 import startApp from '../helpers/start-app';
-import { lookupService } from '../helpers/utils/lookup';
 
 let application;
-const { run } = Ember;
 const { timeout: defaultTimeout } = config.flashMessageDefaults;
 
 module('Acceptance: Integration', {

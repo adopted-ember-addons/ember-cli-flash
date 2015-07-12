@@ -1,4 +1,3 @@
-/* global sinon */
 import { module, test } from 'qunit';
 import Ember from 'ember';
 import FlashMessage from 'ember-cli-flash/flash/object';
