@@ -1,11 +1,11 @@
 import Ember from 'ember';
 import layout from '../templates/components/flash-message';
+import computed from 'ember-new-computed';
 
 const get = Ember.get;
 const set = Ember.set;
 const {
   Handlebars,
-  computed,
   getWithDefault,
   warn,
   run,

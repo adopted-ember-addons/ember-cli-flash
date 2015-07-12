@@ -1,13 +1,13 @@
 import Ember from 'ember';
 import FlashMessage from 'ember-cli-flash/flash/object';
 import objectWithout from '../utils/object-without';
+import computed from 'ember-new-computed';
 
 const get = Ember.get;
 const set = Ember.set;
 const {
   Service,
   assert,
-  computed,
   copy,
   getWithDefault,
   isNone,
