@@ -1,11 +1,11 @@
 import Ember from 'ember';
 import customComputed from '../utils/computed';
+import computed from 'ember-new-computed';
 
 const get = Ember.get;
 const set = Ember.set;
 const {
   Evented,
-  computed,
   on,
   run
 } = Ember;
