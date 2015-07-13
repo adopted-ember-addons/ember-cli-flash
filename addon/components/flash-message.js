@@ -65,7 +65,7 @@ export default Ember.Component.extend({
   }),
 
   _setActive: on('didInsertElement', function() {
-    run.scheduleOnce('afterRender', this, () => {
+    run.next(() => {
       set(this, 'active', true);
     });
   }),
