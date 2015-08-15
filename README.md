@@ -84,20 +84,20 @@ You can also pass in options to custom messages:
 
 ```javascript
 Ember.get(this, 'flashMessages').add({
-  message            : 'I like alpacas',
-  type               : 'alpaca'
-  timeout            : 500,
-  priority           : 200,
-  sticky             : true,
-  showProgress       : true,
-  extendedTimeout    : 500,
+  message: 'I like alpacas',
+  type: 'alpaca'
+  timeout: 500,
+  priority: 200,
+  sticky: true,
+  showProgress: true,
+  extendedTimeout: 500,
 });
 
 Ember.get(this, 'flashMessages').success('This is amazing', {
-  timeout      : 100,
-  priority     : 100,
-  sticky       : false,
-  showProgress : true
+  timeout: 100,
+  priority: 100,
+  sticky: false,
+  showProgress: true
 });
 ```
 
@@ -146,14 +146,14 @@ You can also add arbitrary options to messages:
 
 ```javascript
 Ember.get(this, 'flashMessages').success('Cool story bro', {
-  someOption : 'hello'
+  someOption: 'hello'
 });
 
 Ember.get(this, 'flashMessages').add({
-  message  : 'hello',
-  type     : 'foo',
-  template : 'some-template',
-  context  : customContext
+  message: 'hello',
+  type: 'foo',
+  template: 'some-template',
+  context: customContext
 });
 ```
 
@@ -188,17 +188,17 @@ module.exports = function(environment) {
   var ENV = {
     flashMessageDefaults: {
       // flash message defaults
-      timeout            : 5000,
-      extendedTimeout    : 0,
-      priority           : 200,
-      sticky             : true,
-      showProgress       : true,
+      timeout: 5000,
+      extendedTimeout: 0,
+      priority: 200,
+      sticky: true,
+      showProgress: true,
 
       // service defaults
-      type               : 'alpaca',
-      types              : [ 'alpaca', 'notice', 'foobar' ],
-      injectionFactories : [ 'route', 'controller', 'view', 'component' ],
-      preventDuplicates  : false
+      type: 'alpaca',
+      types: [ 'alpaca', 'notice', 'foobar' ],
+      injectionFactories: [ 'route', 'controller', 'view', 'component' ],
+      preventDuplicates: false
     }
   }
 }

@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const get = Ember.get;
+const { get } = Ember;
 
 export default Ember.Route.extend({
   activate() {
