@@ -2,29 +2,24 @@ import Ember from 'ember';
 import layout from '../templates/components/flash-message';
 import computed from 'ember-new-computed';
 
-const get = Ember.get;
-const set = Ember.set;
 const {
   Handlebars,
   getWithDefault,
   warn,
   run,
   on,
-  String: emberString
+  get,
+  set,
+  String: { classify },
+  Handlebars: { SafeString }
 } = Ember;
-const {
-  classify
-} = emberString;
 const {
   escapeExpression
 } = Handlebars.Utils;
-const {
-  SafeString
-} = Handlebars;
 
 export default Ember.Component.extend({
   layout,
-  classNameBindings: [ 'alertType', 'active', 'exiting'],
+  classNameBindings: [ 'alertType', 'active', 'exiting' ],
   active: false,
   messageStyle: 'bootstrap',
   showProgressBar: computed.readOnly('flash.showProgress'),

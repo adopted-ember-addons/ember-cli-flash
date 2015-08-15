@@ -3,8 +3,6 @@ import FlashMessage from 'ember-cli-flash/flash/object';
 import objectWithout from '../utils/object-without';
 import computed from 'ember-new-computed';
 
-const get = Ember.get;
-const set = Ember.set;
 const {
   Service,
   assert,
@@ -16,6 +14,8 @@ const {
   setProperties,
   typeOf,
   warn,
+  get,
+  set,
   A: emberArray
 } = Ember;
 
