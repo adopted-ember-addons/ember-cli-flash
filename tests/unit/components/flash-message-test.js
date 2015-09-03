@@ -5,11 +5,11 @@ import {
 } from 'ember-qunit';
 import FlashMessage from 'ember-cli-flash/flash/object';
 
-const get = Ember.get;
-const set = Ember.set;
 const {
   setProperties,
-  run
+  run,
+  get,
+  set
 } = Ember;
 let flash;
 
@@ -84,6 +84,6 @@ test('exiting the flash object sets exiting on the component', function(assert) 
 
   run(() => {
     set(flash, 'exiting' , true);
-    assert.ok(get(component, 'exiting', 'it sets `exiting` to true when the flash object is exiting'));
+    assert.ok(get(component, 'exiting'), 'it sets `exiting` to true when the flash object is exiting');
   });
 });

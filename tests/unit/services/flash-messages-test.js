@@ -3,17 +3,14 @@ import Ember from 'ember';
 import config from '../../../config/environment';
 import FlashMessagesService from 'ember-cli-flash/services/flash-messages';
 
-const get = Ember.get;
-const set = Ember.set;
 const {
   run,
   typeOf,
-  String: emberString,
+  get,
+  set,
+  String: { classify },
   A: emberArray
 } = Ember;
-const {
-  classify
-} = emberString;
 
 let service;
 let SANDBOX = {};

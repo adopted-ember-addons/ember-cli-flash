@@ -2,7 +2,7 @@ import Ember from 'ember';
 import computed from '../../../utils/computed';
 import { module, test } from 'qunit';
 
-const get = Ember.get;
+const { get } = Ember;
 
 module('Unit | Utility | computed');
 

@@ -3,9 +3,9 @@ import Ember from 'ember';
 import FlashMessage from 'ember-cli-flash/flash/object';
 
 const testTimerDuration = 50;
-const get = Ember.get;
 const {
-  run
+  run,
+  get
 } = Ember;
 let flash = null;
 let SANDBOX = {};

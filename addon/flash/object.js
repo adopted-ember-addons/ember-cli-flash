@@ -2,12 +2,12 @@ import Ember from 'ember';
 import customComputed from '../utils/computed';
 import computed from 'ember-new-computed';
 
-const get = Ember.get;
-const set = Ember.set;
 const {
   Evented,
   on,
-  run
+  run,
+  get,
+  set
 } = Ember;
 
 export default Ember.Object.extend(Evented, {
