@@ -152,19 +152,19 @@ Ember.get(this, 'flashMessages').success('Cool story bro', {
 Ember.get(this, 'flashMessages').add({
   message: 'hello',
   type: 'foo',
-  template: 'some-template',
-  context: customContext
+  componentName: 'some-component',
+  content: customContent
 });
 ```
 
 #### Example use case
-For example, this allows the template that ultimately renders the flash to be as rich as it needs to be:
+This makes use of the [component helper](http://emberjs.com/blog/2015/03/27/ember-1-11-0-released.html#toc_component-helper), allowing the template that ultimately renders the flash to be dynamic:
 
 ```handlebars
 {{#each flashMessages.queue as |flash|}}
   {{#flash-message flash=flash as |component flash|}}
-    {{#if flash.template}}
-      {{render flash.template flash.context}}
+    {{#if flash.componentName}}
+      {{component flash.componentName content=flash.content}}
     {{else}}
       <h6>{{component.flashType}}</h6>
       <p>{{flash.message}}</p>
