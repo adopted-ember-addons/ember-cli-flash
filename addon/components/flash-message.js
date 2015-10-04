@@ -25,6 +25,17 @@ export default Ember.Component.extend({
   showProgressBar: computed.readOnly('flash.showProgress'),
   exiting: computed.readOnly('flash.exiting'),
 
+  closeFlashOnClick: computed('flash.closeOnClick', {
+    get() {
+      return getWithDefault(this, 'flash.closeOnClick', true);
+    },
+    set() {
+      warn('`closeFlashOnClick` is read only');
+
+      return this;
+    }
+  }),
+
   alertType: computed('flash.type', {
     get() {
       const flashType = getWithDefault(this, 'flash.type', '');
@@ -83,7 +94,11 @@ export default Ember.Component.extend({
   }),
 
   click() {
-    this._destroyFlashMessage();
+    if (this.get('closeFlashOnClick')) {
+      this._destroyFlashMessage();
+    } else {
+      return false;
+    }
   },
 
   willDestroy() {
