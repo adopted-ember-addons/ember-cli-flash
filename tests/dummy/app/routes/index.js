@@ -8,7 +8,8 @@ export default Ember.Route.extend({
 
     flashMessages.success('Route transitioned successfully', {
       priority: 500,
-      showProgress: true
+      showProgress: true,
+      closeOnClick: false
     });
 
     flashMessages.warning('It is going to rain tomorrow', {
