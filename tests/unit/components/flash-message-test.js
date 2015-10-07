@@ -62,8 +62,7 @@ test('read only methods cannot be set', function(assert) {
       alertType: 'invalid',
       flashType: 'invalid',
       progressDuration: 'derp',
-      extendedTimeout: 'nope',
-      closeFlashOnClick: false
+      extendedTimeout: 'nope'
     });
   });
 
@@ -79,18 +78,17 @@ test('read only methods cannot be set', function(assert) {
 test('Changing closeOnClick to false ensures the flash message is not closed', function(assert) {
   assert.expect(2);
 
+  set(flash, 'closeOnClick', false);
   const component = this.subject({ flash });
 
-  run(() => {
-    set(flash, 'closeOnClick', false);
-  });
-
   this.render();
-  assert.equal(get(component, 'exiting'), false, 'it initializes with `exiting` set to false');
+  assert.equal(get(component, 'exiting'), false, 'it initializes with `exiting` set to true');
 
   run(() => {
     component.click();
+  });
 
+  run(() => {
     assert.equal(get(component, 'exiting'), false, 'Exiting is not made true to close the flash message');
   });
 });
