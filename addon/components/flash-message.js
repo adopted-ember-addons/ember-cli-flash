@@ -11,7 +11,8 @@ const {
   get,
   set,
   String: { classify },
-  Handlebars: { SafeString }
+  Handlebars: { SafeString },
+  K
 } = Ember;
 const {
   escapeExpression
@@ -25,16 +26,12 @@ export default Ember.Component.extend({
   showProgressBar: computed.readOnly('flash.showProgress'),
   exiting: computed.readOnly('flash.exiting'),
 
-  closeFlashOnClick: computed('flash.closeOnClick', {
-    get() {
-      return getWithDefault(this, 'flash.closeOnClick', true);
-    },
-    set() {
-      warn('`closeFlashOnClick` is read only');
-
-      return this;
+  init() {
+    this._super(...arguments);
+    if (!getWithDefault(this, 'flash.closeOnClick', true)) {
+      this.click = K;
     }
-  }),
+  },
 
   alertType: computed('flash.type', {
     get() {
@@ -94,11 +91,7 @@ export default Ember.Component.extend({
   }),
 
   click() {
-    if (this.get('closeFlashOnClick')) {
-      this._destroyFlashMessage();
-    } else {
-      return false;
-    }
+    this._destroyFlashMessage();
   },
 
   willDestroy() {
