@@ -10,21 +10,24 @@ const {
   getWithDefault,
   isNone,
   merge,
-  on,
   setProperties,
   typeOf,
   warn,
   get,
   set,
+  String: { classify },
   A: emberArray
 } = Ember;
-
-const { classify } = Ember.String;
+const {
+  equal,
+  sort,
+  mapBy
+} = computed;
 
 export default Service.extend({
-  isEmpty: computed.equal('queue.length', 0).readOnly(),
+  isEmpty: equal('queue.length', 0).readOnly(),
 
-  arrangedQueue: computed.sort('queue', function(a, b) {
+  arrangedQueue: sort('queue', function(a, b) {
     if (a.priority < b.priority) {
       return 1;
     } else if (a.priority > b.priority) {
@@ -33,25 +36,29 @@ export default Service.extend({
     return 0;
   }).readOnly(),
 
-  add(options = {}) {
-    const flash = this._newFlashMessage(options);
+  _guids: mapBy('queue', '_guid').readOnly(),
 
-    return this._pushToQueue(flash);
+  init() {
+    this._super(...arguments);
+    this._setDefaults();
+    this.queue = emberArray();
+  },
+
+  add(options = {}) {
+    return this._enqueue(this._newFlashMessage(options));
   },
 
   clearMessages() {
     const flashes = get(this, 'queue');
 
     if (isNone(flashes)) {
-      set(this, 'queue', emberArray([]));
-    } else {
-      flashes.clear();
+      return;
     }
 
-    return flashes;
+    return flashes.clear();
   },
 
-  registerTypes(types = []) {
+  registerTypes(types = emberArray()) {
     types.forEach((type) => this._registerType(type));
   },
 
@@ -89,11 +96,6 @@ export default Service.extend({
     return value;
   },
 
-  _setInitialState: on('init', function() {
-    this._setDefaults();
-    this.clearMessages();
-  }),
-
   _setDefaults() {
     const defaults = getWithDefault(this, 'flashMessageDefaults', {});
 
@@ -104,7 +106,7 @@ export default Service.extend({
       set(this, defaultKey, defaults[key]);
     }
 
-    this.registerTypes(getWithDefault(this, 'defaultTypes', []));
+    this.registerTypes(getWithDefault(this, 'defaultTypes', emberArray()));
   },
 
   _registerType(type) {
@@ -118,17 +120,12 @@ export default Service.extend({
     });
   },
 
-  _guids: computed.mapBy('queue', '_guid').readOnly(),
-
   _hasDuplicate(guid) {
-    const guids = get(this, '_guids');
-
-    return guids.contains(guid);
+    return get(this, '_guids').contains(guid);
   },
 
-  _pushToQueue(flashInstance) {
+  _enqueue(flashInstance) {
     const preventDuplicates = get(this, 'defaultPreventDuplicates');
-    const flashes = get(this, 'queue');
     const guid = get(flashInstance, '_guid');
 
     if (preventDuplicates && this._hasDuplicate(guid)) {
@@ -136,8 +133,6 @@ export default Service.extend({
       return;
     }
 
-    flashes.pushObject(flashInstance);
-
-    return flashInstance;
+    return get(this, 'queue').pushObject(flashInstance);
   }
 });
