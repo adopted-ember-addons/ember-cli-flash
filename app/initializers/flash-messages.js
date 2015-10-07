@@ -1,6 +1,6 @@
 import config from '../config/environment';
 
-export function initialize(_container, application) {
+export function initialize(application) {
   const { flashMessageDefaults } = config;
   const { injectionFactories } = flashMessageDefaults;
 
