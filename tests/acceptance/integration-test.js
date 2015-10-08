@@ -5,9 +5,12 @@ import {
   test
 } from 'qunit';
 import startApp from '../helpers/start-app';
+import Flash from 'ember-cli-flash/flash/object';
 
 let application;
 const { timeout: defaultTimeout } = config.flashMessageDefaults;
+
+const flashBackup = Flash.extend();
 
 module('Acceptance: Integration', {
   beforeEach() {
@@ -43,5 +46,23 @@ test('high priority messages are rendered on top', function(assert) {
     assert.ok(find('.alert'));
     assert.equal(find('.alert h6').first().text(), 'Warning');
     assert.equal(find('.alert p').first().text(), 'It is going to rain tomorrow');
+  });
+});
+test('sticky messages are still removed when clicked', function(assert) {
+  assert.expect(5);
+
+  visit('/');
+
+  andThen(() => {
+    assert.ok(find('.alert.alert-danger'));
+    assert.equal(find('.alert').length, 1);
+    assert.equal(find('.alert.alert-danger h6').text(), 'Danger');
+    assert.equal(find('.alert.alert-danger p').text(), 'You went offline');
+  });
+
+  // click('.alert.alert-danger');
+  triggerEvent('.alert.alert-danger', $(document), 'click');
+  andThen(() => {
+    assert.equal(find('.alert').length, 0);
   });
 });

@@ -85,6 +85,20 @@ export default Ember.Component.extend({
   click() {
     this._destroyFlashMessage();
   },
+  mouseEnter() {
+    const flash = getWithDefault(this, 'flash', false);
+    
+    if (flash) {
+      flash.preventDestroy();
+    }
+  },
+  mouseLeave() {
+    const flash = getWithDefault(this, 'flash', false);
+    
+    if (flash) {
+      flash.prepareDestroy();
+    }
+  },
 
   willDestroy() {
     this._super();
