@@ -1,7 +1,7 @@
 # ember-cli-flash
 *Simple, highly configurable flash messages for ember-cli.*
 
-[![npm version](https://badge.fury.io/js/ember-cli-flash.svg)](http://badge.fury.io/js/ember-cli-flash) [![Build Status](https://travis-ci.org/poteto/ember-cli-flash.svg)](https://travis-ci.org/poteto/ember-cli-flash) [![Ember Observer Score](http://emberobserver.com/badges/ember-cli-flash.svg)](http://emberobserver.com/addons/ember-cli-flash) [![Code Climate](https://codeclimate.com/github/poteto/ember-cli-flash/badges/gpa.svg)](https://codeclimate.com/github/poteto/ember-cli-flash) [![Circle CI](https://circleci.com/gh/poteto/ember-cli-flash.svg?style=svg)](https://circleci.com/gh/poteto/ember-cli-flash) 
+[![npm version](https://badge.fury.io/js/ember-cli-flash.svg)](http://badge.fury.io/js/ember-cli-flash) [![Build Status](https://travis-ci.org/poteto/ember-cli-flash.svg)](https://travis-ci.org/poteto/ember-cli-flash) [![Ember Observer Score](http://emberobserver.com/badges/ember-cli-flash.svg)](http://emberobserver.com/addons/ember-cli-flash) [![Code Climate](https://codeclimate.com/github/poteto/ember-cli-flash/badges/gpa.svg)](https://codeclimate.com/github/poteto/ember-cli-flash) 
 
 This `ember-cli` addon adds a simple flash message service and component to your app. The service is injected into all `Controllers`, `Routes`, `Views` and `Components` by default ([you can change this](#service-defaults)), or lazily injected with `Ember.inject.service`.
 
@@ -152,19 +152,19 @@ Ember.get(this, 'flashMessages').success('Cool story bro', {
 Ember.get(this, 'flashMessages').add({
   message: 'hello',
   type: 'foo',
-  template: 'some-template',
-  context: customContext
+  componentName: 'some-component',
+  content: customContent
 });
 ```
 
 #### Example use case
-For example, this allows the template that ultimately renders the flash to be as rich as it needs to be:
+This makes use of the [component helper](http://emberjs.com/blog/2015/03/27/ember-1-11-0-released.html#toc_component-helper), allowing the template that ultimately renders the flash to be dynamic:
 
 ```handlebars
 {{#each flashMessages.queue as |flash|}}
   {{#flash-message flash=flash as |component flash|}}
-    {{#if flash.template}}
-      {{render flash.template flash.context}}
+    {{#if flash.componentName}}
+      {{component flash.componentName content=flash.content}}
     {{else}}
       <h6>{{component.flashType}}</h6>
       <p>{{flash.message}}</p>
