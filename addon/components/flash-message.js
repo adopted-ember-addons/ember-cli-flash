@@ -3,27 +3,27 @@ import layout from '../templates/components/flash-message';
 import computed from 'ember-new-computed';
 
 const {
-  Handlebars,
+  String: { classify, htmlSafe },
+  Component,
   getWithDefault,
   warn,
   run,
   on,
   get,
   set,
-  String: { classify },
-  Handlebars: { SafeString }
 } = Ember;
 const {
-  escapeExpression
-} = Handlebars.Utils;
+  readOnly,
+  bool
+} = computed;
 
-export default Ember.Component.extend({
+export default Component.extend({
   layout,
-  classNameBindings: [ 'alertType', 'active', 'exiting' ],
+  classNameBindings: ['alertType', 'active', 'exiting'],
   active: false,
   messageStyle: 'bootstrap',
-  showProgressBar: computed.readOnly('flash.showProgress'),
-  exiting: computed.readOnly('flash.exiting'),
+  showProgressBar: readOnly('flash.showProgress'),
+  exiting: readOnly('flash.exiting'),
 
   alertType: computed('flash.type', {
     get() {
@@ -72,9 +72,8 @@ export default Ember.Component.extend({
       }
 
       const duration = getWithDefault(this, 'flash.timeout', 0);
-      const escapedCSS = escapeExpression(`transition-duration: ${duration}ms`);
 
-      return new SafeString(escapedCSS);
+      return htmlSafe(`transition-duration: ${duration}ms`);
     },
 
     set() {
@@ -100,5 +99,5 @@ export default Ember.Component.extend({
     }
   },
 
-  hasBlock: computed.bool('template').readOnly()
+  hasBlock: bool('template').readOnly()
 });

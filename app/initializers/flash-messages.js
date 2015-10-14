@@ -1,8 +1,7 @@
 import config from '../config/environment';
 
 export function initialize() {
-  let application = arguments[1] || arguments[0];
-
+  const application = arguments[1] || arguments[0];
   const { flashMessageDefaults } = config;
   const { injectionFactories } = flashMessageDefaults;
 
