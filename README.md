@@ -85,7 +85,7 @@ You can also pass in options to custom messages:
 ```javascript
 Ember.get(this, 'flashMessages').add({
   message: 'I like alpacas',
-  type: 'alpaca'
+  type: 'alpaca',
   timeout: 500,
   priority: 200,
   sticky: true,
