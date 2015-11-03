@@ -75,6 +75,16 @@ test('read only methods cannot be set', function(assert) {
   });
 });
 
+test('it starts the flash timer on render', function(assert) {
+  assert.expect(2);
+
+  this.subject({ flash });
+  assert.equal(get(flash, 'timer'), undefined, 'it initializes with without a timer set');
+
+  this.render();
+  assert.ok(get(flash, 'timer'), 'it starts the timer on render');
+});
+
 test('exiting the flash object sets exiting on the component', function(assert) {
   assert.expect(2);
 

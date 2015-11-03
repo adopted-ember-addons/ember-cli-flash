@@ -20,10 +20,8 @@ export default EmberObject.extend(Evented, {
   exitTimer: null,
   exiting: false,
 
-  init() {
-    this._super(...arguments);
-
-    if (get(this, 'sticky')) {
+  startTimer() {
+    if (get(this, 'timer') || get(this, 'sticky')) {
       return;
     }
 

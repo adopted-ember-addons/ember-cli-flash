@@ -29,7 +29,9 @@ module('FlashMessageObject', {
   }
 });
 
-test('it sets a timer after init', function(assert) {
+test('it sets a timer when startTimer is called', function(assert) {
+  flash.startTimer();
+
   assert.ok(flash.get('timer'));
 });
 
@@ -37,6 +39,8 @@ test('it destroys the message after the timer has elapsed', function(assert) {
   let result;
   const done = assert.async();
   assert.expect(3);
+
+  flash.startTimer();
 
   flash.on('didDestroyMessage', () => {
     result = 'foo';
@@ -62,6 +66,8 @@ test('it does not destroy the message if it is sticky', function(assert) {
     sticky: true
   });
 
+  stickyFlash.startTimer();
+
   run.later(() => {
     assert.equal(get(stickyFlash, 'isDestroyed'), false, 'it is not destroyed');
     done();
@@ -83,6 +89,9 @@ test('it sets an `exitTimer` when `extendedTimeout` is set', function(assert) {
   const exitFlash = FlashMessage.create({
     extendedTimeout: testTimerDuration
   });
+
+  exitFlash.startTimer();
+
   assert.ok(exitFlash.get('exitTimer'));
 });
 
@@ -94,6 +103,8 @@ test('it sets `exiting` to true after the timer has elapsed', function(assert) {
     timeout: testTimerDuration,
     extendedTimeout: testTimerDuration
   });
+
+  exitFlash.startTimer();
 
   run.later(() => {
     assert.equal(exitFlash.get('exiting'), true, 'it sets `exiting` to true');
