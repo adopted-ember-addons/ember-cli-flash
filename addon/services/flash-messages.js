@@ -45,7 +45,9 @@ export default Service.extend({
   },
 
   add(options = {}) {
-    return this._enqueue(this._newFlashMessage(options));
+    this._enqueue(this._newFlashMessage(options));
+
+    return this;
   },
 
   clearMessages() {
@@ -55,11 +57,15 @@ export default Service.extend({
       return;
     }
 
-    return flashes.clear();
+    flashes.clear();
+
+    return this;
   },
 
   registerTypes(types = emberArray()) {
     types.forEach((type) => this._registerType(type));
+
+    return this;
   },
 
   _newFlashMessage(options = {}) {
