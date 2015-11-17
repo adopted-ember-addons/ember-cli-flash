@@ -11,6 +11,7 @@ const {
   on,
   get,
   set,
+  observer
 } = Ember;
 const {
   readOnly,
@@ -58,6 +59,14 @@ export default Component.extend({
       return this;
     }
   }),
+
+  // Observer used here for backwards compatibility with Ember 1.11/1.12, replace
+  // with on('didRender') once possible.
+  _startTimers: on('didInsertElement', observer('flash', function() {
+    run.schedule('afterRender', this, () => {
+      get(this, 'flash').startTimer();
+    });
+  })),
 
   _setActive: on('didInsertElement', function() {
     run.scheduleOnce('afterRender', this, () => {
