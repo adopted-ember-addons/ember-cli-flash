@@ -60,7 +60,7 @@ export default Component.extend({
   }),
 
   _setActive: on('didInsertElement', function() {
-    run.scheduleOnce('afterRender', this, () => {
+    run.next(this, () => {
       set(this, 'active', true);
     });
   }),

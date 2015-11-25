@@ -46,7 +46,7 @@ test('it renders with the right props', function(assert) {
   assert.equal(get(component, 'flashType'), 'Test', 'it has the right `flashType`');
   assert.equal(get(component, 'progressDuration'), `transition-duration: ${flash.get('timeout')}ms`, 'it has the right `progressDuration`');
 
-  run(() => {
+  run.next(() => {
     assert.equal(get(component, 'active'), true, 'it sets `active` to true after rendering');
   });
 });
