@@ -10,7 +10,7 @@ const {
   run,
   on,
   get,
-  set,
+  set
 } = Ember;
 const {
   readOnly,
