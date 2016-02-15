@@ -38,11 +38,7 @@ export default Component.extend({
       return `${prefix}${flashType}`;
     },
 
-    set() {
-      warn('`alertType` is read only');
-
-      return this;
-    }
+    set: readOnlySet
   }),
 
   flashType: computed('flash.type', {
@@ -52,11 +48,7 @@ export default Component.extend({
       return classify(flashType);
     },
 
-    set() {
-      warn('`flashType` is read only');
-
-      return this;
-    }
+    set: readOnlySet
   }),
 
   _setActive: on('didInsertElement', function() {
@@ -76,9 +68,7 @@ export default Component.extend({
       return htmlSafe(`transition-duration: ${duration}ms`);
     },
 
-    set() {
-      warn('`progressDuration` is read only');
-    }
+    set: readOnlySet
   }),
 
   click() {
@@ -101,3 +91,12 @@ export default Component.extend({
 
   hasBlock: bool('template').readOnly()
 });
+
+function readOnlySet(key, value, oldValue) {
+  warn(`\`${key}\` is read only`, {
+    id: `ember-cli-flash.${key}-readonly`
+  });
+
+  // Ember 1.11 does not pass `oldValue`
+  return arguments.length === 3 ? oldValue : this.get(key);
+}

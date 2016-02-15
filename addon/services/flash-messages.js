@@ -135,7 +135,9 @@ export default Service.extend({
     const guid = get(flashInstance, '_guid');
 
     if (preventDuplicates && this._hasDuplicate(guid)) {
-      warn('Attempting to add a duplicate message to the Flash Messages Service');
+      warn('Attempting to add a duplicate message to the Flash Messages Service', {
+        id: 'ember-cli-flash.duplicate-message'
+      });
       return;
     }
 
