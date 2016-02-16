@@ -1,4 +1,28 @@
-import config from '../config/environment';
+const config =  {
+    flashMessageDefaults: {
+      timeout: 3000,
+      extendedTimeout: 0,
+      priority: 100,
+      sticky: false,
+      showProgress: false,
+      type: 'info',
+      types: [
+        'success',
+        'info',
+        'warning',
+        'danger',
+        'alert',
+        'secondary'
+      ],
+      injectionFactories: [
+        'route',
+        'controller',
+        'view',
+        'component'
+      ],
+      preventDuplicates: false
+    }
+  };
 
 export function initialize() {
   const application = arguments[1] || arguments[0];
