@@ -36,12 +36,6 @@ export default Component.extend({
       }
 
       return `${prefix}${flashType}`;
-    },
-
-    set() {
-      warn('`alertType` is read only');
-
-      return this;
     }
   }),
 
@@ -50,12 +44,6 @@ export default Component.extend({
       const flashType = getWithDefault(this, 'flash.type', '');
 
       return classify(flashType);
-    },
-
-    set() {
-      warn('`flashType` is read only');
-
-      return this;
     }
   }),
 
@@ -74,10 +62,6 @@ export default Component.extend({
       const duration = getWithDefault(this, 'flash.timeout', 0);
 
       return htmlSafe(`transition-duration: ${duration}ms`);
-    },
-
-    set() {
-      warn('`progressDuration` is read only');
     }
   }),
 
