@@ -1,4 +1,4 @@
-import userConfig = '../config/environment';
+import userConfig from '../config/environment';
 const defaults =  {
     flashMessageDefaults: {
       timeout: 3000,
