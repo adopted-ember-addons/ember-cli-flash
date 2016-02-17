@@ -1,7 +1,33 @@
-import config from '../config/environment';
+import userConfig from '../config/environment';
+const defaults =  {
+    flashMessageDefaults: {
+      timeout: 3000,
+      extendedTimeout: 0,
+      priority: 100,
+      sticky: false,
+      showProgress: false,
+      type: 'info',
+      types: [
+        'success',
+        'info',
+        'warning',
+        'danger',
+        'alert',
+        'secondary'
+      ],
+      injectionFactories: [
+        'route',
+        'controller',
+        'view',
+        'component'
+      ],
+      preventDuplicates: false
+    }
+  };
 
 export function initialize() {
   const application = arguments[1] || arguments[0];
+  const config = Object.assign(userConfig, defaults);
   const { flashMessageDefaults } = config;
   const { injectionFactories } = flashMessageDefaults;
 
