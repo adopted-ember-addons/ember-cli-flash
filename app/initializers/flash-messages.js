@@ -1,4 +1,5 @@
-const config =  {
+import userConfig = '../config/environment';
+const defaults =  {
     flashMessageDefaults: {
       timeout: 3000,
       extendedTimeout: 0,
@@ -26,6 +27,7 @@ const config =  {
 
 export function initialize() {
   const application = arguments[1] || arguments[0];
+  const config = Object.assign(userConfig, defaults);
   const { flashMessageDefaults } = config;
   const { injectionFactories } = flashMessageDefaults;
 
