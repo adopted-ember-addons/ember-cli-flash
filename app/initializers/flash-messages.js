@@ -29,8 +29,8 @@ const addonDefaults = {
 
 export function initialize() {
   const application = arguments[1] || arguments[0];
-  const { flashMessageDefaults } = config;
-  const { injectionFactories } = flashMessageDefaults;
+  const { flashMessageDefaults } = config || {};
+  const { injectionFactories } = flashMessageDefaults || [];
   const options = merge(addonDefaults, flashMessageDefaults);
   const shouldShowDeprecation = !(injectionFactories && injectionFactories.length);
 
@@ -38,7 +38,8 @@ export function initialize() {
   application.inject('service:flash-messages', 'flashMessageDefaults', 'config:flash-messages');
 
   deprecate(INJECTION_FACTORIES_DEPRECATION_MESSAGE, shouldShowDeprecation, {
-    id: 'ember-cli-flash.deprecate-injection-factories'
+    id: 'ember-cli-flash.deprecate-injection-factories',
+    until: '2.0.0'
   });
 
   options.injectionFactories.forEach((factory) => {
