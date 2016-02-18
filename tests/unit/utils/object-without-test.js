@@ -1,4 +1,4 @@
-import objectWithout from '../../../utils/object-without';
+import objectWithout from 'ember-cli-flash/utils/object-without';
 import { module, test } from 'qunit';
 
 module('Unit | Utility | object without');
@@ -15,7 +15,7 @@ test('it returns an object without the specified keys', function(assert) {
     deskLocation: 'basement'
   };
 
-  const result = objectWithout(employee, [ 'stapler' ]);
+  const result = objectWithout(employee, ['stapler']);
 
   assert.deepEqual(result, expectedResult, 'it returns an object without the specified keys');
 });

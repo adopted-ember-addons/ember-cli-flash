@@ -1,3 +1,1 @@
-import FlashMessagesService from 'ember-cli-flash/services/flash-messages';
-
-export default FlashMessagesService;
+export { default } from 'ember-cli-flash/services/flash-messages';
