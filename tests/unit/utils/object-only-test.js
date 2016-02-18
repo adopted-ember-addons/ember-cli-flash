@@ -1,4 +1,4 @@
-import objectOnly from '../../../utils/object-only';
+import objectOnly from 'ember-cli-flash/utils/object-only';
 import { module, test } from 'qunit';
 
 module('Unit | Utility | object only');
@@ -15,7 +15,7 @@ test('it returns an object with only the specified keys', function(assert) {
     deskLocation: 'basement'
   };
 
-  const result = objectOnly(employee, [ 'name', 'deskLocation' ]);
+  const result = objectOnly(employee, ['name', 'deskLocation']);
 
   assert.deepEqual(result, expectedResult, 'it returns an object with only the specified keys');
 });
