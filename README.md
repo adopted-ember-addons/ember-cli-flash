@@ -3,7 +3,7 @@
 
 [![npm version](https://badge.fury.io/js/ember-cli-flash.svg)](http://badge.fury.io/js/ember-cli-flash) [![Build Status](https://travis-ci.org/poteto/ember-cli-flash.svg)](https://travis-ci.org/poteto/ember-cli-flash) [![Ember Observer Score](http://emberobserver.com/badges/ember-cli-flash.svg)](http://emberobserver.com/addons/ember-cli-flash) [![Code Climate](https://codeclimate.com/github/poteto/ember-cli-flash/badges/gpa.svg)](https://codeclimate.com/github/poteto/ember-cli-flash) 
 
-This `ember-cli` addon adds a simple flash message service and component to your app. The service is injected into all `Controllers`, `Routes`, `Views` and `Components` by default ([you can change this](#service-defaults)), or lazily injected with `Ember.inject.service`.
+This `ember-cli` addon adds a simple flash message service and component to your app. Just inject with `Ember.inject.service` and you're good to go!
 
 ## Installation
 You can install either with `ember install`:
@@ -24,7 +24,13 @@ ember install:addon ember-cli-flash
 This addon is tested against the `release`, `beta` and `canary` channels, `~1.11.0`, and `1.12.1`. Because this addon makes use of attribute bindings, which were introduced in ember `1.11.0`, earlier versions of ember are not compatible with the latest version. 
 
 ## Usage
-Usage is very simple. First, add one of the [template examples](#displaying-flash-messages) to your app. Then, from within the factories you injected to (defaults to `Controller`, `Route`, `View` and `Component`):
+Usage is very simple. First, add one of the [template examples](#displaying-flash-messages) to your app. Then, inject the `flashMessages` service and use one of its convenience methods:
+
+```javascript
+export default Ember.Component.extend({
+  flashMessages: Ember.inject.service()
+})
+```
 
 ### Convenience methods (Bootstrap / Foundation alerts)
 You can quickly add flash messages using these methods from the service:
@@ -57,15 +63,16 @@ actions: {
   saveFoo() {
     const flashMessages = Ember.get(this, 'flashMessages');
 
-    Ember.get(this, 'model').save()
-    .then((res) => {
-      flashMessages.success('Successfully saved!');
-      doSomething(res);
-    })
-    .catch((err) => {
-      flashMessages.danger('Something went wrong!');
-      handleError(err);
-    });
+    Ember.get(this, 'model')
+      .save()
+      .then((res) => {
+        flashMessages.success('Successfully saved!');
+        doSomething(res);
+      })
+      .catch((err) => {
+        flashMessages.danger('Something went wrong!');
+        handleError(err);
+      });
   }
 }
 ```
@@ -90,7 +97,7 @@ Ember.get(this, 'flashMessages').add({
   priority: 200,
   sticky: true,
   showProgress: true,
-  extendedTimeout: 500,
+  extendedTimeout: 500
 });
 
 Ember.get(this, 'flashMessages').success('This is amazing', {
@@ -197,7 +204,6 @@ module.exports = function(environment) {
       // service defaults
       type: 'alpaca',
       types: [ 'alpaca', 'notice', 'foobar' ],
-      injectionFactories: [ 'route', 'controller', 'view', 'component' ],
       preventDuplicates: false
     }
   }
@@ -217,31 +223,6 @@ See the [options](#options) section for information about flash message specific
   Default: `[ 'success', 'info', 'warning', 'danger', 'alert', 'secondary' ]`
 
   This option lets you specify exactly what types you need, which means in the above example, you can do `Ember.get('flashMessages').{alpaca,notice,foobar}`. 
-
-- `injectionFactories?: array`
-
-  Default: `[ 'route', 'controller', 'view', 'component' ]`
-
-  The key `injectionFactories` lets you choose which factories the service injects itself into. 
-  If you only need to access the flash message service from inside `controllers`, you can do so by changing the `injectionFactories` prop to `[ 'controller' ]`. Note that this will also work with any valid registry name on the container, e.g. `[ 'component:foo', 'controller:bar', 'route:baz' ]`.
-
-  If you'd prefer not to automatically inject the service into all factories, you can opt to inject the service manually on any `Ember.Object` registered in the container (Ember `1.10.0` or higher):
-
-  ```javascript
-  module.exports = function(environment) {
-    var ENV = {
-      flashMessageDefaults: {
-        injectionFactories: []
-      }
-    }
-  }
-  ```
-
-  ```javascript
-  export default Ember.Component.extend({
-    flashMessages: Ember.inject.service()
-  })
-  ```
 
 - `preventDuplicates?: boolean`
 
@@ -334,9 +315,7 @@ test('flash message is rendered', function(assert) {
   assert.expect(1);
   visit('/');
 
-  andThen(() => {
-    assert.ok(find('.alert.alert-success'));
-  });
+  andThen(() => assert.ok(find('.alert.alert-success'));
 });
 ```
 
@@ -345,10 +324,10 @@ For unit tests that require the `flashMessages` service, you'll need to do a sma
 
 ```js
 moduleFor('route:foo', 'Unit | Route | foo', {
-  needs: [ 'service:flash-messages' ],
+  needs: ['service:flash-messages'],
   beforeEach() {
-    const typesUsed = [ 'warning', 'success' ];
-    this.container.lookup('service:flash-messages').registerTypes(typesUsed);
+    const typesUsed = ['warning', 'success'];
+    Ember.getOwner(this).lookup('service:flash-messages').registerTypes(typesUsed);
   }
 });
 ```
@@ -356,11 +335,8 @@ moduleFor('route:foo', 'Unit | Route | foo', {
 ## Styling
 This addon is minimal and does not currently ship with a stylesheet. You can style flash messages by targetting the appropriate alert class (Foundation or Bootstrap) in your CSS.
 
-## Contributing
-Please read the [Contributing guidelines](CONTRIBUTING.md) for information on how to contribute.
-
 ## License
-MIT
+[MIT](LICENSE.md)
 
 ## Installation
 
