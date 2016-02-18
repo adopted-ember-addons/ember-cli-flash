@@ -41,7 +41,7 @@ export function initialize() {
     id: 'ember-cli-flash.deprecate-injection-factories'
   });
 
-  injectionFactories.forEach((factory) => {
+  options.injectionFactories.forEach((factory) => {
     application.inject(factory, 'flashMessages', 'service:flash-messages');
   });
 }
