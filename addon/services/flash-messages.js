@@ -26,6 +26,7 @@ const {
 
 export default Service.extend({
   isEmpty: equal('queue.length', 0).readOnly(),
+  _guids: mapBy('queue', '_guid').readOnly(),
 
   arrangedQueue: sort('queue', function(a, b) {
     if (a.priority < b.priority) {
@@ -35,8 +36,6 @@ export default Service.extend({
     }
     return 0;
   }).readOnly(),
-
-  _guids: mapBy('queue', '_guid').readOnly(),
 
   init() {
     this._super(...arguments);

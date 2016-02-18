@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import computed from '../../../utils/computed';
+import computed from 'ember-cli-flash/utils/computed';
 import { module, test } from 'qunit';
 
 const { get } = Ember;

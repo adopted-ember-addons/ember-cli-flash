@@ -1,4 +1,4 @@
-import objectCompact from '../../../utils/object-compact';
+import objectCompact from 'ember-cli-flash/utils/object-compact';
 import { module, test } from 'qunit';
 
 module('Unit | Utility | object compact');
