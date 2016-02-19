@@ -6,7 +6,6 @@ const {
   String: { classify, htmlSafe },
   Component,
   getWithDefault,
-  warn,
   run,
   on,
   get,
@@ -19,11 +18,13 @@ const {
 
 export default Component.extend({
   layout,
-  classNameBindings: ['alertType', 'active', 'exiting'],
   active: false,
   messageStyle: 'bootstrap',
+  classNameBindings: ['alertType', 'active', 'exiting'],
+
   showProgressBar: readOnly('flash.showProgress'),
   exiting: readOnly('flash.exiting'),
+  hasBlock: bool('template').readOnly(),
 
   alertType: computed('flash.type', {
     get() {
@@ -36,12 +37,6 @@ export default Component.extend({
       }
 
       return `${prefix}${flashType}`;
-    },
-
-    set() {
-      warn('`alertType` is read only');
-
-      return this;
     }
   }),
 
@@ -50,12 +45,6 @@ export default Component.extend({
       const flashType = getWithDefault(this, 'flash.type', '');
 
       return classify(flashType);
-    },
-
-    set() {
-      warn('`flashType` is read only');
-
-      return this;
     }
   }),
 
@@ -74,10 +63,6 @@ export default Component.extend({
       const duration = getWithDefault(this, 'flash.timeout', 0);
 
       return htmlSafe(`transition-duration: ${duration}ms`);
-    },
-
-    set() {
-      warn('`progressDuration` is read only');
     }
   }),
 
@@ -97,7 +82,5 @@ export default Component.extend({
     if (flash) {
       flash.destroyMessage();
     }
-  },
-
-  hasBlock: bool('template').readOnly()
+  }
 });
