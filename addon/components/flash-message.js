@@ -15,6 +15,10 @@ const {
   readOnly,
   bool
 } = computed;
+const {
+  next,
+  cancel
+} = run;
 
 export default Component.extend({
   layout,
@@ -49,9 +53,10 @@ export default Component.extend({
   }),
 
   _setActive: on('didInsertElement', function() {
-    run.next(this, () => {
+    const pendingSet = next(this, () => {
       set(this, 'active', true);
     });
+    set(this, 'pendingSet', pendingSet);
   }),
 
   progressDuration: computed('flash.showProgress', {
@@ -73,6 +78,7 @@ export default Component.extend({
   willDestroy() {
     this._super();
     this._destroyFlashMessage();
+    cancel(get(this, 'pendingSet'));
   },
 
   // private
