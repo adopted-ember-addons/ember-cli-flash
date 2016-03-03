@@ -35,7 +35,7 @@ export function guidFor(dependentKey) {
     get() {
       const value = get(this, dependentKey);
 
-      return emberGuidFor(value);
+      return emberGuidFor(value.toString());
     }
   });
 }
