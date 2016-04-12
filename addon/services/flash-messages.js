@@ -9,7 +9,6 @@ const {
   copy,
   getWithDefault,
   isNone,
-  merge,
   setProperties,
   typeOf,
   warn,
@@ -23,6 +22,8 @@ const {
   sort,
   mapBy
 } = computed;
+
+const merge = Ember.assign || Ember.merge;
 
 export default Service.extend({
   isEmpty: equal('queue.length', 0).readOnly(),
