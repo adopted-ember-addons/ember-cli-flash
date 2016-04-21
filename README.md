@@ -97,7 +97,8 @@ Ember.get(this, 'flashMessages').add({
   priority: 200,
   sticky: true,
   showProgress: true,
-  extendedTimeout: 500
+  extendedTimeout: 500,
+  destroyOnClick: false
 });
 
 Ember.get(this, 'flashMessages').success('This is amazing', {
