@@ -40,12 +40,6 @@ module.exports = function(environment) {
         'secondary',
         'foo'
       ],
-      injectionFactories: [
-        'route',
-        'controller',
-        'view',
-        'component'
-      ],
       preventDuplicates: false
     }
   };

@@ -1,5 +1,11 @@
 {{#if hasBlock}}
-  {{yield this flash}}
+  {{yield (hash
+    progressDuration=progressDuration
+    message=flash.message
+    type=flash.type
+    sticky=flash.sticky
+    showProgressBar=flash.showProgress
+  )}}
 {{else}}
   {{flash.message}}
   {{#if showProgressBar}}

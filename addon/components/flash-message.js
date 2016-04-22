@@ -3,11 +3,10 @@ import layout from '../templates/components/flash-message';
 import computed from 'ember-new-computed';
 
 const {
-  String: { classify, htmlSafe },
+  String: { htmlSafe },
+  run: { next, cancel },
   Component,
   getWithDefault,
-  run,
-  on,
   get,
   set
 } = Ember;
@@ -15,53 +14,23 @@ const {
   readOnly,
   bool
 } = computed;
-const {
-  next,
-  cancel
-} = run;
 
 export default Component.extend({
   layout,
-  active: false,
-  messageStyle: 'bootstrap',
-  classNameBindings: ['alertType', 'active', 'exiting'],
+  isActive: false,
+  classNameBindings: ['isActive', 'isExiting'],
 
+  type: readOnly('flash.type'),
+  message: readOnly('flash.message'),
+  sticky: readOnly('flash.sticky'),
   showProgressBar: readOnly('flash.showProgress'),
-  exiting: readOnly('flash.exiting'),
+  isExiting: readOnly('flash.isExiting'),
+
   hasBlock: bool('template').readOnly(),
 
-  alertType: computed('flash.type', {
+  progressDuration: computed('showProgressBar', {
     get() {
-      const flashType = getWithDefault(this, 'flash.type', '');
-      const messageStyle = getWithDefault(this, 'messageStyle', '');
-      let prefix = 'alert alert-';
-
-      if (messageStyle === 'foundation') {
-        prefix = 'alert-box ';
-      }
-
-      return `${prefix}${flashType}`;
-    }
-  }),
-
-  flashType: computed('flash.type', {
-    get() {
-      const flashType = getWithDefault(this, 'flash.type', '');
-
-      return classify(flashType);
-    }
-  }),
-
-  _setActive: on('didInsertElement', function() {
-    const pendingSet = next(this, () => {
-      set(this, 'active', true);
-    });
-    set(this, 'pendingSet', pendingSet);
-  }),
-
-  progressDuration: computed('flash.showProgress', {
-    get() {
-      if (!get(this, 'flash.showProgress')) {
+      if (!get(this, 'showProgressBar')) {
         return false;
       }
 
@@ -71,8 +40,10 @@ export default Component.extend({
     }
   }),
 
-  click() {
-    this._destroyFlashMessage();
+  didInsertElement() {
+    this._super(...arguments);
+    const pendingSet = next(this, () => set(this, 'isActive', true));
+    set(this, 'pendingSet', pendingSet);
   },
 
   willDestroy() {
@@ -87,6 +58,12 @@ export default Component.extend({
 
     if (flash) {
       flash.destroyMessage();
+    }
+  },
+
+  actions: {
+    close() {
+      this._destroyFlashMessage();
     }
   }
 });

@@ -187,14 +187,3 @@ test('it does not add duplicate messages to the queue if preventDuplicates is `t
   assert.deepEqual(result, expectedResult, 'it does not add duplicate messages to the queue');
   assert.equal(get(service, 'queue').length, 2, 'it does not add duplicate messages to the queue');
 });
-
-test('it supports chaining', function(assert) {
-  service
-    .registerTypes(['meow'])
-    .clearMessages()
-    .add({ message: 'foo' })
-    .meow('bar');
-
-  assert.equal(get(service, 'queue.firstObject.message'), 'foo', 'should support chaining');
-  assert.equal(get(service, 'queue.lastObject.message'), 'bar', 'should support chaining');
-});

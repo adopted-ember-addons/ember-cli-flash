@@ -1,8 +1,14 @@
 import Ember from 'ember';
 
-const { get } = Ember;
+const {
+  Route,
+  get,
+  inject: { service }
+} = Ember;
 
-export default Ember.Route.extend({
+export default Route.extend({
+  flashMessages: service(),
+
   activate() {
     const flashMessages = get(this, 'flashMessages');
 

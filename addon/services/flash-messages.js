@@ -4,6 +4,8 @@ import objectWithout from '../utils/object-without';
 import computed from 'ember-new-computed';
 
 const {
+  A: emberArray,
+  String: { classify },
   Service,
   assert,
   copy,
@@ -13,17 +15,14 @@ const {
   typeOf,
   warn,
   get,
-  set,
-  String: { classify },
-  A: emberArray
+  set
 } = Ember;
 const {
   equal,
   sort,
   mapBy
 } = computed;
-
-const merge = Ember.assign || Ember.merge;
+const assign = Ember.assign || Ember.merge;
 
 export default Service.extend({
   isEmpty: equal('queue.length', 0).readOnly(),
@@ -45,9 +44,7 @@ export default Service.extend({
   },
 
   add(options = {}) {
-    this._enqueue(this._newFlashMessage(options));
-
-    return this;
+    return this._enqueue(this._newFlashMessage(options));
   },
 
   clearMessages() {
@@ -57,15 +54,11 @@ export default Service.extend({
       return;
     }
 
-    flashes.clear();
-
-    return this;
+    return flashes.clear();
   },
 
   registerTypes(types = emberArray()) {
     types.forEach((type) => this._registerType(type));
-
-    return this;
   },
 
   _newFlashMessage(options = {}) {
@@ -78,8 +71,7 @@ export default Service.extend({
       'injectionFactories',
       'preventDuplicates'
     ]);
-
-    const flashMessageOptions = merge(copy(defaults), { flashService });
+    const flashMessageOptions = assign(copy(defaults), { flashService });
 
     for (let key in options) {
       const value = get(options, key);

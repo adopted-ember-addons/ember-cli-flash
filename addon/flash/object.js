@@ -16,7 +16,7 @@ const {
 export default EmberObject.extend(Evented, {
   timer: null,
   exitTimer: null,
-  exiting: false,
+  isExiting: false,
 
   queue: readOnly('flashService.queue'),
   totalTimeout: customComputed.add('timeout', 'extendedTimeout').readOnly(),
@@ -45,20 +45,15 @@ export default EmberObject.extend(Evented, {
   },
 
   exitMessage() {
-    set(this, 'exiting', true);
+    set(this, 'isExiting', true);
 
     this._cancelTimer('exitTimer');
     this.trigger('didExitMessage');
   },
 
   willDestroy() {
-    const timers = ['timer', 'exitTimer'];
-
-    timers.forEach((timer) => {
-      this._cancelTimer(timer);
-    });
-
     this._super(...arguments);
+    ['timer', 'exitTimer'].forEach((timer) => this._cancelTimer(timer));
   },
 
   // private

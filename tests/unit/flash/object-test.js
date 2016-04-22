@@ -86,7 +86,7 @@ test('it sets an `exitTimer` when `extendedTimeout` is set', function(assert) {
   assert.ok(exitFlash.get('exitTimer'));
 });
 
-test('it sets `exiting` to true after the timer has elapsed', function(assert) {
+test('it sets `isExiting` to true after the timer has elapsed', function(assert) {
   assert.expect(2);
   const done = assert.async();
 
@@ -96,7 +96,7 @@ test('it sets `exiting` to true after the timer has elapsed', function(assert) {
   });
 
   run.later(() => {
-    assert.equal(exitFlash.get('exiting'), true, 'it sets `exiting` to true');
+    assert.equal(exitFlash.get('isExiting'), true, 'it sets `isExiting` to true');
     assert.equal(exitFlash.get('exitTimer'), null, 'it cancels the `exitTimer`');
     done();
   }, testTimerDuration * 2);

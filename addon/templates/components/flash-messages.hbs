@@ -1,0 +1,11 @@
+{{#each flashes as |flash|}}
+  {{#if hasBlock}}
+    {{yield (hash
+      component=(component "flash-message" flash=flash)
+      close=(action "close" flash)
+      type=flash.type
+    )}}
+  {{else}}
+    {{flash-message flash=flash click=(action "close" flash)}}
+  {{/if}}
+{{/each}}
