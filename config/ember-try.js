@@ -16,12 +16,75 @@ module.exports = {
       }
     },
     {
-      name: 'ember-1.12.1',
+      name: 'ember-1.12',
       dependencies: {
-        'ember': '1.12.1'
+        'ember': '~1.12.0'
       },
       resolutions: {
-        'ember': '1.12.1'
+        'ember': '~1.12.0'
+      }
+    },
+    {
+      name: 'ember-1.13',
+      dependencies: {
+        'ember': '~1.13.0'
+      },
+      resolutions: {
+        'ember': '~1.13.0'
+      }
+    },
+    {
+      name: 'ember-2.0',
+      dependencies: {
+        'ember': '~2.0.0'
+      },
+      resolutions: {
+        'ember': '~2.0.0'
+      }
+    },
+    {
+      name: 'ember-2.1',
+      dependencies: {
+        'ember': '~2.1.0'
+      },
+      resolutions: {
+        'ember': '~2.1.0'
+      }
+    },
+    {
+      name: 'ember-2.2',
+      dependencies: {
+        'ember': '~2.2.0'
+      },
+      resolutions: {
+        'ember': '~2.2.0'
+      }
+    },
+    {
+      name: 'ember-2.3',
+      dependencies: {
+        'ember': '~2.3.0'
+      },
+      resolutions: {
+        'ember': '~2.3.0'
+      }
+    },
+    {
+      name: 'ember-2.4',
+      dependencies: {
+        'ember': '~2.4.0'
+      },
+      resolutions: {
+        'ember': '~2.4.0'
+      }
+    },
+    {
+      name: 'ember-2.5',
+      dependencies: {
+        'ember': '~2.5.0'
+      },
+      resolutions: {
+        'ember': '~2.5.0'
       }
     },
     {

@@ -3,27 +3,32 @@ import layout from '../templates/components/flash-message';
 import computed from 'ember-new-computed';
 
 const {
-  Handlebars,
+  String: { classify, htmlSafe },
+  Component,
   getWithDefault,
-  warn,
   run,
   on,
   get,
-  set,
-  String: { classify },
-  Handlebars: { SafeString }
+  set
 } = Ember;
 const {
-  escapeExpression
-} = Handlebars.Utils;
+  readOnly,
+  bool
+} = computed;
+const {
+  next,
+  cancel
+} = run;
 
-export default Ember.Component.extend({
+export default Component.extend({
   layout,
-  classNameBindings: [ 'alertType', 'active', 'exiting' ],
   active: false,
   messageStyle: 'bootstrap',
-  showProgressBar: computed.readOnly('flash.showProgress'),
-  exiting: computed.readOnly('flash.exiting'),
+  classNameBindings: ['alertType', 'active', 'exiting'],
+
+  showProgressBar: readOnly('flash.showProgress'),
+  exiting: readOnly('flash.exiting'),
+  hasBlock: bool('template').readOnly(),
 
   alertType: computed('flash.type', {
     get() {
@@ -36,12 +41,6 @@ export default Ember.Component.extend({
       }
 
       return `${prefix}${flashType}`;
-    },
-
-    set() {
-      warn('`alertType` is read only');
-
-      return this;
     }
   }),
 
@@ -50,19 +49,14 @@ export default Ember.Component.extend({
       const flashType = getWithDefault(this, 'flash.type', '');
 
       return classify(flashType);
-    },
-
-    set() {
-      warn('`flashType` is read only');
-
-      return this;
     }
   }),
 
   _setActive: on('didInsertElement', function() {
-    run.scheduleOnce('afterRender', this, () => {
+    const pendingSet = next(this, () => {
       set(this, 'active', true);
     });
+    set(this, 'pendingSet', pendingSet);
   }),
 
   progressDuration: computed('flash.showProgress', {
@@ -72,13 +66,8 @@ export default Ember.Component.extend({
       }
 
       const duration = getWithDefault(this, 'flash.timeout', 0);
-      const escapedCSS = escapeExpression(`transition-duration: ${duration}ms`);
 
-      return new SafeString(escapedCSS);
-    },
-
-    set() {
-      warn('`progressDuration` is read only');
+      return htmlSafe(`transition-duration: ${duration}ms`);
     }
   }),
 
@@ -89,6 +78,7 @@ export default Ember.Component.extend({
   willDestroy() {
     this._super();
     this._destroyFlashMessage();
+    cancel(get(this, 'pendingSet'));
   },
 
   // private
@@ -98,7 +88,5 @@ export default Ember.Component.extend({
     if (flash) {
       flash.destroyMessage();
     }
-  },
-
-  hasBlock: computed.bool('template').readOnly()
+  }
 });

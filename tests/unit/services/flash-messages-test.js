@@ -67,9 +67,9 @@ test('#arrangedQueue is read only', function(assert) {
 });
 
 test('#add adds a custom message', function(assert) {
-  assert.expect(5);
+  assert.expect(4);
 
-  SANDBOX.flash = service.add({
+  service.add({
     message: 'test',
     type: 'test',
     timeout: 1,
@@ -77,7 +77,6 @@ test('#add adds a custom message', function(assert) {
     showProgress: true
   });
 
-  assert.equal(get(service, 'queue.0'), SANDBOX.flash, 'it adds the flash message');
   assert.equal(get(service, 'queue.0.type'), 'test', 'it has the correct type');
   assert.equal(get(service, 'queue.0.timeout'), 1, 'it has the correct timeout');
   assert.equal(get(service, 'queue.0.sticky'), true, 'it has the correct sticky');
@@ -132,25 +131,23 @@ test('it registers default types on init', function(assert) {
 });
 
 test('it adds specific options via add()', function(assert) {
-  assert.expect(2);
+  assert.expect(1);
 
-  SANDBOX.flash = service.add({
+  service.add({
     message: "here's an option you may or may not know",
     appOption: 'ohai'
   });
 
-  assert.equal(get(service, 'queue.0'), SANDBOX.flash);
   assert.equal(get(service, 'queue.0.appOption'), 'ohai');
 });
 
 test('it adds specific options via specific message type', function(assert) {
-  assert.expect(2);
+  assert.expect(1);
 
-  SANDBOX.flash = service.info('you can pass app options this way too', {
+  service.info('you can pass app options this way too', {
     appOption: 'we meet again app-option'
   });
 
-  assert.equal(get(service, 'queue.0'), SANDBOX.flash);
   assert.equal(get(service, 'queue.0.appOption'), 'we meet again app-option');
 });
 
@@ -189,4 +186,15 @@ test('it does not add duplicate messages to the queue if preventDuplicates is `t
 
   assert.deepEqual(result, expectedResult, 'it does not add duplicate messages to the queue');
   assert.equal(get(service, 'queue').length, 2, 'it does not add duplicate messages to the queue');
+});
+
+test('it supports chaining', function(assert) {
+  service
+    .registerTypes(['meow'])
+    .clearMessages()
+    .add({ message: 'foo' })
+    .meow('bar');
+
+  assert.equal(get(service, 'queue.firstObject.message'), 'foo', 'should support chaining');
+  assert.equal(get(service, 'queue.lastObject.message'), 'bar', 'should support chaining');
 });

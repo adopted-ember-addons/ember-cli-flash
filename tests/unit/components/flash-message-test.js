@@ -6,7 +6,6 @@ import {
 import FlashMessage from 'ember-cli-flash/flash/object';
 
 const {
-  setProperties,
   run,
   get,
   set
@@ -46,32 +45,8 @@ test('it renders with the right props', function(assert) {
   assert.equal(get(component, 'flashType'), 'Test', 'it has the right `flashType`');
   assert.equal(get(component, 'progressDuration'), `transition-duration: ${flash.get('timeout')}ms`, 'it has the right `progressDuration`');
 
-  run(() => {
+  run.next(() => {
     assert.equal(get(component, 'active'), true, 'it sets `active` to true after rendering');
-  });
-});
-
-test('read only methods cannot be set', function(assert) {
-  assert.expect(3);
-
-  const component = this.subject({ flash });
-  this.render();
-
-  run(() => {
-    setProperties(component, {
-      alertType: 'invalid',
-      flashType: 'invalid',
-      progressDuration: 'derp',
-      extendedTimeout: 'nope'
-    });
-  });
-
-  assert.deepEqual(get(component, 'flash'), flash);
-  assert.throws(() => {
-    set(component, 'showProgressBar', true);
-  });
-  assert.throws(() => {
-    set(component, 'hasBlock', true);
   });
 });
 

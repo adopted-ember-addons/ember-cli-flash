@@ -1,4 +1,6 @@
-<h2 id="title">Welcome to Ember.js</h2>
+<h1 id="title">Ember-CLI-Flash Demo</h1>
+
+<p>Simple, highly configurable flash messages for ember-cli.</p>
 
 {{#each flashMessages.arrangedQueue as |flash|}}
   {{#flash-message flash=flash as |component flash|}}
@@ -12,4 +14,17 @@
   {{/flash-message}}
 {{/each}}
 
-{{outlet}}
+<code><pre>
+  \{{#each flashMessages.arrangedQueue as |flash|}}
+    \{{#flash-message flash=flash as |component flash|}}
+        &lt;h6&gt;\{{component.flashType}}&lt;/h6&gt;
+    &lt;p&gt;\{{flash.message}}&lt;/p&gt;
+      \{{#if component.showProgressBar}}
+          &lt;div class="alert-progress"&gt;
+              &lt;div class="alert-progressBar" style="{{component.progressDuration}}"&gt;&lt;/div&gt;
+          &lt;/div&gt;
+      \{{/if}}
+    \{{/flash-message}}
+  \{{/each}}
+
+</pre></code>

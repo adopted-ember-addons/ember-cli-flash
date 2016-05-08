@@ -3,19 +3,35 @@ import customComputed from '../utils/computed';
 import computed from 'ember-new-computed';
 
 const {
+  Object: EmberObject,
+  run: { later, cancel },
   Evented,
-  on,
-  run,
   get,
   set
 } = Ember;
+const {
+  readOnly
+} = computed;
 
-export default Ember.Object.extend(Evented, {
-  queue: computed.readOnly('flashService.queue'),
-  totalTimeout: customComputed.add('timeout', 'extendedTimeout').readOnly(),
+export default EmberObject.extend(Evented, {
   timer: null,
   exitTimer: null,
   exiting: false,
+
+  queue: readOnly('flashService.queue'),
+  totalTimeout: customComputed.add('timeout', 'extendedTimeout').readOnly(),
+  _guid: customComputed.guidFor('message').readOnly(),
+
+  init() {
+    this._super(...arguments);
+
+    if (get(this, 'sticky')) {
+      return;
+    }
+
+    this._setTimer('exitTimer', 'exitMessage', get(this, 'timeout'));
+    this._setTimer('timer', 'destroyMessage', get(this, 'totalTimeout'));
+  },
 
   destroyMessage() {
     const queue = get(this, 'queue');
@@ -36,7 +52,7 @@ export default Ember.Object.extend(Evented, {
   },
 
   willDestroy() {
-    const timers = [ 'timer', 'exitTimer' ];
+    const timers = ['timer', 'exitTimer'];
 
     timers.forEach((timer) => {
       this._cancelTimer(timer);
@@ -46,28 +62,15 @@ export default Ember.Object.extend(Evented, {
   },
 
   // private
-  _guid: customComputed.guidFor('message').readOnly(),
-
-  _setInitialState: on('init', function() {
-    if (get(this, 'sticky')) {
-      return;
-    }
-
-    this._setTimer('exitTimer', 'exitMessage', get(this, 'timeout'));
-    this._setTimer('timer', 'destroyMessage', get(this, 'totalTimeout'));
-  }),
-
   _setTimer(name, methodName, timeout) {
-    const timer = run.later(this, methodName, timeout);
-
-    set(this, name, timer);
+    return set(this, name, later(this, methodName, timeout));
   },
 
   _cancelTimer(name) {
     const timer = get(this, name);
 
     if (timer) {
-      run.cancel(timer);
+      cancel(timer);
       set(this, name, null);
     }
   }
