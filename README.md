@@ -315,7 +315,7 @@ test('flash message is rendered', function(assert) {
   assert.expect(1);
   visit('/');
 
-  andThen(() => assert.ok(find('.alert.alert-success'));
+  andThen(() => assert.ok(find('.alert.alert-success')));
 });
 ```
 
