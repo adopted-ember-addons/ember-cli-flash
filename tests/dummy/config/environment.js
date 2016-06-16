@@ -31,6 +31,7 @@ module.exports = function(environment) {
       sticky: true,
       showProgress: false,
       type: 'info',
+      closeFlashOnClick: true,
       types: [
         'success',
         'info',

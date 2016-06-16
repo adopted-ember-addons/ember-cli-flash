@@ -148,6 +148,12 @@ Ember.get(this, 'flashMessages').success('This is amazing', {
 
   Number of milliseconds before a flash message is removed to add the class 'exiting' to the element.  This can be used to animate the removal of messages with a transition.
 
+- `closeOnClick?: boolean`
+
+  Default: `true`
+  
+  Indicates whether to close the notifification message on click of it or not. This will be useful when a notification message has a link that redirects users to another page.
+  
 ### Arbitrary options
 You can also add arbitrary options to messages:
 

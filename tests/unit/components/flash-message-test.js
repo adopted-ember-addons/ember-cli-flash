@@ -21,7 +21,8 @@ moduleForComponent('flash-message', 'FlashMessageComponent', {
       type: 'test',
       timeout: 50,
       extendedTimeout: 5000,
-      showProgress: true
+      showProgress: true,
+      closeFlashOnClick: false
     });
   },
 
@@ -60,5 +61,23 @@ test('exiting the flash object sets exiting on the component', function(assert) 
   run(() => {
     set(flash, 'exiting' , true);
     assert.ok(get(component, 'exiting'), 'it sets `exiting` to true when the flash object is exiting');
+  });
+});
+
+test('Changing closeFlashOnClick to false ensures the flash message is not closed', function(assert) {
+  assert.expect(2);
+
+  const component = this.subject({ flash });
+  run(() => {
+    set(flash, 'closeFlashOnClick', false);
+  });
+
+  this.render();
+  assert.equal(get(component, 'exiting'), false, 'it initializes with `exiting` set to false');
+
+  run(() => {
+    component.click();
+
+    assert.equal(get(component, 'exiting'), false, 'Exiting is not made true to close the flash message');
   });
 });

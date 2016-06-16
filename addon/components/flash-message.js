@@ -9,7 +9,8 @@ const {
   run,
   on,
   get,
-  set
+  set,
+  K
 } = Ember;
 const {
   readOnly,
@@ -29,6 +30,12 @@ export default Component.extend({
   showProgressBar: readOnly('flash.showProgress'),
   exiting: readOnly('flash.exiting'),
   hasBlock: bool('template').readOnly(),
+
+  initialize: on('init', function() {
+    if (!get(this, 'flash.closeFlashOnClick')) {
+      this.click = K;
+    }
+  }),
 
   alertType: computed('flash.type', {
     get() {
