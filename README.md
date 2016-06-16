@@ -97,7 +97,8 @@ Ember.get(this, 'flashMessages').add({
   priority: 200,
   sticky: true,
   showProgress: true,
-  extendedTimeout: 500
+  extendedTimeout: 500,
+  destroyOnClick: false
 });
 
 Ember.get(this, 'flashMessages').success('This is amazing', {
@@ -147,6 +148,12 @@ Ember.get(this, 'flashMessages').success('This is amazing', {
   Default: `0`
 
   Number of milliseconds before a flash message is removed to add the class 'exiting' to the element.  This can be used to animate the removal of messages with a transition.
+  
+- `destroyOnClick?: boolean`
+
+  Default: `true`
+
+  By default, flash messages will be destroyed on click.  Disabling this can be useful if the message supports user interaction.
 
 ### Arbitrary options
 You can also add arbitrary options to messages:

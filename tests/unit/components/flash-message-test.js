@@ -62,3 +62,22 @@ test('exiting the flash object sets exiting on the component', function(assert) 
     assert.ok(get(component, 'exiting'), 'it sets `exiting` to true when the flash object is exiting');
   });
 });
+
+test('it destroys the flash object on click', function(assert) {
+  assert.expect(1);
+  const component = this.subject({ flash });
+  this.render();
+
+  $('.alert').click();
+  assert.ok(get(component, 'flash').isDestroyed, 'it destroys the flash object on click');
+});
+
+test('it does not destroy the flash object when `flash.destroyOnClick` is false', function(assert) {
+  assert.expect(1);
+  flash.destroyOnClick = false;
+  const component = this.subject({ flash });
+  this.render();
+
+  $('.alert').click();
+  assert.notOk(get(component, 'flash').isDestroyed, 'it does not destroy the flash object on click');
+});
