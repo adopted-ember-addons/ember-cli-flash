@@ -72,7 +72,11 @@ export default Component.extend({
   }),
 
   click() {
-    this._destroyFlashMessage();
+    const destroyOnClick = getWithDefault(this, 'flash.destroyOnClick', true);
+
+    if (destroyOnClick) {
+      this._destroyFlashMessage();
+    }
   },
 
   willDestroy() {
