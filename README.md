@@ -306,7 +306,7 @@ $ ember generate ember-cli-flash
 
 This also adds the helper to `tests/test-helper.js`. You won't actually need to import this into your tests, but it's good to know what the blueprint does. Basically, the helper overrides the `_setInitialState` method so that the flash messages behave intuitively in a testing environment. 
 
-An example integration test:
+An example acceptance test:
 
 ```javascript
 // tests/acceptance/foo-test.js
@@ -316,6 +316,26 @@ test('flash message is rendered', function(assert) {
   visit('/');
 
   andThen(() => assert.ok(find('.alert.alert-success')));
+});
+```
+
+An example integration test:
+
+```javascript
+// tests/integration/components/x-foo-test.js
+import Ember from 'ember';
+
+moduleForComponent('x-foo', 'Integration | Component | x foo', {
+  integration: true,
+  beforeEach() {
+    //We have to register any types we expect to use in this component
+    const typesUsed = ['info', 'warning', 'success'];
+    Ember.getOwner(this).lookup('service:flash-messages').registerTypes(typesUsed);
+  }
+});
+
+test('it renders', function(assert) {
+  ...
 });
 ```
 
