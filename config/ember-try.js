@@ -88,6 +88,15 @@ module.exports = {
       }
     },
     {
+      name: 'ember-2.6',
+      dependencies: {
+        'ember': '~2.6.0'
+      },
+      resolutions: {
+        'ember': '~2.6.0'
+      }
+    },
+    {
       name: 'ember-release',
       dependencies: {
         'ember': 'components/ember#release'
