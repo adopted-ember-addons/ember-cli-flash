@@ -34,9 +34,10 @@ export default Component.extend({
     get() {
       const flashType = getWithDefault(this, 'flash.type', '');
       const messageStyle = getWithDefault(this, 'messageStyle', '');
-      let prefix = 'alert alert-';
-
-      if (messageStyle === 'foundation') {
+      let prefix = 'alert-';
+      if (messageStyle === 'bootstrap') {
+        prefix = 'alert alert-';
+      } else if (messageStyle === 'foundation') {
         prefix = 'alert-box ';
       }
 

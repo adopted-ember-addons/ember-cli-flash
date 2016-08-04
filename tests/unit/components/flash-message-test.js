@@ -81,3 +81,13 @@ test('it does not destroy the flash object when `flash.destroyOnClick` is false'
   $('.alert').click();
   assert.notOk(get(component, 'flash').isDestroyed, 'it does not destroy the flash object on click');
 });
+
+test('if it receives `messageStyle="notBootstrapNorFoundation"` it doesn\'t has any prefix class', function(assert) {
+  assert.expect(1);
+
+  this.subject({ flash, messageStyle: 'notBootstrapNorFoundation' });
+
+  this.render();
+
+  assert.equal(this.$().attr('class').indexOf('alert '), -1, 'The component has no default classes'); // intentional space
+});
