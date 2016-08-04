@@ -129,7 +129,7 @@ Ember.get(this, 'flashMessages').success('This is amazing', {
   
   Default: `100`
 
-  Higher priority messages appear before low priority messages. The best practise is to use priority values in multiples of `100` (`100` being the lowest priority).
+  Higher priority messages appear before low priority messages. The best practise is to use priority values in multiples of `100` (`100` being the lowest priority). Note that you will need [modify your template](#sort-messages-by-priority) for this work.
 
 - `sticky?: boolean`
   
@@ -217,7 +217,7 @@ module.exports = function(environment) {
 }
 ```
 
-See the [options](#options) section for information about flash message specific options. 
+See the [options](#custom-messages-api) section for information about flash message specific options. 
 
 - `type?: string`
 
