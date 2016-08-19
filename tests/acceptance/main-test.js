@@ -1,23 +1,10 @@
-import Ember from 'ember';
+import { test } from 'qunit';
 import config from '../../config/environment';
-import {
-  module,
-  test
-} from 'qunit';
-import startApp from '../helpers/start-app';
+import moduleForAcceptance from '../../tests/helpers/module-for-acceptance';
 
-let application;
 const { timeout: defaultTimeout } = config.flashMessageDefaults;
 
-module('Acceptance: Integration', {
-  beforeEach() {
-    application = startApp();
-  },
-
-  afterEach() {
-    Ember.run(application, 'destroy');
-  }
-});
+moduleForAcceptance('Acceptance | main');
 
 test('flash messages are rendered', function(assert) {
   assert.expect(7);
