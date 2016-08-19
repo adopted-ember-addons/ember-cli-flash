@@ -1,23 +1,12 @@
 # ember-cli-flash
 *Simple, highly configurable flash messages for ember-cli.*
 
-[![npm version](https://badge.fury.io/js/ember-cli-flash.svg)](http://badge.fury.io/js/ember-cli-flash) [![Build Status](https://travis-ci.org/poteto/ember-cli-flash.svg)](https://travis-ci.org/poteto/ember-cli-flash) [![Ember Observer Score](http://emberobserver.com/badges/ember-cli-flash.svg)](http://emberobserver.com/addons/ember-cli-flash) [![Code Climate](https://codeclimate.com/github/poteto/ember-cli-flash/badges/gpa.svg)](https://codeclimate.com/github/poteto/ember-cli-flash) 
+![Download count all time](https://img.shields.io/npm/dt/ember-cli-flash.svg) [![npm version](https://badge.fury.io/js/ember-cli-flash.svg)](http://badge.fury.io/js/ember-cli-flash) [![CircleCI](https://circleci.com/gh/poteto/ember-cli-flash.svg?style=shield)](https://circleci.com/gh/poteto/ember-cli-flash) [![Ember Observer Score](http://emberobserver.com/badges/ember-cli-flash.svg)](http://emberobserver.com/addons/ember-cli-flash) [![Code Climate](https://codeclimate.com/github/poteto/ember-cli-flash/badges/gpa.svg)](https://codeclimate.com/github/poteto/ember-cli-flash) 
 
 This `ember-cli` addon adds a simple flash message service and component to your app. Just inject with `Ember.inject.service` and you're good to go!
 
-## Installation
-You can install either with `ember install`:
-
-For Ember CLI >= `0.2.3`:
-
-```shell
-ember install ember-cli-flash
 ```
-
-For Ember CLI < `0.2.3`:
-
-```shell
-ember install:addon ember-cli-flash
+ember install ember-cli-flash
 ```
 
 ## Compatibility
