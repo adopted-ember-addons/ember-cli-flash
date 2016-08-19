@@ -122,6 +122,15 @@ module.exports = {
       resolutions: {
         'ember': 'canary'
       }
+    },
+    {
+      name: 'ember-alpha',
+      dependencies: {
+        'ember': 'alpha'
+      },
+      resolutions: {
+        'ember': 'alpha'
+      }
     }
   ]
 };
