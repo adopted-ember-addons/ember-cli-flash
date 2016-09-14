@@ -1,9 +1,9 @@
 import Ember from 'ember';
-import computed from 'ember-new-computed';
 
 const {
   typeOf,
   get,
+  computed,
   guidFor: emberGuidFor,
   A: emberArray
 } = Ember;

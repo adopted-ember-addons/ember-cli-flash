@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import FlashMessage from 'ember-cli-flash/flash/object';
 import objectWithout from '../utils/object-without';
-import computed from 'ember-new-computed';
 
 const {
   Service,
@@ -14,6 +13,7 @@ const {
   warn,
   get,
   set,
+  computed,
   String: { classify },
   A: emberArray
 } = Ember;
