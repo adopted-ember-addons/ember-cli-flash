@@ -37,10 +37,10 @@ test('#guidFor generates the same guid for a message', function(assert) {
     _guid: computed.guidFor('message')
   });
   const flash = Flash.create({
-    message: new Ember.Handlebars.SafeString('I like pie')
+    message: Ember.String.htmlSafe('I like pie')
   });
   const secondFlash = Flash.create({
-    message: new Ember.Handlebars.SafeString('I like pie')
+    message: Ember.String.htmlSafe('I like pie')
   });
   const result = get(flash, '_guid');
   const secondResult = get(secondFlash, '_guid');
