@@ -127,7 +127,7 @@ export default Service.extend({
   },
 
   _hasDuplicate(guid) {
-    return get(this, '_guids').contains(guid);
+    return get(this, '_guids').includes(guid);
   },
 
   _enqueue(flashInstance) {
