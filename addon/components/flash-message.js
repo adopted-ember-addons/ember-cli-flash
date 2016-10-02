@@ -6,6 +6,7 @@ const {
   String: { classify, htmlSafe },
   Component,
   getWithDefault,
+  isPresent,
   run,
   on,
   get,
@@ -76,6 +77,20 @@ export default Component.extend({
 
     if (destroyOnClick) {
       this._destroyFlashMessage();
+    }
+  },
+
+  mouseEnter() {
+    const flash = get(this, 'flash');
+    if (isPresent(flash)) {
+      flash.deferTimers();
+    }
+  },
+
+  mouseLeave() {
+    const flash = get(this, 'flash');
+    if (isPresent(flash)) {
+      flash.resumeTimers();
     }
   },
 
