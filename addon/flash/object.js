@@ -4,9 +4,9 @@ import computed from 'ember-new-computed';
 
 const {
   Object: EmberObject,
-  run: { later, cancel },
   Evented,
   get,
+  run: { later, cancel },
   set
 } = Ember;
 const {
