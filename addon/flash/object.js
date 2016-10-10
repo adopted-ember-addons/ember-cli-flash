@@ -52,6 +52,12 @@ export default EmberObject.extend(Evented, {
   willDestroy() {
     this._cancelAllTimers();
 
+    const onDestroy = get(this, 'onDestroy');
+
+    if (onDestroy) {
+      onDestroy();
+    }
+
     this._super(...arguments);
   },
 

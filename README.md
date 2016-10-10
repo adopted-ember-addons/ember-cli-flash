@@ -144,6 +144,12 @@ Ember.get(this, 'flashMessages').success('This is amazing', {
 
   By default, flash messages will be destroyed on click.  Disabling this can be useful if the message supports user interaction.
 
+- `onDestroy: function`
+
+  Default: `undefined`
+
+  A function to be called when the flash message is destroyed.
+
 ### Arbitrary options
 You can also add arbitrary options to messages:
 
