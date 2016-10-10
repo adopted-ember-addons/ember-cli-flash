@@ -24,6 +24,7 @@ export default Component.extend({
   layout,
   active: false,
   messageStyle: 'bootstrap',
+  classNames: 'flash-message',
   classNameBindings: ['alertType', 'active', 'exiting'],
 
   showProgressBar: readOnly('flash.showProgress'),
