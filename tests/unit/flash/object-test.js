@@ -1,6 +1,7 @@
 import { module, test } from 'qunit';
 import Ember from 'ember';
 import FlashMessage from 'ember-cli-flash/flash/object';
+import sinon from 'sinon';
 
 const testTimerDuration = 50;
 const {
@@ -8,7 +9,6 @@ const {
   get
 } = Ember;
 let flash = null;
-let SANDBOX = {};
 
 module('FlashMessageObject', {
   beforeEach() {
@@ -25,7 +25,6 @@ module('FlashMessageObject', {
       flash.destroyMessage();
     });
     flash = null;
-    SANDBOX = {};
   }
 });
 
@@ -100,4 +99,35 @@ test('it sets `exiting` to true after the timer has elapsed', function(assert) {
     assert.equal(exitFlash.get('exitTimer'), null, 'it cancels the `exitTimer`');
     done();
   }, testTimerDuration * 2);
+});
+
+test('#deferTimers cancels timers and updates timeout', function(assert) {
+  assert.expect(2);
+
+  const getElapsedTimeStub = sinon.stub().returns(5);
+
+  const exitFlash = FlashMessage.create({
+    timeout: testTimerDuration,
+    extendedTimeout: testTimerDuration,
+    _getElapsedTime: getElapsedTimeStub
+  });
+
+  exitFlash.deferTimers();
+
+  assert.equal(exitFlash.get('timeout'), 45, 'elapsed time is subtracted from timeout');
+  assert.notOk(exitFlash.get('timer'), 'timer is canceled');
+});
+
+test('#resumeTimers resets timers', function(assert) {
+  assert.expect(2);
+
+  const exitFlash = FlashMessage.create({
+    timeout: testTimerDuration,
+    extendedTimeout: testTimerDuration,
+  });
+
+  exitFlash.resumeTimers();
+
+  assert.ok(exitFlash.get('timer'), 'timer is started');
+  assert.ok(exitFlash.get('exitTimer'), 'timer is started');
 });

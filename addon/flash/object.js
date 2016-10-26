@@ -4,9 +4,9 @@ import computed from 'ember-new-computed';
 
 const {
   Object: EmberObject,
-  run: { later, cancel },
   Evented,
   get,
+  run: { later, cancel },
   set
 } = Ember;
 const {
@@ -17,6 +17,7 @@ export default EmberObject.extend(Evented, {
   timer: null,
   exitTimer: null,
   exiting: false,
+  initializedTime: null,
 
   queue: readOnly('flashService.queue'),
   totalTimeout: customComputed.add('timeout', 'extendedTimeout').readOnly(),
@@ -29,8 +30,8 @@ export default EmberObject.extend(Evented, {
       return;
     }
 
-    this._setTimer('exitTimer', 'exitMessage', get(this, 'timeout'));
-    this._setTimer('timer', 'destroyMessage', get(this, 'totalTimeout'));
+    this._setupTimers();
+    this._setInitializedTime();
   },
 
   destroyMessage() {
@@ -52,18 +53,44 @@ export default EmberObject.extend(Evented, {
   },
 
   willDestroy() {
-    const timers = ['timer', 'exitTimer'];
-
-    timers.forEach((timer) => {
-      this._cancelTimer(timer);
-    });
+    this._cancelAllTimers();
 
     this._super(...arguments);
+  },
+
+  deferTimers() {
+    let timeout = get(this, 'timeout');
+    let remainingTime = timeout - this._getElapsedTime();
+    set(this, 'timeout', remainingTime);
+
+    this._cancelAllTimers();
+  },
+
+  resumeTimers() {
+    this._setupTimers();
   },
 
   // private
   _setTimer(name, methodName, timeout) {
     return set(this, name, later(this, methodName, timeout));
+  },
+
+  _setupTimers() {
+    this._setTimer('exitTimer', 'exitMessage', get(this, 'timeout'));
+    this._setTimer('timer', 'destroyMessage', get(this, 'totalTimeout'));
+  },
+
+  _setInitializedTime() {
+    let currentTime = new Date().getTime();
+
+    set(this, 'initializedTime', currentTime);
+  },
+
+  _getElapsedTime() {
+    let currentTime = new Date().getTime();
+    let initializedTime = get(this, 'initializedTime');
+
+    return currentTime - initializedTime;
   },
 
   _cancelTimer(name) {
@@ -73,5 +100,13 @@ export default EmberObject.extend(Evented, {
       cancel(timer);
       set(this, name, null);
     }
+  },
+
+  _cancelAllTimers() {
+    const timers = ['timer', 'exitTimer'];
+
+    timers.forEach((timer) => {
+      this._cancelTimer(timer);
+    });
   }
 });
