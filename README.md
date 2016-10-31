@@ -177,11 +177,23 @@ This makes use of the [component helper](http://emberjs.com/blog/2015/03/27/embe
 ```
 
 ### Clearing all messages on screen
-It's best practise to use flash messages sparingly, only when you need to notify the user of something. If you're sending too many messages, and need a way for your users to clear all messages from screen, you can use this method:
+It's best practice to use flash messages sparingly, only when you need to notify the user of something. If you're sending too many messages, and need a way for your users to clear all messages from screen, you can use this method:
 
 ```javascript
 Ember.get(this, 'flashMessages').clearMessages();
 ```
+
+### Returning flash object
+The flash message service is designed to be Fluent, allowing you to chain methods on the service easily. The service should handle most cases but if you want to access the flash object directly, you can use the `getFlashObject` method:
+
+```javascript
+const flashObject = Ember.get(this, 'flashMessages').add({
+  message: 'hola',
+  type: 'foo'
+}).getFlashObject();
+```
+
+You can then manipulate the `flashObject` directly. Note that `getFlashObject` must be the last method in your chain as it returns the flash object directly.
 
 ## Service defaults
 In `config/environment.js`, you can override service defaults in the `flashMessageDefaults` object:
