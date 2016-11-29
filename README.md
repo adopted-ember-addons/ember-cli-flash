@@ -1,7 +1,7 @@
 # ember-cli-flash
 *Simple, highly configurable flash messages for ember-cli.*
 
-![Download count all time](https://img.shields.io/npm/dt/ember-cli-flash.svg) [![npm version](https://badge.fury.io/js/ember-cli-flash.svg)](http://badge.fury.io/js/ember-cli-flash) [![CircleCI](https://circleci.com/gh/poteto/ember-cli-flash.svg?style=shield)](https://circleci.com/gh/poteto/ember-cli-flash) [![Ember Observer Score](http://emberobserver.com/badges/ember-cli-flash.svg)](http://emberobserver.com/addons/ember-cli-flash) [![Code Climate](https://codeclimate.com/github/poteto/ember-cli-flash/badges/gpa.svg)](https://codeclimate.com/github/poteto/ember-cli-flash) 
+![Download count all time](https://img.shields.io/npm/dt/ember-cli-flash.svg) [![npm version](https://badge.fury.io/js/ember-cli-flash.svg)](http://badge.fury.io/js/ember-cli-flash) [![CircleCI](https://circleci.com/gh/poteto/ember-cli-flash.svg?style=shield)](https://circleci.com/gh/poteto/ember-cli-flash) [![Ember Observer Score](http://emberobserver.com/badges/ember-cli-flash.svg)](http://emberobserver.com/addons/ember-cli-flash) [![Code Climate](https://codeclimate.com/github/poteto/ember-cli-flash/badges/gpa.svg)](https://codeclimate.com/github/poteto/ember-cli-flash)
 
 This `ember-cli` addon adds a simple flash message service and component to your app. Just inject with `Ember.inject.service` and you're good to go!
 
@@ -10,7 +10,7 @@ ember install ember-cli-flash
 ```
 
 ## Compatibility
-This addon is tested against the `release`, `beta` and `canary` channels, `~1.11.0`, and `1.12.1`. Because this addon makes use of attribute bindings, which were introduced in ember `1.11.0`, earlier versions of ember are not compatible with the latest version. 
+This addon is tested against the `release`, `beta` and `canary` channels, `~1.11.0`, and `1.12.1`. Because this addon makes use of attribute bindings, which were introduced in ember `1.11.0`, earlier versions of ember are not compatible with the latest version.
 
 ## Usage
 Usage is very simple. First, add one of the [template examples](#displaying-flash-messages) to your app. Then, inject the `flashMessages` service and use one of its convenience methods:
@@ -99,11 +99,11 @@ Ember.get(this, 'flashMessages').success('This is amazing', {
 ```
 
 - `message: string`
-  
+
   Required. The message that the flash message displays.
 
 - `type?: string`
-  
+
   Default: `info`
 
   This is mainly used for styling. The flash message's `type` is set as a class name on the rendered component, together with a prefix. The rendered class name depends on the message type that was passed into the component.
@@ -115,19 +115,19 @@ Ember.get(this, 'flashMessages').success('This is amazing', {
   Number of milliseconds before a flash message is automatically removed.
 
 - `priority?: number`
-  
+
   Default: `100`
 
   Higher priority messages appear before low priority messages. The best practise is to use priority values in multiples of `100` (`100` being the lowest priority). Note that you will need [modify your template](#sort-messages-by-priority) for this work.
 
 - `sticky?: boolean`
-  
+
   Default: `false`
 
   By default, flash messages disappear after a certain amount of time. To disable this and make flash messages permanent (they can still be dismissed by click), set `sticky` to true.
 
 - `showProgress?: boolean`
-  
+
   Default: `false`
 
   To show a progress bar in the flash message, set this to true.
@@ -137,7 +137,7 @@ Ember.get(this, 'flashMessages').success('This is amazing', {
   Default: `0`
 
   Number of milliseconds before a flash message is removed to add the class 'exiting' to the element.  This can be used to animate the removal of messages with a transition.
-  
+
 - `destroyOnClick?: boolean`
 
   Default: `true`
@@ -183,7 +183,7 @@ It's best practise to use flash messages sparingly, only when you need to notify
 Ember.get(this, 'flashMessages').clearMessages();
 ```
 
-## Service defaults 
+## Service defaults
 In `config/environment.js`, you can override service defaults in the `flashMessageDefaults` object:
 
 ```javascript
@@ -206,7 +206,7 @@ module.exports = function(environment) {
 }
 ```
 
-See the [options](#custom-messages-api) section for information about flash message specific options. 
+See the [options](#custom-messages-api) section for information about flash message specific options.
 
 - `type?: string`
 
@@ -218,7 +218,7 @@ See the [options](#custom-messages-api) section for information about flash mess
 
   Default: `[ 'success', 'info', 'warning', 'danger', 'alert', 'secondary' ]`
 
-  This option lets you specify exactly what types you need, which means in the above example, you can do `Ember.get('flashMessages').{alpaca,notice,foobar}`. 
+  This option lets you specify exactly what types you need, which means in the above example, you can do `Ember.get('flashMessages').{alpaca,notice,foobar}`.
 
 - `preventDuplicates?: boolean`
 
@@ -300,7 +300,7 @@ When you install the addon, it should automatically generate a helper located at
 $ ember generate ember-cli-flash
 ```
 
-This also adds the helper to `tests/test-helper.js`. You won't actually need to import this into your tests, but it's good to know what the blueprint does. Basically, the helper overrides the `_setInitialState` method so that the flash messages behave intuitively in a testing environment. 
+This also adds the helper to `tests/test-helper.js`. You won't actually need to import this into your tests, but it's good to know what the blueprint does. Basically, the helper overrides the `_setInitialState` method so that the flash messages behave intuitively in a testing environment.
 
 An example acceptance test:
 
@@ -311,7 +311,7 @@ test('flash message is rendered', function(assert) {
   assert.expect(1);
   visit('/');
 
-  andThen(() => assert.ok(find('.alert.alert-success')));
+  andThen(() => assert.ok(find('.alert.alert-success').length));
 });
 ```
 
