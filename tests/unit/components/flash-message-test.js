@@ -26,10 +26,6 @@ moduleForComponent('flash-message', 'FlashMessageComponent', {
   },
 
   afterEach() {
-    run(() => {
-      flash.destroy();
-    });
-
     flash = null;
   }
 });
