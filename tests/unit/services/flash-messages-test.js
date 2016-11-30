@@ -198,3 +198,26 @@ test('it supports chaining', function(assert) {
   assert.equal(get(service, 'queue.firstObject.message'), 'foo', 'should support chaining');
   assert.equal(get(service, 'queue.lastObject.message'), 'bar', 'should support chaining');
 });
+
+test('it returns flash object when fetched through `getFlashObject`', function(assert) {
+  const { flashMessageDefaults } = config;
+  const flash = service
+    .clearMessages()
+    .add({ message: 'foo' })
+    .getFlashObject();
+
+  assert.equal(get(flash, 'message'), 'foo', 'it returns flash object with correct message');
+  assert.equal(get(flash, 'timeout'), flashMessageDefaults.timeout, 'it returns an object with defaults');
+});
+
+test('it supports public API methods for `peekLast` and `peekFirst`', function(assert) {
+  service.clearMessages();
+
+  assert.equal(typeOf(service.peekLast()), 'undefined', 'returns undefined when queue is empty');
+  assert.equal(typeOf(service.peekFirst()), 'undefined', 'returns undefined when queue is empty');
+
+  service.add({ message: 'foo' }).add({ message: 'bar' });
+
+  assert.equal(service.peekFirst().message, 'foo', 'returns first object from queue');
+  assert.equal(service.peekLast().message, 'bar', 'returns last object from queue');
+});
