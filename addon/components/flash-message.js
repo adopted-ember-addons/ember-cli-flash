@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import layout from '../templates/components/flash-message';
-import computed from 'ember-new-computed';
 
 const {
   String: { classify, htmlSafe },
@@ -10,7 +9,8 @@ const {
   run,
   on,
   get,
-  set
+  set,
+  computed
 } = Ember;
 const {
   readOnly,

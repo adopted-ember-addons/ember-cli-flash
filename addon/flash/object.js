@@ -1,17 +1,14 @@
 import Ember from 'ember';
 import customComputed from '../utils/computed';
-import computed from 'ember-new-computed';
 
 const {
   Object: EmberObject,
+  computed: { readOnly },
+  run: { later, cancel },
   Evented,
   get,
-  run: { later, cancel },
   set
 } = Ember;
-const {
-  readOnly
-} = computed;
 
 export default EmberObject.extend(Evented, {
   timer: null,
