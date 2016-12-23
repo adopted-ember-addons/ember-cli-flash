@@ -118,16 +118,51 @@ test('#deferTimers cancels timers and updates timeout', function(assert) {
   assert.notOk(exitFlash.get('timer'), 'timer is canceled');
 });
 
+test('#deferTimers is not called if message is sticky', function(assert) {
+  assert.expect(2);
+
+  const getElapsedTimeStub = sinon.stub();
+  const cancelAllTimerStub = sinon.stub();
+
+  const exitFlash = FlashMessage.create({
+    sticky: true,
+    timeout: testTimerDuration,
+    extendedTimeout: testTimerDuration,
+    _getElapsedTime: getElapsedTimeStub,
+    _cancelAllTimers: cancelAllTimerStub
+  });
+
+  exitFlash.deferTimers();
+
+  assert.notOk(getElapsedTimeStub.called, 'elapsed time is not called');
+  assert.notOk(cancelAllTimerStub.called, 'cancel timers is not called');
+});
+
 test('#resumeTimers resets timers', function(assert) {
   assert.expect(2);
 
   const exitFlash = FlashMessage.create({
     timeout: testTimerDuration,
-    extendedTimeout: testTimerDuration,
+    extendedTimeout: testTimerDuration
   });
 
   exitFlash.resumeTimers();
 
   assert.ok(exitFlash.get('timer'), 'timer is started');
   assert.ok(exitFlash.get('exitTimer'), 'timer is started');
+});
+
+test('#resumeTimers resets timers', function(assert) {
+  assert.expect(1);
+
+  const setupTimerStub = sinon.stub();
+
+  const exitFlash = FlashMessage.create({
+    sticky: true,
+    _setupTimers: setupTimerStub
+  });
+
+  exitFlash.resumeTimers();
+
+  assert.notOk(setupTimerStub.called, 'setup timers is not called');
 });

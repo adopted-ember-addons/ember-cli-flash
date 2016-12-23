@@ -56,6 +56,9 @@ export default EmberObject.extend(Evented, {
   },
 
   deferTimers() {
+    if (get(this, 'sticky')) {
+      return;
+    }
     let timeout = get(this, 'timeout');
     let remainingTime = timeout - this._getElapsedTime();
     set(this, 'timeout', remainingTime);
@@ -64,6 +67,9 @@ export default EmberObject.extend(Evented, {
   },
 
   resumeTimers() {
+    if (get(this, 'sticky')) {
+      return;
+    }
     this._setupTimers();
   },
 
