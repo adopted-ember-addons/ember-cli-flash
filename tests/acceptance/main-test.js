@@ -8,7 +8,7 @@ moduleForAcceptance('Acceptance | main');
 
 test('flash messages are rendered', function(assert) {
   assert.expect(7);
-  visit('/');
+  visit('/test');
 
   andThen(() => {
     assert.ok(find('.alert.alert-success'));
@@ -24,7 +24,7 @@ test('flash messages are rendered', function(assert) {
 
 test('high priority messages are rendered on top', function(assert) {
   assert.expect(3);
-  visit('/');
+  visit('/test');
 
   andThen(() => {
     assert.ok(find('.alert'));

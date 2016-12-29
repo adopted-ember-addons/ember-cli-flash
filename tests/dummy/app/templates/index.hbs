@@ -1,0 +1,24 @@
+<h1 id="title">Ember-CLI-Flash Demo</h1>
+
+<p>Simple, highly configurable flash messages for ember-cli.</p>
+<a href="https://github.com/poteto/ember-cli-flash">Repo</a> |
+<a href="https://www.npmjs.com/package/ember-cli-flash">NPM</a>
+
+<br><br/>
+
+<button {{action "fire" "success"}} class="btn btn-success">Success</button>
+<button {{action "fire" "warning"}} class="btn btn-warning">Warning</button>
+<button {{action "fire" "info"}} class="btn btn-info">Info</button>
+<button {{action "fire" "danger"}} class="btn btn-danger">DANGER</button>
+
+<br><br/>
+<form>
+  <div class="form-group">
+    <label for="message">Message</label>
+    {{input type="text" value=message class="form-control" id="message" placeholder="Alpacas are lovely"}}
+  </div>
+  <div class="form-group">
+    <label for="timeout">Milliseconds to linger (click message to dismiss early)</label>
+    {{input type="text" value=timeout class="form-control" id="timeout"}}
+  </div>
+</form>
