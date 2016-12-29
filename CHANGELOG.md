@@ -5,6 +5,10 @@ changelog, see the git history.
 
 [npm page](https://www.npmjs.com/package/ember-cli-flash)
 
+## [1.4.1]
+  - Remove Usage of Deprecated Ember.K Method [224](https://github.com/poteto/ember-cli-flash/pull/224)
+  - Add check on mouseover for sticky messages [223](https://github.com/poteto/ember-cli-flash/pull/223)
+
 ## [1.4.0]
 
   - Add changelog for release notes [220](https://github.com/poteto/ember-cli-flash/pull/220)
