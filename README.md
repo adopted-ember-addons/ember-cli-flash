@@ -87,7 +87,10 @@ Ember.get(this, 'flashMessages').add({
   sticky: true,
   showProgress: true,
   extendedTimeout: 500,
-  destroyOnClick: false
+  destroyOnClick: false,
+  onDestroy() {
+    // behavior triggered when flash is destroyed
+  }
 });
 
 Ember.get(this, 'flashMessages').success('This is amazing', {
