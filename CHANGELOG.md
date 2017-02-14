@@ -5,6 +5,9 @@ changelog, see the git history.
 
 [npm page](https://www.npmjs.com/package/ember-cli-flash)
 
+## [1.4.2]
+  - Add onDestroy callback method for flash object destroy [211](https://github.com/poteto/ember-cli-flash/pull/211)
+
 ## [1.4.1]
   - Remove Usage of Deprecated Ember.K Method [224](https://github.com/poteto/ember-cli-flash/pull/224)
   - Add check on mouseover for sticky messages [223](https://github.com/poteto/ember-cli-flash/pull/223)
