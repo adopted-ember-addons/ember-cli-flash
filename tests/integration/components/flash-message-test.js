@@ -111,4 +111,29 @@ if (parseFloat(Ember.VERSION) > 2.0) {
 
     clock.restore();
   });
+
+  test('a custom component can use the close closure action', function(assert) {
+    assert.expect(3);
+
+    let destroyMessage = sinon.spy();
+    this.set('flash', FlashMessage.create({
+      message: 'flash message content',
+      sticky: true,
+      destroyOnClick: false,
+      destroyMessage
+    }));
+
+    this.render(hbs`
+      {{#flash-message flash=flash as |component flash close|}}
+        {{flash.message}}
+        <a href="#" {{action close}}>close</a>
+      {{/flash-message}}
+    `);
+
+    assert.notOk(destroyMessage.calledOnce, 'flash has not been destroyed yet');
+    this.$(":contains(flash message content)").click();
+    assert.notOk(destroyMessage.calledOnce, 'flash has not been destroyed yet');
+    this.$(":contains(close)").click();
+    assert.ok(destroyMessage.calledOnce, 'flash is destroyed after clicking close');
+  });
 }
