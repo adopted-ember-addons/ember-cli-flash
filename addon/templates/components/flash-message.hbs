@@ -1,5 +1,5 @@
 {{#if hasBlock}}
-  {{yield this flash}}
+  {{yield this flash (action 'close')}}
 {{else}}
   {{flash.message}}
   {{#if showProgressBar}}
