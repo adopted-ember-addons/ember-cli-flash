@@ -3,6 +3,7 @@ import hbs from 'htmlbars-inline-precompile';
 import FlashMessage from 'ember-cli-flash/flash/object';
 import sinon from 'sinon';
 import Ember from 'ember';
+import wait from 'ember-test-helpers/wait';
 
 const timeoutDefault = 1000;
 const halfTimeout = 500;
@@ -111,4 +112,24 @@ if (parseFloat(Ember.VERSION) > 2.0) {
 
     clock.restore();
   });
+
+  test('a custom component can use the close closure action', function(assert) {
+    assert.expect(1);
+
+    this.set('flash', FlashMessage.create({ message: 'hi', sticky: true, closeOnClick: false }));
+
+    this.render(hbs`
+      {{#flash-message flash=flash as |component flash close|}}
+        <a href="#" {{action close}}>close</a>
+        <a href="#">stay open</a>
+      {{/flash-message}}
+    `);
+    // this.$(":contains(stay open)").click();
+
+    this.$(":contains(close)").click();
+    return wait().then(() => {
+      assert.equal(this.$().text().trim(), '');
+    });
+  });
+
 }
