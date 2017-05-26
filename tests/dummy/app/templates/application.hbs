@@ -3,7 +3,8 @@
 <p>Simple, highly configurable flash messages for ember-cli.</p>
 
 {{#each flashMessages.arrangedQueue as |flash|}}
-  {{#flash-message flash=flash as |component flash|}}
+  {{#flash-message flash=flash as |component flash close|}}
+    <a href="#" {{action close}}>close</a>
     <h6>{{component.flashType}}</h6>
     <p>{{flash.message}}</p>
     {{#if component.showProgressBar}}
