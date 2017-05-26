@@ -107,5 +107,11 @@ export default Component.extend({
     if (flash) {
       flash.destroyMessage();
     }
+  },
+
+  actions: {
+    close() {
+      this._destroyFlashMessage();
+    }
   }
 });

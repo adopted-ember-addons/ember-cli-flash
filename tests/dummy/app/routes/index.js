@@ -15,6 +15,8 @@ export default Ember.Route.extend({
       priority: 1000
     });
 
-    flashMessages.danger('You went offline');
+    flashMessages.danger('You went offline', {
+      destroyOnClick: false
+    });
   }
 });
