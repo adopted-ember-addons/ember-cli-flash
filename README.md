@@ -178,7 +178,7 @@ This makes use of the [component helper](http://emberjs.com/blog/2015/03/27/embe
     {{#if flash.componentName}}
       {{component flash.componentName content=flash.content}}
     {{else}}
-      <span {{action close}}>x</span>
+      <a href="#" {{action close}}>close</a>
       <h6>{{component.flashType}}</h6>
       <p>{{flash.message}}</p>
     {{/if}}
