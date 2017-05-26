@@ -174,10 +174,11 @@ This makes use of the [component helper](http://emberjs.com/blog/2015/03/27/embe
 
 ```handlebars
 {{#each flashMessages.queue as |flash|}}
-  {{#flash-message flash=flash as |component flash|}}
+  {{#flash-message flash=flash as |component flash close|}}
     {{#if flash.componentName}}
       {{component flash.componentName content=flash.content}}
     {{else}}
+      <span {{action close}}>x</span>
       <h6>{{component.flashType}}</h6>
       <p>{{flash.message}}</p>
     {{/if}}
