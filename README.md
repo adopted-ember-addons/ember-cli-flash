@@ -174,11 +174,10 @@ This makes use of the [component helper](http://emberjs.com/blog/2015/03/27/embe
 
 ```handlebars
 {{#each flashMessages.queue as |flash|}}
-  {{#flash-message flash=flash as |component flash close|}}
+  {{#flash-message flash=flash as |component flash|}}
     {{#if flash.componentName}}
       {{component flash.componentName content=flash.content}}
     {{else}}
-      <a href="#" {{action close}}>close</a>
       <h6>{{component.flashType}}</h6>
       <p>{{flash.message}}</p>
     {{/if}}
@@ -269,6 +268,20 @@ It also accepts your own template:
         <div class="alert-progressBar" style="{{component.progressDuration}}"></div>
       </div>
     {{/if}}
+  {{/flash-message}}
+{{/each}}
+```
+
+### Custom `close` action
+The `close` action is always passed to the component whether it is used or not. It can be used to implement your own close button, such an an `x` in the top-right corner.
+
+When using a custom `close` action, you will want to set `destroyOnClick=false` to override the default (`destroyOnClick=true`). You could do this globally in `flashMessageDefaults`.
+
+```
+{{#each flashMessages.queue as |flash|}}
+  {{#flash-message flash=flash as |component flash close|}}
+    {{flash.message}}
+    <a href="#" {{action close}}>x</a>
   {{/flash-message}}
 {{/each}}
 ```
