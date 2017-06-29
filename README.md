@@ -273,7 +273,7 @@ It also accepts your own template:
 ```
 
 ### Custom `close` action
-The `close` action is always passed to the component whether it is used or not. It can be used to implement your own close button, such an an `x` in the top-right corner.
+The `close` action is always passed to the component whether it is used or not. It can be used to implement your own close button, such as an `x` in the top-right corner.
 
 When using a custom `close` action, you will want to set `destroyOnClick=false` to override the default (`destroyOnClick=true`). You could do this globally in `flashMessageDefaults`.
 
