@@ -272,6 +272,20 @@ It also accepts your own template:
 {{/each}}
 ```
 
+### Custom `close` action
+The `close` action is always passed to the component whether it is used or not. It can be used to implement your own close button, such as an `x` in the top-right corner.
+
+When using a custom `close` action, you will want to set `destroyOnClick=false` to override the default (`destroyOnClick=true`). You could do this globally in `flashMessageDefaults`.
+
+```
+{{#each flashMessages.queue as |flash|}}
+  {{#flash-message flash=flash as |component flash close|}}
+    {{flash.message}}
+    <a href="#" {{action close}}>x</a>
+  {{/flash-message}}
+{{/each}}
+```
+
 ### Styling with Foundation or Bootstrap
 By default, flash messages will have Bootstrap style class names. If you want to use Foundation, simply specify the `messageStyle` on the component:
 
@@ -370,7 +384,7 @@ moduleFor('route:foo', 'Unit | Route | foo', {
 ```
 
 ## Styling
-This addon is minimal and does not currently ship with a stylesheet. You can style flash messages by targetting the appropriate alert class (Foundation or Bootstrap) in your CSS.
+This addon is minimal and does not currently ship with a stylesheet. You can style flash messages by targeting the appropriate alert class (Foundation or Bootstrap) in your CSS.
 
 ## License
 [MIT](LICENSE.md)
