@@ -8,7 +8,8 @@ import FlashMessage from 'ember-cli-flash/flash/object';
 const {
   run,
   get,
-  set
+  set,
+  $
 } = Ember;
 let flash;
 

@@ -1,4 +1,4 @@
-/*jshint node:true*/
+/* eslint-env node */
 module.exports = {
   scenarios: [
     {
@@ -24,21 +24,50 @@ module.exports = {
       }
     },
     {
-      name: 'ember-lts',
+      name: 'ember-lts-2.4',
       bower: {
         dependencies: {
-          "ember": "~2.4.0"
+          'ember': 'components/ember#lts-2-4'
+        },
+        resolutions: {
+          'ember': 'lts-2-4'
+        }
+      },
+      npm: {
+        devDependencies: {
+          'ember-source': null
         }
       }
     },
     {
-      name: 'ember-latest',
+      name: 'ember-lts-2.8',
       bower: {
         dependencies: {
-          "ember": "release"
+          'ember': 'components/ember#lts-2-8'
         },
         resolutions: {
-          "ember": "release"
+          'ember': 'lts-2-8'
+        }
+      },
+      npm: {
+        devDependencies: {
+          'ember-source': null
+        }
+      }
+    },
+    {
+      name: 'ember-release',
+      bower: {
+        dependencies: {
+          'ember': 'components/ember#release'
+        },
+        resolutions: {
+          'ember': 'release'
+        }
+      },
+      npm: {
+        devDependencies: {
+          'ember-source': null
         }
       }
     },
@@ -47,10 +76,15 @@ module.exports = {
       allowedToFail: true,
       bower: {
         dependencies: {
-          "ember": "beta"
+          'ember': 'components/ember#beta'
         },
         resolutions: {
-          "ember": "beta"
+          'ember': 'beta'
+        }
+      },
+      npm: {
+        devDependencies: {
+          'ember-source': null
         }
       }
     },
@@ -59,23 +93,22 @@ module.exports = {
       allowedToFail: true,
       bower: {
         dependencies: {
-          "ember": "canary"
+          'ember': 'components/ember#canary'
         },
         resolutions: {
-          "ember": "canary"
+          'ember': 'canary'
+        }
+      },
+      npm: {
+        devDependencies: {
+          'ember-source': null
         }
       }
     },
     {
-      name: 'ember-alpha',
-      allowedToFail: true,
-      bower: {
-        dependencies: {
-          "ember": "alpha"
-        },
-        resolutions: {
-          "ember": "alpha"
-        }
+      name: 'ember-default',
+      npm: {
+        devDependencies: {}
       }
     }
   ]
