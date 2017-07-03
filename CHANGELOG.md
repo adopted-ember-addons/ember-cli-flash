@@ -5,6 +5,10 @@ changelog, see the git history.
 
 [npm page](https://www.npmjs.com/package/ember-cli-flash)
 
+## [1.4.3]
+  - Pass 'close' as closure action
+  [233](https://github.com/poteto/ember-cli-flash/pull/230)
+
 ## [1.4.2]
   - Add onDestroy callback method for flash object destroy [211](https://github.com/poteto/ember-cli-flash/pull/211)
 
