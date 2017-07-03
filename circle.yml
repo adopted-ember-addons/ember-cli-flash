@@ -2,11 +2,12 @@ machine:
   node:
     version: "stable"
 dependencies:
-  pre:
-    - npm install -g bower
-  post:
-    - npm install
+  override:
+    - yarn install --frozen-lockfile
+    - yarn global add bower
     - bower install
+  cache_directories:
+    - ~/.cache/yarn
 test:
   override:
-    - npm test
+    - yarn test
