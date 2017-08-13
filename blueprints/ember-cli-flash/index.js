@@ -1,4 +1,4 @@
-/* jshint node: true */
+/* eslint-env node */
 
 var EOL = require('os').EOL;
 

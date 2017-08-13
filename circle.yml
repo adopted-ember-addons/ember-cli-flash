@@ -4,8 +4,6 @@ machine:
 dependencies:
   override:
     - yarn install --frozen-lockfile
-    - yarn global add bower
-    - bower install
   cache_directories:
     - ~/.cache/yarn
 test:
