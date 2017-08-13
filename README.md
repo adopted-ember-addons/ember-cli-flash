@@ -392,7 +392,7 @@ This addon is minimal and does not currently ship with a stylesheet. You can sty
 ## Installation
 
 * `git clone` this repository
-* `npm install`
+* `yarn install`
 * `bower install`
 
 ## Running
