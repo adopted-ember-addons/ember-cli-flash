@@ -68,13 +68,13 @@ test('flash message is removed after timeout', function(assert) {
 test('flash message is removed after timeout if mouse enters', function(assert) {
   assert.expect(3);
 
-  let foo = FlashMessage.create({
+  let flashObject = FlashMessage.create({
     message: 'hi',
     sticky: false,
     timeout: timeoutDefault
   });
 
-  this.set('flash', foo);
+  this.set('flash', flashObject);
 
   this.render(hbs`
     {{#flash-message elementId="testFlash" flash=flash as |component flash|}}
@@ -85,11 +85,11 @@ test('flash message is removed after timeout if mouse enters', function(assert) 
   assert.equal(this.$().text().trim(), 'hi');
   this.$('#testFlash').mouseenter();
 
-  assert.notOk(foo.isDestroyed, 'Flash Object is not destroyed');
+  assert.notOk(flashObject.isDestroyed, 'Flash Object is not destroyed');
   this.$('#testFlash').mouseleave();
 
   later(() => {
-    assert.ok(foo.isDestroyed, 'Flash Object is destroyed');
+    assert.ok(flashObject.isDestroyed, 'Flash Object is destroyed');
   }, 1001);
   return wait();
 });
@@ -115,4 +115,31 @@ test('a custom component can use the close closure action', function(assert) {
   assert.notOk(this.get('flash').isDestroyed, 'flash has not been destroyed yet');
   this.$(":contains(close)").click();
   assert.ok(this.get('flash').isDestroyed, 'flash is destroyed after clicking close');
+});
+
+test('exiting class is applied for sticky messages', function(assert) {
+  assert.expect(3);
+  let flashObject =  FlashMessage.create({
+    message: 'flash message content',
+    sticky: true,
+    extendedTimeout: 100
+  });
+
+  this.set('flash', flashObject);
+
+  this.render(hbs`
+    {{#flash-message flash=flash as |component flash|}}
+      <span>{{flash.message}}</span>
+    {{/flash-message}}
+  `);
+
+  const flashDiv = this.$('.alert:eq(0)');
+  flashDiv.click();
+  assert.ok(flashDiv.length, 'Flash message is shown');
+  assert.ok(flashDiv.hasClass('exiting'), 'exiting class is applied');
+
+  later(() => {
+    assert.ok(flashObject.isDestroyed, 'Flash Object is destroyed');
+  }, 101);
+  return wait();
 });

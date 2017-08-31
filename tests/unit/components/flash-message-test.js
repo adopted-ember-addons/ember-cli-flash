@@ -62,6 +62,7 @@ test('exiting the flash object sets exiting on the component', function(assert) 
 
 test('it destroys the flash object on click', function(assert) {
   assert.expect(1);
+  flash.set('extendedTimeout', 0);
   const component = this.subject({ flash });
   this.render();
 

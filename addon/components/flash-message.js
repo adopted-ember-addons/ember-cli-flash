@@ -90,7 +90,7 @@ export default Component.extend({
 
   mouseLeave() {
     const flash = get(this, 'flash');
-    if (isPresent(flash)) {
+    if (isPresent(flash) && !get(flash, 'exiting')) {
       flash.allowExit();
     }
   },

@@ -97,7 +97,7 @@ test('it calls `onDestroy` when object is destroyed', function(assert) {
   assert.expect(1);
 
   const callbackFlash = FlashMessage.create({
-    extendedTimeout: 1000,
+    sticky: true,
     onDestroy() {
       assert.ok(true, 'onDestroy is called');
     }

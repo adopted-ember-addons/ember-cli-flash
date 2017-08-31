@@ -20,7 +20,8 @@ export default Ember.Route.extend({
     });
 
     flashMessages.warning('It is going to rain tomorrow', {
-      priority: 1000
+      priority: 1000,
+      extendedTimeout: 1000
     });
 
     flashMessages.danger('You went offline');
