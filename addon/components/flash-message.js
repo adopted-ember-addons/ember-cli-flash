@@ -83,14 +83,14 @@ export default Component.extend({
   mouseEnter() {
     const flash = get(this, 'flash');
     if (isPresent(flash)) {
-      flash.deferTimers();
+      flash.preventExit();
     }
   },
 
   mouseLeave() {
     const flash = get(this, 'flash');
     if (isPresent(flash)) {
-      flash.resumeTimers();
+      flash.allowExit();
     }
   },
 

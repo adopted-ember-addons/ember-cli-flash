@@ -14,10 +14,10 @@ export default EmberObject.extend(Evented, {
   timer: null,
   exitTimer: null,
   exiting: false,
+  isExitable: true,
   initializedTime: null,
 
   queue: readOnly('flashService.queue'),
-  totalTimeout: customComputed.add('timeout', 'extendedTimeout').readOnly(),
   _guid: customComputed.guidFor('message').readOnly(),
 
   init() {
@@ -27,7 +27,7 @@ export default EmberObject.extend(Evented, {
       return;
     }
 
-    this._setupTimers();
+    this._setTimer('timer', 'exitMessage', get(this, 'timeout'));
     this._setInitializedTime();
   },
 
@@ -43,9 +43,14 @@ export default EmberObject.extend(Evented, {
   },
 
   exitMessage() {
-    set(this, 'exiting', true);
+    if (!get(this, 'isExitable')) {
+      return;
+    }
 
-    this._cancelTimer('exitTimer');
+    this._setTimer('exitTimer', 'destroyMessage', get(this, 'extendedTimeout'));
+    this._cancelTimer('timer');
+
+    set(this, 'exiting', true);
     this.trigger('didExitMessage');
   },
 
@@ -61,32 +66,18 @@ export default EmberObject.extend(Evented, {
     this._super(...arguments);
   },
 
-  deferTimers() {
-    if (get(this, 'sticky')) {
-      return;
-    }
-    let timeout = get(this, 'timeout');
-    let remainingTime = timeout - this._getElapsedTime();
-    set(this, 'timeout', remainingTime);
-
-    this._cancelAllTimers();
+  preventExit() {
+    set(this, 'isExitable', false);
   },
 
-  resumeTimers() {
-    if (get(this, 'sticky')) {
-      return;
-    }
-    this._setupTimers();
+  allowExit() {
+    set(this, 'isExitable', true);
+    this._checkIfShouldExit();
   },
 
   // private
   _setTimer(name, methodName, timeout) {
     return set(this, name, later(this, methodName, timeout));
-  },
-
-  _setupTimers() {
-    this._setTimer('exitTimer', 'exitMessage', get(this, 'timeout'));
-    this._setTimer('timer', 'destroyMessage', get(this, 'totalTimeout'));
   },
 
   _setInitializedTime() {
@@ -117,5 +108,11 @@ export default EmberObject.extend(Evented, {
     timers.forEach((timer) => {
       this._cancelTimer(timer);
     });
+  },
+
+  _checkIfShouldExit() {
+    if (this._getElapsedTime() >= get(this, 'timeout') && !get(this, 'sticky')) {
+      this.exitMessage();
+    }
   }
 });
