@@ -16,5 +16,11 @@ export default Ember.Route.extend({
     });
 
     flashMessages.danger('You went offline');
+
+    flashMessages.success('Good job! Ok, bye', {
+      timeout: 5000,
+      sticky: false,
+      showProgress: true
+    });
   }
 });
