@@ -15,6 +15,7 @@ export default EmberObject.extend(Evented, {
   exitTimer: null,
   exiting: false,
   initializedTime: null,
+  resumedTime: null,
 
   queue: readOnly('flashService.queue'),
   totalTimeout: customComputed.add('timeout', 'extendedTimeout').readOnly(),
@@ -76,6 +77,7 @@ export default EmberObject.extend(Evented, {
     if (get(this, 'sticky')) {
       return;
     }
+    set(this, 'resumedTime', new Date().getTime());
     this._setupTimers();
   },
 
@@ -97,7 +99,7 @@ export default EmberObject.extend(Evented, {
 
   _getElapsedTime() {
     let currentTime = new Date().getTime();
-    let initializedTime = get(this, 'initializedTime');
+    let initializedTime = get(this, 'resumedTime') || get(this, 'initializedTime');
 
     return currentTime - initializedTime;
   },
