@@ -1,7 +1,0 @@
-{
-  "name": "ember-cli-flash",
-  "dependencies": {
-    "ember-qunit-notifications": "0.1.0",
-    "sinonjs": "^1.17.1"
-  }
-}
