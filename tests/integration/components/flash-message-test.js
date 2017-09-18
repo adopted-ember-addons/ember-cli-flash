@@ -1,9 +1,10 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import FlashMessage from 'ember-cli-flash/flash/object';
-import sinon from 'sinon';
-import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
+import Ember from 'ember';
+
+const { run: { later } } = Ember;
 
 const timeoutDefault = 1000;
 
@@ -40,92 +41,77 @@ test('it does not error when quickly removed from the DOM', function(assert) {
   assert.ok(this.get('flash').isDestroyed, 'Flash Object isDestroyed');
 });
 
-if (parseFloat(Ember.VERSION) > 2.0) {
-  test('flash message is removed after timeout', function(assert) {
-    assert.expect(3);
+test('flash message is removed after timeout', function(assert) {
+  assert.expect(3);
 
-    let destroyMessage = sinon.spy();
-    
-    this.set('flash', FlashMessage.create({
-      message: 'hi',
-      sticky: false,
-      timeout: timeoutDefault,
-      destroyMessage
-    }));
+  this.set('flash', FlashMessage.create({
+    message: 'hi',
+    sticky: false,
+    timeout: timeoutDefault
+  }));
 
-    this.render(hbs`
-      {{#flash-message flash=flash as |component flash|}}
-        {{flash.message}}
-      {{/flash-message}}
-    `);
+  this.render(hbs`
+    {{#flash-message flash=flash as |component flash|}}
+      {{flash.message}}
+    {{/flash-message}}
+  `);
 
-    assert.equal(this.$().text().trim(), 'hi');
-    assert.notOk(destroyMessage.calledOnce, 'flash has not been destroyed yet');
+  assert.equal(this.$().text().trim(), 'hi');
+  assert.notOk(this.get('flash').isDestroyed, 'Flash is not destroyed immediately');
 
-    return wait().then(() => {
-      assert.ok(destroyMessage.calledOnce, 'flash is destroyed after timeout');
-    });
+  return wait().then(() => {
+    assert.ok(this.get('flash').isDestroyed, 'Flash Object is destroyed');
+  });
+});
+
+test('flash message is removed after timeout if mouse enters', function(assert) {
+  assert.expect(3);
+
+  let foo = FlashMessage.create({
+    message: 'hi',
+    sticky: false,
+    timeout: timeoutDefault
   });
 
-  test('flash message is removed after timeout', function(assert) {
-    assert.expect(3);
+  this.set('flash', foo);
 
-    let destroyMessage = sinon.spy();
+  this.render(hbs`
+    {{#flash-message elementId="testFlash" flash=flash as |component flash|}}
+      {{flash.message}}
+    {{/flash-message}}
+  `);
 
-    this.set('flash', FlashMessage.create({
-      message: 'hi',
-      sticky: false,
-      timeout: timeoutDefault,
-      destroyMessage
-    }));
+  assert.equal(this.$().text().trim(), 'hi');
+  this.$('#testFlash').mouseenter();
 
-    this.render(hbs`
-      {{#flash-message flash=flash as |component flash|}}
-        <span id="testFlash">{{flash.message}}</span>
-      {{/flash-message}}
-    `);
+  assert.notOk(foo.isDestroyed, 'Flash Object is not destroyed');
+  this.$('#testFlash').mouseleave();
 
-    assert.equal(this.$().text().trim(), 'hi');
+  later(() => {
+    assert.ok(foo.isDestroyed, 'Flash Object is destroyed');
+  }, 1001);
+  return wait();
+});
 
-    this.$('#testFlash').mouseenter();
+test('a custom component can use the close closure action', function(assert) {
+  assert.expect(3);
 
-    assert.notOk(
-      destroyMessage.calledOnce,
-      'flash is not destroyed after enough elapsed time'
-    );
+  this.set('flash', FlashMessage.create({
+    message: 'flash message content',
+    sticky: true,
+    destroyOnClick: false
+  }));
 
-    this.$('#testFlash').mouseleave();
-        
-    return wait().then(() => {
-      assert.ok(
-        destroyMessage.calledOnce,
-        'flash waits remaining time from original timeout'
-      );
-    });
-  });
+  this.render(hbs`
+    {{#flash-message flash=flash as |component flash close|}}
+      {{flash.message}}
+      <a href="#" {{action close}}>close</a>
+    {{/flash-message}}
+  `);
 
-  test('a custom component can use the close closure action', function(assert) {
-    assert.expect(3);
-
-    let destroyMessage = sinon.spy();
-    this.set('flash', FlashMessage.create({
-      message: 'flash message content',
-      sticky: true,
-      destroyOnClick: false,
-      destroyMessage
-    }));
-
-    this.render(hbs`
-      {{#flash-message flash=flash as |component flash close|}}
-        {{flash.message}}
-        <a href="#" {{action close}}>close</a>
-      {{/flash-message}}
-    `);
-
-    assert.notOk(destroyMessage.calledOnce, 'flash has not been destroyed yet');
-    this.$(":contains(flash message content)").click();
-    assert.notOk(destroyMessage.calledOnce, 'flash has not been destroyed yet');
-    this.$(":contains(close)").click();
-    assert.ok(destroyMessage.calledOnce, 'flash is destroyed after clicking close');
-  });
-}
+  assert.notOk(this.get('flash').isDestroyed, 'flash has not been destroyed yet');
+  this.$(":contains(flash message content)").click();
+  assert.notOk(this.get('flash').isDestroyed, 'flash has not been destroyed yet');
+  this.$(":contains(close)").click();
+  assert.ok(this.get('flash').isDestroyed, 'flash is destroyed after clicking close');
+});

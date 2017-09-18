@@ -46,7 +46,6 @@ export default EmberObject.extend(Evented, {
     if (!get(this, 'isExitable')) {
       return;
     }
-
     this._setTimer('exitTimer', 'destroyMessage', get(this, 'extendedTimeout'));
     this._cancelTimer('timer');
 
