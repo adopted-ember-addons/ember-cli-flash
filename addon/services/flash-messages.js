@@ -77,7 +77,7 @@ export default Service.extend({
   },
 
   getFlashObject() {
-    const errorText = 'A flass message must be added before it can be returned';
+    const errorText = 'A flash message must be added before it can be returned';
     assert(errorText, get(this, 'queue').length);
 
     return this.peekLast();
