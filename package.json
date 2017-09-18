@@ -27,7 +27,7 @@
   "dependencies": {
     "ember-cli-babel": "^5.1.6",
     "ember-cli-htmlbars": "^1.0.3",
-    "ember-runtime-enumerable-includes-polyfill": "^1.0.1"
+    "ember-runtime-enumerable-includes-polyfill": "^2.0.0"
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.5",
