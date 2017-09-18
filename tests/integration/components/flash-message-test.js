@@ -66,6 +66,7 @@ if (parseFloat(Ember.VERSION) > 2.0) {
     assert.notOk(destroyMessage.calledOnce, 'flash has not been destroyed yet');
 
     clock.tick(timeoutDefault);
+    clock.tick(timeoutDefault);
     assert.ok(destroyMessage.calledOnce, 'flash is destroyed after timeout');
 
     clock.restore();
