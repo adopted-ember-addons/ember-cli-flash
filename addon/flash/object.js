@@ -1,10 +1,10 @@
 import Ember from 'ember';
 import customComputed from '../utils/computed';
+import { task, timeout } from 'ember-concurrency';
 
 const {
   Object: EmberObject,
   computed: { readOnly },
-  run: { later, cancel },
   Evented,
   get,
   set
@@ -26,30 +26,33 @@ export default EmberObject.extend(Evented, {
     if (get(this, 'sticky')) {
       return;
     }
-
-    this._setTimer('timer', 'exitMessage', get(this, 'timeout'));
+    let timerTaskInstance = get(this, 'timerTask');
+    timerTaskInstance.perform();
+    set(this, 'timerTaskInstance', timerTaskInstance)
     this._setInitializedTime();
   },
 
   destroyMessage() {
-    let extendedTimeout = get(this, 'extendedTimeout') || 0;
-    return extendedTimeout ? this._delayedTeardown(extendedTimeout) : this._teardown();
+    let exitTaskInstance = get(this, 'exitTaskInstance');
+    if (exitTaskInstance && exitTaskInstance.isRunning) {
+      exitTaskInstance.cancel();
+      this._teardown();
+    } else {
+      get(this, 'delayedTeardownTask').perform();
+    }
   },
 
   exitMessage() {
     if (!get(this, 'isExitable')) {
       return;
     }
-    this._setTimer('exitTimer', 'destroyMessage', get(this, 'extendedTimeout'));
-    this._cancelTimer('timer');
-
-    set(this, 'exiting', true);
+    this._cancelTimer();
+    let exitTaskInstance = get(this, 'exitTimerTask').perform();
+    set(this, 'exitTaskInstance', exitTaskInstance);
     this.trigger('didExitMessage');
   },
 
   willDestroy() {
-    this._cancelAllTimers();
-
     const onDestroy = get(this, 'onDestroy');
 
     if (onDestroy) {
@@ -68,11 +71,24 @@ export default EmberObject.extend(Evented, {
     this._checkIfShouldExit();
   },
 
-  // private
-  _setTimer(name, methodName, timeout) {
-    return set(this, name, later(this, methodName, timeout));
-  },
+  timerTask: task(function* () {
+    yield timeout(get(this, 'timeout'));
+    this.exitMessage();
+  }),
 
+  exitTimerTask: task(function* () {
+    set(this, 'exiting', true);
+    yield timeout(get(this, 'extendedTimeout') || 0);
+    this._teardown();
+  }),
+
+  delayedTeardownTask: task(function* () {
+    set(this, 'exiting', true);
+    yield timeout(get(this, 'extendedTimeout'));
+    this._teardown();
+  }),
+
+  // private
   _setInitializedTime() {
     let currentTime = new Date().getTime();
 
@@ -86,34 +102,17 @@ export default EmberObject.extend(Evented, {
     return currentTime - initializedTime;
   },
 
-  _cancelTimer(name) {
-    const timer = get(this, name);
-
-    if (timer) {
-      cancel(timer);
-      set(this, name, null);
+  _cancelTimer() {
+    let timerInstance = get(this, 'timerInstance');
+    if (timerInstance) {
+      timerInstance.cancel();
     }
-  },
-
-  _cancelAllTimers() {
-    const timers = ['timer', 'exitTimer'];
-
-    timers.forEach((timer) => {
-      this._cancelTimer(timer);
-    });
   },
 
   _checkIfShouldExit() {
     if (this._getElapsedTime() >= get(this, 'timeout') && !get(this, 'sticky')) {
       this.exitMessage();
     }
-  },
-
-  _delayedTeardown(extendedTimeout) {
-    set(this, 'exiting', true);
-    later(() => {
-      this._teardown();
-    }, extendedTimeout);
   },
 
   _teardown() {
