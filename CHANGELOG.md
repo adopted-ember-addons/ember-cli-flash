@@ -5,6 +5,13 @@ changelog, see the git history.
 
 [npm page](https://www.npmjs.com/package/ember-cli-flash)
 
+## [1.5.0]
+  - Upgrade to Ember 2.15 [243](https://github.com/poteto/ember-cli-flash/pull/243) & [236](https://github.com/poteto/ember-cli-flash/pull/236)
+  - Prevent early destruction from mouse events [241](https://github.com/poteto/ember-cli-flash/pull/241)
+  - Minor typo errors [238](https://github.com/poteto/ember-cli-flash/pull/238)
+  - Remove bower
+  - Fix deprecation warnings related to outdate dependencies
+
 ## [1.4.3]
   - Pass 'close' as closure action
   [233](https://github.com/poteto/ember-cli-flash/pull/230)
