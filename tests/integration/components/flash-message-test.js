@@ -22,6 +22,7 @@ test('it renders a flash message', function(assert) {
   `);
 
   assert.equal(this.$().text().trim(), 'hi');
+  assert.ok(this.$('.alert:eq(0)').hasClass('flash-message'));
 });
 
 test('it does not error when quickly removed from the DOM', function(assert) {
