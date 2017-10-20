@@ -28,7 +28,7 @@ module('FlashMessageObject', {
 });
 
 test('it sets a timer after init', function(assert) {
-  assert.ok(flash.get('timer'));
+  assert.ok(flash.get('timerTaskInstance.isRunning'));
 });
 
 test('it destroys the message after the timer has elapsed', function(assert) {

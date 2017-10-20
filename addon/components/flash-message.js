@@ -7,14 +7,15 @@ const {
   getWithDefault,
   isPresent,
   run,
-  on,
   get,
   set,
   computed
 } = Ember;
 const {
+  and,
+  bool,
   readOnly,
-  bool
+  not
 } = computed;
 const {
   next,
@@ -28,7 +29,9 @@ export default Component.extend({
   classNames: ['flash-message'],
   classNameBindings: ['alertType', 'active', 'exiting'],
 
-  showProgressBar: readOnly('flash.showProgress'),
+  showProgress: readOnly('flash.showProgress'),
+  notExiting: not('exiting'),
+  showProgressBar: and('showProgress', 'notExiting'),
   exiting: readOnly('flash.exiting'),
   hasBlock: bool('template').readOnly(),
 
@@ -54,12 +57,13 @@ export default Component.extend({
     }
   }),
 
-  _setActive: on('didInsertElement', function() {
+  didInsertElement() {
+    this._super(...arguments);
     const pendingSet = next(this, () => {
       set(this, 'active', true);
     });
     set(this, 'pendingSet', pendingSet);
-  }),
+  },
 
   progressDuration: computed('flash.showProgress', {
     get() {
@@ -96,7 +100,7 @@ export default Component.extend({
   },
 
   willDestroy() {
-    this._super();
+    this._super(...arguments);
     this._destroyFlashMessage();
     cancel(get(this, 'pendingSet'));
   },
