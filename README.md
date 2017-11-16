@@ -153,6 +153,42 @@ Ember.get(this, 'flashMessages').success('This is amazing', {
 
   A function to be called when the flash message is destroyed.
 
+### Animated example
+To animate messages, set `extendedTimeout` to something higher than zero. Here we've chosen 500ms.
+
+```javascript
+module.exports = function(environment) {
+  var ENV = {
+    flashMessageDefaults: {
+      extendedTimeout: 500
+    }
+  }
+}
+```
+
+Then animate using CSS transitions, using the `.active` and `.active.exiting` classes.
+```scss
+.alert {
+  opacity: 0;
+  position: relative;
+  left: 100px;
+
+  transition: all 700ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  &.active {
+    opacity: 1;
+    left: 0px;
+
+    &.exiting {
+      opacity: 0;
+      left: 100px;
+    }
+  }
+}
+```
+
+**NOTE:** Exit transitions currently are not supported for sticky messages.
+
 ### Arbitrary options
 You can also add arbitrary options to messages:
 
