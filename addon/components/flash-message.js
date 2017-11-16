@@ -77,7 +77,7 @@ export default Component.extend({
     const destroyOnClick = getWithDefault(this, 'flash.destroyOnClick', true);
 
     if (destroyOnClick) {
-      this._destroyFlashMessage();
+      this._exitFlashMessage();
     }
   },
 
@@ -110,9 +110,18 @@ export default Component.extend({
     }
   },
 
+  _exitFlashMessage() {
+    const flash = getWithDefault(this, 'flash', false);
+
+    if (flash && !get(flash, 'isDestroyed')) {
+      flash.allowExit();
+      flash.exitMessage();
+    }
+  },
+
   actions: {
     close() {
-      this._destroyFlashMessage();
+      this._exitFlashMessage();
     }
   }
 });
