@@ -99,6 +99,8 @@ test('a custom component can use the close closure action', function(assert) {
 
   this.set('flash', FlashMessage.create({
     message: 'flash message content',
+    extendedTimeout: 0,
+    timeout: 0,
     sticky: true,
     destroyOnClick: false
   }));
@@ -114,5 +116,8 @@ test('a custom component can use the close closure action', function(assert) {
   this.$(":contains(flash message content)").click();
   assert.notOk(this.get('flash').isDestroyed, 'flash has not been destroyed yet');
   this.$(":contains(close)").click();
-  assert.ok(this.get('flash').isDestroyed, 'flash is destroyed after clicking close');
+  later(() => {
+    assert.ok(this.get('flash').isDestroyed, 'flash is destroyed after clicking close');
+  }, 10);
+  return wait();
 });
