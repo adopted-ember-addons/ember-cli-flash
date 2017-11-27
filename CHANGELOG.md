@@ -5,6 +5,9 @@ changelog, see the git history.
 
 [npm page](https://www.npmjs.com/package/ember-cli-flash)
 
+## [1.6.1]
+  - Revert [240](https://github.com/poteto/ember-cli-flash/pull/240) [253](https://github.com/poteto/ember-cli-flash/pull/253)
+
 ## [1.6.0]
   - Upgrade to Ember 2.16 & new modules api [249](https://github.com/poteto/ember-cli-flash/pull/249)
   - extendTimeout on sticky message [240](https://github.com/poteto/ember-cli-flash/pull/240)
