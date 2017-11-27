@@ -1,16 +1,10 @@
-import Ember from 'ember';
+import { htmlSafe, classify } from '@ember/string';
+import Component from '@ember/component';
+import { isPresent } from '@ember/utils';
+import { run } from '@ember/runloop';
+import { computed, set, get, getWithDefault } from '@ember/object';
 import layout from '../templates/components/flash-message';
 
-const {
-  String: { classify, htmlSafe },
-  Component,
-  getWithDefault,
-  isPresent,
-  run,
-  get,
-  set,
-  computed
-} = Ember;
 const {
   and,
   bool,

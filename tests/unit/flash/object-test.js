@@ -1,12 +1,9 @@
+import { run } from '@ember/runloop';
+import { get } from '@ember/object';
 import { module, test } from 'qunit';
-import Ember from 'ember';
 import FlashMessage from 'ember-cli-flash/flash/object';
 
 const testTimerDuration = 50;
-const {
-  run,
-  get
-} = Ember;
 let flash = null;
 
 module('FlashMessageObject', {

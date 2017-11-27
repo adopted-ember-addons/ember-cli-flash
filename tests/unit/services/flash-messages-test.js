@@ -1,16 +1,11 @@
+import { run } from '@ember/runloop';
+import { typeOf } from '@ember/utils';
+import { set, get } from '@ember/object';
+import { classify } from '@ember/string';
+import { A as emberArray } from '@ember/array';
 import { module, test } from 'qunit';
-import Ember from 'ember';
 import config from '../../../config/environment';
 import FlashMessagesService from 'ember-cli-flash/services/flash-messages';
-
-const {
-  run,
-  typeOf,
-  get,
-  set,
-  String: { classify },
-  A: emberArray
-} = Ember;
 
 let service;
 let SANDBOX = {};

@@ -1,29 +1,23 @@
-import Ember from 'ember';
+import { merge } from '@ember/polyfills';
+import Service from '@ember/service';
+import { copy } from '@ember/object/internals';
+import { typeOf, isNone } from '@ember/utils';
+import { warn, assert } from '@ember/debug';
+import {
+  set,
+  get,
+  setProperties,
+  getWithDefault
+} from '@ember/object';
+import {
+  mapBy,
+  sort,
+  equal
+} from '@ember/object/computed';
+import { classify } from '@ember/string';
+import { A as emberArray } from '@ember/array';
 import FlashMessage from 'ember-cli-flash/flash/object';
 import objectWithout from '../utils/object-without';
-
-const {
-  Service,
-  assert,
-  copy,
-  getWithDefault,
-  isNone,
-  setProperties,
-  typeOf,
-  warn,
-  get,
-  set,
-  computed,
-  String: { classify },
-  A: emberArray
-} = Ember;
-const {
-  equal,
-  sort,
-  mapBy
-} = computed;
-
-const merge = Ember.assign || Ember.merge;
 
 export default Service.extend({
   isEmpty: equal('queue.length', 0).readOnly(),

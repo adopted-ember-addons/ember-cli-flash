@@ -1,14 +1,13 @@
-import Ember from 'ember';
+import { htmlSafe } from '@ember/string';
+import EmberObject, { get } from '@ember/object';
 import computed from 'ember-cli-flash/utils/computed';
 import { module, test } from 'qunit';
-
-const { get } = Ember;
 
 module('Unit | Utility | computed');
 
 test('#add adds `dependentKeys` that are numbers together', function(assert) {
   const expectedResult = 60;
-  const Person = Ember.Object.extend({
+  const Person = EmberObject.extend({
     scores: computed.add('first', 'second', 'third', 'fourth')
   });
   const person = Person.create({
@@ -22,7 +21,7 @@ test('#add adds `dependentKeys` that are numbers together', function(assert) {
 });
 
 test('#guidFor generates a guid for a `dependentKey`', function(assert) {
-  const Flash = Ember.Object.extend({
+  const Flash = EmberObject.extend({
     _guid: computed.guidFor('message')
   });
   const flash = Flash.create({
@@ -33,14 +32,14 @@ test('#guidFor generates a guid for a `dependentKey`', function(assert) {
 });
 
 test('#guidFor generates the same guid for a message', function(assert) {
-  const Flash = Ember.Object.extend({
+  const Flash = EmberObject.extend({
     _guid: computed.guidFor('message')
   });
   const flash = Flash.create({
-    message: Ember.String.htmlSafe('I like pie')
+    message: htmlSafe('I like pie')
   });
   const secondFlash = Flash.create({
-    message: Ember.String.htmlSafe('I like pie')
+    message: htmlSafe('I like pie')
   });
   const result = get(flash, '_guid');
   const secondResult = get(secondFlash, '_guid');
