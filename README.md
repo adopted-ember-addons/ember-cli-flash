@@ -187,6 +187,8 @@ Then animate using CSS transitions, using the `.active` and `.active.exiting` cl
 }
 ```
 
+**NOTE:** Exit transitions currently are not supported for sticky messages.
+
 ### Arbitrary options
 You can also add arbitrary options to messages:
 

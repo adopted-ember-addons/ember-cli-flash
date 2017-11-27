@@ -1,3 +1,4 @@
+import { on } from '@ember/object/evented';
 import { htmlSafe, classify } from '@ember/string';
 import Component from '@ember/component';
 import { isPresent } from '@ember/utils';
@@ -6,10 +7,8 @@ import { computed, set, get, getWithDefault } from '@ember/object';
 import layout from '../templates/components/flash-message';
 
 const {
-  and,
-  bool,
   readOnly,
-  not
+  bool
 } = computed;
 const {
   next,
@@ -23,9 +22,7 @@ export default Component.extend({
   classNames: ['flash-message'],
   classNameBindings: ['alertType', 'active', 'exiting'],
 
-  showProgress: readOnly('flash.showProgress'),
-  notExiting: not('exiting'),
-  showProgressBar: and('showProgress', 'notExiting'),
+  showProgressBar: readOnly('flash.showProgress'),
   exiting: readOnly('flash.exiting'),
   hasBlock: bool('template').readOnly(),
 
@@ -51,13 +48,12 @@ export default Component.extend({
     }
   }),
 
-  didInsertElement() {
-    this._super(...arguments);
+  _setActive: on('didInsertElement', function() {
     const pendingSet = next(this, () => {
       set(this, 'active', true);
     });
     set(this, 'pendingSet', pendingSet);
-  },
+  }),
 
   progressDuration: computed('flash.showProgress', {
     get() {
@@ -88,13 +84,13 @@ export default Component.extend({
 
   mouseLeave() {
     const flash = get(this, 'flash');
-    if (isPresent(flash) && !get(flash, 'exiting')) {
+    if (isPresent(flash)) {
       flash.allowExit();
     }
   },
 
   willDestroy() {
-    this._super(...arguments);
+    this._super();
     this._destroyFlashMessage();
     cancel(get(this, 'pendingSet'));
   },
