@@ -1,4 +1,5 @@
 module.exports = {
+  useYarn: true,
   scenarios: [
     {
       name: 'ember-1.13',

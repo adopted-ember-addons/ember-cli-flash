@@ -427,7 +427,6 @@ This addon is minimal and does not currently ship with a stylesheet. You can sty
 
 * `git clone` this repository
 * `yarn install`
-* `bower install`
 
 ## Running
 

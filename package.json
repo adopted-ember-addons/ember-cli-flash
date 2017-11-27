@@ -36,17 +36,14 @@
     "ember-runtime-enumerable-includes-polyfill": "^2.0.0"
   },
   "devDependencies": {
-    "bower": "^1.8.2",
     "broccoli-asset-rev": "^2.4.5",
     "ember-cli": "~2.16.2",
-    "ember-cli-app-version": "^1.0.0",
     "ember-cli-dependency-checker": "^2.0.0",
     "ember-cli-eslint": "^4.0.0",
     "ember-cli-github-pages": "0.0.6",
     "ember-cli-htmlbars-inline-precompile": "^1.0.0",
     "ember-cli-inject-live-reload": "^1.4.1",
     "ember-cli-qunit": "^4.0.0",
-    "ember-cli-release": "^0.2.9",
     "ember-cli-shims": "^1.1.0",
     "ember-cli-sri": "^2.1.0",
     "ember-cli-uglify": "^2.0.0",
