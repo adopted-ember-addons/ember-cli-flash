@@ -25,7 +25,7 @@ module('FlashMessageObject', {
 });
 
 test('it sets a timer after init', function(assert) {
-  assert.ok(flash.get('timer'));
+  assert.ok(flash.get('timerTaskInstance.isRunning'));
 });
 
 test('it destroys the message after the timer has elapsed', function(assert) {
@@ -94,7 +94,7 @@ test('it calls `onDestroy` when object is destroyed', function(assert) {
   assert.expect(1);
 
   const callbackFlash = FlashMessage.create({
-    extendedTimeout: 1000,
+    sticky: true,
     onDestroy() {
       assert.ok(true, 'onDestroy is called');
     }
