@@ -1,13 +1,7 @@
-import Ember from 'ember';
+import Evented from '@ember/object/evented';
+import EmberObject, { set, get } from '@ember/object';
 import customComputed from '../utils/computed';
 import { task, timeout } from 'ember-concurrency';
-
-const {
-  Object: EmberObject,
-  Evented,
-  get,
-  set
-} = Ember;
 
 export default EmberObject.extend(Evented, {
   exitTimer: null,

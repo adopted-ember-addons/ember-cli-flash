@@ -1,12 +1,7 @@
-import Ember from 'ember';
-
-const {
-  typeOf,
-  get,
-  computed,
-  guidFor: emberGuidFor,
-  A: emberArray
-} = Ember;
+import { typeOf } from '@ember/utils';
+import { computed, get } from '@ember/object';
+import { guidFor as emberGuidFor } from '@ember/object/internals';
+import { A as emberArray } from '@ember/array';
 
 export function add(...dependentKeys) {
   const computedFunc = computed({

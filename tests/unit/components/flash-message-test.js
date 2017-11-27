@@ -1,16 +1,12 @@
+import { run } from '@ember/runloop';
+import { set, get } from '@ember/object';
 import $ from 'jquery';
-import Ember from 'ember';
 import {
   moduleForComponent,
   test
 } from 'ember-qunit';
 import FlashMessage from 'ember-cli-flash/flash/object';
 
-const {
-  run,
-  get,
-  set
-} = Ember;
 let flash;
 
 moduleForComponent('flash-message', 'FlashMessageComponent', {

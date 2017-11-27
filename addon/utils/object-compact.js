@@ -1,8 +1,4 @@
-import Ember from 'ember';
-
-const {
-  isPresent
-} = Ember;
+import { isPresent } from '@ember/utils';
 
 export default function objectCompact(objectInstance) {
   const compactedObject = {};
