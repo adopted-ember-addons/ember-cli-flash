@@ -5,6 +5,12 @@ changelog, see the git history.
 
 [npm page](https://www.npmjs.com/package/ember-cli-flash)
 
+## [1.6.0]
+  - Upgrade to Ember 2.16 & new modules api [249](https://github.com/poteto/ember-cli-flash/pull/249)
+  - extendTimeout on sticky message [240](https://github.com/poteto/ember-cli-flash/pull/240)
+  - Add base class `flash-message` to flash component [210](https://github.com/poteto/ember-cli-flash/pull/210)
+  - Remove the rest of bower
+
 ## [1.5.0]
   - Upgrade to Ember 2.15 [243](https://github.com/poteto/ember-cli-flash/pull/243) & [236](https://github.com/poteto/ember-cli-flash/pull/236)
   - Prevent early destruction from mouse events [241](https://github.com/poteto/ember-cli-flash/pull/241)
