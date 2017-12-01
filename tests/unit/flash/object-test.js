@@ -1,5 +1,6 @@
 import { run } from '@ember/runloop';
 import { get } from '@ember/object';
+import { isPresent } from '@ember/utils';
 import { module, test } from 'qunit';
 import FlashMessage from 'ember-cli-flash/flash/object';
 
@@ -25,7 +26,7 @@ module('FlashMessageObject', {
 });
 
 test('it sets a timer after init', function(assert) {
-  assert.ok(flash.get('timerTaskInstance.isRunning'));
+  assert.ok(isPresent(flash.get('timerTaskInstance')));
 });
 
 test('it destroys the message after the timer has elapsed', function(assert) {
