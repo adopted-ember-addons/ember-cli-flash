@@ -5,6 +5,9 @@ changelog, see the git history.
 
 [npm page](https://www.npmjs.com/package/ember-cli-flash)
 
+## [1.6.2]
+  - extendTimeout on sticky message [254](https://github.com/poteto/ember-cli-flash/pull/254)
+
 ## [1.6.1]
   - Revert [240](https://github.com/poteto/ember-cli-flash/pull/240) [253](https://github.com/poteto/ember-cli-flash/pull/253)
 
