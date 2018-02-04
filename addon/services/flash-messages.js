@@ -78,7 +78,8 @@ export default Service.extend({
   },
 
   _newFlashMessage(options = {}) {
-    assert('The flash message cannot be empty.', options.message);
+    assert('The flash message cannot be empty when preventDuplicates is enabled.',
+        get(this, 'defaultPreventDuplicates') ? options.message : true);
 
     const flashService = this;
     const allDefaults = getWithDefault(this, 'flashMessageDefaults', {});
@@ -141,13 +142,16 @@ export default Service.extend({
 
   _enqueue(flashInstance) {
     const preventDuplicates = get(this, 'defaultPreventDuplicates');
-    const guid = get(flashInstance, '_guid');
 
-    if (preventDuplicates && this._hasDuplicate(guid)) {
-      warn('Attempting to add a duplicate message to the Flash Messages Service', false, {
-        id: 'ember-cli-flash.duplicate-message'
-      });
-      return;
+    if (preventDuplicates) {
+      const guid = get(flashInstance, '_guid');
+
+      if (this._hasDuplicate(guid)) {
+        warn('Attempting to add a duplicate message to the Flash Messages Service', false, {
+          id: 'ember-cli-flash.duplicate-message'
+        });
+        return;
+      }
     }
 
     return get(this, 'queue').pushObject(flashInstance);

@@ -103,7 +103,7 @@ Ember.get(this, 'flashMessages').success('This is amazing', {
 
 - `message: string`
 
-  Required. The message that the flash message displays.
+  Required when `preventDuplicates` is enabled. The message that the flash message displays.
 
 - `type?: string`
 

@@ -162,6 +162,24 @@ test('it sets the correct defaults for service properties', function(assert) {
   }
 });
 
+test('when preventDuplicates is `false` setting a message is not required', function(assert) {
+  set(service, 'defaultPreventDuplicates', false);
+
+  service.add({
+    customProperty: 'ohai'
+  });
+
+  assert.equal(get(service, 'queue.0.customProperty'), 'ohai');
+});
+
+test('when preventDuplicates is `true`, setting a message is required', function(assert) {
+  set(service, 'defaultPreventDuplicates', true);
+
+  assert.throws((() => {
+    service.add({ });
+  }).message, 'Assertion Failed: The flash message cannot be empty when preventDuplicates is enabled.');
+});
+
 test('it adds duplicate messages to the queue if preventDuplicates is `false`', function(assert) {
   set(service, 'defaultPreventDuplicates', false);
   const expectedResult = emberArray([ 'foo', 'foo', 'bar' ]);
