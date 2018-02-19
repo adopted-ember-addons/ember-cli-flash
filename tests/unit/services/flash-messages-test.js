@@ -169,7 +169,7 @@ test('when preventDuplicates is `false` setting a message is not required', func
     customProperty: 'ohai'
   });
 
-  assert.equal(get(service, 'queue.0.customProperty'), 'ohai');
+  assert.equal(get(service, 'queue.firstObject.customProperty'), 'ohai');
 });
 
 test('when preventDuplicates is `true`, setting a message is required', function(assert) {
