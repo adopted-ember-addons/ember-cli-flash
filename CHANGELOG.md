@@ -5,6 +5,12 @@ changelog, see the git history.
 
 [npm page](https://www.npmjs.com/package/ember-cli-flash)
 
+## [1.6.3]
+  - Update test-helper blueprint for ember versions >= `2.17`
+    [263](https://github.com/poteto/ember-cli-flash/pull/263)
+  - Allow flash messages without text when `preventDuplicates` is `false`
+    [260](https://github.com/poteto/ember-cli-flash/pull/260)
+
 ## [1.6.2]
   - extendTimeout on sticky message [254](https://github.com/poteto/ember-cli-flash/pull/254)
 
