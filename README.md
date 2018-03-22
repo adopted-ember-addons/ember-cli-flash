@@ -425,21 +425,24 @@ This addon is minimal and does not currently ship with a stylesheet. You can sty
 
 ## Installation
 
-* `git clone` this repository
+* `git clone https://github.com/poteto/ember-cli-flash.git`
+* `cd my-addon`
 * `yarn install`
 
-## Running
+## Linting
 
-* `ember server`
-* Visit your app at http://localhost:4200.
+* `yarn run lint:js`
+* `yarn run lint:js -- --fix`
 
-## Running Tests
+## Running tests
 
-* `ember test`
-* `ember test --server`
+* `ember test` – Runs the test suite on the current Ember version
+* `ember test --server` – Runs the test suite in "watch mode"
+* `yarn test` – Runs `ember try:each` to test your addon against multiple Ember versions
 
-## Building
+## Running the dummy application
 
-* `ember build`
+* `ember serve`
+* Visit the dummy application at [http://localhost:4200](http://localhost:4200).
 
-For more information on using ember-cli, visit [http://www.ember-cli.com/](http://www.ember-cli.com/).
+For more information on using ember-cli, visit [https://www.ember-cli.com/](http://www.ember-cli.com/).

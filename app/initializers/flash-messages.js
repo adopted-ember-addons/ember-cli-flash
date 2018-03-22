@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import config from '../config/environment';
-
+/* eslint-disable ember/new-module-imports */
 const { deprecate } = Ember;
 const merge = Ember.assign || Ember.merge;
 const INJECTION_FACTORIES_DEPRECATION_MESSAGE = '[ember-cli-flash] Future versions of ember-cli-flash will no longer inject the service automatically. Instead, you should explicitly inject it into your Route, Controller or Component with `Ember.inject.service`.';
