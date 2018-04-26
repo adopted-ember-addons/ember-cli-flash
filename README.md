@@ -16,9 +16,12 @@ This addon is tested against the `release`, `beta` and `canary` channels, `~1.11
 Usage is very simple. First, add one of the [template examples](#displaying-flash-messages) to your app. Then, inject the `flashMessages` service and use one of its convenience methods:
 
 ```javascript
-export default Ember.Component.extend({
-  flashMessages: Ember.inject.service()
-})
+import Component from '@ember/component';
+import { inject } from '@ember/service';
+
+export default Component.extend({
+  flashMessages: inject()
+});
 ```
 
 ### Convenience methods (Bootstrap / Foundation alerts)
@@ -42,15 +45,19 @@ These will add the appropriate classes to the flash message component for stylin
 ```javascript
 // Bootstrap: the flash message component will have 'alert alert-success' classes
 // Foundation: the flash message component will have 'alert-box success' classes
-Ember.get(this, 'flashMessages').success('Success!');
+import { get } from '@ember/object';
+
+get(this, 'flashMessages').success('Success!');
 ```
 
 You can take advantage of Promises, and their `.then` and `.catch` methods. To add a flash message after saving a model (or when it fails):
 
 ```javascript
+import { get } from '@ember/object';
+
 actions: {
   saveFoo() {
-    const flashMessages = Ember.get(this, 'flashMessages');
+    const flashMessages = get(this, 'flashMessages');
 
     Ember.get(this, 'model')
       .save()
@@ -70,7 +77,9 @@ actions: {
 If the convenience methods don't fit your needs, you can add custom messages with `add`:
 
 ```javascript
-Ember.get(this, 'flashMessages').add({
+import { get } from '@ember/object';
+
+get(this, 'flashMessages').add({
   message: 'Custom message'
 });
 ```
@@ -79,7 +88,9 @@ Ember.get(this, 'flashMessages').add({
 You can also pass in options to custom messages:
 
 ```javascript
-Ember.get(this, 'flashMessages').add({
+import { get } from '@ember/object';
+
+get(this, 'flashMessages').add({
   message: 'I like alpacas',
   type: 'alpaca',
   timeout: 500,
@@ -93,7 +104,7 @@ Ember.get(this, 'flashMessages').add({
   }
 });
 
-Ember.get(this, 'flashMessages').success('This is amazing', {
+get(this, 'flashMessages').success('This is amazing', {
   timeout: 100,
   priority: 100,
   sticky: false,
@@ -191,11 +202,13 @@ Then animate using CSS transitions, using the `.active` and `.active.exiting` cl
 You can also add arbitrary options to messages:
 
 ```javascript
-Ember.get(this, 'flashMessages').success('Cool story bro', {
+import { get } from '@ember/object';
+
+get(this, 'flashMessages').success('Cool story bro', {
   someOption: 'hello'
 });
 
-Ember.get(this, 'flashMessages').add({
+get(this, 'flashMessages').add({
   message: 'hello',
   type: 'foo',
   componentName: 'some-component',
@@ -223,14 +236,18 @@ This makes use of the [component helper](http://emberjs.com/blog/2015/03/27/embe
 It's best practice to use flash messages sparingly, only when you need to notify the user of something. If you're sending too many messages, and need a way for your users to clear all messages from screen, you can use this method:
 
 ```javascript
-Ember.get(this, 'flashMessages').clearMessages();
+import { get } from '@ember/object';
+
+get(this, 'flashMessages').clearMessages();
 ```
 
 ### Returning flash object
 The flash message service is designed to be Fluent, allowing you to chain methods on the service easily. The service should handle most cases but if you want to access the flash object directly, you can use the `getFlashObject` method:
 
 ```javascript
-const flashObject = Ember.get(this, 'flashMessages').add({
+import { get } from '@ember/object';
+
+const flashObject = get(this, 'flashMessages').add({
   message: 'hola',
   type: 'foo'
 }).getFlashObject();
@@ -388,14 +405,14 @@ An example integration test:
 
 ```javascript
 // tests/integration/components/x-foo-test.js
-import Ember from 'ember';
+import { getOwner } from '@ember/application';
 
 moduleForComponent('x-foo', 'Integration | Component | x foo', {
   integration: true,
   beforeEach() {
     //We have to register any types we expect to use in this component
     const typesUsed = ['info', 'warning', 'success'];
-    Ember.getOwner(this).lookup('service:flash-messages').registerTypes(typesUsed);
+    getOwner(this).lookup('service:flash-messages').registerTypes(typesUsed);
   }
 });
 
@@ -408,11 +425,13 @@ test('it renders', function(assert) {
 For unit tests that require the `flashMessages` service, you'll need to do a small bit of setup:
 
 ```js
+import { getOwner } from '@ember/application';
+
 moduleFor('route:foo', 'Unit | Route | foo', {
   needs: ['service:flash-messages'],
   beforeEach() {
     const typesUsed = ['warning', 'success'];
-    Ember.getOwner(this).lookup('service:flash-messages').registerTypes(typesUsed);
+    getOwner(this).lookup('service:flash-messages').registerTypes(typesUsed);
   }
 });
 ```
