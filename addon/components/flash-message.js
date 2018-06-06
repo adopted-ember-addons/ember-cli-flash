@@ -22,6 +22,7 @@ export default Component.extend({
   messageStyle: 'bootstrap',
   classNames: ['flash-message'],
   classNameBindings: ['alertType', 'active', 'exiting'],
+  attributeBindings: ['aria-label', 'aria-describedby', 'role'],
 
   showProgress: readOnly('flash.showProgress'),
   notExiting: not('exiting'),
