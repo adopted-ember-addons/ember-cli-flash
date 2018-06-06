@@ -5,6 +5,10 @@ changelog, see the git history.
 
 [npm page](https://www.npmjs.com/package/ember-cli-flash)
 
+## [1.6.4]
+  - Add `aria-label` attr-binding and other accessibility attrs to flash components
+    [269](https://github.com/poteto/ember-cli-flash/pull/269)
+
 ## [1.6.3]
   - Update test-helper blueprint for ember versions >= `2.17`
     [263](https://github.com/poteto/ember-cli-flash/pull/263)
