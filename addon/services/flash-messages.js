@@ -1,6 +1,5 @@
 import { merge } from '@ember/polyfills';
 import Service from '@ember/service';
-import { copy } from '@ember/object/internals';
 import { typeOf, isNone } from '@ember/utils';
 import { warn, assert } from '@ember/debug';
 import {
@@ -89,7 +88,7 @@ export default Service.extend({
       'preventDuplicates'
     ]);
 
-    const flashMessageOptions = merge(copy(defaults), { flashService });
+    const flashMessageOptions = merge({}, defaults, { flashService });
 
     for (let key in options) {
       const value = get(options, key);
@@ -129,7 +128,7 @@ export default Service.extend({
     assert('The flash type cannot be undefined', type);
 
     this[type] = ((message, options = {}) => {
-      const flashMessageOptions = copy(options);
+      const flashMessageOptions = merge({}, options);
       setProperties(flashMessageOptions, { message, type });
 
       return this.add(flashMessageOptions);
