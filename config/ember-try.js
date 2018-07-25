@@ -6,7 +6,7 @@ module.exports = function() {
   return Promise.all([
     getChannelURL('release'),
     getChannelURL('beta'),
-    getChannelURL('canary'),
+    getChannelURL('canary')
   ]).then((urls) => {
     return {
       useYarn: true,
@@ -19,25 +19,6 @@ module.exports = function() {
             },
             resolutions: {
               'ember': '~1.13.0'
-            }
-          }
-        },
-        {
-          name: 'ember-2.0',
-          bower: {
-            dependencies: {
-              'ember': '~2.0.0'
-            },
-            resolutions: {
-              'ember': '~2.0.0'
-            }
-          }
-        },
-        {
-          name: 'ember-lts-2.4',
-          bower: {
-            dependencies: {
-              "ember": "~2.4.0"
             }
           }
         },
