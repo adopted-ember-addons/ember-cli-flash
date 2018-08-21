@@ -88,6 +88,8 @@ export default Service.extend({
   _newFlashMessage(options = {}) {
     assert('The flash message cannot be empty when preventDuplicates is enabled.',
         get(this, 'defaultPreventDuplicates') ? options.message : true);
+    assert('The flash message cannot be empty when preventDuplicates is enabled.',
+        get(options, 'preventDuplicates') ? options.message : true);
 
     const flashService = this;
     const allDefaults = getWithDefault(this, 'flashMessageDefaults', {});
@@ -155,7 +157,11 @@ export default Service.extend({
   },
 
   _enqueue(flashInstance) {
-    const preventDuplicates = get(this, 'defaultPreventDuplicates');
+    const instancePreventDuplicates = get(flashInstance, 'preventDuplicates');
+    const preventDuplicates = typeof instancePreventDuplicates === 'boolean' ?
+      // always prefer instance option over global option
+      instancePreventDuplicates :
+      get(this, 'defaultPreventDuplicates');
 
     if (preventDuplicates) {
       const guid = get(flashInstance, '_guid');
