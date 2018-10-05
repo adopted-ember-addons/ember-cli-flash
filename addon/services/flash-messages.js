@@ -5,7 +5,8 @@ import {
   set,
   get,
   setProperties,
-  getWithDefault
+  getWithDefault,
+  computed
 } from '@ember/object';
 import {
   mapBy,
@@ -17,6 +18,8 @@ import { assign } from '@ember/polyfills';
 import { A as emberArray } from '@ember/array';
 import FlashMessage from 'ember-cli-flash/flash/object';
 import objectWithout from '../utils/object-without';
+import { getOwner } from '@ember/application';
+import flashMessageOptions from '../utils/flash-message-options';
 
 export default Service.extend({
   isEmpty: equal('queue.length', 0).readOnly(),
@@ -110,6 +113,12 @@ export default Service.extend({
 
     return value;
   },
+
+  flashMessageDefaults: computed(function() {
+    const config  = getOwner(this).resolveRegistration('config:environment');
+    const overrides = getWithDefault(config, 'flashMessageDefaults', {});
+    return flashMessageOptions(overrides);
+  }),
 
   _setDefaults() {
     const defaults = getWithDefault(this, 'flashMessageDefaults', {});
