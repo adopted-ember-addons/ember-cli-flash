@@ -49,7 +49,7 @@ jobs:
       - restore-cache: *restore-yarn-cache
       - run:
           name: Run tests
-          command: npm test
+          command: node_modules/.bin/ember try:each
 
 
 workflows:
