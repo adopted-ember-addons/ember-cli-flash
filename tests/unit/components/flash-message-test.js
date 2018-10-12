@@ -6,6 +6,7 @@ import {
   test
 } from 'ember-qunit';
 import FlashMessage from 'ember-cli-flash/flash/object';
+import wait from 'ember-test-helpers/wait';
 
 let flash;
 
@@ -27,7 +28,7 @@ moduleForComponent('flash-message', 'FlashMessageComponent', {
   }
 });
 
-test('it renders with the right props', function(assert) {
+test('it renders with the right props', async function(assert) {
   assert.expect(5);
 
   const component = this.subject({ flash });
@@ -38,9 +39,8 @@ test('it renders with the right props', function(assert) {
   assert.equal(get(component, 'flashType'), 'Test', 'it has the right `flashType`');
   assert.equal(get(component, 'progressDuration'), `transition-duration: ${flash.get('timeout')}ms`, 'it has the right `progressDuration`');
 
-  run.next(() => {
-    assert.equal(get(component, 'active'), true, 'it sets `active` to true after rendering');
-  });
+  await wait();
+  assert.equal(get(component, 'active'), true, 'it sets `active` to true after rendering');
 });
 
 test('exiting the flash object sets exiting on the component', function(assert) {
