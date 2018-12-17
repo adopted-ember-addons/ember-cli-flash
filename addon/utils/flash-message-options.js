@@ -1,6 +1,6 @@
 /* eslint-disable ember/new-module-imports */
 import Ember from 'ember';
-const merge = Ember.merge || Ember.assign;
+const assign = Ember.assign || Ember.merge;
 
 export default function(configOverrides) {
   const addonDefaults = {
@@ -26,6 +26,6 @@ export default function(configOverrides) {
     ],
     preventDuplicates: false
   };
-  return merge(addonDefaults, configOverrides);
+  return assign(addonDefaults, configOverrides);
 }
 
