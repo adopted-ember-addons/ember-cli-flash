@@ -5,6 +5,36 @@
 
 This `ember-cli` addon adds a simple flash message service and component to your app. Just inject with `Ember.inject.service` and you're good to go!
 
+<!-- toc -->
+
+- [Installation](#installation)
+- [Compatibility](#compatibility)
+- [Usage](#usage)
+  * [Convenience methods (Bootstrap / Foundation alerts)](#convenience-methods-bootstrap--foundation-alerts)
+    + [Bootstrap](#bootstrap)
+    + [Foundation](#foundation)
+  * [Custom messages](#custom-messages)
+    + [Custom messages API](#custom-messages-api)
+  * [Animated example](#animated-example)
+  * [Arbitrary options](#arbitrary-options)
+    + [Example use case](#example-use-case)
+  * [Clearing all messages on screen](#clearing-all-messages-on-screen)
+  * [Returning flash object](#returning-flash-object)
+- [Service defaults](#service-defaults)
+- [Displaying flash messages](#displaying-flash-messages)
+  * [Custom `close` action](#custom-close-action)
+  * [Styling with Foundation or Bootstrap](#styling-with-foundation-or-bootstrap)
+  * [Sort messages by priority](#sort-messages-by-priority)
+  * [Rounded corners (Foundation)](#rounded-corners-foundation)
+  * [Custom flash message component](#custom-flash-message-component)
+- [Acceptance / Integration tests](#acceptance--integration-tests)
+- [Unit testing](#unit-testing)
+- [Styling](#styling)
+- [License](#license)
+
+<!-- tocstop -->
+
+## Installation
 ```
 ember install ember-cli-flash
 ```
