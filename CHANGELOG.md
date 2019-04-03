@@ -5,27 +5,87 @@ changelog, see the git history.
 
 [npm page](https://www.npmjs.com/package/ember-cli-flash)
 
-## [1.6.4]
-  - Add `aria-label` attr-binding and other accessibility attrs to flash components
-    [269](https://github.com/poteto/ember-cli-flash/pull/269)
+## 1.7.1 (2019-01-08)
 
-## [1.6.3]
-  - Update test-helper blueprint for ember versions >= `2.17`
-    [263](https://github.com/poteto/ember-cli-flash/pull/263)
-  - Allow flash messages without text when `preventDuplicates` is `false`
-    [260](https://github.com/poteto/ember-cli-flash/pull/260)
+#### :memo: Documentation
+* [#290](https://github.com/poteto/ember-cli-flash/pull/290) Documentation update for 1.7.0 ([@cythrawll](https://github.com/cythrawll))
 
-## [1.6.2]
-  - extendTimeout on sticky message [254](https://github.com/poteto/ember-cli-flash/pull/254)
+#### Committers: 3
+- Brian Runnells ([@Dhaulagiri](https://github.com/Dhaulagiri))
+- Chad ([@cythrawll](https://github.com/cythrawll))
+- Olle Jonsson ([@olleolleolle](https://github.com/olleolleolle))
 
-## [1.6.1]
-  - Revert [240](https://github.com/poteto/ember-cli-flash/pull/240) [253](https://github.com/poteto/ember-cli-flash/pull/253)
 
-## [1.6.0]
-  - Upgrade to Ember 2.16 & new modules api [249](https://github.com/poteto/ember-cli-flash/pull/249)
-  - extendTimeout on sticky message [240](https://github.com/poteto/ember-cli-flash/pull/240)
-  - Add base class `flash-message` to flash component [210](https://github.com/poteto/ember-cli-flash/pull/210)
-  - Remove the rest of bower
+## 1.7.0 (2018-12-12)
+
+#### :rocket: Enhancement
+* [#284](https://github.com/poteto/ember-cli-flash/pull/284) provide default config/overrides to FlashMessageService w/o injections ([@fivetanley](https://github.com/fivetanley))
+
+#### :house: Internal
+* [#277](https://github.com/poteto/ember-cli-flash/pull/277) ember-cli 3.3 ([@Dhaulagiri](https://github.com/Dhaulagiri))
+* [#285](https://github.com/poteto/ember-cli-flash/pull/285) fix broken test ([@sbatson5](https://github.com/sbatson5))
+* [#283](https://github.com/poteto/ember-cli-flash/pull/283) Migrate to circle 2.0 ([@Darshan-Chauhan](https://github.com/Darshan-Chauhan))
+
+#### Committers: 4
+- Brian Runnells ([@Dhaulagiri](https://github.com/Dhaulagiri))
+- Darshan Chauhan ([@Darshan-Chauhan](https://github.com/Darshan-Chauhan))
+- Scott Batson ([@sbatson5](https://github.com/sbatson5))
+- Stanley Stuart ([@fivetanley](https://github.com/fivetanley))
+
+
+## 1.6.4 (2018-06-06)
+
+#### :rocket: Enhancement
+* [#269](https://github.com/poteto/ember-cli-flash/pull/269) add aria-label and others to flash message attrs ([@sbatson5](https://github.com/sbatson5))
+* [#263](https://github.com/poteto/ember-cli-flash/pull/263) update blueprint to handle newer test-helper.js ([@bgentry](https://github.com/bgentry))
+* [#260](https://github.com/poteto/ember-cli-flash/pull/260) remove requirement for providing a message ([@st-h](https://github.com/st-h))
+
+#### :memo: Documentation
+* [#267](https://github.com/poteto/ember-cli-flash/pull/267) Update readme to use new modules syntax ([@dcyriller](https://github.com/dcyriller))
+
+#### :house: Internal
+* [#266](https://github.com/poteto/ember-cli-flash/pull/266) Upgrade to ember 3.0 ([@jmar910](https://github.com/jmar910))
+* [#258](https://github.com/poteto/ember-cli-flash/pull/258) Add ambient TypeScript type information ([@mike-north](https://github.com/mike-north))
+
+#### Committers: 6
+- Blake Gentry ([@bgentry](https://github.com/bgentry))
+- Cyrille David ([@dcyriller](https://github.com/dcyriller))
+- James Martinez ([@jmar910](https://github.com/jmar910))
+- Mike North ([@mike-north](https://github.com/mike-north))
+- Scott Batson ([@sbatson5](https://github.com/sbatson5))
+- Steve ([@st-h](https://github.com/st-h))
+
+
+## show (2017-12-07)
+
+#### :rocket: Enhancement
+* [#254](https://github.com/poteto/ember-cli-flash/pull/254) extendTimeout on sticky message ([@Dhaulagiri](https://github.com/Dhaulagiri))
+
+#### Committers: 1
+- Brian Runnells ([@Dhaulagiri](https://github.com/Dhaulagiri))
+
+
+## 1.6.2 (2017-12-07)
+
+#### :rocket: Enhancement
+* [#254](https://github.com/poteto/ember-cli-flash/pull/254) extendTimeout on sticky message ([@Dhaulagiri](https://github.com/Dhaulagiri))
+
+#### Committers: 1
+- Brian Runnells ([@Dhaulagiri](https://github.com/Dhaulagiri))
+
+
+## 1.6.0 (2017-11-27)
+
+#### :house: Internal
+* [#250](https://github.com/poteto/ember-cli-flash/pull/250) remove deps we don't use ([@Dhaulagiri](https://github.com/Dhaulagiri))
+* [#251](https://github.com/poteto/ember-cli-flash/pull/251) Update LICENSE.md ([@Dhaulagiri](https://github.com/Dhaulagiri))
+* [#249](https://github.com/poteto/ember-cli-flash/pull/249) ember-cli-update to 2.16 ([@Dhaulagiri](https://github.com/Dhaulagiri))
+
+#### Committers: 4
+- Brian Runnells ([@Dhaulagiri](https://github.com/Dhaulagiri))
+- Jeff Felchner ([@jfelchner](https://github.com/jfelchner))
+- Scott Batson ([@sbatson5](https://github.com/sbatson5))
+- Steve ([@sdhull](https://github.com/sdhull))
 
 ## [1.5.0]
   - Upgrade to Ember 2.15 [243](https://github.com/poteto/ember-cli-flash/pull/243) & [236](https://github.com/poteto/ember-cli-flash/pull/236)
