@@ -1,10 +1,40 @@
 # ember-cli-flash
-*Simple, highly configurable flash messages for ember-cli.*
 
 ![Download count all time](https://img.shields.io/npm/dt/ember-cli-flash.svg) [![npm version](https://badge.fury.io/js/ember-cli-flash.svg)](http://badge.fury.io/js/ember-cli-flash) [![CircleCI](https://circleci.com/gh/poteto/ember-cli-flash.svg?style=shield)](https://circleci.com/gh/poteto/ember-cli-flash) [![Ember Observer Score](http://emberobserver.com/badges/ember-cli-flash.svg)](http://emberobserver.com/addons/ember-cli-flash) [![Code Climate](https://codeclimate.com/github/poteto/ember-cli-flash/badges/gpa.svg)](https://codeclimate.com/github/poteto/ember-cli-flash)
 
-This `ember-cli` addon adds a simple flash message service and component to your app. Just inject with `Ember.inject.service` and you're good to go!
+*Simple, highly configurable flash messages for ember.*
 
+This ember addon adds a flash message service and component to your app.
+
+## Table of Contents
+<!-- toc -->
+- [Installation](#installation)
+- [Compatibility](#compatibility)
+- [Usage](#usage)
+  * [Convenience methods (Bootstrap / Foundation alerts)](#convenience-methods-bootstrap--foundation-alerts)
+    + [Bootstrap](#bootstrap)
+    + [Foundation](#foundation)
+  * [Custom messages](#custom-messages)
+    + [Custom messages API](#custom-messages-api)
+  * [Animated example](#animated-example)
+  * [Arbitrary options](#arbitrary-options)
+    + [Example use case](#example-use-case)
+  * [Clearing all messages on screen](#clearing-all-messages-on-screen)
+  * [Returning flash object](#returning-flash-object)
+- [Service defaults](#service-defaults)
+- [Displaying flash messages](#displaying-flash-messages)
+  * [Custom `close` action](#custom-close-action)
+  * [Styling with Foundation or Bootstrap](#styling-with-foundation-or-bootstrap)
+  * [Sort messages by priority](#sort-messages-by-priority)
+  * [Rounded corners (Foundation)](#rounded-corners-foundation)
+  * [Custom flash message component](#custom-flash-message-component)
+- [Acceptance / Integration tests](#acceptance--integration-tests)
+- [Unit testing](#unit-testing)
+- [Styling](#styling)
+- [License](#license)
+<!-- tocstop -->
+
+## Installation
 ```
 ember install ember-cli-flash
 ```
@@ -441,27 +471,3 @@ This addon is minimal and does not currently ship with a stylesheet. You can sty
 
 ## License
 [MIT](LICENSE.md)
-
-## Installation
-
-* `git clone https://github.com/poteto/ember-cli-flash.git`
-* `cd my-addon`
-* `yarn install`
-
-## Linting
-
-* `yarn run lint:js`
-* `yarn run lint:js -- --fix`
-
-## Running tests
-
-* `ember test` – Runs the test suite on the current Ember version
-* `ember test --server` – Runs the test suite in "watch mode"
-* `yarn test` – Runs `ember try:each` to test your addon against multiple Ember versions
-
-## Running the dummy application
-
-* `ember serve`
-* Visit the dummy application at [http://localhost:4200](http://localhost:4200).
-
-For more information on using ember-cli, visit [https://www.ember-cli.com/](http://www.ember-cli.com/).
