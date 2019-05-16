@@ -1,7 +1,7 @@
 import Evented from '@ember/object/evented';
 import EmberObject, { set, get } from '@ember/object';
 import { cancel, later } from '@ember/runloop';
-import customComputed from '../utils/computed';
+import { guidFor } from '../utils/computed';
 
 export default EmberObject.extend(Evented, {
   exitTimer: null,
@@ -9,7 +9,7 @@ export default EmberObject.extend(Evented, {
   isExitable: true,
   initializedTime: null,
 
-  _guid: customComputed.guidFor('message').readOnly(),
+  _guid: guidFor('message').readOnly(),
 
   init() {
     this._super(...arguments);
