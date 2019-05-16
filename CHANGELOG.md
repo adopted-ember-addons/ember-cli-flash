@@ -5,6 +5,14 @@ changelog, see the git history.
 
 [npm page](https://www.npmjs.com/package/ember-cli-flash)
 
+## 1.7.2 (2019-05-16)
+
+#### :bug: Bug Fix
+* [#299](https://github.com/poteto/ember-cli-flash/pull/299) Fix guidFor import ([@villander](https://github.com/villander))
+
+#### Committers: 1
+- Michael Villander ([@villander](https://github.com/villander))
+
 ## 1.7.1 (2019-01-08)
 
 #### :memo: Documentation
