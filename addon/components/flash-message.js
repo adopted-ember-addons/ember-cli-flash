@@ -58,6 +58,14 @@ export default Component.extend({
       set(this, 'active', true);
     });
     set(this, 'pendingSet', pendingSet);
+    this.element.addEventListener('mouseenter', this._mouseEnter);
+    this.element.addEventListener('mouseleave', this._mouseLeave);
+  },
+
+  willDestroyElement() {
+    this._super(...arguments);
+    this.element.removeEventListener('mouseenter', this._mouseEnter);
+    this.element.removeEventListener('mouseleave', this._mouseLeave);
   },
 
   progressDuration: computed('flash.showProgress', {
@@ -80,14 +88,14 @@ export default Component.extend({
     }
   },
 
-  mouseEnter() {
+  _mouseEnter() {
     const flash = get(this, 'flash');
     if (isPresent(flash)) {
       flash.preventExit();
     }
   },
 
-  mouseLeave() {
+  _mouseLeave() {
     const flash = get(this, 'flash');
     if (isPresent(flash) && !get(flash, 'exiting')) {
       flash.allowExit();
