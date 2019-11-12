@@ -1,21 +1,21 @@
 import objectCompact from 'ember-cli-flash/utils/object-compact';
 import { module, test } from 'qunit';
 
-module('Unit | Utility | object compact');
+module('Unit | Utility | object compact', function() {
+  test('it returns an object with all `null` and `undefined` elements removed', function(assert) {
+    const rawData = {
+      firstName: 'Michael',
+      lastName: 'Bolton',
+      company: undefined,
+      age: null,
+      favoriteDrink: ''
+    };
+    const expectedResult = {
+      firstName: 'Michael',
+      lastName: 'Bolton'
+    };
 
-test('it returns an object with all `null` and `undefined` elements removed', function(assert) {
-  const rawData = {
-    firstName: 'Michael',
-    lastName: 'Bolton',
-    company: undefined,
-    age: null,
-    favoriteDrink: ''
-  };
-  const expectedResult = {
-    firstName: 'Michael',
-    lastName: 'Bolton'
-  };
-
-  const result = objectCompact(rawData);
-  assert.deepEqual(result, expectedResult, 'it should not contain `null` or `undefined` elements');
+    const result = objectCompact(rawData);
+    assert.deepEqual(result, expectedResult, 'it should not contain `null` or `undefined` elements');
+  });
 });

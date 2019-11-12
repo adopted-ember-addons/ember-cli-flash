@@ -8,13 +8,14 @@
     <p>{{flash.message}}</p>
     {{#if component.showProgressBar}}
       <div class="alert-progress">
-        <div class="alert-progressBar" style="{{component.progressDuration}}"></div>
+        <div class="alert-progressBar" style={{component.progressDuration}}></div>
       </div>
     {{/if}}
   {{/flash-message}}
 {{/each}}
 
-<code><pre>
+<code>
+  <pre>
   \{{#each flashMessages.arrangedQueue as |flash|}}
     \{{#flash-message flash=flash as |component flash|}}
         &lt;h6&gt;\{{component.flashType}}&lt;/h6&gt;
@@ -26,5 +27,5 @@
       \{{/if}}
     \{{/flash-message}}
   \{{/each}}
-
-</pre></code>
+  </pre>
+</code>

@@ -28,7 +28,7 @@ You can contribute code, design (maybe 'themes' for different kinds of flash mes
 * `ember serve`
 * Visit the dummy application at [http://localhost:4200](http://localhost:4200).
 
-For more information on using ember-cli, visit [https://www.ember-cli.com/](http://www.ember-cli.com/).
+For more information on using ember-cli, visit [https://ember-cli.com/](https://ember-cli.com/).
 
 ## Making changes
 Feel free to submit a pull request for changes to this document.

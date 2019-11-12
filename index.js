@@ -1,5 +1,5 @@
 'use strict';
 
 module.exports = {
-  name: 'ember-cli-flash'
+  name: require('./package').name
 };
