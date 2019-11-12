@@ -1,4 +1,4 @@
-import { find, visit } from '@ember/test-helpers';
+import { visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import config from '../../config/environment';
@@ -12,22 +12,22 @@ module('Acceptance | main', function(hooks) {
     assert.expect(7);
     await visit('/');
 
-    assert.ok(find('.alert.alert-success'));
-    assert.equal(find('.alert.alert-success h6').textContent, 'Success');
-    assert.equal(find('.alert.alert-success p').textContent, 'Route transitioned successfully');
-    assert.equal(find('.alert.alert-success .alert-progressBar').getAttribute('style'), `transition-duration: ${defaultTimeout}ms`);
+    assert.dom('.alert.alert-success').exists();
+    assert.dom('.alert.alert-success h6').hasText('Success');
+    assert.dom('.alert.alert-success p').hasText('Route transitioned successfully');
+    assert.dom('.alert.alert-success .alert-progressBar').hasAttribute('style', `transition-duration: ${defaultTimeout}ms`);
 
-    assert.ok(find('.alert.alert-warning'));
-    assert.equal(find('.alert.alert-warning h6').textContent, 'Warning');
-    assert.equal(find('.alert.alert-warning p').textContent, 'It is going to rain tomorrow');
+    assert.dom('.alert.alert-warning').exists();
+    assert.dom('.alert.alert-warning h6').hasText('Warning');
+    assert.dom('.alert.alert-warning p').hasText('It is going to rain tomorrow');
   });
 
   test('high priority messages are rendered on top', async function(assert) {
     assert.expect(3);
     await visit('/');
 
-    assert.ok(find('.alert'));
-    assert.equal(find('.alert h6').textContent, 'Warning');
-    assert.equal(find('.alert p').textContent, 'It is going to rain tomorrow');
+    assert.dom('.alert').exists();
+    assert.dom('.alert h6').hasText('Warning');
+    assert.dom('.alert p').hasText('It is going to rain tomorrow');
   });
 });
