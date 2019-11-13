@@ -64,7 +64,6 @@ module.exports = function() {
         },
         {
           name: 'ember-release',
-          allowedToFail: true,
           npm: {
             devDependencies: {
               'ember-source': urls[0]
