@@ -166,6 +166,7 @@ module('Integration | Component | flash message', function(hooks) {
     `);
 
     await click('.alert');
+
     assert.dom('.alert').hasClass('exiting', 'exiting class is applied');
     assert.ok(flashObject.isDestroyed, 'Flash Object is destroyed');
   });
