@@ -4,7 +4,7 @@ aliases:
 
   - defaults: &defaults
       docker:
-        - image: circleci/node:boron
+        - image: circleci/node:8
       working_directory: ~/code
 
   - &restore-repo-cache
@@ -20,6 +20,7 @@ aliases:
         - ~/.cache/yarn
   - &yarn
     |
+      node --version
       yarn install --non-interactive --cache-folder ~/.cache/yarn --frozen-lockfile
 
 jobs:
@@ -43,7 +44,7 @@ jobs:
   tests:
     <<: *defaults
     docker:
-      - image: circleci/node:6-browsers
+      - image: circleci/node:8-browsers
     steps:
       - restore-cache: *restore-repo-cache
       - restore-cache: *restore-yarn-cache
