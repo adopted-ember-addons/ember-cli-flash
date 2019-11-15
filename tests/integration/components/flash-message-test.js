@@ -3,9 +3,10 @@ import { setupRenderingTest } from 'ember-qunit';
 import { click, find, render, settled, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import FlashMessage from 'ember-cli-flash/flash/object';
-import { next } from '@ember/runloop';
+import { next, later } from '@ember/runloop';
 
 const timeoutDefault = 1000;
+const TIMEOUT = 50;
 
 module('Integration | Component | flash message', function(hooks) {
   setupRenderingTest(hooks);
@@ -29,7 +30,7 @@ module('Integration | Component | flash message', function(hooks) {
     this.set('flash', FlashMessage.create({
       message: 'test',
       type: 'test',
-      timeout: 50,
+      timeout: TIMEOUT,
       extendedTimeout: 5000,
       showProgress: true
     }));
@@ -38,10 +39,10 @@ module('Integration | Component | flash message', function(hooks) {
       {{flash-message flash=flash}}
     `);
 
-    next(this, () => {
+    later(this, () => {
       assert.dom('.alert').hasClass('alert-test');
       assert.equal(find('.alert-progressBar').style['transitionDuration'], '50ms', 'it has the right `progressDuration`');
-    });
+    }, TIMEOUT - 20); // Checking for the DOM in between 0 - 50 ms :facepalm: When support for Ember 2.x is dropped, this can be moved as a `next` instead of later.
     
     await settled();
 
@@ -62,9 +63,8 @@ module('Integration | Component | flash message', function(hooks) {
 
     this.set('flag', false);
 
-    return settled().then(() => {
-      assert.ok(this.get('flash').isDestroyed, 'Flash Object isDestroyed');
-    });
+    await settled();
+    assert.ok(this.get('flash').isDestroyed, 'Flash Object isDestroyed');
   });
 
   test('flash message is removed after timeout', async function(assert) {
@@ -82,10 +82,10 @@ module('Integration | Component | flash message', function(hooks) {
       {{/flash-message}}
     `);
 
-    next(this, () => {
+    later(this, () => {
       assert.dom('*').hasText('hi');
       assert.notOk(this.get('flash').isDestroyed, 'Flash is not destroyed immediately');
-    });
+    }, timeoutDefault - 100);
 
     await settled();
 
@@ -109,7 +109,7 @@ module('Integration | Component | flash message', function(hooks) {
       {{/flash-message}}
     `);
 
-    next(this, () => {
+    later(this, () => {
       assert.dom('*').hasText('hi');
       triggerEvent('#testFlash', 'mouseenter');
 
@@ -117,7 +117,7 @@ module('Integration | Component | flash message', function(hooks) {
         assert.notOk(flashObject.isDestroyed, 'Flash Object is not destroyed');
         triggerEvent('#testFlash', 'mouseleave');
       });
-    });
+    }, timeoutDefault - 100);
 
     await settled();
 
