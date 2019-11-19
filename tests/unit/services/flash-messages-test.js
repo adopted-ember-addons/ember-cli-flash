@@ -6,7 +6,6 @@ import { A as emberArray } from '@ember/array';
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 import config from '../../../config/environment';
-import FlashMessagesService from 'dummy/services/flash-messages';
 import EmberError from '@ember/error';
 
 let service;
@@ -16,7 +15,7 @@ module('FlashMessagesService', function(hooks) {
   setupTest(hooks);
 
   hooks.beforeEach(function() {
-    service = FlashMessagesService.create(this.owner.ownerInjection());
+    service = this.owner.lookup('service:flash-messages');
   });
 
   hooks.afterEach(function() {
