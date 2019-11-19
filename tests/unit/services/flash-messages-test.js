@@ -95,7 +95,7 @@ module('FlashMessagesService', function(hooks) {
     service.success('foo');
     service.success('bar');
     service.success('baz');
-    service.clearMessages();
+    run(() => service.clearMessages());
 
     assert.equal(typeOf(get(service, 'queue')), 'array', 'it returns an array');
     assert.equal(get(service, 'queue.length'), 0, 'it clears the array');

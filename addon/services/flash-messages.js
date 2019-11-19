@@ -40,6 +40,11 @@ export default Service.extend({
     this.queue = emberArray();
   },
 
+  willDestroy() {
+    this._super(...arguments);
+    this.clearMessages();
+  },
+
   add(options = {}) {
     this._enqueue(this._newFlashMessage(options));
 
@@ -53,6 +58,7 @@ export default Service.extend({
       return;
     }
 
+    flashes.forEach(flash => flash.destroyMessage());
     flashes.clear();
 
     return this;
