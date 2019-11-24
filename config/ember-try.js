@@ -20,6 +20,10 @@ module.exports = function() {
             resolutions: {
               'ember': '~1.13.0'
             }
+          },
+          npm: {
+            'ember-cli-addon-docs': null,
+            'ember-data': null
           }
         },
         {
