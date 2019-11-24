@@ -3,12 +3,12 @@
 {{#docs-demo as |demo|}}
   {{#demo.example name="demo.hbs"}}
     {{#each flashMessages.arrangedQueue as |flash|}}
-      {{#flash-message flash=flash as |component flash|}}
-        <h6>{{component.flashType}}</h6>
+      {{#flash-message flash=flash as |c flash|}}
+        <h6>{{c.flashType}}</h6>
         <p>{{flash.message}}</p>
-        {{#if component.showProgressBar}}
+        {{#if c.showProgressBar}}
           <div class="alert-progress">
-            <div class="alert-progressBar" style="{{component.progressDuration}}"></div>
+            <div class="alert-progressBar" style="{{c.progressDuration}}"></div>
           </div>
         {{/if}}
       {{/flash-message}}

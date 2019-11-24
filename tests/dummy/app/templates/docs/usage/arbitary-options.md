@@ -23,11 +23,11 @@ This makes use of the [component helper](http://emberjs.com/blog/2015/03/27/embe
 
 {{#docs-snippet name='usage-9.hbs'}}
   {{#each flashMessages.queue as |flash|}}
-    {{#flash-message flash=flash as |component flash|}}
+    {{#flash-message flash=flash as |c flash|}}
       {{#if flash.componentName}}
         {{component flash.componentName content=flash.content}}
       {{else}}
-        <h6>{{component.flashType}}</h6>
+        <h6>{{c.flashType}}</h6>
         <p>{{flash.message}}</p>
       {{/if}}
     {{/flash-message}}

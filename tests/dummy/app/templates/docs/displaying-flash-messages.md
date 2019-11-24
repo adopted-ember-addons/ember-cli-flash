@@ -12,12 +12,12 @@ It also accepts your own template:
 
 {{#docs-snippet name="example-2.hbs"}}
   {{#each flashMessages.queue as |flash|}}
-    {{#flash-message flash=flash as |component flash|}}
-      <h6>{{component.flashType}}</h6>
+    {{#flash-message flash=flash as |c flash|}}
+      <h6>{{c.flashType}}</h6>
       <p>{{flash.message}}</p>
-      {{#if component.showProgressBar}}
+      {{#if c.showProgressBar}}
         <div class="alert-progress">
-          <div class="alert-progressBar" style="{{component.progressDuration}}"></div>
+          <div class="alert-progressBar" style="{{c.progressDuration}}"></div>
         </div>
       {{/if}}
     {{/flash-message}}
@@ -31,7 +31,7 @@ When using a custom `close` action, you will want to set `destroyOnClick=false` 
 
 {{#docs-snippet name="example-3.hbs"}}
   {{#each flashMessages.queue as |flash|}}
-    {{#flash-message flash=flash as |component flash close|}}
+    {{#flash-message flash=flash as |c flash close|}}
       {{flash.message}}
       <a href="#" {{action close}}>x</a>
     {{/flash-message}}
