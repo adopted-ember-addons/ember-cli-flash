@@ -12,21 +12,6 @@ module.exports = function() {
       useYarn: true,
       scenarios: [
         {
-          name: 'ember-1.13',
-          bower: {
-            dependencies: {
-              'ember': '~1.13.0'
-            },
-            resolutions: {
-              'ember': '~1.13.0'
-            }
-          },
-          npm: {
-            'ember-cli-addon-docs': null,
-            'ember-data': null
-          }
-        },
-        {
           name: 'ember-lts-2.12',
           npm: {
             devDependencies: {
