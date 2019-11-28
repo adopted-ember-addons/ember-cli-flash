@@ -32,6 +32,7 @@ This ember addon adds a flash message service and component to your app.
 - [Unit testing](#unit-testing)
 - [Styling](#styling)
 - [License](#license)
+- [Contributors](#contributors)
 <!-- tocstop -->
 
 ## Installation
@@ -471,3 +472,39 @@ This addon is minimal and does not currently ship with a stylesheet. You can sty
 
 ## License
 [MIT](LICENSE.md)
+
+## Contributors
+
+We're grateful to these wonderful contributors who've contributed to `ember-cli-flash`:
+
+[//]: contributor-faces
+<a href="https://github.com/poteto"><img src="https://avatars0.githubusercontent.com/u/1390709?v=4" title="poteto" width="80" height="80"></a>
+<a href="https://github.com/Dhaulagiri"><img src="https://avatars1.githubusercontent.com/u/1672302?v=4" title="Dhaulagiri" width="80" height="80"></a>
+<a href="https://github.com/sbatson5"><img src="https://avatars3.githubusercontent.com/u/881981?v=4" title="sbatson5" width="80" height="80"></a>
+<a href="https://github.com/johno"><img src="https://avatars2.githubusercontent.com/u/1424573?v=4" title="johno" width="80" height="80"></a>
+<a href="https://github.com/rwjblue"><img src="https://avatars0.githubusercontent.com/u/12637?v=4" title="rwjblue" width="80" height="80"></a>
+<a href="https://github.com/mike-north"><img src="https://avatars1.githubusercontent.com/u/558005?v=4" title="mike-north" width="80" height="80"></a>
+<a href="https://github.com/jrjohnson"><img src="https://avatars2.githubusercontent.com/u/349624?v=4" title="jrjohnson" width="80" height="80"></a>
+<a href="https://github.com/martndemus"><img src="https://avatars2.githubusercontent.com/u/903637?v=4" title="martndemus" width="80" height="80"></a>
+<a href="https://github.com/bgentry"><img src="https://avatars2.githubusercontent.com/u/114033?v=4" title="bgentry" width="80" height="80"></a>
+<a href="https://github.com/cowboyd"><img src="https://avatars2.githubusercontent.com/u/4205?v=4" title="cowboyd" width="80" height="80"></a>
+<a href="https://github.com/kmiyashiro"><img src="https://avatars1.githubusercontent.com/u/71852?v=4" title="kmiyashiro" width="80" height="80"></a>
+<a href="https://github.com/st-h"><img src="https://avatars1.githubusercontent.com/u/5768353?v=4" title="st-h" width="80" height="80"></a>
+<a href="https://github.com/abhilashlr"><img src="https://avatars0.githubusercontent.com/u/5667722?v=4" title="abhilashlr" width="80" height="80"></a>
+<a href="https://github.com/jrowlingson"><img src="https://avatars0.githubusercontent.com/u/3051781?v=4" title="jrowlingson" width="80" height="80"></a>
+<a href="https://github.com/charlatan154"><img src="https://avatars2.githubusercontent.com/u/1842448?v=4" title="charlatan154" width="80" height="80"></a>
+<a href="https://github.com/lxcodes"><img src="https://avatars3.githubusercontent.com/u/62131?v=4" title="lxcodes" width="80" height="80"></a>
+<a href="https://github.com/blimmer"><img src="https://avatars1.githubusercontent.com/u/630449?v=4" title="blimmer" width="80" height="80"></a>
+<a href="https://github.com/benmurden"><img src="https://avatars3.githubusercontent.com/u/213062?v=4" title="benmurden" width="80" height="80"></a>
+<a href="https://github.com/bsclifton"><img src="https://avatars3.githubusercontent.com/u/4733304?v=4" title="bsclifton" width="80" height="80"></a>
+<a href="https://github.com/caseywatts"><img src="https://avatars1.githubusercontent.com/u/273653?v=4" title="caseywatts" width="80" height="80"></a>
+<a href="https://github.com/cythrawll"><img src="https://avatars2.githubusercontent.com/u/99422?v=4" title="cythrawll" width="80" height="80"></a>
+<a href="https://github.com/makepanic"><img src="https://avatars3.githubusercontent.com/u/1205444?v=4" title="makepanic" width="80" height="80"></a>
+<a href="https://github.com/cigoe"><img src="https://avatars3.githubusercontent.com/u/518239?v=4" title="cigoe" width="80" height="80"></a>
+<a href="https://github.com/cmcclure"><img src="https://avatars2.githubusercontent.com/u/4295108?v=4" title="cmcclure" width="80" height="80"></a>
+<a href="https://github.com/dcyriller"><img src="https://avatars2.githubusercontent.com/u/6677373?v=4" title="dcyriller" width="80" height="80"></a>
+<a href="https://github.com/dfreeman"><img src="https://avatars2.githubusercontent.com/u/108688?v=4" title="dfreeman" width="80" height="80"></a>
+<a href="https://github.com/Darshan-Chauhan"><img src="https://avatars2.githubusercontent.com/u/18572215?v=4" title="Darshan-Chauhan" width="80" height="80"></a>
+<a href="https://github.com/dustinspecker"><img src="https://avatars3.githubusercontent.com/u/2449282?v=4" title="dustinspecker" width="80" height="80"></a>
+
+[//]: contributor-faces
