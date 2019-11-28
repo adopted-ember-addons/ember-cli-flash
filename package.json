@@ -9,7 +9,8 @@
     "lint:js": "eslint .",
     "start": "ember serve",
     "test": "ember test",
-    "test:all": "ember try:each"
+    "test:all": "ember try:each",
+    "contributors": "npx contributor-faces -e \"(*-bot|*\\[bot\\]|*-tomster|homu)\""
   },
   "bugs": "https://github.com/poteto/ember-cli-flash/issues",
   "homepage": "https://github.com/poteto/ember-cli-flash",
