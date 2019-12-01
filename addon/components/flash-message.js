@@ -2,7 +2,7 @@ import { htmlSafe, classify } from '@ember/string';
 import Component from '@ember/component';
 import { isPresent } from '@ember/utils';
 import { run } from '@ember/runloop';
-import { computed, set, get, getWithDefault } from '@ember/object';
+import { action, computed, set, get, getWithDefault } from '@ember/object';
 import layout from '../templates/components/flash-message';
 
 const {
@@ -88,19 +88,19 @@ export default Component.extend({
     }
   },
 
-  _mouseEnter() {
+  _mouseEnter: action(function() {
     const flash = get(this, 'flash');
     if (isPresent(flash)) {
       flash.preventExit();
     }
-  },
+  }),
 
-  _mouseLeave() {
+  _mouseLeave: action(function() {
     const flash = get(this, 'flash');
     if (isPresent(flash) && !get(flash, 'exiting')) {
       flash.allowExit();
     }
-  },
+  }),
 
   willDestroy() {
     this._super(...arguments);
