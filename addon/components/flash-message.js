@@ -2,7 +2,7 @@ import { htmlSafe, classify } from '@ember/string';
 import Component from '@ember/component';
 import { isPresent } from '@ember/utils';
 import { run } from '@ember/runloop';
-import { action, computed, set, get, getWithDefault } from '@ember/object';
+import { computed, set, get, getWithDefault } from '@ember/object';
 import layout from '../templates/components/flash-message';
 
 const {
@@ -58,14 +58,16 @@ export default Component.extend({
       set(this, 'active', true);
     });
     set(this, 'pendingSet', pendingSet);
-    this.element.addEventListener('mouseenter', this._mouseEnter);
-    this.element.addEventListener('mouseleave', this._mouseLeave);
+    this.set('_mouseEnterHandler', this._mouseEnter.bind(this));
+    this.set('_mouseLeaveHandler', this._mouseLeave.bind(this));
+    this.element.addEventListener('mouseenter', this._mouseEnterHandler);
+    this.element.addEventListener('mouseleave', this._mouseLeaveHandler);
   },
 
   willDestroyElement() {
     this._super(...arguments);
-    this.element.removeEventListener('mouseenter', this._mouseEnter);
-    this.element.removeEventListener('mouseleave', this._mouseLeave);
+    this.element.removeEventListener('mouseenter', this._mouseEnterHandler);
+    this.element.removeEventListener('mouseleave', this._mouseLeaveHandler);
   },
 
   progressDuration: computed('flash.showProgress', {
@@ -88,19 +90,19 @@ export default Component.extend({
     }
   },
 
-  _mouseEnter: action(function() {
+  _mouseEnter() {
     const flash = get(this, 'flash');
     if (isPresent(flash)) {
       flash.preventExit();
     }
-  }),
+  },
 
-  _mouseLeave: action(function() {
+  _mouseLeave() {
     const flash = get(this, 'flash');
     if (isPresent(flash) && !get(flash, 'exiting')) {
       flash.allowExit();
     }
-  }),
+  },
 
   willDestroy() {
     this._super(...arguments);

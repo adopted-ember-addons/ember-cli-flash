@@ -1,6 +1,6 @@
 {
   "name": "ember-cli-flash",
-  "version": "1.7.2",
+  "version": "1.8.0",
   "description": "Simple, highly configurable flash messages for ember-cli",
   "scripts": {
     "build": "ember build",
@@ -9,7 +9,8 @@
     "lint:js": "eslint .",
     "start": "ember serve",
     "test": "ember test",
-    "test:all": "ember try:each"
+    "test:all": "ember try:each",
+    "contributors": "npx contributor-faces -e \"(*-bot|*\\[bot\\]|*-tomster|homu)\""
   },
   "bugs": "https://github.com/poteto/ember-cli-flash/issues",
   "homepage": "https://github.com/poteto/ember-cli-flash",
