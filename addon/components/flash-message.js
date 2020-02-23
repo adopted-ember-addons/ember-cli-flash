@@ -64,8 +64,10 @@ export default Component.extend({
 
   willDestroyElement() {
     this._super(...arguments);
-    this.element.removeEventListener('mouseenter', this._mouseEnter);
-    this.element.removeEventListener('mouseleave', this._mouseLeave);
+    if (this.element) {
+      this.element.removeEventListener('mouseenter', this._mouseEnter);
+      this.element.removeEventListener('mouseleave', this._mouseLeave);
+    }
   },
 
   progressDuration: computed('flash.showProgress', {
