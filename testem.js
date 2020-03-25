@@ -14,9 +14,8 @@ module.exports = {
         process.env.CI ? '--no-sandbox' : null,
         '--headless',
         '--disable-gpu',
-        '--disable-software-rasterizer',
         '--mute-audio',
-        '--remote-debugging-port=0',
+        '--remote-debugging-port=9222',
         '--window-size=1440,900'
       ].filter(Boolean)
     }
