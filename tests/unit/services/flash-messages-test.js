@@ -184,6 +184,17 @@ module('FlashMessagesService', function(hooks) {
     );
   });
 
+  test('when preventDuplicates is `false` but flashInstance preventDuplicates is `true` setting a message is not required', function(assert) {
+    set(service, 'defaultPreventDuplicates', false);
+
+    assert.throws(() => {
+        service.add({ preventDuplicates: true });
+      },
+      new EmberError('Assertion Failed: The flash message cannot be empty when preventDuplicates is enabled.'),
+      'Error is thrown'
+    );
+  });
+
   test('it adds duplicate messages to the queue if preventDuplicates is `false`', function(assert) {
     set(service, 'defaultPreventDuplicates', false);
     const expectedResult = emberArray([ 'foo', 'foo', 'bar' ]);
@@ -203,6 +214,43 @@ module('FlashMessagesService', function(hooks) {
 
     assert.deepEqual(result, expectedResult, 'it does not add duplicate messages to the queue');
     assert.equal(get(service, 'queue').length, 2, 'it does not add duplicate messages to the queue');
+  });
+
+  test('it does not add duplicate messages to the queue if flashInstance preventDuplicates is `true`', function(assert) {
+    set(service, 'defaultPreventDuplicates', false);
+    const messages = emberArray([ 'foo', 'foo', 'bar' ]);
+    const expectedResult = messages.uniq();
+    messages.forEach((message) => service.success(message, {preventDuplicates: true}));
+    const result = get(service, 'queue').mapBy('message');
+
+    assert.deepEqual(result, expectedResult, 'it does not add duplicate messages to the queue');
+    assert.equal(get(service, 'queue').length, 2, 'it does not add duplicate messages to the queue');
+  });
+
+  test('flashInstance preventDuplicates prefers instance preventDuplicates over global', function(assert) {
+    set(service, 'defaultPreventDuplicates', true);
+    const messages = emberArray([ 'foo', 'foo', 'bar' ]);
+    const expectedResult = [ 'foo', 'foo', 'bar' ];
+    messages.forEach((message) => service.success(message, {preventDuplicates: false}));
+    const result = get(service, 'queue').mapBy('message');
+
+    assert.deepEqual(result, expectedResult, 'it adds duplicate messages to the queue');
+    assert.equal(get(service, 'queue').length, 3, 'it adds duplicate messages to the queue');
+  });
+
+  test('it does use the global preventDuplicates if the instance option isn\'t set', function(assert) {
+    set(service, 'defaultPreventDuplicates', false);
+    service.success('foo');
+    service.success('foo');
+    service.success('bar', {preventDuplicates: true});
+    service.success('bar', {preventDuplicates: true});
+    service.success('foo');
+    service.success('baz', {preventDuplicates: true});
+
+    const result = get(service, 'queue').mapBy('message');
+
+    assert.deepEqual(result, ['foo', 'foo', 'bar', 'foo', 'baz'], 'it adds duplicated messages if preventDuplicates isn\'t set');
+    assert.equal(get(service, 'queue').length, 5, 'it handles duplicates where preventDuplicates is false');
   });
 
   test('it supports chaining', function(assert) {
