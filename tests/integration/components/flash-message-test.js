@@ -20,7 +20,7 @@ module('Integration | Component | flash message', function(hooks) {
       {{/flash-message}}
     `);
 
-    assert.dom('*').hasText('hi');
+    assert.dom('.alert').hasText('hi');
     assert.dom('.alert').hasClass('flash-message');
   });
 
@@ -83,7 +83,7 @@ module('Integration | Component | flash message', function(hooks) {
     `);
 
     later(this, () => {
-      assert.dom('*').hasText('hi');
+      assert.dom('.alert').hasText('hi');
       assert.notOk(this.get('flash').isDestroyed, 'Flash is not destroyed immediately');
     }, timeoutDefault - 100);
 
@@ -110,7 +110,7 @@ module('Integration | Component | flash message', function(hooks) {
     `);
 
     later(this, () => {
-      assert.dom('*').hasText('hi');
+      assert.dom('.alert').hasText('hi');
       triggerEvent('#testFlash', 'mouseenter');
 
       next(this, () => {

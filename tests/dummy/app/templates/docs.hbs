@@ -1,0 +1,35 @@
+{{#docs-viewer as |viewer|}}
+  {{#viewer.nav as |nav|}}
+    {{nav.item 'Introduction' 'docs.index'}}
+    {{nav.item "Installation" "docs.installation"}}
+    {{nav.item "Compatibility" "docs.compatibility"}}
+
+    {{nav.item "Demo" "docs.demo"}}
+
+    {{nav.item "Usage" "docs.usage"}}
+    {{#nav.subnav as |nav|}}
+      {{nav.item "Convenience methods" "docs.usage.convenience"}}
+      {{nav.item "Custom messages" "docs.usage.custom-messages"}}
+      {{nav.item "Animated example" "docs.usage.animated-example"}}
+      {{nav.item "Arbitary options" "docs.usage.arbitary-options"}}
+      {{nav.item "Clearing messages on screen" "docs.usage.clearing-messages-on-screen"}}
+      {{nav.item "Returning flash object" "docs.usage.returning-flash-object"}}
+    {{/nav.subnav}}
+
+    {{nav.item "Service defaults" "docs.service-defaults"}}
+    {{nav.item "Displaying flash messages" "docs.displaying-flash-messages"}}
+
+    {{nav.item "Testing" "docs.testing"}}
+    {{#nav.subnav as |nav|}}
+      {{nav.item "Acceptance/Integration testing" "docs.testing.acceptance-testing"}}
+      {{nav.item "Unit testing" "docs.testing.unit-testing"}}
+    {{/nav.subnav}}
+
+    {{nav.item "Styling" "docs.styling"}}
+    {{nav.item "License" "docs.license"}}
+  {{/viewer.nav}}
+
+  {{#viewer.main}}
+    {{outlet}}
+  {{/viewer.main}}
+{{/docs-viewer}}
