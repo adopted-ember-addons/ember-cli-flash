@@ -2,8 +2,9 @@ import { htmlSafe, classify } from '@ember/string';
 import Component from '@ember/component';
 import { isPresent } from '@ember/utils';
 import { run } from '@ember/runloop';
-import { computed, set, get, getWithDefault } from '@ember/object';
+import { computed, set, get } from '@ember/object';
 import layout from '../templates/components/flash-message';
+import getWithDefault from '../utils/get-with-default';
 
 const {
   and,
