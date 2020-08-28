@@ -13,17 +13,6 @@ module('Unit | Utility | get-with-default', function() {
     assert.equal(result, defaultValue);
   });
 
-  test('it returns the default value when the target value is null', function(assert) {
-    let obj = {
-      testKey: null
-    }
-
-    let defaultValue = 'defaultValue';
-    let result = getWithDefault(obj, 'testKey', defaultValue);
-
-    assert.equal(result, defaultValue);
-  });
-
   test('it returns the target value when available', function(assert) {
     let obj = {
       truthy: true,
@@ -31,7 +20,8 @@ module('Unit | Utility | get-with-default', function() {
       truthyNumber: 1,
       falsyNumber: 0,
       string: 'test',
-      emptyString: ''
+      emptyString: '',
+      null: null
     }
 
     let defaultValue = 'defaultValue';
