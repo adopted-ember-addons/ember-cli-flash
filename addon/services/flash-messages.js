@@ -5,7 +5,6 @@ import {
   set,
   get,
   setProperties,
-  getWithDefault,
   computed
 } from '@ember/object';
 import {
@@ -20,6 +19,7 @@ import FlashMessage from 'ember-cli-flash/flash/object';
 import objectWithout from '../utils/object-without';
 import { getOwner } from '@ember/application';
 import flashMessageOptions from '../utils/flash-message-options';
+import getWithDefault from '../utils/get-with-default';
 
 export default Service.extend({
   isEmpty: equal('queue.length', 0).readOnly(),
