@@ -4,7 +4,7 @@ aliases:
 
   - defaults: &defaults
       docker:
-        - image: circleci/node:8
+        - image: circleci/node:12
       working_directory: ~/code
 
   - &restore-repo-cache
@@ -44,7 +44,7 @@ jobs:
   tests:
     <<: *defaults
     docker:
-      - image: circleci/node:8-browsers
+      - image: circleci/node:12-browsers
     steps:
       - restore-cache: *restore-repo-cache
       - restore-cache: *restore-yarn-cache
