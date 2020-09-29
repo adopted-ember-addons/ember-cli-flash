@@ -1,10 +1,18 @@
-{{#if hasBlock}}
-  {{yield this flash (action "close")}}
-{{else}}
-  {{flash.message}}
-  {{#if showProgressBar}}
-    <div class="alert-progress">
-      <div class="alert-progressBar" style={{progressDuration}}></div>
-    </div>
+<div
+  class="flash-message {{this.alertType}} {{if this.exiting "exiting"}} {{if this.active "active"}}"
+  ...attributes
+  {{on "click" this.onClick}}
+  {{did-insert this.onDidInsert}}
+  {{will-destroy this.onWillDestroy}}
+>
+  {{#if hasBlock}}
+    {{yield this flash (action "onClose")}}
+  {{else}}
+    {{this.flash.message}}
+    {{#if this.showProgressBar}}
+      <div class="alert-progress">
+        <div class="alert-progressBar" style={{this.progressDuration}}></div>
+      </div>
+    {{/if}}
   {{/if}}
-{{/if}}
+</div>

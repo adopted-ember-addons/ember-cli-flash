@@ -1,126 +1,121 @@
 import Evented from '@ember/object/evented';
-import EmberObject, { set, get } from '@ember/object';
+import EmberObject, { set } from '@ember/object';
 import { cancel, later } from '@ember/runloop';
 import { guidFor } from '../utils/computed';
 
-export default EmberObject.extend(Evented, {
-  exitTimer: null,
-  exiting: false,
-  isExitable: true,
-  initializedTime: null,
+export default class Object extends EmberObject.extend(Evented) {
+  exitTimer = null;
+  exiting = false;
+  isExitable = true;
+  initializedTime = null;
 
-  _guid: guidFor('message').readOnly(),
+  @(guidFor('message').readOnly())
+  _guid;
 
   init() {
-    this._super(...arguments);
+    super.init(...arguments);
 
-    if (get(this, 'sticky')) {
+    if (this.sticky) {
       return;
     }
     this.timerTask();
     this._setInitializedTime();
-  },
+  }
 
   destroyMessage() {
     this._cancelTimer();
-    let exitTaskInstance = get(this, 'exitTaskInstance');
-    if (exitTaskInstance) {
-      cancel(exitTaskInstance);
+    if (this.exitTaskInstance) {
+      cancel(this.exitTaskInstance);
       this._teardown();
     } else {
       this.exitTimerTask();
     }
-  },
+  }
 
   exitMessage() {
-    if (!get(this, 'isExitable')) {
+    if (!this.isExitable) {
       return;
     }
     this.exitTimerTask();
     this.trigger('didExitMessage');
-  },
+  }
 
   willDestroy() {
-    const onDestroy = get(this, 'onDestroy');
-    if (onDestroy) {
-      onDestroy();
+    if (this.onDestroy) {
+      this.onDestroy();
     }
 
     this._cancelTimer();
     this._cancelTimer('exitTaskInstance');
-    this._super(...arguments);
-  },
+    super.willDestroy(...arguments);
+  }
 
   preventExit() {
     set(this, 'isExitable', false);
-  },
+  }
 
   allowExit() {
     set(this, 'isExitable', true);
     this._checkIfShouldExit();
-  },
+  }
 
   timerTask() {
-    let timeout = get(this, 'timeout');
-    if (!timeout) {
+    if (!this.timeout) {
       return;
     }
-    let timerTaskInstance = later(() => {
+    const timerTaskInstance = later(() => {
       this.exitMessage();
-    }, timeout);
+    }, this.timeout);
     set(this, 'timerTaskInstance', timerTaskInstance);
-  },
+  }
 
   exitTimerTask() {
-    if (get(this, 'isDestroyed')) {
+    if (this.isDestroyed) {
       return;
     }
     set(this, 'exiting', true);
-    let extendedTimeout = get(this, 'extendedTimeout');
-    if (extendedTimeout) {
+    if (this.extendedTimeout) {
       let exitTaskInstance = later(() => {
         this._teardown();
-      }, extendedTimeout);
+      }, this.extendedTimeout);
       set(this, 'exitTaskInstance', exitTaskInstance);
     } else {
       this._teardown();
     }
-  },
+  }
 
-  // private
   _setInitializedTime() {
     let currentTime = new Date().getTime();
-
     set(this, 'initializedTime', currentTime);
-  },
+
+    return this.initializedTime;
+  }
 
   _getElapsedTime() {
     let currentTime = new Date().getTime();
-    let initializedTime = get(this, 'initializedTime');
 
-    return currentTime - initializedTime;
-  },
+    return currentTime - this.initializedTime;
+  }
 
   _cancelTimer(taskName = 'timerTaskInstance') {
-    let taskInstance = get(this, taskName);
-    if (taskInstance) {
-      cancel(taskInstance);
+    if (this[taskName]) {
+      cancel(this[taskName]);
     }
-  },
+  }
 
   _checkIfShouldExit() {
-    if (this._getElapsedTime() >= get(this, 'timeout') && !get(this, 'sticky')) {
+    if (this._getElapsedTime() >= this.timeout && !this.sticky) {
       this._cancelTimer();
       this.exitMessage();
     }
-  },
+  }
 
   _teardown() {
-    const queue = get(this, 'flashService.queue');
+    const queue = this.flashService?.queue;
     if (queue) {
       queue.removeObject(this);
     }
     this.destroy();
     this.trigger('didDestroyMessage');
   }
-});
+}
