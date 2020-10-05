@@ -47,7 +47,7 @@ export default class FlashMessagesService extends Service {
   }
 
   clearMessages() {
-    const flashes = get(this, 'queue');
+    const flashes = this.queue;
 
     if (isNone(flashes)) {
       return;
@@ -66,16 +66,16 @@ export default class FlashMessagesService extends Service {
   }
 
   peekFirst() {
-    return get(this, 'queue.firstObject');
+    return this.queue.firstObject;
   }
 
   peekLast() {
-    return get(this, 'queue.lastObject');
+    return this.queue.lastObject;
   }
 
   getFlashObject() {
     const errorText = 'A flash message must be added before it can be returned';
-    assert(errorText, get(this, 'queue').length);
+    assert(errorText, this.queue.length);
 
     return this.peekLast();
   }
@@ -83,11 +83,11 @@ export default class FlashMessagesService extends Service {
   _newFlashMessage(options = {}) {
     assert(
       'The flash message cannot be empty when preventDuplicates is enabled.',
-      get(this, 'defaultPreventDuplicates') ? options.message : true
+      this.defaultPreventDuplicates ? options.message : true
     );
     assert(
       'The flash message cannot be empty when preventDuplicates is enabled.',
-      get(options, 'preventDuplicates') ? options.message : true
+      options.preventDuplicates ? options.message : true
     );
 
     const flashService = this;
@@ -153,19 +153,19 @@ export default class FlashMessagesService extends Service {
   }
 
   _hasDuplicate(guid) {
-    return get(this, '_guids').includes(guid);
+    return this._guids.includes(guid);
   }
 
   _enqueue(flashInstance) {
-    const instancePreventDuplicates = get(flashInstance, 'preventDuplicates');
+    const instancePreventDuplicates = flashInstance.preventDuplicates;
     const preventDuplicates =
       typeof instancePreventDuplicates === 'boolean'
         ? // always prefer instance option over global option
           instancePreventDuplicates
-        : get(this, 'defaultPreventDuplicates');
+        : this.defaultPreventDuplicates;
 
     if (preventDuplicates) {
-      const guid = get(flashInstance, '_guid');
+      const guid = flashInstance._guid;
 
       if (this._hasDuplicate(guid)) {
         warn(
@@ -179,6 +179,6 @@ export default class FlashMessagesService extends Service {
       }
     }
 
-    return get(this, 'queue').pushObject(flashInstance);
+    return this.queue.pushObject(flashInstance);
   }
 }

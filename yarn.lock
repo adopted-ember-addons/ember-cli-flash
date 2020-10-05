@@ -5189,13 +5189,22 @@ ember-cli-version-checker@^4.1.0:
     semver "^6.3.0"
     silent-error "^1.1.1"
 
-ember-cli-version-checker@^5.0.1, ember-cli-version-checker@^5.0.2:
+ember-cli-version-checker@^5.0.1:
   version "5.0.2"
   resolved "https://registry.yarnpkg.com/ember-cli-version-checker/-/ember-cli-version-checker-5.0.2.tgz#7e96157be4b13b083a68078b188820193275d8c4"
   integrity sha512-cqFrIg9++GKdpMv2DP8pryAhTcmCYUL2hzHatLwkcJe23s+ioZ0JQWte0avxZ5lJnwn5e3kzUKkLkDfHDFBMUw==
   dependencies:
     resolve-package-path "^2.0.0"
     semver "^7.1.3"
+    silent-error "^1.1.1"
+
+ember-cli-version-checker@^5.1.1:
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/ember-cli-version-checker/-/ember-cli-version-checker-5.1.1.tgz#3185c526c14671609cbd22ab0d0925787fc84f3d"
+  integrity sha512-YziSW1MgOuVdJSyUY2CKSC4vXrGQIHF6FgygHkJOxYGjZNQYwf5MK0sbliKatvJf7kzDSnXs+r8JLrD74W/A8A==
+  dependencies:
+    resolve-package-path "^2.0.0"
+    semver "^7.3.2"
     silent-error "^1.1.1"
 
 ember-cli@~3.17.0:
@@ -5672,13 +5681,14 @@ escape-string-regexp@^1.0.0, escape-string-regexp@^1.0.2, escape-string-regexp@^
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
 
-eslint-plugin-ember@^7.11.0:
-  version "7.11.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-ember/-/eslint-plugin-ember-7.11.0.tgz#b770b0c68a18bbba4b66d32921750af143a4abf9"
-  integrity sha512-hlBhipZbBpwEroig7wPLtYCAz+ETNPtrpNQMRb5nK9BIZemhC+9S2lXQbWQrtJJwfxyUFpQdQU61FWtJJn561g==
+eslint-plugin-ember@^9.2.0:
+  version "9.2.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-ember/-/eslint-plugin-ember-9.2.0.tgz#4bdf00701cb765931da1e2bd4df88e0ec5dfcd68"
+  integrity sha512-m4uFMBMItW6roXgv8feRqRksCKn9hEzDJPJYLo7u9AFNNYjcqZtXmzI986zRNErxmDtHWh4Jve7qgxjWAODDEw==
   dependencies:
     "@ember-data/rfc395-data" "^0.0.4"
-    ember-rfc176-data "^0.3.12"
+    ember-rfc176-data "^0.3.15"
+    lodash.kebabcase "^4.1.1"
     snake-case "^3.0.3"
 
 eslint-plugin-es@^3.0.0:
@@ -7878,6 +7888,11 @@ lodash.isobject@~2.3.0:
   dependencies:
     lodash._objecttypes "~2.3.0"
 
+lodash.kebabcase@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/lodash.kebabcase/-/lodash.kebabcase-4.1.1.tgz#8489b1cb0d29ff88195cceca448ff6d6cc295c36"
+  integrity sha1-hImxyw0p/4gZXM7KRI/21swpXDY=
+
 lodash.keys@^3.0.0:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/lodash.keys/-/lodash.keys-3.1.2.tgz#4dbc0472b156be50a0b286855d1bd0b0c656098a"
@@ -9674,6 +9689,11 @@ semver@^7.0.0, semver@^7.1.3:
   version "7.1.3"
   resolved "https://registry.yarnpkg.com/semver/-/semver-7.1.3.tgz#e4345ce73071c53f336445cfc19efb1c311df2a6"
   integrity sha512-ekM0zfiA9SCBlsKa2X1hxyxiI4L3B6EbVJkkdgQXnSEEaHlGdvyodMruTiulSRWMMB4NeIuYNMC9rTKTz97GxA==
+
+semver@^7.3.2:
+  version "7.3.2"
+  resolved "https://registry.yarnpkg.com/semver/-/semver-7.3.2.tgz#604962b052b81ed0786aae84389ffba70ffd3938"
+  integrity sha512-OrOb32TeeambH6UrhtShmF7CRDqhL6/5XpPNp2DuRH6+9QLw/orhp72j87v8Qa1ScDkvrrBNpZcDejAirJmfXQ==
 
 send@0.16.1:
   version "0.16.1"

@@ -30,7 +30,7 @@ export default class FlashMessage extends Component {
   @bool('template')
   hasBlock;
 
-  @computed('flash.type')
+  @computed('flash.type', 'messageStyle')
   get alertType() {
     const flashType = this.flash.type || '';
     const messageStyle = this.messageStyle || '';
@@ -48,7 +48,7 @@ export default class FlashMessage extends Component {
     return classify(this.flash.type || '');
   }
 
-  @computed('flash.showProgress')
+  @computed('flash.{showProgress,timeout}')
   get progressDuration() {
     if (!this.flash?.showProgress) {
       return false;
@@ -95,8 +95,8 @@ export default class FlashMessage extends Component {
       set(this, 'active', true);
     });
     set(this, 'pendingSet', pendingSet);
-    set(this, '_mouseEnterHandler', this._mouseEnter.bind(this));
-    set(this, '_mouseLeaveHandler', this._mouseLeave.bind(this));
+    set(this, '_mouseEnterHandler', this._mouseEnter);
+    set(this, '_mouseLeaveHandler', this._mouseLeave);
     element.addEventListener('mouseenter', this._mouseEnterHandler);
     element.addEventListener('mouseleave', this._mouseLeaveHandler);
   }

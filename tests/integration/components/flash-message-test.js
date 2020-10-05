@@ -82,7 +82,7 @@ module('Integration | Component | flash message', function (hooks) {
     this.set('flag', false);
 
     await settled();
-    assert.ok(this.get('flash').isDestroyed, 'Flash Object isDestroyed');
+    assert.ok(this.flash.isDestroyed, 'Flash Object isDestroyed');
   });
 
   test('flash message is removed after timeout', async function (assert) {
@@ -108,7 +108,7 @@ module('Integration | Component | flash message', function (hooks) {
       () => {
         assert.dom('*').hasText('hi');
         assert.notOk(
-          this.get('flash').isDestroyed,
+          this.flash.isDestroyed,
           'Flash is not destroyed immediately'
         );
       },
@@ -117,7 +117,7 @@ module('Integration | Component | flash message', function (hooks) {
 
     await settled();
 
-    assert.ok(this.get('flash').isDestroyed, 'Flash Object is destroyed');
+    assert.ok(this.flash.isDestroyed, 'Flash Object is destroyed');
   });
 
   test('flash message is removed after timeout if mouse enters', async function (assert) {
@@ -179,19 +179,19 @@ module('Integration | Component | flash message', function (hooks) {
     `);
 
     assert.notOk(
-      this.get('flash').isDestroyed,
+      this.flash.isDestroyed,
       'flash has not been destroyed yet'
     );
 
     await click('.alert');
     assert.notOk(
-      this.get('flash').isDestroyed,
+      this.flash.isDestroyed,
       'flash has not been destroyed yet'
     );
 
     await click('.alert a');
     assert.ok(
-      this.get('flash').isDestroyed,
+      this.flash.isDestroyed,
       'flash is destroyed after clicking close'
     );
   });
