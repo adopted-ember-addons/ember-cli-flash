@@ -15,7 +15,7 @@
   "bugs": "https://github.com/poteto/ember-cli-flash/issues",
   "homepage": "https://github.com/poteto/ember-cli-flash",
   "engines": {
-    "node": "^4.5 || 6.* || 8.* || >= 10.*"
+    "node": "6.* || 8.* || >= 10.*"
   },
   "contributors": [
     {
@@ -34,19 +34,23 @@
     "ember-runtime-enumerable-includes-polyfill": "^2.1.0"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.10.4",
+    "@babel/plugin-proposal-optional-chaining": "^7.6.0",
     "@ember/optional-features": "^1.3.0",
+    "@ember/render-modifiers": "^1.0.2",
     "@types/ember": "^3.1.1",
+    "babel-eslint": "^8.0.0",
     "broccoli-asset-rev": "^3.0.0",
     "ember-cli": "~3.17.0",
     "ember-cli-dependency-checker": "^3.2.0",
     "ember-cli-eslint": "^5.1.0",
     "ember-cli-github-pages": "0.2.2",
-    "ember-cli-htmlbars-inline-precompile": "^3.0.1",
     "ember-cli-inject-live-reload": "^2.0.2",
     "ember-cli-sri": "^2.1.1",
     "ember-cli-template-lint": "^2.0.2",
     "ember-cli-uglify": "^3.0.0",
     "ember-cli-version-checker": "^5.0.2",
+    "ember-decorators": "^6.1.1",
     "ember-disable-prototype-extensions": "^1.1.3",
     "ember-export-application-global": "^2.0.1",
     "ember-load-initializers": "^2.1.1",
@@ -56,7 +60,7 @@
     "ember-source": "~3.17.1",
     "ember-source-channel-url": "^2.0.1",
     "ember-try": "^1.4.0",
-    "eslint-plugin-ember": "^7.11.0",
+    "eslint-plugin-ember": "^9.2.0",
     "eslint-plugin-node": "^11.0.0",
     "lerna-changelog": "^1.0.1",
     "loader.js": "^4.7.0",

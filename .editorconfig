@@ -16,5 +16,8 @@ indent_size = 2
 [*.hbs]
 insert_final_newline = false
 
+[*.js]
+quote_type = single
+
 [*.{diff,md}]
 trim_trailing_whitespace = false

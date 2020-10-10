@@ -3,7 +3,7 @@
 <p>Simple, highly configurable flash messages for ember-cli.</p>
 
 {{#each flashMessages.arrangedQueue as |flash|}}
-  {{#flash-message flash=flash as |component flash|}}
+  <FlashMessage @flash={{flash}} as |component flash|>
     <h6>{{component.flashType}}</h6>
     <p>{{flash.message}}</p>
     {{#if component.showProgressBar}}
@@ -11,7 +11,7 @@
         <div class="alert-progressBar" style={{component.progressDuration}}></div>
       </div>
     {{/if}}
-  {{/flash-message}}
+  </FlashMessage>
 {{/each}}
 
 <code>

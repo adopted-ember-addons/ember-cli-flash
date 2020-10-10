@@ -2,127 +2,110 @@ import { htmlSafe, classify } from '@ember/string';
 import Component from '@ember/component';
 import { isPresent } from '@ember/utils';
 import { run } from '@ember/runloop';
-import { computed, set, get } from '@ember/object';
+import { action, computed, set } from '@ember/object';
+import { and, bool, readOnly, not } from '@ember/object/computed';
+import { tagName } from '@ember-decorators/component';
 import layout from '../templates/components/flash-message';
-import getWithDefault from '../utils/get-with-default';
 
-const {
-  and,
-  bool,
-  readOnly,
-  not
-} = computed;
-const {
-  next,
-  cancel
-} = run;
+const { next, cancel } = run;
 
-export default Component.extend({
-  layout,
-  active: false,
-  messageStyle: 'bootstrap',
-  classNames: ['flash-message'],
-  classNameBindings: ['alertType', 'active', 'exiting'],
-  attributeBindings: ['aria-label', 'aria-describedby', 'role'],
+@tagName('')
+export default class FlashMessage extends Component {
+  layout = layout;
+  active = false;
+  messageStyle = 'bootstrap';
 
-  showProgress: readOnly('flash.showProgress'),
-  notExiting: not('exiting'),
-  showProgressBar: and('showProgress', 'notExiting'),
-  exiting: readOnly('flash.exiting'),
-  hasBlock: bool('template').readOnly(),
+  @readOnly('flash.showProgress')
+  showProgress;
 
-  alertType: computed('flash.type', {
-    get() {
-      const flashType = getWithDefault(this, 'flash.type', '');
-      const messageStyle = getWithDefault(this, 'messageStyle', '');
-      let prefix = 'alert alert-';
+  @not('exiting')
+  notExiting;
 
-      if (messageStyle === 'foundation') {
-        prefix = 'alert-box ';
-      }
+  @and('showProgress', 'notExiting')
+  showProgressBar;
 
-      return `${prefix}${flashType}`;
+  @readOnly('flash.exiting')
+  exiting;
+
+  @bool('template')
+  hasBlock;
+
+  @computed('flash.type', 'messageStyle')
+  get alertType() {
+    const flashType = this.flash.type || '';
+    const messageStyle = this.messageStyle || '';
+    let prefix = 'alert alert-';
+
+    if (messageStyle === 'foundation') {
+      prefix = 'alert-box ';
     }
-  }),
 
-  flashType: computed('flash.type', {
-    get() {
-      const flashType = getWithDefault(this, 'flash.type', '');
+    return `${prefix}${flashType}`;
+  }
 
-      return classify(flashType);
+  @computed('flash.type')
+  get flashType() {
+    return classify(this.flash.type || '');
+  }
+
+  @computed('flash.{showProgress,timeout}')
+  get progressDuration() {
+    if (!this.flash?.showProgress) {
+      return false;
     }
-  }),
+    const duration = this.flash?.timeout || 0;
+    return htmlSafe(`transition-duration: ${duration}ms`);
+  }
 
-  didInsertElement() {
-    this._super(...arguments);
-    const pendingSet = next(this, () => {
-      set(this, 'active', true);
-    });
-    set(this, 'pendingSet', pendingSet);
-    this.set('_mouseEnterHandler', this._mouseEnter.bind(this));
-    this.set('_mouseLeaveHandler', this._mouseLeave.bind(this));
-    this.element.addEventListener('mouseenter', this._mouseEnterHandler);
-    this.element.addEventListener('mouseleave', this._mouseLeaveHandler);
-  },
-
-  willDestroyElement() {
-    this._super(...arguments);
-    this.element.removeEventListener('mouseenter', this._mouseEnterHandler);
-    this.element.removeEventListener('mouseleave', this._mouseLeaveHandler);
-  },
-
-  progressDuration: computed('flash.showProgress', {
-    get() {
-      if (!get(this, 'flash.showProgress')) {
-        return false;
-      }
-
-      const duration = getWithDefault(this, 'flash.timeout', 0);
-
-      return htmlSafe(`transition-duration: ${duration}ms`);
+  _mouseEnter() {
+    if (isPresent(this.flash)) {
+      this.flash.preventExit();
     }
-  }),
+  }
 
-  click() {
-    const destroyOnClick = getWithDefault(this, 'flash.destroyOnClick', true);
+  _mouseLeave() {
+    if (isPresent(this.flash) && !this.flash.exiting) {
+      this.flash.allowExit();
+    }
+  }
+
+  _destroyFlashMessage() {
+    if (this.flash) {
+      this.flash.destroyMessage();
+    }
+  }
+
+  @action
+  onClick() {
+    const destroyOnClick = this.flash?.destroyOnClick ?? true;
 
     if (destroyOnClick) {
       this._destroyFlashMessage();
     }
-  },
-
-  _mouseEnter() {
-    const flash = get(this, 'flash');
-    if (isPresent(flash)) {
-      flash.preventExit();
-    }
-  },
-
-  _mouseLeave() {
-    const flash = get(this, 'flash');
-    if (isPresent(flash) && !get(flash, 'exiting')) {
-      flash.allowExit();
-    }
-  },
-
-  willDestroy() {
-    this._super(...arguments);
-    this._destroyFlashMessage();
-    cancel(get(this, 'pendingSet'));
-  },
-
-  // private
-  _destroyFlashMessage() {
-    const flash = getWithDefault(this, 'flash', false);
-
-    if (flash) {
-      flash.destroyMessage();
-    }
-  },
-
-  actions: {
-    close() {
-      this._destroyFlashMessage();
-    }
   }
-});
+
+  @action
+  onClose() {
+    this._destroyFlashMessage();
+  }
+
+  @action
+  onDidInsert(element) {
+    const pendingSet = next(this, () => {
+      set(this, 'active', true);
+    });
+    set(this, 'pendingSet', pendingSet);
+    set(this, '_mouseEnterHandler', this._mouseEnter);
+    set(this, '_mouseLeaveHandler', this._mouseLeave);
+    element.addEventListener('mouseenter', this._mouseEnterHandler);
+    element.addEventListener('mouseleave', this._mouseLeaveHandler);
+  }
+
+  @action
+  onWillDestroy(element) {
+    element.removeEventListener('mouseenter', this._mouseEnterHandler);
+    element.removeEventListener('mouseleave', this._mouseLeaveHandler);
+    cancel(this.pendingSet);
+    this._destroyFlashMessage();
+  }
+}

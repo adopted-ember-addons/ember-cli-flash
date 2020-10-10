@@ -1,9 +1,8 @@
 import Route from '@ember/routing/route';
-import { get } from '@ember/object';
 
 export default Route.extend({
   activate() {
-    const flashMessages = get(this, 'flashMessages');
+    const flashMessages = this.flashMessages;
 
     flashMessages.success('Route transitioned successfully', {
       priority: 500,
