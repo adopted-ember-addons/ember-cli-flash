@@ -377,6 +377,15 @@ By default, flash messages will have Bootstrap style class names. If you want to
 {{/each}}
 ```
 
+### Styling with user-specified flash type class prefix
+If you don't wish to use the class names associated with Bootstrap / Foundation, specify the `flashTypePrefix` on the component. This will override the class name prefixes with your own. For example, `flashTypePrefix='special-alert-'` would create flash messages with the class `special-alert-succcess`
+
+```handlebars
+{{#each flashMessages.queue as |flash|}}
+  {{flash-message flash=flash flashTypePrefix='special-alert-'}}
+{{/each}}
+```
+
 ### Sort messages by priority
 To display messages sorted by priority, add this to your template:
 
