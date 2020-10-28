@@ -30,17 +30,23 @@ export default class FlashMessage extends Component {
   @bool('template')
   hasBlock;
 
-  @computed('flash.type', 'messageStyle')
+  @computed('flash.type', 'flashTypePrefix', 'messageStyle')
   get alertType() {
     const flashType = this.flash.type || '';
-    const messageStyle = this.messageStyle || '';
-    let prefix = 'alert alert-';
+    const flashTypePrefix = this.flashTypePrefix;
 
-    if (messageStyle === 'foundation') {
-      prefix = 'alert-box ';
+    if (flashTypePrefix) {
+      return `${flashTypePrefix}${flashType}`;
+    } else {
+      const messageStyle = this.messageStyle || '';
+      let prefix = 'alert alert-';
+
+      if (messageStyle === 'foundation') {
+        prefix = 'alert-box ';
+      }
+
+      return `${prefix}${flashType}`;
     }
-
-    return `${prefix}${flashType}`;
   }
 
   @computed('flash.type')
