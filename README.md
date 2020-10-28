@@ -405,16 +405,29 @@ $ ember generate ember-cli-flash
 
 This also adds the helper to `tests/test-helper.js`. You won't actually need to import this into your tests, but it's good to know what the blueprint does. Basically, the helper overrides the `_setInitialState` method so that the flash messages behave intuitively in a testing environment.
 
+Some example tests below, based on qunit.
+
 An example acceptance test:
 
 ```javascript
-// tests/acceptance/foo-test.js
+// tests/acceptance/foo-page-test.js
 
-test('flash message is rendered', function(assert) {
-  assert.expect(1);
-  visit('/');
+import { module, test } from 'qunit'
+import { setupApplicationTest } from 'ember-qunit'
+import { click, visit } from '@ember/test-helpers'
 
-  andThen(() => assert.ok(find('.alert.alert-success').length));
+module('Application | Component | foo-page', function (hooks) {
+  setupApplicationTest(hooks)
+
+  test('flash message is rendered', async function(assert) {
+    assert.expect(1);
+
+    await visit('/');
+
+    await click('.button-that-opens-alert')
+
+    assert.dom('.alert.alert-success').exists({ count: 1 });
+  });
 });
 ```
 
@@ -422,19 +435,25 @@ An example integration test:
 
 ```javascript
 // tests/integration/components/x-foo-test.js
-import { getOwner } from '@ember/application';
 
-moduleForComponent('x-foo', 'Integration | Component | x foo', {
-  integration: true,
-  beforeEach() {
-    //We have to register any types we expect to use in this component
+import { module, test } from 'qunit'
+import { setupRenderingTest } from 'ember-qunit'
+import { render } from '@ember/test-helpers'
+import { hbs } from 'ember-cli-htmlbars'
+
+module('Integration | Component | x-foo', function (hooks) {
+  setupRenderingTest(hooks)
+
+  hooks.beforeEach(function() {
+    // We have to register any types we expect to use in this component
     const typesUsed = ['info', 'warning', 'success'];
-    getOwner(this).lookup('service:flash-messages').registerTypes(typesUsed);
-  }
-});
+    this.owner.lookup('service:flash-messages').registerTypes(typesUsed);
+  })
 
-test('it renders', function(assert) {
-  ...
+  test('it renders', function(assert) {
+    await render(hbs`<XFoo/>`)
+    ...
+  })
 });
 ```
 
@@ -442,19 +461,27 @@ test('it renders', function(assert) {
 For unit tests that require the `flashMessages` service, you'll need to do a small bit of setup:
 
 ```js
-import { getOwner } from '@ember/application';
+import { module, test } from 'qunit'
+import { setupTest } from 'ember-qunit'
 
-moduleFor('route:foo', 'Unit | Route | foo', {
-  needs: ['service:flash-messages', 'config:environment'],
-  beforeEach() {
-    const typesUsed = ['warning', 'success'];
-    getOwner(this).lookup('service:flash-messages').registerTypes(typesUsed);
-  }
+module('Container | Route | foo', function (hooks) {
+  setupTest(hooks)
+
+  hooks.beforeEach(function() {
+    // We have to register any types we expect to use in this component
+    const typesUsed = ['info', 'warning', 'success'];
+    this.owner.lookup('service:flash-messages').registerTypes(typesUsed);
+  })
+
+  test('it does the thing it should do', function(assert) {
+    const subject = this.owner.lookup('route:foo')
+    ...
+  })
 });
 ```
 
 ## Styling
-This addon is minimal and does not currently ship with a stylesheet. You can style flash messages by targeting the appropriate alert class (Foundation or Bootstrap) in your CSS.
+This addon is minimal and does not currently ship with a stylesheet. You can style flash messages by targeting the appropriate alert classes in your CSS.
 
 ## License
 [MIT](LICENSE.md)
