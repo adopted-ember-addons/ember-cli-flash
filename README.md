@@ -76,21 +76,17 @@ These will add the appropriate classes to the flash message component for stylin
 ```javascript
 // Bootstrap: the flash message component will have 'alert alert-success' classes
 // Foundation: the flash message component will have 'alert-box success' classes
-import { get } from '@ember/object';
-
-get(this, 'flashMessages').success('Success!');
+this.flashMessages.success('Success!');
 ```
 
 You can take advantage of Promises, and their `.then` and `.catch` methods. To add a flash message after saving a model (or when it fails):
 
 ```javascript
-import { get } from '@ember/object';
-
 actions: {
   saveFoo() {
-    const flashMessages = get(this, 'flashMessages');
+    const flashMessages = this.flashMessages;
 
-    Ember.get(this, 'model')
+    this.model
       .save()
       .then((res) => {
         flashMessages.success('Successfully saved!');
@@ -108,9 +104,7 @@ actions: {
 If the convenience methods don't fit your needs, you can add custom messages with `add`:
 
 ```javascript
-import { get } from '@ember/object';
-
-get(this, 'flashMessages').add({
+this.flashMessages.add({
   message: 'Custom message'
 });
 ```
@@ -119,9 +113,7 @@ get(this, 'flashMessages').add({
 You can also pass in options to custom messages:
 
 ```javascript
-import { get } from '@ember/object';
-
-get(this, 'flashMessages').add({
+this.flashMessages.add({
   message: 'I like alpacas',
   type: 'alpaca',
   timeout: 500,
@@ -135,7 +127,7 @@ get(this, 'flashMessages').add({
   }
 });
 
-get(this, 'flashMessages').success('This is amazing', {
+this.flashMessages.success('This is amazing', {
   timeout: 100,
   priority: 100,
   sticky: false,
@@ -233,13 +225,11 @@ Then animate using CSS transitions, using the `.active` and `.active.exiting` cl
 You can also add arbitrary options to messages:
 
 ```javascript
-import { get } from '@ember/object';
-
-get(this, 'flashMessages').success('Cool story bro', {
+this.flashMessages.success('Cool story bro', {
   someOption: 'hello'
 });
 
-get(this, 'flashMessages').add({
+this.flashMessages.add({
   message: 'hello',
   type: 'foo',
   componentName: 'some-component',
@@ -252,14 +242,14 @@ This makes use of the [component helper](http://emberjs.com/blog/2015/03/27/embe
 
 ```handlebars
 {{#each flashMessages.queue as |flash|}}
-  {{#flash-message flash=flash as |component flash|}}
+  <FlashMessage @flash={{flash}} as |component flash|>
     {{#if flash.componentName}}
       {{component flash.componentName content=flash.content}}
     {{else}}
       <h6>{{component.flashType}}</h6>
       <p>{{flash.message}}</p>
     {{/if}}
-  {{/flash-message}}
+  </FlashMessage>
 {{/each}}
 ```
 
@@ -267,18 +257,14 @@ This makes use of the [component helper](http://emberjs.com/blog/2015/03/27/embe
 It's best practice to use flash messages sparingly, only when you need to notify the user of something. If you're sending too many messages, and need a way for your users to clear all messages from screen, you can use this method:
 
 ```javascript
-import { get } from '@ember/object';
-
-get(this, 'flashMessages').clearMessages();
+this.flashMessages.clearMessages();
 ```
 
 ### Returning flash object
 The flash message service is designed to be Fluent, allowing you to chain methods on the service easily. The service should handle most cases but if you want to access the flash object directly, you can use the `getFlashObject` method:
 
 ```javascript
-import { get } from '@ember/object';
-
-const flashObject = get(this, 'flashMessages').add({
+const flashObject = this.flashMessages.add({
   message: 'hola',
   type: 'foo'
 }).getFlashObject();
@@ -321,7 +307,7 @@ See the [options](#custom-messages-api) section for information about flash mess
 
   Default: `[ 'success', 'info', 'warning', 'danger', 'alert', 'secondary' ]`
 
-  This option lets you specify exactly what types you need, which means in the above example, you can do `Ember.get('flashMessages').{alpaca,notice,foobar}`.
+  This option lets you specify exactly what types you need, which means in the above example, you can do `this.flashMessages.{alpaca,notice,foobar}`.
 
 - `preventDuplicates?: boolean`
 
@@ -334,7 +320,7 @@ Then, to display somewhere in your app, add this to your template:
 
 ```handlebars
 {{#each flashMessages.queue as |flash|}}
-  {{flash-message flash=flash}}
+  <FlashMessage @flash={{flash}} />
 {{/each}}
 ```
 
@@ -342,7 +328,7 @@ It also accepts your own template:
 
 ```handlebars
 {{#each flashMessages.queue as |flash|}}
-  {{#flash-message flash=flash as |component flash|}}
+  <FlashMessage @flash={{flash}} as |component flash|>
     <h6>{{component.flashType}}</h6>
     <p>{{flash.message}}</p>
     {{#if component.showProgressBar}}
@@ -350,7 +336,7 @@ It also accepts your own template:
         <div class="alert-progressBar" style="{{component.progressDuration}}"></div>
       </div>
     {{/if}}
-  {{/flash-message}}
+  </FlashMessage>
 {{/each}}
 ```
 
@@ -359,12 +345,12 @@ The `close` action is always passed to the component whether it is used or not. 
 
 When using a custom `close` action, you will want to set `destroyOnClick=false` to override the default (`destroyOnClick=true`). You could do this globally in `flashMessageDefaults`.
 
-```
+```handlebars
 {{#each flashMessages.queue as |flash|}}
-  {{#flash-message flash=flash as |component flash close|}}
+  <FlashMessage @flash={{flash}} as |component flash close|>
     {{flash.message}}
-    <a href="#" {{action close}}>x</a>
-  {{/flash-message}}
+    <span role="button" {{on "click" (action close)}}>x</span>
+  </FlashMessage>
 {{/each}}
 ```
 
@@ -373,7 +359,7 @@ By default, flash messages will have Bootstrap style class names. If you want to
 
 ```handlebars
 {{#each flashMessages.queue as |flash|}}
-  {{flash-message flash=flash messageStyle='foundation'}}
+  <FlashMessage @flash={{flash}} @messageStyle='foundation' />
 {{/each}}
 ```
 
@@ -382,7 +368,7 @@ To display messages sorted by priority, add this to your template:
 
 ```handlebars
 {{#each flashMessages.arrangedQueue as |flash|}}
-  {{flash-message flash=flash}}
+  <FlashMessage @flash={{flash}} />
 {{/each}}
 ```
 
@@ -391,13 +377,13 @@ To add `radius` or `round` type corners in Foundation:
 
 ```handlebars
 {{#each flashMessages.arrangedQueue as |flash|}}
-  {{flash-message flash=flash messageStyle='foundation' class='radius'}}
+  <FlashMessage @flash={{flash}} @messageStyle='foundation' class='radius' />
 {{/each}}
 ```
 
 ```handlebars
 {{#each flashMessages.arrangedQueue as |flash|}}
-  {{flash-message flash=flash messageStyle='foundation' class='round'}}
+  <FlashMessage @flash={{flash}} @messageStyle='foundation' class='round' />
 {{/each}}
 ```
 
@@ -406,7 +392,7 @@ If the provided component isn't to your liking, you can easily create your own. 
 
 ```handlebars
 {{#each flashMessages.queue as |flash|}}
-  {{custom-component flash=flash}}
+  <CustomComponent @flash={{flash}} />
 {{/each}}
 ```
 
@@ -419,16 +405,29 @@ $ ember generate ember-cli-flash
 
 This also adds the helper to `tests/test-helper.js`. You won't actually need to import this into your tests, but it's good to know what the blueprint does. Basically, the helper overrides the `_setInitialState` method so that the flash messages behave intuitively in a testing environment.
 
+Some example tests below, based on qunit.
+
 An example acceptance test:
 
 ```javascript
-// tests/acceptance/foo-test.js
+// tests/acceptance/foo-page-test.js
 
-test('flash message is rendered', function(assert) {
-  assert.expect(1);
-  visit('/');
+import { module, test } from 'qunit'
+import { setupApplicationTest } from 'ember-qunit'
+import { click, visit } from '@ember/test-helpers'
 
-  andThen(() => assert.ok(find('.alert.alert-success').length));
+module('Application | Component | foo-page', function (hooks) {
+  setupApplicationTest(hooks)
+
+  test('flash message is rendered', async function(assert) {
+    assert.expect(1);
+
+    await visit('/');
+
+    await click('.button-that-opens-alert')
+
+    assert.dom('.alert.alert-success').exists({ count: 1 });
+  });
 });
 ```
 
@@ -436,19 +435,25 @@ An example integration test:
 
 ```javascript
 // tests/integration/components/x-foo-test.js
-import { getOwner } from '@ember/application';
 
-moduleForComponent('x-foo', 'Integration | Component | x foo', {
-  integration: true,
-  beforeEach() {
-    //We have to register any types we expect to use in this component
+import { module, test } from 'qunit'
+import { setupRenderingTest } from 'ember-qunit'
+import { render } from '@ember/test-helpers'
+import { hbs } from 'ember-cli-htmlbars'
+
+module('Integration | Component | x-foo', function (hooks) {
+  setupRenderingTest(hooks)
+
+  hooks.beforeEach(function() {
+    // We have to register any types we expect to use in this component
     const typesUsed = ['info', 'warning', 'success'];
-    getOwner(this).lookup('service:flash-messages').registerTypes(typesUsed);
-  }
-});
+    this.owner.lookup('service:flash-messages').registerTypes(typesUsed);
+  })
 
-test('it renders', function(assert) {
-  ...
+  test('it renders', function(assert) {
+    await render(hbs`<XFoo/>`)
+    ...
+  })
 });
 ```
 
@@ -456,19 +461,27 @@ test('it renders', function(assert) {
 For unit tests that require the `flashMessages` service, you'll need to do a small bit of setup:
 
 ```js
-import { getOwner } from '@ember/application';
+import { module, test } from 'qunit'
+import { setupTest } from 'ember-qunit'
 
-moduleFor('route:foo', 'Unit | Route | foo', {
-  needs: ['service:flash-messages', 'config:environment'],
-  beforeEach() {
-    const typesUsed = ['warning', 'success'];
-    getOwner(this).lookup('service:flash-messages').registerTypes(typesUsed);
-  }
+module('Container | Route | foo', function (hooks) {
+  setupTest(hooks)
+
+  hooks.beforeEach(function() {
+    // We have to register any types we expect to use in this component
+    const typesUsed = ['info', 'warning', 'success'];
+    this.owner.lookup('service:flash-messages').registerTypes(typesUsed);
+  })
+
+  test('it does the thing it should do', function(assert) {
+    const subject = this.owner.lookup('route:foo')
+    ...
+  })
 });
 ```
 
 ## Styling
-This addon is minimal and does not currently ship with a stylesheet. You can style flash messages by targeting the appropriate alert class (Foundation or Bootstrap) in your CSS.
+This addon is minimal and does not currently ship with a stylesheet. You can style flash messages by targeting the appropriate alert classes in your CSS.
 
 ## License
 [MIT](LICENSE.md)
