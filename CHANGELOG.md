@@ -14,7 +14,7 @@ changelog, see the git history.
 #### Committers: 1
 - Joshua Lawrence ([@jwlawrence](https://github.com/jwlawrence))
 
-## 1.9.0 (2020-11-15)
+## 1.9.1 (2020-11-15)
 
 #### :bug: Deprecations
 * [#326](https://github.com/poteto/ember-cli-flash/pull/326) Fix `getWithDefault` deprecation warning ([@sandydoo](https://github.com/sandydoo))
