@@ -1,7 +1,8 @@
-import { htmlSafe, classify } from '@ember/string';
 import Component from '@ember/component';
+import { htmlSafe, classify } from '@ember/string';
 import { isPresent } from '@ember/utils';
 import { run } from '@ember/runloop';
+import { assert } from '@ember/debug'
 import { action, computed, set } from '@ember/object';
 import { and, bool, readOnly, not } from '@ember/object/computed';
 import { tagName } from '@ember-decorators/component';
@@ -30,20 +31,18 @@ export default class FlashMessage extends Component {
   @bool('template')
   hasBlock;
 
-  @computed('messageStyle')
-  get messageStylePrefix() {
+  @computed('messageStyle', 'messageStylePrefix')
+  get _defaultMessageStylePrefix() {
+    assert('messageStyle is not used when messageStylePrefix is defined', this.messageStyle && this.messageStylePrefix)
     const isFoundation = this.messageStyle === 'foundation';
     return isFoundation ? 'alert-box ' : 'alert alert-';
   }
 
-  @computed('flash.type', 'flashTypePrefix', 'messageStylePrefix')
+  @computed('flash.type', 'messageStylePrefix', '_defaultMessageStylePrefix')
   get alertType() {
     const flashType = this.flash.type || '';
-
-    const { flashTypePrefix, messageStylePrefix } = this;
-
-    const prefix = flashTypePrefix ? flashTypePrefix : messageStylePrefix;
-    return `${prefix || ''}${flashType}`;
+    const prefix = this.messageStylePrefix || this._defaultMessageStylePrefix || '';
+    return `${prefix}${flashType}`;
   }
 
   @computed('flash.type')

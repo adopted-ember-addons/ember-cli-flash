@@ -217,7 +217,7 @@ module('Integration | Component | flash message', function (hooks) {
     assert.ok(flashObject.isDestroyed, 'Flash Object is destroyed');
   });
 
-  test('custom flash type class name prefix is applied', async function (assert) {
+  test('custom message type class name prefix is applied', async function (assert) {
     assert.expect(2);
     let flashObject = FlashMessage.create({
       message: 'flash message content',
@@ -226,10 +226,10 @@ module('Integration | Component | flash message', function (hooks) {
     });
 
     this.set('flash', flashObject);
-    this.set('flashTypePrefix', 'my-flash-')
+    this.set('messageStylePrefix', 'my-flash-')
 
     await render(hbs`
-      <FlashMessage @flash={{this.flash}} @flashTypePrefix={{this.flashTypePrefix}} as |component flash|>
+      <FlashMessage @flash={{this.flash}} @messageStylePrefix={{this.messageStylePrefix}} as |component flash|>
         <span>{{flash.message}}</span>
       </FlashMessage>
     `);
