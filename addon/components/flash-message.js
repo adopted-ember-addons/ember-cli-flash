@@ -5,13 +5,12 @@ import { run } from '@ember/runloop';
 import { assert } from '@ember/debug'
 import { action, computed, set } from '@ember/object';
 import { and, bool, readOnly, not } from '@ember/object/computed';
-import { tagName } from '@ember-decorators/component';
 import layout from '../templates/components/flash-message';
 
 const { next, cancel } = run;
 
-@tagName('')
 export default class FlashMessage extends Component {
+  tagName = '';
   layout = layout;
   active = false;
   messageStyle = 'bootstrap';

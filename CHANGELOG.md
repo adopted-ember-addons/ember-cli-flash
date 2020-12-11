@@ -5,6 +5,56 @@ changelog, see the git history.
 
 [npm page](https://www.npmjs.com/package/ember-cli-flash)
 
+## 2.0.0 (2020-11-15)
+
+#### :rocket: Enhancement
+* [#324](https://github.com/poteto/ember-cli-flash/pull/324) Update all dependencies, drop older Ember support  ([@jwlawrence](https://github.com/jwlawrence))
+* [#328](https://github.com/poteto/ember-cli-flash/pull/328) Use modern syntax standards  ([@jwlawrence](https://github.com/jwlawrence))
+
+#### Committers: 1
+- Joshua Lawrence ([@jwlawrence](https://github.com/jwlawrence))
+
+## 1.9.0 (2020-11-15)
+
+#### :bug: Deprecations
+* [#326](https://github.com/poteto/ember-cli-flash/pull/326) Fix `getWithDefault` deprecation warning ([@sandydoo](https://github.com/sandydoo))
+
+#### Committers: 1
+- Sander Melnikov ([@sandydoo](https://github.com/sandydoo))
+
+## 1.9.0 (2020-06-15)
+
+#### :rocket: Enhancement
+* [#282](https://github.com/poteto/ember-cli-flash/pull/282) Handle `preventDuplicates` ([@makepanic](https://github.com/makepanic))
+
+#### Committers: 1
+- Christian ([@makepanic](https://github.com/makepanic))
+
+## 1.8.1 (2020-02-26)
+
+#### :house: Internal
+* [#314](https://github.com/poteto/ember-cli-flash/pull/314) Add contributor faces ([@poteto](https://github.com/poteto))
+
+#### :bug: Bug Fix
+* [#315](https://github.com/poteto/ember-cli-flash/pull/315) Fix missing bind event ([@st-h](https://github.com/st-h))
+
+#### Committers: 2
+- Lauren Tan ([@poteto](https://github.com/poteto))
+- Steve ([@st-h](https://github.com/st-h))
+
+## 1.8.0 (2019-11-22)
+
+#### :bug: Bug Fixes
+* [#303](https://github.com/poteto/ember-cli-flash/pull/303) Clean up timers ([@makepanic](https://github.com/makepanic))
+* [#304](https://github.com/poteto/ember-cli-flash/pull/304) Remove deprecated mouse events ([@st-h](https://github.com/st-h))
+* [#309](https://github.com/poteto/ember-cli-flash/pull/309) Update Node version for CI ([@abhilashlr](https://github.com/abhilashlr))
+* [#308](https://github.com/poteto/ember-cli-flash/pull/308) Update ember-try ([@abhilashlr](https://github.com/abhilashlr))
+
+#### Committers: 3
+- abhilashlr ([@abhilashlr](https://github.com/abhilashlr))
+- Steve ([@st-h](https://github.com/st-h))
+- Christian ([@makepanic](https://github.com/makepanic))
+
 ## 1.7.2 (2019-05-16)
 
 #### :bug: Bug Fix

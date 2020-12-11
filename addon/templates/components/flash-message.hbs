@@ -1,5 +1,6 @@
 <div
   class="flash-message {{this.alertType}} {{if this.exiting "exiting"}} {{if this.active "active"}}"
+  role="alert"
   ...attributes
   {{on "click" this.onClick}}
   {{did-insert this.onDidInsert}}
