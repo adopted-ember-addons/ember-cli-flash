@@ -2,7 +2,6 @@ import Component from '@ember/component';
 import { htmlSafe, classify } from '@ember/string';
 import { isPresent } from '@ember/utils';
 import { run } from '@ember/runloop';
-import { assert } from '@ember/debug'
 import { action, computed, set } from '@ember/object';
 import { and, bool, readOnly, not } from '@ember/object/computed';
 import layout from '../templates/components/flash-message';
@@ -32,7 +31,6 @@ export default class FlashMessage extends Component {
 
   @computed('messageStyle', 'messageStylePrefix')
   get _defaultMessageStylePrefix() {
-    assert('messageStyle is not used when messageStylePrefix is defined', this.messageStyle && this.messageStylePrefix)
     const isFoundation = this.messageStyle === 'foundation';
     return isFoundation ? 'alert-box ' : 'alert alert-';
   }
