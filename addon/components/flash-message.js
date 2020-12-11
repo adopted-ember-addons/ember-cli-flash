@@ -29,7 +29,7 @@ export default class FlashMessage extends Component {
   @bool('template')
   hasBlock;
 
-  @computed('messageStyle', 'messageStylePrefix')
+  @computed('messageStyle')
   get _defaultMessageStylePrefix() {
     const isFoundation = this.messageStyle === 'foundation';
     return isFoundation ? 'alert-box ' : 'alert alert-';
