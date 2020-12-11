@@ -368,7 +368,7 @@ If you don't wish to use the class names associated with Bootstrap / Foundation,
 
 ```handlebars
 {{#each flashMessages.queue as |flash|}}
-  {{flash-message flash=flash messageStylePrefix='special-alert-'}}
+  <FlashMessage @flash={{flash}} @messageStylePrefix='special-alert-' />
 {{/each}}
 ```
 
