@@ -1,5 +1,5 @@
-import { htmlSafe, classify } from '@ember/string';
 import Component from '@ember/component';
+import { htmlSafe, classify } from '@ember/string';
 import { isPresent } from '@ember/utils';
 import { run } from '@ember/runloop';
 import { action, computed, set } from '@ember/object';
@@ -29,16 +29,16 @@ export default class FlashMessage extends Component {
   @bool('template')
   hasBlock;
 
-  @computed('flash.type', 'messageStyle')
+  @computed('messageStyle')
+  get _defaultMessageStylePrefix() {
+    const isFoundation = this.messageStyle === 'foundation';
+    return isFoundation ? 'alert-box ' : 'alert alert-';
+  }
+
+  @computed('flash.type', 'messageStylePrefix', '_defaultMessageStylePrefix')
   get alertType() {
     const flashType = this.flash.type || '';
-    const messageStyle = this.messageStyle || '';
-    let prefix = 'alert alert-';
-
-    if (messageStyle === 'foundation') {
-      prefix = 'alert-box ';
-    }
-
+    const prefix = this.messageStylePrefix || this._defaultMessageStylePrefix;
     return `${prefix}${flashType}`;
   }
 

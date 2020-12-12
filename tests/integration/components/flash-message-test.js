@@ -216,4 +216,25 @@ module('Integration | Component | flash message', function (hooks) {
     assert.dom('.alert').hasClass('exiting', 'exiting class is applied');
     assert.ok(flashObject.isDestroyed, 'Flash Object is destroyed');
   });
+
+  test('custom message type class name prefix is applied', async function (assert) {
+    assert.expect(2);
+    let flashObject = FlashMessage.create({
+      message: 'flash message content',
+      type: 'test',
+      sticky: true,
+    });
+
+    this.set('flash', flashObject);
+    this.set('messageStylePrefix', 'my-flash-')
+
+    await render(hbs`
+      <FlashMessage @flash={{this.flash}} @messageStylePrefix={{this.messageStylePrefix}} as |component flash|>
+        <span>{{flash.message}}</span>
+      </FlashMessage>
+    `);
+
+    assert.dom('.my-flash-test').exists({ count: 1 }, 'it uses the provided flash type class name prefix')
+    assert.dom('.my-flash-test').doesNotHaveClass('alert', 'default flash type class name is not present')
+  })
 });
