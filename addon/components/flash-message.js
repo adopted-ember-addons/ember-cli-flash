@@ -38,7 +38,7 @@ export default class FlashMessage extends Component {
   @computed('flash.type', 'messageStylePrefix', '_defaultMessageStylePrefix')
   get alertType() {
     const flashType = this.flash.type || '';
-    const prefix = this.messageStylePrefix || this._defaultMessageStylePrefix || '';
+    const prefix = this.messageStylePrefix || this._defaultMessageStylePrefix;
     return `${prefix}${flashType}`;
   }
 
