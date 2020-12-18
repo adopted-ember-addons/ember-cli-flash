@@ -5,6 +5,22 @@ changelog, see the git history.
 
 [npm page](https://www.npmjs.com/package/ember-cli-flash)
 
+## 2.1.0 (2020-12-18)
+
+#### :rocket: Enhancement
+* [#335](https://github.com/poteto/ember-cli-flash/pull/335) Add `messageStylePrefix` ([@Techn1x](https://github.com/Techn1x))
+* [#336](https://github.com/poteto/ember-cli-flash/pull/336) Imrpoved a11y in flash message component ([@Techn1x](https://github.com/Techn1x))
+
+#### :bug: Bug Fix
+* [#342](https://github.com/poteto/ember-cli-flash/pull/342) Fix missing bind event ([@makepanic](https://github.com/makepanic))
+
+#### :memo: Documentation
+* [#339](https://github.com/poteto/ember-cli-flash/pull/339) Update readme to modern Ember standards ([@Techn1x](https://github.com/Techn1x))
+
+#### Committers: 1
+- Brad Overton ([@Techn1x](https://github.com/Techn1x))
+- Christian ([@makepanic](https://github.com/makepanic))
+
 ## 2.0.0 (2020-11-15)
 
 #### :rocket: Enhancement
