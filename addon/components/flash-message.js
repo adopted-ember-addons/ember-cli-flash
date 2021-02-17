@@ -1,5 +1,6 @@
 import Component from '@ember/component';
-import { htmlSafe, classify } from '@ember/string';
+import { classify } from '@ember/string';
+import { htmlSafe } from '@ember/template';
 import { isPresent } from '@ember/utils';
 import { run } from '@ember/runloop';
 import { action, computed, set } from '@ember/object';
