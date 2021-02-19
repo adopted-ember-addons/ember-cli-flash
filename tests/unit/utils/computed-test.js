@@ -1,4 +1,4 @@
-import { htmlSafe } from '@ember/string';
+import { htmlSafe } from '@ember/template';
 import EmberObject from '@ember/object';
 import computed from 'ember-cli-flash/utils/computed';
 import { module, test } from 'qunit';
