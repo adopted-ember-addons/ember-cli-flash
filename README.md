@@ -412,7 +412,7 @@ When you install the addon, it should automatically generate a helper located at
 $ ember generate ember-cli-flash
 ```
 
-This also adds the helper to `tests/test-helper.js`. You won't actually need to import this into your tests, but it's good to know what the blueprint does. Basically, the helper overrides the `_setInitialState` method so that the flash messages behave intuitively in a testing environment.
+This also adds the helper to `tests/test-helper.js`. You won't actually need to import this into your tests, but it's good to know what the blueprint does. Basically, the helper overrides a method used to initialise the flash-message's class, so that it behaves intuitively in a testing environment.
 
 Some example tests below, based on qunit.
 
