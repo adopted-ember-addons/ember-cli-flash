@@ -5,11 +5,20 @@ changelog, see the git history.
 
 [npm page](https://www.npmjs.com/package/ember-cli-flash)
 
+## 2.1.1 (2021-02-26)
+
+#### :rocket: Enhancement
+* [#350](https://github.com/poteto/ember-cli-flash/pull/350) Update `htmlSafe` import ([@rwwagner90](https://github.com/rwwagner90))
+* [#351](https://github.com/poteto/ember-cli-flash/pull/351) Support ember-cli-version-checker v5t ([@wagenet](https://github.com/wagenet))
+
+#### :memo: Documentation
+* [#349](https://github.com/poteto/ember-cli-flash/pull/349) Fix text in README about deleted test helper ([@MrChocolatine](https://github.com/MrChocolatine))
+
 ## 2.1.0 (2020-12-18)
 
 #### :rocket: Enhancement
 * [#335](https://github.com/poteto/ember-cli-flash/pull/335) Add `messageStylePrefix` ([@Techn1x](https://github.com/Techn1x))
-* [#336](https://github.com/poteto/ember-cli-flash/pull/336) Imrpoved a11y in flash message component ([@Techn1x](https://github.com/Techn1x))
+* [#336](https://github.com/poteto/ember-cli-flash/pull/336) Improved a11y in flash message component ([@Techn1x](https://github.com/Techn1x))
 
 #### :bug: Bug Fix
 * [#342](https://github.com/poteto/ember-cli-flash/pull/342) Fix missing bind event ([@makepanic](https://github.com/makepanic))
