@@ -23,8 +23,6 @@ declare module 'ember-cli-flash/services/flash-messages' {
   import Service from '@ember/service';
   import FlashObject from 'ember-cli-flash/flash/object';
 
-  type Partial<T> = { [K in keyof T]?: T[K] };
-
   interface MessageOptions {
     type: string;
     priority: number;
