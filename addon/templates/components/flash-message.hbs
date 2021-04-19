@@ -7,7 +7,7 @@
   {{will-destroy this.onWillDestroy}}
 >
   {{#if hasBlock}}
-    {{yield this flash (action "onClose")}}
+    {{yield this this.flash (action "onClose")}}
   {{else}}
     {{this.flash.message}}
     {{#if this.showProgressBar}}
