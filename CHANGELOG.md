@@ -5,6 +5,12 @@ changelog, see the git history.
 
 [npm page](https://www.npmjs.com/package/ember-cli-flash)
 
+## 2.1.2 (2021-04-20)
+
+#### :bug: Bug Fix
+* [#355](https://github.com/poteto/ember-cli-flash/pull/355) Fix `this-property-fallback` deprecation warning ([@aoumiri](https://github.com/aoumiri))
+* [#353](https://github.com/poteto/ember-cli-flash/pull/353) Delete uneeded Typescript Partial ([@MrChocolatine](https://github.com/MrChocolatine))
+
 ## 2.1.1 (2021-02-26)
 
 #### :rocket: Enhancement
