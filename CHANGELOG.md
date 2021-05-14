@@ -5,6 +5,11 @@ changelog, see the git history.
 
 [npm page](https://www.npmjs.com/package/ember-cli-flash)
 
+## 2.1.3 (2021-05-14)
+
+#### :bug: Bug Fix
+* [#358](https://github.com/poteto/ember-cli-flash/pull/358) Fix missing modifier error ([@sandydoo](https://github.com/sandydoo))
+
 ## 2.1.2 (2021-04-20)
 
 #### :bug: Bug Fix
