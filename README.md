@@ -41,7 +41,7 @@ ember install ember-cli-flash
 ```
 
 ## Compatibility
-This addon is tested against the `release`, `beta` and `canary` channels, `~1.11.0`, and `1.12.1`. Because this addon makes use of attribute bindings, which were introduced in ember `1.11.0`, earlier versions of ember are not compatible with the latest version.
+This addon is tested against the Ember `release`, `beta` and `canary` channels, back to Ember `v3.16`. 
 
 ## Usage
 Usage is very simple. First, add one of the [template examples](#displaying-flash-messages) to your app. Then, inject the `flashMessages` service and use one of its convenience methods:
