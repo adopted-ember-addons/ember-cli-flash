@@ -6,7 +6,7 @@
   {{did-insert this.onDidInsert}}
   {{will-destroy this.onWillDestroy}}
 >
-  {{#if hasBlock}}
+  {{#if (has-block)}}
     {{yield this this.flash (action "onClose")}}
   {{else}}
     {{this.flash.message}}

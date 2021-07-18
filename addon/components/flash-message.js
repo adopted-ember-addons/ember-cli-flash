@@ -4,7 +4,7 @@ import { htmlSafe } from '@ember/template';
 import { isPresent } from '@ember/utils';
 import { run } from '@ember/runloop';
 import { action, computed, set } from '@ember/object';
-import { and, bool, readOnly, not } from '@ember/object/computed';
+import { and, readOnly, not } from '@ember/object/computed';
 import layout from '../templates/components/flash-message';
 
 const { next, cancel } = run;
@@ -26,9 +26,6 @@ export default class FlashMessage extends Component {
 
   @readOnly('flash.exiting')
   exiting;
-
-  @bool('template')
-  hasBlock;
 
   @computed('messageStyle')
   get _defaultMessageStylePrefix() {
