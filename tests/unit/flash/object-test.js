@@ -37,11 +37,7 @@ module('FlashMessageObject', function (hooks) {
     });
 
     run.later(() => {
-      assert.equal(
-        flash.isDestroyed,
-        true,
-        'it sets `isDestroyed` to true'
-      );
+      assert.true(flash.isDestroyed, 'it sets `isDestroyed` to true');
       assert.equal(flash.timer, null, 'it cancels the timer');
       assert.equal(result, 'foo', 'it emits the `didDestroyMessage` hook');
       done();
@@ -61,11 +57,7 @@ module('FlashMessageObject', function (hooks) {
     });
 
     run.later(() => {
-      assert.equal(
-        stickyFlash.isDestroyed,
-        false,
-        'it is not destroyed'
-      );
+      assert.false(stickyFlash.isDestroyed, 'it is not destroyed');
       done();
     }, testTimerDuration);
   });
@@ -77,7 +69,7 @@ module('FlashMessageObject', function (hooks) {
       flash.destroyMessage();
     });
 
-    assert.equal(flash.get('isDestroyed'), true);
+    assert.true(flash.get('isDestroyed'));
     assert.equal(flash.get('timer'), null);
   });
 
@@ -91,7 +83,7 @@ module('FlashMessageObject', function (hooks) {
     });
 
     run.later(() => {
-      assert.equal(exitFlash.get('exiting'), true, 'it sets `exiting` to true');
+      assert.true(exitFlash.get('exiting'), 'it sets `exiting` to true');
       assert.equal(exitFlash.get('timer'), null, 'it cancels the `timer`');
       done();
     }, testTimerDuration * 2);

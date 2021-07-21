@@ -35,16 +35,11 @@ module.exports = function (environment) {
         'danger',
         'alert',
         'secondary',
-        'foo'
+        'foo',
       ],
-      injectionFactories: [
-        'route',
-        'controller',
-        'view',
-        'component'
-      ],
-      preventDuplicates: false
-    }
+      injectionFactories: ['route', 'controller', 'view', 'component'],
+      preventDuplicates: false,
+    },
   };
 
   if (environment === 'development') {

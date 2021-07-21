@@ -2,8 +2,5 @@
 
 module.exports = {
   extends: 'recommended',
-  ignore: [
-    'addon/templates/components/flash-message',
-    'dummy/**'
-  ]
+  ignore: ['addon/templates/components/flash-message', 'dummy/**'],
 };

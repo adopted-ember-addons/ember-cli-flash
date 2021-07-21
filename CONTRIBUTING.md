@@ -15,7 +15,7 @@ You can contribute code, design (maybe 'themes' for different kinds of flash mes
 ## Linting
 
 * `yarn run lint:js`
-* `yarn run lint:js -- --fix`
+* `lint:js:fix`
 
 ## Running tests
 
