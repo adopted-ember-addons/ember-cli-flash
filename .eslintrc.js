@@ -17,7 +17,12 @@ module.exports = {
   env: {
     browser: true,
   },
-  rules: {},
+  rules: {
+    'ember/no-classic-components': 'warn',
+    'ember/no-classic-classes': 'warn',
+    'ember/no-computed-properties-in-native-classes': 'warn',
+    'ember/classic-decorator-hooks': 'warn',
+  },
   overrides: [
     // node files
     {
@@ -45,6 +50,9 @@ module.exports = {
         browser: false,
         node: true,
       },
+      rules: {
+        'node/no-unsupported-features/es-syntax': 'warn',
+      },
       plugins: ['node'],
       extends: ['plugin:node/recommended'],
     },
@@ -52,6 +60,9 @@ module.exports = {
       // Test files:
       files: ['tests/**/*-test.{js,ts}'],
       extends: ['plugin:qunit/recommended'],
+      rules: {
+        'qunit/require-expect': 'warn',
+      },
     },
   ],
 };
