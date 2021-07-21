@@ -19,6 +19,7 @@
 /testem.log
 /yarn-error.log
 /.vscode
+/.idea
 
 # ember-try
 /.node_modules.ember-try/
