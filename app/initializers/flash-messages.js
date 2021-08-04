@@ -18,6 +18,10 @@ export function initialize() {
   deprecate(INJECTION_FACTORIES_DEPRECATION_MESSAGE, shouldShowDeprecation, {
     id: 'ember-cli-flash.deprecate-injection-factories',
     until: '2.0.0',
+    for: 'ember-cli-flash',
+    since: {
+      available: '1.3.12',
+    },
   });
 
   options.injectionFactories.forEach((factory) => {
