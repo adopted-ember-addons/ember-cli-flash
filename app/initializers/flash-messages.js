@@ -1,5 +1,5 @@
 import config from '../config/environment';
-import { deprecate } from '@ember/application/deprecations';
+import { deprecate } from '@ember/debug';
 
 /* eslint-disable ember/new-module-imports */
 const INJECTION_FACTORIES_DEPRECATION_MESSAGE =
