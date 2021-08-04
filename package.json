@@ -41,7 +41,7 @@
     "@babel/plugin-proposal-nullish-coalescing-operator": "^7.10.4",
     "@babel/plugin-proposal-optional-chaining": "^7.6.0",
     "@ember/optional-features": "^2.0.0",
-    "@ember/test-helpers": "^2.2.5",
+    "@ember/test-helpers": "^2.3.0",
     "@embroider/test-setup": "^0.43.0",
     "@types/ember": "^3.1.1",
     "babel-eslint": "^10.1.0",
