@@ -11,7 +11,7 @@
     "lint:js": "eslint . --cache",
     "lint:js:fix": "eslint . --fix",
     "start": "ember serve",
-    "test": "npm-run-all lint test:*",
+    "test": "npm-run-all lint:hbs lint:js test:*",
     "test:all": "ember try:each",
     "contributors": "npx contributor-faces -e \"(*-bot|*\\[bot\\]|*-tomster|homu)\""
   },
