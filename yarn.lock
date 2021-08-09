@@ -1900,13 +1900,13 @@
     ember-cli-htmlbars-inline-precompile "^2.1.0"
     ember-test-waiters "^1.1.1"
 
-"@embroider/test-setup@^0.41.0":
-  version "0.41.0"
-  resolved "https://registry.yarnpkg.com/@embroider/test-setup/-/test-setup-0.41.0.tgz#7e18fb266ba2f0b131256b303ef4e682f3ca9b20"
-  integrity sha512-MH8g9G2robf52Ffc1uan21Z/ehwfCHnVa1E5KuI/zau3Ad1HfcRNOGdNwUtpvOr98wPdpTXdJYSg31urcPRUuQ==
+"@embroider/test-setup@^0.43.5":
+  version "0.43.5"
+  resolved "https://registry.yarnpkg.com/@embroider/test-setup/-/test-setup-0.43.5.tgz#79944cb50038802cc71d50aa0d5d7a0955ee6349"
+  integrity sha512-ke+5B0VR2343ZrOqV9Ok2LyA4m2q2ApM1Oy1RC8+3+OI5lDVg8UgZG9n/G2e77KPMFxnK3eVpXcPdLcdOxW6+w==
   dependencies:
-    lodash "^4.17.20"
-    resolve "^1.17.0"
+    lodash "^4.17.21"
+    resolve "^1.20.0"
 
 "@glimmer/env@0.1.7":
   version "0.1.7"
@@ -7963,7 +7963,7 @@ lodash@^4.17.19, lodash@^4.2.0:
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.20.tgz#b44a9b6297bcb698f1c51a3545a2b3b368d59c52"
   integrity sha512-PlhdFcillOINfeV7Ni6oF1TAEayyZBoZ8bcshTHqOYJYlrqzRK5hagpagky5o4HfCzzd1TRkXPMFq6cKk9rGmA==
 
-lodash@^4.17.20:
+lodash@^4.17.21:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
@@ -9458,7 +9458,7 @@ resolve@^1.11.1, resolve@^1.13.1, resolve@^1.14.0, resolve@^1.14.2, resolve@^1.1
   dependencies:
     path-parse "^1.0.6"
 
-resolve@^1.17.0:
+resolve@^1.20.0:
   version "1.20.0"
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.20.0.tgz#629a013fb3f70755d6f0b7935cc1c2c5378b1975"
   integrity sha512-wENBPt4ySzg4ybFQW2TT1zMQucPK95HSh/nq2CFTZVOGut2+pQvSsgtda4d26YrYcr067wjbmzOG8byDPBX63A==
