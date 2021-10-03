@@ -23,7 +23,7 @@ declare module 'ember-cli-flash/services/flash-messages' {
   import Service from '@ember/service';
   import FlashObject from 'ember-cli-flash/flash/object';
 
-  interface MessageOptions {
+  export interface MessageOptions {
     type: string;
     priority: number;
     timeout: number;
@@ -34,11 +34,11 @@ declare module 'ember-cli-flash/services/flash-messages' {
     onDestroy: () => void;
   }
   
-  interface CustomMessageInfo extends Partial<MessageOptions> {
+  export interface CustomMessageInfo extends Partial<MessageOptions> {
     message: string;
   }
   
-  interface FlashFunction {
+  export interface FlashFunction {
     (message: string, options?: Partial<MessageOptions>): FlashMessageService;
   }
   
