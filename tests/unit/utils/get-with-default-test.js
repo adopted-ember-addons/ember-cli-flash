@@ -1,11 +1,11 @@
 import getWithDefault from 'ember-cli-flash/utils/get-with-default';
 import { module, test } from 'qunit';
 
-module('Unit | Utility | get-with-default', function() {
-  test('it returns the default value when the target value is undefined', function(assert) {
+module('Unit | Utility | get-with-default', function () {
+  test('it returns the default value when the target value is undefined', function (assert) {
     let obj = {
-      testKey: undefined
-    }
+      testKey: undefined,
+    };
 
     let defaultValue = 'defaultValue';
     let result = getWithDefault(obj, 'testKey', defaultValue);
@@ -13,7 +13,7 @@ module('Unit | Utility | get-with-default', function() {
     assert.equal(result, defaultValue);
   });
 
-  test('it returns the target value when available', function(assert) {
+  test('it returns the target value when available', function (assert) {
     let obj = {
       truthy: true,
       falsy: false,
@@ -21,8 +21,8 @@ module('Unit | Utility | get-with-default', function() {
       falsyNumber: 0,
       string: 'test',
       emptyString: '',
-      null: null
-    }
+      null: null,
+    };
 
     let defaultValue = 'defaultValue';
 

@@ -12,6 +12,7 @@
 /.env*
 /.pnp*
 /.sass-cache
+/.eslintcache
 /connect.lock
 /coverage/
 /libpeerconnection.log
@@ -19,6 +20,7 @@
 /testem.log
 /yarn-error.log
 /.vscode
+/.idea
 
 # ember-try
 /.node_modules.ember-try/

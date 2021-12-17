@@ -178,16 +178,10 @@ module('Integration | Component | flash message', function (hooks) {
       </FlashMessage>
     `);
 
-    assert.notOk(
-      this.flash.isDestroyed,
-      'flash has not been destroyed yet'
-    );
+    assert.notOk(this.flash.isDestroyed, 'flash has not been destroyed yet');
 
     await click('.alert');
-    assert.notOk(
-      this.flash.isDestroyed,
-      'flash has not been destroyed yet'
-    );
+    assert.notOk(this.flash.isDestroyed, 'flash has not been destroyed yet');
 
     await click('.alert a');
     assert.ok(
@@ -226,7 +220,7 @@ module('Integration | Component | flash message', function (hooks) {
     });
 
     this.set('flash', flashObject);
-    this.set('messageStylePrefix', 'my-flash-')
+    this.set('messageStylePrefix', 'my-flash-');
 
     await render(hbs`
       <FlashMessage @flash={{this.flash}} @messageStylePrefix={{this.messageStylePrefix}} as |component flash|>
@@ -234,7 +228,17 @@ module('Integration | Component | flash message', function (hooks) {
       </FlashMessage>
     `);
 
-    assert.dom('.my-flash-test').exists({ count: 1 }, 'it uses the provided flash type class name prefix')
-    assert.dom('.my-flash-test').doesNotHaveClass('alert', 'default flash type class name is not present')
-  })
+    assert
+      .dom('.my-flash-test')
+      .exists(
+        { count: 1 },
+        'it uses the provided flash type class name prefix'
+      );
+    assert
+      .dom('.my-flash-test')
+      .doesNotHaveClass(
+        'alert',
+        'default flash type class name is not present'
+      );
+  });
 });

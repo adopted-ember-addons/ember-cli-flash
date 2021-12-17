@@ -17,10 +17,12 @@ export function add(...dependentKeys) {
         return value;
       });
 
-      return emberArray(values).compact().reduce((prev, curr) => {
-        return prev + curr;
-      });
-    }
+      return emberArray(values)
+        .compact()
+        .reduce((prev, curr) => {
+          return prev + curr;
+        });
+    },
   });
 
   return computedFunc.property.apply(computedFunc, dependentKeys);
@@ -36,6 +38,6 @@ export function guidFor(dependentKey) {
       if (isNone(value)) return;
 
       return emberGuidFor(value.toString());
-    }
+    },
   });
 }
