@@ -1,6 +1,9 @@
 import Route from '@ember/routing/route';
+import { inject as service } from '@ember/service';
 
-export default Route.extend({
+export default class IndexRoute extends Route {
+  @service flashMessages;
+
   activate() {
     const flashMessages = this.flashMessages;
 
@@ -23,5 +26,5 @@ export default Route.extend({
     });
 
     flashMessages.danger('You went offline');
-  },
-});
+  }
+}
