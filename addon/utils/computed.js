@@ -1,7 +1,5 @@
-import { typeOf } from '@ember/utils';
 import { computed, get } from '@ember/object';
 import { guidFor as emberGuidFor } from '@ember/object/internals';
-import { A as emberArray } from '@ember/array';
 import { isNone } from '@ember/utils';
 
 export function guidFor(dependentKey) {
