@@ -1,4 +1,4 @@
-import { run, later } from '@ember/runloop';
+import { run } from '@ember/runloop';
 import { isPresent } from '@ember/utils';
 import { module, test } from 'qunit';
 import FlashMessage from 'ember-cli-flash/flash/object';
@@ -36,7 +36,7 @@ module('FlashMessageObject', function (hooks) {
       result = 'foo';
     });
 
-    later(() => {
+    run.later(() => {
       assert.true(flash.isDestroyed, 'it sets `isDestroyed` to true');
       assert.equal(flash.timer, null, 'it cancels the timer');
       assert.equal(result, 'foo', 'it emits the `didDestroyMessage` hook');
@@ -56,7 +56,7 @@ module('FlashMessageObject', function (hooks) {
       sticky: true,
     });
 
-    later(() => {
+    run.later(() => {
       assert.false(stickyFlash.isDestroyed, 'it is not destroyed');
       done();
     }, testTimerDuration);
@@ -82,7 +82,7 @@ module('FlashMessageObject', function (hooks) {
       extendedTimeout: testTimerDuration,
     });
 
-    later(() => {
+    run.later(() => {
       assert.true(exitFlash.get('exiting'), 'it sets `exiting` to true');
       assert.equal(exitFlash.get('timer'), null, 'it cancels the `timer`');
       done();

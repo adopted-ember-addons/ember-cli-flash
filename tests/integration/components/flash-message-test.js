@@ -72,7 +72,7 @@ module('Integration | Component | flash message', function (hooks) {
     this.set('flag', true);
 
     await render(hbs`
-      {{#if this.flag}}
+      {{#if flag}}
         <FlashMessage @flash={{this.flash}} as |component flash|>
           {{flash.message}}
         </FlashMessage>

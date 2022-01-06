@@ -2,10 +2,12 @@ import Component from '@ember/component';
 import { classify } from '@ember/string';
 import { htmlSafe } from '@ember/template';
 import { isPresent } from '@ember/utils';
-import { next, cancel } from '@ember/runloop';
+import { run } from '@ember/runloop';
 import { action, computed, set } from '@ember/object';
 import { and, readOnly, not } from '@ember/object/computed';
 import layout from '../templates/components/flash-message';
+
+const { next, cancel } = run;
 
 export default class FlashMessage extends Component {
   tagName = '';

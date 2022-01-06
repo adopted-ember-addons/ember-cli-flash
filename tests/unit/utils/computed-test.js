@@ -4,6 +4,25 @@ import computed from 'ember-cli-flash/utils/computed';
 import { module, test } from 'qunit';
 
 module('Unit | Utility | computed', function () {
+  test('#add adds `dependentKeys` that are numbers together', function (assert) {
+    const expectedResult = 60;
+    const Person = EmberObject.extend({
+      scores: computed.add('first', 'second', 'third', 'fourth'),
+    });
+    const person = Person.create({
+      first: 10,
+      second: 20,
+      third: 30,
+      fourth: 'foo',
+    });
+    const result = person.scores;
+    assert.equal(
+      result,
+      expectedResult,
+      'it adds `dependentKeys` that are numbers together'
+    );
+  });
+
   test('#guidFor generates a guid for a `dependentKey`', function (assert) {
     const Flash = EmberObject.extend({
       _guid: computed.guidFor('message'),
