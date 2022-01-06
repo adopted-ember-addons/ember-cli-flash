@@ -347,7 +347,7 @@ When using a custom `close` action, you will want to set `destroyOnClick=false` 
 {{#each this.flashMessages.queue as |flash|}}
   <FlashMessage @flash={{flash}} as |component flash close|>
     {{flash.message}}
-    <span role="button" {{on "click" this.close}}>x</span>
+    <span role="button" {{on "click" close}}>x</span>
   </FlashMessage>
 {{/each}}
 ```
