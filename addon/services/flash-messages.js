@@ -94,7 +94,6 @@ export default class FlashMessagesService extends Service {
     const allDefaults = getWithDefault(this, 'flashMessageDefaults', {});
     const defaults = objectWithout(allDefaults, [
       'types',
-      'injectionFactories',
       'preventDuplicates',
     ]);
 

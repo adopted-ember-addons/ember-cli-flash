@@ -10,7 +10,6 @@ export default function (configOverrides) {
     showProgress: false,
     type: 'info',
     types: ['success', 'info', 'warning', 'danger', 'alert', 'secondary'],
-    injectionFactories: ['route', 'controller', 'view', 'component'],
     preventDuplicates: false,
   };
   return assign(addonDefaults, configOverrides);
