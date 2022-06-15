@@ -37,6 +37,7 @@ export default class FlashMessage extends Component {
     return this.showProgress && this.notExiting;
   }
 
+  @computed('args.flash.exiting')
   get exiting() {
     return this.args.flash.exiting;
   }
