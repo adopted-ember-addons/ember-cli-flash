@@ -7,9 +7,9 @@
   {{will-destroy this.onWillDestroy}}
 >
   {{#if (has-block)}}
-    {{yield this this.flash (action "onClose")}}
+    {{yield this @flash this.onClose}}
   {{else}}
-    {{this.flash.message}}
+    {{@flash.message}}
     {{#if this.showProgressBar}}
       <div class="alert-progress">
         <div class="alert-progressBar" style={{this.progressDuration}}></div>
