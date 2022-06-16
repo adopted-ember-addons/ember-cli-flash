@@ -32,6 +32,7 @@ declare module 'ember-cli-flash/services/flash-messages' {
     extendedTimeout: number;
     destroyOnClick: boolean;
     onDestroy: () => void;
+    [key: string]: unknown;
   }
   
   export interface CustomMessageInfo extends Partial<MessageOptions> {
