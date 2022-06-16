@@ -13,9 +13,9 @@
     "notifications",
     "notify"
   ],
-  "homepage": "https://github.com/poteto/ember-cli-flash",
-  "bugs": "https://github.com/poteto/ember-cli-flash/issues",
-  "repository": "https://github.com/poteto/ember-cli-flash",
+  "homepage": "https://github.com/adopted-ember-addons/ember-cli-flash",
+  "bugs": "https://github.com/adopted-ember-addons/ember-cli-flash/issues",
+  "repository": "https://github.com/adopted-ember-addons/ember-cli-flash",
   "license": "MIT",
   "author": "Lauren Tan",
   "contributors": [
