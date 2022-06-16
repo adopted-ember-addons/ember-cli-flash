@@ -38,7 +38,7 @@ module('FlashMessageObject', function (hooks) {
 
     later(() => {
       assert.true(flash.isDestroyed, 'it sets `isDestroyed` to true');
-      assert.strictEqual(flash.timer, null, 'it cancels the timer');
+      assert.notOk(flash.timer, 'it cancels the timer');
       assert.strictEqual(
         result,
         'foo',
@@ -74,7 +74,7 @@ module('FlashMessageObject', function (hooks) {
     });
 
     assert.true(flash.get('isDestroyed'));
-    assert.strictEqual(flash.get('timer'), null);
+    assert.notOk(flash.get('timer'));
   });
 
   test('it sets `exiting` to true after the timer has elapsed', function (assert) {
@@ -88,11 +88,7 @@ module('FlashMessageObject', function (hooks) {
 
     later(() => {
       assert.true(exitFlash.get('exiting'), 'it sets `exiting` to true');
-      assert.strictEqual(
-        exitFlash.get('timer'),
-        null,
-        'it cancels the `timer`'
-      );
+      assert.notOk(exitFlash.get('timer'), 'it cancels the `timer`');
       done();
     }, testTimerDuration * 2);
   });
