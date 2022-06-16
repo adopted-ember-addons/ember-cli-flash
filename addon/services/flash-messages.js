@@ -91,11 +91,7 @@ export default class FlashMessagesService extends Service {
 
     const flashService = this;
     const allDefaults = getWithDefault(this, 'flashMessageDefaults', {});
-    const defaults = objectWithout(allDefaults, [
-      'types',
-      'injectionFactories',
-      'preventDuplicates',
-    ]);
+    const defaults = objectWithout(allDefaults, ['types', 'preventDuplicates']);
 
     const flashMessageOptions = Object.assign({}, defaults, { flashService });
 
