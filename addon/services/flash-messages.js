@@ -4,13 +4,12 @@ import { typeOf, isNone } from '@ember/utils';
 import { warn, assert } from '@ember/debug';
 import { set, get, setProperties, computed } from '@ember/object';
 import { classify } from '@ember/string';
-import { assign } from '@ember/polyfills';
 import { A as emberArray } from '@ember/array';
 import FlashMessage from 'ember-cli-flash/flash/object';
-import objectWithout from '../utils/object-without';
+import objectWithout from 'ember-cli-flash/utils/object-without';
 import { getOwner } from '@ember/application';
-import flashMessageOptions from '../utils/flash-message-options';
-import getWithDefault from '../utils/get-with-default';
+import flashMessageOptions from 'ember-cli-flash/utils/flash-message-options';
+import getWithDefault from 'ember-cli-flash/utils/get-with-default';
 
 export default class FlashMessagesService extends Service {
   @(equal('queue.length', 0).readOnly())
@@ -92,13 +91,9 @@ export default class FlashMessagesService extends Service {
 
     const flashService = this;
     const allDefaults = getWithDefault(this, 'flashMessageDefaults', {});
-    const defaults = objectWithout(allDefaults, [
-      'types',
-      'injectionFactories',
-      'preventDuplicates',
-    ]);
+    const defaults = objectWithout(allDefaults, ['types', 'preventDuplicates']);
 
-    const flashMessageOptions = assign({}, defaults, { flashService });
+    const flashMessageOptions = Object.assign({}, defaults, { flashService });
 
     for (let key in options) {
       const value = get(options, key);
@@ -145,7 +140,7 @@ export default class FlashMessagesService extends Service {
     assert('The flash type cannot be undefined', type);
 
     this[type] = (message, options = {}) => {
-      const flashMessageOptions = assign({}, options);
+      const flashMessageOptions = Object.assign({}, options);
       setProperties(flashMessageOptions, { message, type });
 
       return this.add(flashMessageOptions);

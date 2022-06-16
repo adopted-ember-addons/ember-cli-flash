@@ -1,10 +1,10 @@
 import Evented from '@ember/object/evented';
 import EmberObject, { set } from '@ember/object';
 import { cancel, later } from '@ember/runloop';
-import { guidFor } from '../utils/computed';
+import { guidFor } from 'ember-cli-flash/utils/computed';
 
 // Note:
-// To avoid https://github.com/poteto/ember-cli-flash/issues/341 from happening, this class can't simply be called Object
+// To avoid https://github.com/adopted-ember-addons/ember-cli-flash/issues/341 from happening, this class can't simply be called Object
 export default class FlashObject extends EmberObject.extend(Evented) {
   exitTimer = null;
   exiting = false;
