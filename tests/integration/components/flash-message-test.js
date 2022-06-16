@@ -51,7 +51,7 @@ module('Integration | Component | flash message', function (hooks) {
       this,
       () => {
         assert.dom('.alert').hasClass('alert-test');
-        assert.equal(
+        assert.strictEqual(
           find('.alert-progressBar').style['transitionDuration'],
           '50ms',
           'it has the right `progressDuration`'
