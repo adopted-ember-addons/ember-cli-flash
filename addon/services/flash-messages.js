@@ -4,7 +4,6 @@ import { typeOf, isNone } from '@ember/utils';
 import { warn, assert } from '@ember/debug';
 import { set, get, setProperties, computed } from '@ember/object';
 import { classify } from '@ember/string';
-import { assign } from '@ember/polyfills';
 import { A as emberArray } from '@ember/array';
 import FlashMessage from 'ember-cli-flash/flash/object';
 import objectWithout from '../utils/object-without';
@@ -98,7 +97,7 @@ export default class FlashMessagesService extends Service {
       'preventDuplicates',
     ]);
 
-    const flashMessageOptions = assign({}, defaults, { flashService });
+    const flashMessageOptions = Object.assign({}, defaults, { flashService });
 
     for (let key in options) {
       const value = get(options, key);
@@ -145,7 +144,7 @@ export default class FlashMessagesService extends Service {
     assert('The flash type cannot be undefined', type);
 
     this[type] = (message, options = {}) => {
-      const flashMessageOptions = assign({}, options);
+      const flashMessageOptions = Object.assign({}, options);
       setProperties(flashMessageOptions, { message, type });
 
       return this.add(flashMessageOptions);
