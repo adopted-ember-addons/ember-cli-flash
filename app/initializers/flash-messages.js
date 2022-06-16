@@ -1,4 +1,4 @@
-import config from '../config/environment';
+import config from 'ember-cli-flash/config/environment';
 import { deprecate } from '@ember/debug';
 
 /* eslint-disable ember/new-module-imports */

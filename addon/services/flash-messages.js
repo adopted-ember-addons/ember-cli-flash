@@ -6,10 +6,10 @@ import { set, get, setProperties, computed } from '@ember/object';
 import { classify } from '@ember/string';
 import { A as emberArray } from '@ember/array';
 import FlashMessage from 'ember-cli-flash/flash/object';
-import objectWithout from '../utils/object-without';
+import objectWithout from 'ember-cli-flash/utils/object-without';
 import { getOwner } from '@ember/application';
-import flashMessageOptions from '../utils/flash-message-options';
-import getWithDefault from '../utils/get-with-default';
+import flashMessageOptions from 'ember-cli-flash/utils/flash-message-options';
+import getWithDefault from 'ember-cli-flash/utils/get-with-default';
 
 export default class FlashMessagesService extends Service {
   @(equal('queue.length', 0).readOnly())
