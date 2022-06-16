@@ -5,7 +5,7 @@ module.exports = function (environment) {
     modulePrefix: 'dummy',
     environment: environment,
     rootURL: '/',
-    locationType: 'auto',
+    locationType: 'history',
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
@@ -37,7 +37,6 @@ module.exports = function (environment) {
         'secondary',
         'foo',
       ],
-      injectionFactories: ['route', 'controller', 'view', 'component'],
       preventDuplicates: false,
     },
   };

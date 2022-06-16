@@ -1,6 +1,8 @@
 # ember-cli-flash
 
-![Download count all time](https://img.shields.io/npm/dt/ember-cli-flash.svg) [![npm version](https://badge.fury.io/js/ember-cli-flash.svg)](http://badge.fury.io/js/ember-cli-flash) [![CircleCI](https://circleci.com/gh/poteto/ember-cli-flash.svg?style=shield)](https://circleci.com/gh/poteto/ember-cli-flash) [![Ember Observer Score](http://emberobserver.com/badges/ember-cli-flash.svg)](http://emberobserver.com/addons/ember-cli-flash) [![Code Climate](https://codeclimate.com/github/poteto/ember-cli-flash/badges/gpa.svg)](https://codeclimate.com/github/poteto/ember-cli-flash)
+![Download count all time](https://img.shields.io/npm/dt/ember-cli-flash.svg) [![npm version](https://badge.fury.io/js/ember-cli-flash.svg)](http://badge.fury.io/js/ember-cli-flash)
+[![Ember Observer Score](http://emberobserver.com/badges/ember-cli-flash.svg)](http://emberobserver.com/addons/ember-cli-flash) 
+[![Code Climate](https://codeclimate.com/github/poteto/ember-cli-flash/badges/gpa.svg)](https://codeclimate.com/github/poteto/ember-cli-flash)
 
 *Simple, highly configurable flash messages for ember.*
 
@@ -41,7 +43,7 @@ ember install ember-cli-flash
 ```
 
 ## Compatibility
-This addon is tested against the Ember `release`, `beta` and `canary` channels, back to Ember `v3.16`. 
+This addon is tested against the Ember `release`, `beta` and `canary` channels, back to Ember `v3.24`. 
 
 ## Usage
 Usage is very simple. First, add one of the [template examples](#displaying-flash-messages) to your app. Then, inject the `flashMessages` service and use one of its convenience methods:

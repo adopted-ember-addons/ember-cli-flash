@@ -10,7 +10,7 @@ module('Unit | Utility | get-with-default', function () {
     let defaultValue = 'defaultValue';
     let result = getWithDefault(obj, 'testKey', defaultValue);
 
-    assert.equal(result, defaultValue);
+    assert.strictEqual(result, defaultValue);
   });
 
   test('it returns the target value when available', function (assert) {
@@ -29,7 +29,7 @@ module('Unit | Utility | get-with-default', function () {
     for (let [key, value] of Object.entries(obj)) {
       let result = getWithDefault(obj, key, defaultValue);
 
-      assert.equal(result, value);
+      assert.strictEqual(result, value);
     }
   });
 });

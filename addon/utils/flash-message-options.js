@@ -1,6 +1,3 @@
-/* eslint-disable ember/new-module-imports */
-import { assign } from '@ember/polyfills';
-
 export default function (configOverrides) {
   const addonDefaults = {
     timeout: 3000,
@@ -10,8 +7,7 @@ export default function (configOverrides) {
     showProgress: false,
     type: 'info',
     types: ['success', 'info', 'warning', 'danger', 'alert', 'secondary'],
-    injectionFactories: ['route', 'controller', 'view', 'component'],
     preventDuplicates: false,
   };
-  return assign(addonDefaults, configOverrides);
+  return Object.assign(addonDefaults, configOverrides);
 }

@@ -34,8 +34,12 @@ module('FlashMessagesService', function (hooks) {
     this.service.success('success 2');
     this.service.success('success 3');
 
-    assert.equal(typeOf(this.service.queue), 'array', 'it returns an array');
-    assert.equal(
+    assert.strictEqual(
+      typeOf(this.service.queue),
+      'array',
+      'it returns an array'
+    );
+    assert.strictEqual(
       this.service.queue.length,
       3,
       'it returns the correct number of flash messages'
@@ -49,18 +53,22 @@ module('FlashMessagesService', function (hooks) {
     this.service.success('success 2', { priority: 200 });
     this.service.success('success 3', { priority: 300 });
 
-    assert.equal(typeOf(this.service.queue), 'array', 'it returns an array');
-    assert.equal(
+    assert.strictEqual(
+      typeOf(this.service.queue),
+      'array',
+      'it returns an array'
+    );
+    assert.strictEqual(
       this.service.queue.length,
       3,
       'it returns the correct number of flash messages'
     );
-    assert.equal(
+    assert.strictEqual(
       this.service.arrangedQueue[0].priority,
       300,
       'it returns flash messages in the right order'
     );
-    assert.equal(
+    assert.strictEqual(
       this.service.arrangedQueue[2].priority,
       100,
       'it returns flash messages in the right order'
@@ -74,7 +82,7 @@ module('FlashMessagesService', function (hooks) {
       this.service.set('arrangedQueue', ['foo']);
     });
 
-    assert.equal(
+    assert.strictEqual(
       this.service.arrangedQueue.length,
       0,
       'it did not set #arrangedQueue'
@@ -92,8 +100,12 @@ module('FlashMessagesService', function (hooks) {
       showProgress: true,
     });
 
-    assert.equal(this.service.queue[0].type, 'test', 'it has the correct type');
-    assert.equal(
+    assert.strictEqual(
+      this.service.queue[0].type,
+      'test',
+      'it has the correct type'
+    );
+    assert.strictEqual(
       this.service.queue[0].timeout,
       1,
       'it has the correct timeout'
@@ -112,7 +124,11 @@ module('FlashMessagesService', function (hooks) {
       message: 'test',
     });
 
-    assert.equal(this.service.queue[0].type, 'info', 'it has the correct type');
+    assert.strictEqual(
+      this.service.queue[0].type,
+      'info',
+      'it has the correct type'
+    );
   });
 
   test('#clearMessages clears the queue', function (assert) {
@@ -123,8 +139,12 @@ module('FlashMessagesService', function (hooks) {
     this.service.success('baz');
     run(() => this.service.clearMessages());
 
-    assert.equal(typeOf(this.service.queue), 'array', 'it returns an array');
-    assert.equal(this.service.queue.length, 0, 'it clears the array');
+    assert.strictEqual(
+      typeOf(this.service.queue),
+      'array',
+      'it returns an array'
+    );
+    assert.strictEqual(this.service.queue.length, 0, 'it clears the array');
   });
 
   test('#registerTypes registers new types', function (assert) {
@@ -134,12 +154,12 @@ module('FlashMessagesService', function (hooks) {
     SANDBOX.type1 = this.service.foo;
     SANDBOX.type2 = this.service.bar;
 
-    assert.equal(
+    assert.strictEqual(
       typeOf(SANDBOX.type1),
       'function',
       'it creates a new method on the service'
     );
-    assert.equal(
+    assert.strictEqual(
       typeOf(SANDBOX.type2),
       'function',
       'it creates a new method on the service'
@@ -163,7 +183,7 @@ module('FlashMessagesService', function (hooks) {
       const method = this.service[type];
 
       assert.ok(method);
-      assert.equal(typeOf(method), 'function');
+      assert.strictEqual(typeOf(method), 'function');
     });
   });
 
@@ -175,7 +195,7 @@ module('FlashMessagesService', function (hooks) {
       appOption: 'ohai',
     });
 
-    assert.equal(this.service.queue[0].appOption, 'ohai');
+    assert.strictEqual(this.service.queue[0].appOption, 'ohai');
   });
 
   test('it adds specific options via specific message type', function (assert) {
@@ -185,7 +205,10 @@ module('FlashMessagesService', function (hooks) {
       appOption: 'we meet again app-option',
     });
 
-    assert.equal(this.service.queue[0].appOption, 'we meet again app-option');
+    assert.strictEqual(
+      this.service.queue[0].appOption,
+      'we meet again app-option'
+    );
   });
 
   test('it sets the correct defaults for service properties', function (assert) {
@@ -200,7 +223,7 @@ module('FlashMessagesService', function (hooks) {
       const defaultValue = this.service[classifiedKey];
       const configValue = flashMessageDefaults[option];
 
-      assert.equal(defaultValue, configValue);
+      assert.strictEqual(defaultValue, configValue);
     }
   });
 
@@ -211,7 +234,7 @@ module('FlashMessagesService', function (hooks) {
       customProperty: 'ohai',
     });
 
-    assert.equal(this.service.queue.firstObject.customProperty, 'ohai');
+    assert.strictEqual(this.service.queue.firstObject.customProperty, 'ohai');
   });
 
   test('when preventDuplicates is `true`, setting a message is required', function (assert) {
@@ -253,7 +276,7 @@ module('FlashMessagesService', function (hooks) {
       expectedResult,
       'it adds duplicate messages to the queue'
     );
-    assert.equal(
+    assert.strictEqual(
       this.service.queue.length,
       3,
       'it adds duplicate messages to the queue'
@@ -272,7 +295,7 @@ module('FlashMessagesService', function (hooks) {
       expectedResult,
       'it does not add duplicate messages to the queue'
     );
-    assert.equal(
+    assert.strictEqual(
       this.service.queue.length,
       2,
       'it does not add duplicate messages to the queue'
@@ -293,7 +316,7 @@ module('FlashMessagesService', function (hooks) {
       expectedResult,
       'it does not add duplicate messages to the queue'
     );
-    assert.equal(
+    assert.strictEqual(
       this.service.queue.length,
       2,
       'it does not add duplicate messages to the queue'
@@ -314,7 +337,7 @@ module('FlashMessagesService', function (hooks) {
       expectedResult,
       'it adds duplicate messages to the queue'
     );
-    assert.equal(
+    assert.strictEqual(
       this.service.queue.length,
       3,
       'it adds duplicate messages to the queue'
@@ -337,7 +360,7 @@ module('FlashMessagesService', function (hooks) {
       ['foo', 'foo', 'bar', 'foo', 'baz'],
       "it adds duplicated messages if preventDuplicates isn't set"
     );
-    assert.equal(
+    assert.strictEqual(
       this.service.queue.length,
       5,
       'it handles duplicates where preventDuplicates is false'
@@ -351,12 +374,12 @@ module('FlashMessagesService', function (hooks) {
       .add({ message: 'foo' })
       .meow('bar');
 
-    assert.equal(
+    assert.strictEqual(
       this.service.queue.firstObject.message,
       'foo',
       'should support chaining'
     );
-    assert.equal(
+    assert.strictEqual(
       this.service.queue.lastObject.message,
       'bar',
       'should support chaining'
@@ -370,12 +393,12 @@ module('FlashMessagesService', function (hooks) {
       .add({ message: 'foo' })
       .getFlashObject();
 
-    assert.equal(
+    assert.strictEqual(
       flash.message,
       'foo',
       'it returns flash object with correct message'
     );
-    assert.equal(
+    assert.strictEqual(
       flash.timeout,
       flashMessageDefaults.timeout,
       'it returns an object with defaults'
@@ -385,12 +408,12 @@ module('FlashMessagesService', function (hooks) {
   test('it supports public API methods for `peekLast` and `peekFirst`', function (assert) {
     this.service.clearMessages();
 
-    assert.equal(
+    assert.strictEqual(
       typeOf(this.service.peekLast()),
       'undefined',
       'returns undefined when queue is empty'
     );
-    assert.equal(
+    assert.strictEqual(
       typeOf(this.service.peekFirst()),
       'undefined',
       'returns undefined when queue is empty'
@@ -398,12 +421,12 @@ module('FlashMessagesService', function (hooks) {
 
     this.service.add({ message: 'foo' }).add({ message: 'bar' });
 
-    assert.equal(
+    assert.strictEqual(
       this.service.peekFirst().message,
       'foo',
       'returns first object from queue'
     );
-    assert.equal(
+    assert.strictEqual(
       this.service.peekLast().message,
       'bar',
       'returns last object from queue'
