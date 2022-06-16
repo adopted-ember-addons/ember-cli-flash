@@ -49,12 +49,12 @@ This addon is tested against the Ember `release`, `beta` and `canary` channels, 
 Usage is very simple. First, add one of the [template examples](#displaying-flash-messages) to your app. Then, inject the `flashMessages` service and use one of its convenience methods:
 
 ```javascript
-import Component from '@ember/component';
-import { inject } from '@ember/service';
+import Component from '@glimmer/component';
+import { inject as service } from '@ember/service';
 
-export default Component.extend({
-  flashMessages: inject()
-});
+export default class MyComponent extends Component {
+  @service flashMessages;
+}
 ```
 
 ### Convenience methods (Bootstrap / Foundation alerts)
@@ -84,21 +84,19 @@ this.flashMessages.success('Success!');
 You can take advantage of Promises, and their `.then` and `.catch` methods. To add a flash message after saving a model (or when it fails):
 
 ```javascript
-actions: {
-  saveFoo() {
-    const flashMessages = this.flashMessages;
+@action saveFoo() {
+  const flashMessages = this.flashMessages;
 
-    this.model
-      .save()
-      .then((res) => {
-        flashMessages.success('Successfully saved!');
-        doSomething(res);
-      })
-      .catch((err) => {
-        flashMessages.danger('Something went wrong!');
-        handleError(err);
-      });
-  }
+  this.model
+    .save()
+    .then((res) => {
+      flashMessages.success('Successfully saved!');
+      doSomething(res);
+    })
+    .catch((err) => {
+      flashMessages.danger('Something went wrong!');
+      handleError(err);
+    });
 }
 ```
 
@@ -107,7 +105,7 @@ If the convenience methods don't fit your needs, you can add custom messages wit
 
 ```javascript
 this.flashMessages.add({
-  message: 'Custom message'
+  message: 'Custom message',
 });
 ```
 
@@ -126,14 +124,14 @@ this.flashMessages.add({
   destroyOnClick: false,
   onDestroy() {
     // behavior triggered when flash is destroyed
-  }
+  },
 });
 
 this.flashMessages.success('This is amazing', {
   timeout: 100,
   priority: 100,
   sticky: false,
-  showProgress: true
+  showProgress: true,
 });
 ```
 
@@ -193,12 +191,12 @@ this.flashMessages.success('This is amazing', {
 To animate messages, set `extendedTimeout` to something higher than zero. Here we've chosen 500ms.
 
 ```javascript
-module.exports = function(environment) {
-  var ENV = {
+module.exports = function (environment) {
+  let ENV = {
     flashMessageDefaults: {
-      extendedTimeout: 500
-    }
-  }
+      extendedTimeout: 500,
+    },
+  };
 }
 ```
 
@@ -228,14 +226,14 @@ You can also add arbitrary options to messages:
 
 ```javascript
 this.flashMessages.success('Cool story bro', {
-  someOption: 'hello'
+  someOption: 'hello',
 });
 
 this.flashMessages.add({
   message: 'hello',
   type: 'foo',
   componentName: 'some-component',
-  content: customContent
+  content: customContent,
 });
 ```
 
@@ -243,7 +241,7 @@ this.flashMessages.add({
 This makes use of the [component helper](http://emberjs.com/blog/2015/03/27/ember-1-11-0-released.html#toc_component-helper), allowing the template that ultimately renders the flash to be dynamic:
 
 ```handlebars
-{{#each flashMessages.queue as |flash|}}
+{{#each this.flashMessages.queue as |flash|}}
   <FlashMessage @flash={{flash}} as |component flash|>
     {{#if flash.componentName}}
       {{component flash.componentName content=flash.content}}
@@ -268,7 +266,7 @@ The flash message service is designed to be Fluent, allowing you to chain method
 ```javascript
 const flashObject = this.flashMessages.add({
   message: 'hola',
-  type: 'foo'
+  type: 'foo',
 }).getFlashObject();
 ```
 
@@ -279,7 +277,7 @@ In `config/environment.js`, you can override service defaults in the `flashMessa
 
 ```javascript
 module.exports = function(environment) {
-  var ENV = {
+  let ENV = {
     flashMessageDefaults: {
       // flash message defaults
       timeout: 5000,
@@ -291,9 +289,9 @@ module.exports = function(environment) {
       // service defaults
       type: 'alpaca',
       types: [ 'alpaca', 'notice', 'foobar' ],
-      preventDuplicates: false
-    }
-  }
+      preventDuplicates: false,
+    },
+  };
 }
 ```
 
@@ -321,7 +319,7 @@ See the [options](#custom-messages-api) section for information about flash mess
 Then, to display somewhere in your app, add this to your template:
 
 ```handlebars
-{{#each flashMessages.queue as |flash|}}
+{{#each this.flashMessages.queue as |flash|}}
   <FlashMessage @flash={{flash}} />
 {{/each}}
 ```
@@ -329,7 +327,7 @@ Then, to display somewhere in your app, add this to your template:
 It also accepts your own template:
 
 ```handlebars
-{{#each flashMessages.queue as |flash|}}
+{{#each this.flashMessages.queue as |flash|}}
   <FlashMessage @flash={{flash}} as |component flash|>
     <h6>{{component.flashType}}</h6>
     <p>{{flash.message}}</p>
@@ -348,10 +346,10 @@ The `close` action is always passed to the component whether it is used or not. 
 When using a custom `close` action, you will want to set `destroyOnClick=false` to override the default (`destroyOnClick=true`). You could do this globally in `flashMessageDefaults`.
 
 ```handlebars
-{{#each flashMessages.queue as |flash|}}
+{{#each this.flashMessages.queue as |flash|}}
   <FlashMessage @flash={{flash}} as |component flash close|>
     {{flash.message}}
-    <span role="button" {{on "click" (action close)}}>x</span>
+    <span role="button" {{on "click" close}}>x</span>
   </FlashMessage>
 {{/each}}
 ```
@@ -360,7 +358,7 @@ When using a custom `close` action, you will want to set `destroyOnClick=false` 
 By default, flash messages will have Bootstrap style class names. If you want to use Foundation, simply specify the `messageStyle` on the component:
 
 ```handlebars
-{{#each flashMessages.queue as |flash|}}
+{{#each this.flashMessages.queue as |flash|}}
   <FlashMessage @flash={{flash}} @messageStyle='foundation' />
 {{/each}}
 ```
@@ -369,7 +367,7 @@ By default, flash messages will have Bootstrap style class names. If you want to
 If you don't wish to use the class names associated with Bootstrap / Foundation, specify the `messageStylePrefix` on the component. This will override the class name prefixes with your own. For example, `messageStylePrefix='special-alert-'` would create flash messages with the class `special-alert-succcess`
 
 ```handlebars
-{{#each flashMessages.queue as |flash|}}
+{{#each this.flashMessages.queue as |flash|}}
   <FlashMessage @flash={{flash}} @messageStylePrefix='special-alert-' />
 {{/each}}
 ```
@@ -378,7 +376,7 @@ If you don't wish to use the class names associated with Bootstrap / Foundation,
 To display messages sorted by priority, add this to your template:
 
 ```handlebars
-{{#each flashMessages.arrangedQueue as |flash|}}
+{{#each this.flashMessages.arrangedQueue as |flash|}}
   <FlashMessage @flash={{flash}} />
 {{/each}}
 ```
@@ -387,13 +385,13 @@ To display messages sorted by priority, add this to your template:
 To add `radius` or `round` type corners in Foundation:
 
 ```handlebars
-{{#each flashMessages.arrangedQueue as |flash|}}
+{{#each this.flashMessages.arrangedQueue as |flash|}}
   <FlashMessage @flash={{flash}} @messageStyle='foundation' class='radius' />
 {{/each}}
 ```
 
 ```handlebars
-{{#each flashMessages.arrangedQueue as |flash|}}
+{{#each this.flashMessages.arrangedQueue as |flash|}}
   <FlashMessage @flash={{flash}} @messageStyle='foundation' class='round' />
 {{/each}}
 ```
@@ -402,7 +400,7 @@ To add `radius` or `round` type corners in Foundation:
 If the provided component isn't to your liking, you can easily create your own. All you need to do is pass in the `flash` object to that component:
 
 ```handlebars
-{{#each flashMessages.queue as |flash|}}
+{{#each this.flashMessages.queue as |flash|}}
   <CustomComponent @flash={{flash}} />
 {{/each}}
 ```
@@ -423,19 +421,19 @@ An example acceptance test:
 ```javascript
 // tests/acceptance/foo-page-test.js
 
-import { module, test } from 'qunit'
-import { setupApplicationTest } from 'ember-qunit'
-import { click, visit } from '@ember/test-helpers'
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
+import { click, visit } from '@ember/test-helpers';
 
 module('Application | Component | foo-page', function (hooks) {
-  setupApplicationTest(hooks)
+  setupApplicationTest(hooks);
 
-  test('flash message is rendered', async function(assert) {
+  test('flash message is rendered', async function (assert) {
     assert.expect(1);
 
     await visit('/');
 
-    await click('.button-that-opens-alert')
+    await click('.button-that-opens-alert');
 
     assert.dom('.alert.alert-success').exists({ count: 1 });
   });
@@ -447,24 +445,24 @@ An example integration test:
 ```javascript
 // tests/integration/components/x-foo-test.js
 
-import { module, test } from 'qunit'
-import { setupRenderingTest } from 'ember-qunit'
-import { render } from '@ember/test-helpers'
-import { hbs } from 'ember-cli-htmlbars'
+import { module, test } from 'qunit';
+import { setupRenderingTest } from 'ember-qunit';
+import { render } from '@ember/test-helpers';
+import { hbs } from 'ember-cli-htmlbars';
 
 module('Integration | Component | x-foo', function (hooks) {
-  setupRenderingTest(hooks)
+  setupRenderingTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     // We have to register any types we expect to use in this component
     const typesUsed = ['info', 'warning', 'success'];
     this.owner.lookup('service:flash-messages').registerTypes(typesUsed);
-  })
+  });
 
-  test('it renders', function(assert) {
-    await render(hbs`<XFoo/>`)
+  test('it renders', function (assert) {
+    await render(hbs`<XFoo/>`);
     ...
-  })
+  });
 });
 ```
 
@@ -472,22 +470,22 @@ module('Integration | Component | x-foo', function (hooks) {
 For unit tests that require the `flashMessages` service, you'll need to do a small bit of setup:
 
 ```js
-import { module, test } from 'qunit'
-import { setupTest } from 'ember-qunit'
+import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';
 
 module('Container | Route | foo', function (hooks) {
-  setupTest(hooks)
+  setupTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     // We have to register any types we expect to use in this component
     const typesUsed = ['info', 'warning', 'success'];
     this.owner.lookup('service:flash-messages').registerTypes(typesUsed);
-  })
+  });
 
-  test('it does the thing it should do', function(assert) {
-    const subject = this.owner.lookup('route:foo')
+  test('it does the thing it should do', function (assert) {
+    const subject = this.owner.lookup('route:foo');
     ...
-  })
+  });
 });
 ```
 
