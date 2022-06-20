@@ -1,8 +1,7 @@
 declare module 'ember-cli-flash/flash/object' {
-  
   import EmberObject from '@ember/object';
   import Evented from '@ember/object/evented';
-  
+
   class FlashObject extends EmberObject.extend(Evented) {
     exiting: boolean;
     exitTimer: number;
@@ -34,26 +33,32 @@ declare module 'ember-cli-flash/services/flash-messages' {
     onDestroy: () => void;
     [key: string]: unknown;
   }
-  
+
   export interface CustomMessageInfo extends Partial<MessageOptions> {
     message: string;
   }
-  
+
   export interface FlashFunction {
     (message: string, options?: Partial<MessageOptions>): FlashMessageService;
   }
-  
+
   class FlashMessageService extends Service {
+    queue: FlashObject[];
+    readonly arrangedQueue: FlashObject[];
+    readonly isEmpty: boolean;
     success: FlashFunction;
     warning: FlashFunction;
     info: FlashFunction;
     danger: FlashFunction;
     alert: FlashFunction;
     secondary: FlashFunction;
-    add(messageInfo: CustomMessageInfo): FlashMessageService;
-    clearMessages(): FlashMessageService;
-    registerTypes(types: string[]): FlashMessageService;
+    add(messageInfo: CustomMessageInfo): this;
+    clearMessages(): this;
+    registerTypes(types: string[]): this;
     getFlashObject(): FlashObject;
+    peekFirst(): FlashObject | undefined;
+    peekLast(): FlashObject | undefined;
+    readonly flashMessageDefaults: any;
   }
 
   export default FlashMessageService;
