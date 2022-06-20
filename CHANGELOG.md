@@ -5,6 +5,47 @@ changelog, see the git history.
 
 [npm page](https://www.npmjs.com/package/ember-cli-flash)
 
+
+## v4.0.0 (2022-06-20)
+
+#### :boom: Breaking Change
+* [#382](https://github.com/adopted-ember-addons/ember-cli-flash/pull/382) Convert `flash-message` to Glimmer component ([@charlesfries](https://github.com/charlesfries))
+* [#383](https://github.com/adopted-ember-addons/ember-cli-flash/pull/383) ember-cli 4.4.0, remove auto service injection ([@rwwagner90](https://github.com/rwwagner90))
+
+#### :bug: Bug Fix
+* [#366](https://github.com/adopted-ember-addons/ember-cli-flash/pull/366) Fix types for service ([@wagenet](https://github.com/wagenet))
+* [#384](https://github.com/adopted-ember-addons/ember-cli-flash/pull/384) Allow arbitrary properties in `MessageOptions` interface ([@charlesfries](https://github.com/charlesfries))
+* [#363](https://github.com/adopted-ember-addons/ember-cli-flash/pull/363) Change hasBlock to has-block to avoid deprecation ([@wagenet](https://github.com/wagenet))
+* [#358](https://github.com/adopted-ember-addons/ember-cli-flash/pull/358) Fix missing modifier error in consuming apps ([@sandydoo](https://github.com/sandydoo))
+* [#355](https://github.com/adopted-ember-addons/ember-cli-flash/pull/355) Fix `this-property-fallback` deprecation warnings ([@aoumiri](https://github.com/aoumiri))
+* [#350](https://github.com/adopted-ember-addons/ember-cli-flash/pull/350) Update htmlSafe imports ([@rwwagner90](https://github.com/rwwagner90))
+
+#### :memo: Documentation
+* [#377](https://github.com/adopted-ember-addons/ember-cli-flash/pull/377) Update README.md formatting ([@charlesfries](https://github.com/charlesfries))
+* [#362](https://github.com/adopted-ember-addons/ember-cli-flash/pull/362) Correct compatibility in README ([@kategengler](https://github.com/kategengler))
+* [#343](https://github.com/adopted-ember-addons/ember-cli-flash/pull/343) Fix typo in changelog ([@HeroicEric](https://github.com/HeroicEric))
+
+#### :house: Internal
+* [#373](https://github.com/adopted-ember-addons/ember-cli-flash/pull/373) Upgrade ember to v4 ([@stukalin](https://github.com/stukalin))
+* [#334](https://github.com/adopted-ember-addons/ember-cli-flash/pull/334) Remove unnecessary `ember-decorators` dependency ([@Turbo87](https://github.com/Turbo87))
+
+#### Committers: 15
+- Anass OUMIRI ([@aoumiri](https://github.com/aoumiri))
+- Andrey Stukalin ([@stukalin](https://github.com/stukalin))
+- Brad Overton ([@Techn1x](https://github.com/Techn1x))
+- Charles Fries ([@charlesfries](https://github.com/charlesfries))
+- Christian ([@makepanic](https://github.com/makepanic))
+- Eric Kelly ([@HeroicEric](https://github.com/HeroicEric))
+- Joshua Lawrence ([@jwlawrence](https://github.com/jwlawrence))
+- Katie Gengler ([@kategengler](https://github.com/kategengler))
+- Peter Wagenet ([@wagenet](https://github.com/wagenet))
+- Robert Wagner ([@rwwagner90](https://github.com/rwwagner90))
+- Sander ([@sandydoo](https://github.com/sandydoo))
+- Scott Batson ([@sbatson5](https://github.com/sbatson5))
+- Tobias Bieniek ([@Turbo87](https://github.com/Turbo87))
+- [@MrChocolatine](https://github.com/MrChocolatine)
+- [@vlascik](https://github.com/vlascik)
+
 ## 2.1.3 (2021-05-14)
 
 #### :bug: Bug Fix
