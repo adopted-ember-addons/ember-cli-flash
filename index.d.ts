@@ -7,6 +7,7 @@ declare module 'ember-cli-flash/flash/object' {
     exitTimer: number;
     isExitable: boolean;
     initializedTime: number;
+    message: string;
     destroyMessage(): void;
     exitMessage(): void;
     preventExit(): void;
@@ -21,6 +22,7 @@ declare module 'ember-cli-flash/services/flash-messages' {
 
   import Service from '@ember/service';
   import FlashObject from 'ember-cli-flash/flash/object';
+  import type { SafeString } from '@ember/template/-private/handlebars';
 
   export interface MessageOptions {
     type: string;
