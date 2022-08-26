@@ -1,4 +1,3 @@
-import type { SafeString } from '@ember/template/-private/handlebars';
 declare module 'ember-cli-flash/flash/object' {
   import EmberObject from '@ember/object';
   import Evented from '@ember/object/evented';
@@ -22,6 +21,9 @@ declare module 'ember-cli-flash/services/flash-messages' {
 
   import Service from '@ember/service';
   import FlashObject from 'ember-cli-flash/flash/object';
+  import type { SafeString } from '@ember/template/-private/handlebars';
+
+  type Message = string | SafeString;
 
   export interface MessageOptions {
     type: string;
@@ -36,11 +38,11 @@ declare module 'ember-cli-flash/services/flash-messages' {
   }
 
   export interface CustomMessageInfo extends Partial<MessageOptions> {
-    message: string | SafeString;
+    message: Message;
   }
 
   export interface FlashFunction {
-    (message: string | SafeString, options?: Partial<MessageOptions>): FlashMessageService;
+    (message: Message, options?: Partial<MessageOptions>): FlashMessageService;
   }
 
   class FlashMessageService extends Service {
