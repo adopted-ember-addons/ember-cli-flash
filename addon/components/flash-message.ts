@@ -16,11 +16,7 @@ export interface FlashMessageSignature {
     messageStylePrefix?: string;
   };
   Blocks: {
-    default: {
-      this: FlashMessage;
-      flash: FlashObject;
-      close: (...args: never[]) => unknown;
-    };
+    default: [FlashMessage, FlashObject, (...args: never[]) => unknown];
   };
 }
 
