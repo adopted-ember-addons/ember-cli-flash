@@ -16,10 +16,6 @@ module('Unit | Utility | object only', function () {
 
     const result = objectOnly(employee, ['name', 'deskLocation']);
 
-    assert.deepEqual(
-      result,
-      expectedResult,
-      'it returns an object with only the specified keys'
-    );
+    assert.deepEqual(result, expectedResult, 'it returns an object with only the specified keys');
   });
 });

@@ -14,18 +14,14 @@ module('Acceptance | main', function (hooks) {
 
     assert.dom('.alert.alert-success').exists();
     assert.dom('.alert.alert-success h6').hasText('Success');
-    assert
-      .dom('.alert.alert-success p')
-      .hasText('Route transitioned successfully');
+    assert.dom('.alert.alert-success p').hasText('Route transitioned successfully');
     assert
       .dom('.alert.alert-success .alert-progressBar')
       .hasAttribute('style', `transition-duration: ${defaultTimeout}ms`);
 
     assert.dom('.alert.alert-warning').exists();
     assert.dom('.alert.alert-warning h6').hasText('Warning');
-    assert
-      .dom('.alert.alert-warning p')
-      .hasText('It is going to rain tomorrow');
+    assert.dom('.alert.alert-warning p').hasText('It is going to rain tomorrow');
   });
 
   test('high priority messages are rendered on top', async function (assert) {

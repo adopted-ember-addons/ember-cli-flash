@@ -27,10 +27,6 @@ module('Unit | Utility | computed', function () {
     });
     const result = flash._guid;
     const secondResult = secondFlash._guid;
-    assert.strictEqual(
-      result,
-      secondResult,
-      'it generated the same guid for messages that compute to the same string'
-    );
+    assert.strictEqual(result, secondResult, 'it generated the same guid for messages that compute to the same string');
   });
 });

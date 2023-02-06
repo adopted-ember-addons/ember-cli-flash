@@ -1,14 +1,17 @@
 import { run, later } from '@ember/runloop';
 import { isPresent } from '@ember/utils';
 import { module, test } from 'qunit';
-import FlashMessage from 'ember-cli-flash/flash/object';
+import FlashObject from 'ember-cli-flash/flash/object';
+import { setupTest } from 'ember-qunit';
 
 const testTimerDuration = 50;
 let flash = null;
 
 module('FlashMessageObject', function (hooks) {
+  setupTest(hooks);
+
   hooks.beforeEach(function () {
-    flash = FlashMessage.create({
+    flash = FlashObject.create({
       type: 'test',
       message: 'Cool story brah',
       timeout: testTimerDuration,
@@ -24,7 +27,7 @@ module('FlashMessageObject', function (hooks) {
   });
 
   test('it sets a timer after init', function (assert) {
-    assert.ok(isPresent(flash.get('timerTaskInstance')));
+    assert.ok(isPresent(flash.timerTaskInstance));
   });
 
   test('it destroys the message after the timer has elapsed', function (assert) {
@@ -39,11 +42,7 @@ module('FlashMessageObject', function (hooks) {
     later(() => {
       assert.true(flash.isDestroyed, 'it sets `isDestroyed` to true');
       assert.notOk(flash.timer, 'it cancels the timer');
-      assert.strictEqual(
-        result,
-        'foo',
-        'it emits the `didDestroyMessage` hook'
-      );
+      assert.strictEqual(result, 'foo', 'it emits the `didDestroyMessage` hook');
       done();
     }, testTimerDuration * 2);
   });
@@ -52,7 +51,7 @@ module('FlashMessageObject', function (hooks) {
     const done = assert.async();
     assert.expect(1);
 
-    const stickyFlash = FlashMessage.create({
+    const stickyFlash = FlashObject.create({
       type: 'test',
       message: 'Cool story brah',
       timeout: testTimerDuration,
@@ -73,22 +72,22 @@ module('FlashMessageObject', function (hooks) {
       flash.destroyMessage();
     });
 
-    assert.true(flash.get('isDestroyed'));
-    assert.notOk(flash.get('timer'));
+    assert.true(flash.isDestroyed);
+    assert.notOk(flash.timer);
   });
 
   test('it sets `exiting` to true after the timer has elapsed', function (assert) {
     assert.expect(2);
     const done = assert.async();
 
-    const exitFlash = FlashMessage.create({
+    const exitFlash = FlashObject.create({
       timeout: testTimerDuration,
       extendedTimeout: testTimerDuration,
     });
 
     later(() => {
-      assert.true(exitFlash.get('exiting'), 'it sets `exiting` to true');
-      assert.notOk(exitFlash.get('timer'), 'it cancels the `timer`');
+      assert.true(exitFlash.exiting, 'it sets `exiting` to true');
+      assert.notOk(exitFlash.timer, 'it cancels the `timer`');
       done();
     }, testTimerDuration * 2);
   });
@@ -96,7 +95,7 @@ module('FlashMessageObject', function (hooks) {
   test('it calls `onDestroy` when object is destroyed', function (assert) {
     assert.expect(1);
 
-    const callbackFlash = FlashMessage.create({
+    const callbackFlash = FlashObject.create({
       sticky: true,
       onDestroy() {
         assert.ok(true, 'onDestroy is called');

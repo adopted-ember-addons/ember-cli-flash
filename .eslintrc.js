@@ -25,6 +25,7 @@ module.exports = {
     'ember/no-computed-properties-in-native-classes': 'warn',
     'ember/classic-decorator-hooks': 'warn',
     'ember/no-empty-glimmer-component-classes': 'warn',
+    'prettier/prettier': ['error', { endOfLine: 'auto' }],
   },
   overrides: [
     // node files
@@ -56,7 +57,7 @@ module.exports = {
     {
       // test files
       files: ['tests/**/*-test.{js,ts}'],
-      extends: ['plugin:qunit/recommended'],
+      extends: ['plugin:qunit/recommended', 'eslint:recommended'],
       rules: {
         'qunit/require-expect': 'warn',
       },

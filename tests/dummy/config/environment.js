@@ -28,15 +28,7 @@ module.exports = function (environment) {
       sticky: true,
       showProgress: false,
       type: 'info',
-      types: [
-        'success',
-        'info',
-        'warning',
-        'danger',
-        'alert',
-        'secondary',
-        'foo',
-      ],
+      types: ['success', 'info', 'warning', 'danger', 'alert', 'secondary', 'foo'],
       preventDuplicates: false,
     },
   };

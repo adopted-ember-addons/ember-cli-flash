@@ -1,5 +1,5 @@
 export default function objectWithout(originalObj = {}, keysToRemain = []) {
-  let newObj = {};
+  const newObj = {};
 
   for (let key in originalObj) {
     if (keysToRemain.indexOf(key) !== -1) {

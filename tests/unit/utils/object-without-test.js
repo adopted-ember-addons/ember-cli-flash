@@ -16,10 +16,6 @@ module('Unit | Utility | object without', function () {
 
     const result = objectWithout(employee, ['stapler']);
 
-    assert.deepEqual(
-      result,
-      expectedResult,
-      'it returns an object without the specified keys'
-    );
+    assert.deepEqual(result, expectedResult, 'it returns an object without the specified keys');
   });
 });

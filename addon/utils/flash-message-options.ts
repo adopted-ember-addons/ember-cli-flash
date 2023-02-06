@@ -1,4 +1,6 @@
-export default function (configOverrides) {
+import { CustomMessageInfo } from 'ember-cli-flash/services/flash-messages';
+
+export default function (configOverrides: Partial<CustomMessageInfo>) {
   const addonDefaults = {
     timeout: 3000,
     extendedTimeout: 0,

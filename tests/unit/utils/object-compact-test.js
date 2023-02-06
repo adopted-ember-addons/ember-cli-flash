@@ -16,10 +16,6 @@ module('Unit | Utility | object compact', function () {
     };
 
     const result = objectCompact(rawData);
-    assert.deepEqual(
-      result,
-      expectedResult,
-      'it should not contain `null` or `undefined` elements'
-    );
+    assert.deepEqual(result, expectedResult, 'it should not contain `null` or `undefined` elements');
   });
 });

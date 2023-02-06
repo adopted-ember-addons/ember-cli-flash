@@ -2,7 +2,7 @@ import { computed, get } from '@ember/object';
 import { guidFor as emberGuidFor } from '@ember/object/internals';
 import { isNone } from '@ember/utils';
 
-export function guidFor(dependentKey) {
+export function guidFor(dependentKey: string): MethodDecorator {
   return computed(dependentKey, {
     get() {
       const value = get(this, dependentKey);
