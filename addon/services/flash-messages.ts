@@ -4,10 +4,10 @@ import { assert, warn } from '@ember/debug';
 import { setProperties } from '@ember/object';
 import { classify } from '@ember/string';
 import { A as emberArray } from '@ember/array';
-import objectWithout from 'ember-cli-flash/utils/object-without';
+import objectWithout from '../utils/object-without';
 import { getOwner } from '@ember/application';
-import flashMessageOptions from 'ember-cli-flash/utils/flash-message-options';
-import FlashObject from 'ember-cli-flash/flash/object';
+import flashMessageOptions from '../utils/flash-message-options';
+import FlashObject from '../flash/object';
 import { TrackedArray } from 'tracked-built-ins';
 import { cached } from '@glimmer/tracking';
 

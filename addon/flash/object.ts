@@ -1,7 +1,7 @@
 import Evented from '@ember/object/evented';
 import EmberObject from '@ember/object';
 import { cancel, later } from '@ember/runloop';
-import FlashMessagesService, { CustomMessageInfo } from 'ember-cli-flash/services/flash-messages';
+import FlashMessagesService, { CustomMessageInfo } from '../services/flash-messages';
 import { cached, tracked } from '@glimmer/tracking';
 import { guidFor as emberGuidFor } from '@ember/object/internals';
 import { EmberRunTimer } from '@ember/runloop/types';

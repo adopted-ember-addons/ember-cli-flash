@@ -1,4 +1,4 @@
-import { CustomMessageInfo } from 'ember-cli-flash/services/flash-messages';
+import { CustomMessageInfo } from '../services/flash-messages';
 
 export default function (configOverrides: Partial<CustomMessageInfo>) {
   const addonDefaults = {

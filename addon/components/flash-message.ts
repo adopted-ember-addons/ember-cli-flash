@@ -5,7 +5,7 @@ import { htmlSafe } from '@ember/template';
 import { isPresent } from '@ember/utils';
 import { cancel, next } from '@ember/runloop';
 import { action } from '@ember/object';
-import FlashObject from 'ember-cli-flash/flash/object';
+import FlashObject from '../flash/object';
 import { EmberRunTimer } from '@ember/runloop/types';
 
 export interface FlashMessageSignature {
