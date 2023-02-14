@@ -138,7 +138,7 @@
     "caniuse-lite": "1.0.30001450"
   },
   "engines": {
-    "node": "12.* || 14.* || >= 16"
+    "node": "14.* || >= 16"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
