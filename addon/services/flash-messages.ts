@@ -78,7 +78,7 @@ export default class FlashMessagesService extends Service {
 
   willDestroy() {
     // eslint-disable-next-line prefer-rest-params
-    (super.willDestroy as any)(...arguments);
+    super.willDestroy();
     this.clearMessages();
   }
 
@@ -164,7 +164,7 @@ export default class FlashMessagesService extends Service {
 
   @cached
   get flashMessageDefaults(): Record<string, unknown> {
-    // @ts-ignore todo: remove after ember's Owner has proper types
+    // @ts-ignore
     const config = getOwner(this).resolveRegistration('config:environment');
     const overrides = config.flashMessageDefaults ?? {};
     return flashMessageOptions(overrides);

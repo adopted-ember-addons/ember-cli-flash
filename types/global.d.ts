@@ -1,9 +1,9 @@
 import 'ember-cached-decorator-polyfill';
+import 'ember-cli-htmlbars';
 
 // Types for compiled templates
 declare module 'ember-cli-flash/templates/*' {
-  // @ts-ignore todo: remove after ember-cli-htmlbars has proper types
-  import { TemplateFactory } from 'ember-cli-htmlbars';
+  import type { TemplateFactory } from 'ember-cli-htmlbars';
 
   const tmpl: TemplateFactory;
   export default tmpl;

@@ -5,9 +5,11 @@ import FlashMessagesService, { CustomMessageInfo } from '../services/flash-messa
 import { cached, tracked } from '@glimmer/tracking';
 import { guidFor as emberGuidFor } from '@ember/object/internals';
 import { EmberRunTimer } from '@ember/runloop/types';
+import classic from 'ember-classic-decorator';
 
 // Note:
 // To avoid https://github.com/adopted-ember-addons/ember-cli-flash/issues/341 from happening, this class can't simply be called Object
+@classic
 export default class FlashObject extends EmberObject.extend(Evented) implements CustomMessageInfo {
   @tracked exitTimer: number | null = null;
   @tracked exiting = false;
@@ -30,7 +32,7 @@ export default class FlashObject extends EmberObject.extend(Evented) implements 
   destroyOnClick?: boolean;
   onDestroy?: () => void;
 
-  // do not use service injection here
+  // do not use a service injection here
   flashService?: FlashMessagesService;
 
   @cached
@@ -39,6 +41,8 @@ export default class FlashObject extends EmberObject.extend(Evented) implements 
   }
 
   init() {
+    // eslint-disable-next-line prefer-rest-params
+    super.init(...arguments);
     if (this.sticky) {
       return;
     }
@@ -56,8 +60,8 @@ export default class FlashObject extends EmberObject.extend(Evented) implements 
     }
   }
 
-  update(fields: Partial<CustomMessageInfo>) {
-    Object.assign(this, fields);
+  update(options: Partial<CustomMessageInfo>) {
+    Object.assign(this, options);
 
     if (this.sticky) {
       return;
@@ -84,8 +88,7 @@ export default class FlashObject extends EmberObject.extend(Evented) implements 
 
     this._cancelTimer();
     this._cancelTimer('exitTaskInstance');
-    // eslint-disable-next-line prefer-rest-params
-    (super.willDestroy as any)(...arguments);
+    super.willDestroy();
   }
 
   preventExit(): void {

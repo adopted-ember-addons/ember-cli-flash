@@ -6,10 +6,7 @@ module.exports = function (defaults) {
   let app = new EmberAddon(defaults, {
     babel: {
       sourceMaps: 'inline',
-      plugins: [
-        '@babel/plugin-proposal-optional-chaining',
-        '@babel/plugin-proposal-nullish-coalescing-operator',
-      ],
+      plugins: ['@babel/plugin-proposal-optional-chaining', '@babel/plugin-proposal-nullish-coalescing-operator'],
       loose: false,
     },
   });

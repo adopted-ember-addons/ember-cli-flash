@@ -2,7 +2,7 @@ module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    ecmaVersion: 2018,
+    ecmaVersion: 2020,
     sourceType: 'module',
     ecmaFeatures: {
       legacyDecorators: true,
@@ -50,6 +50,8 @@ module.exports = {
       },
       rules: {
         'node/no-unsupported-features/es-syntax': 'warn',
+        '@typescript-eslint/no-var-requires': 'warn',
+        '@typescript-eslint/no-empty-function': 'warn',
       },
       plugins: ['node'],
       extends: ['plugin:node/recommended'],
