@@ -42,6 +42,10 @@ export default class FlashMessage extends Component {
     return this.args.flash.exiting;
   }
 
+  get exitingClass() {
+    return this.args.exitingClass || 'exiting';
+  }
+
   get messageStylePrefix() {
     return this.args.messageStylePrefix ?? this._defaultMessageStylePrefix;
   }
