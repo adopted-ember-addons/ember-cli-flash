@@ -1,0 +1,3 @@
+packages:
+  - 'ember-cli-flash'
+  - 'test-app'

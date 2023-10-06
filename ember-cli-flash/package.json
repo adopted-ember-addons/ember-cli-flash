@@ -1,0 +1,64 @@
+{
+  "name": "ember-cli-flash",
+  "version": "4.0.0",
+  "description": "Simple, highly configurable flash messages for ember-cli",
+  "keywords": [
+    "ember-addon",
+    "ember",
+    "ember-cli",
+    "flash messages",
+    "flash",
+    "growl",
+    "toastr",
+    "notifications",
+    "notify"
+  ],
+  "homepage": "https://github.com/adopted-ember-addons/ember-cli-flash",
+  "bugs": "https://github.com/adopted-ember-addons/ember-cli-flash/issues",
+  "repository": "https://github.com/adopted-ember-addons/ember-cli-flash",
+  "license": "MIT",
+  "author": "Lauren Tan",
+  "contributors": [
+    {
+      "name": "Mike North"
+    },
+    {
+      "name": "Scott Batson"
+    },
+    {
+      "name": "Brian Runnells"
+    }
+  ],
+  "dependencies": {
+    "@ember/render-modifiers": "^2.0.2",
+    "@glimmer/component": "^1.1.2",
+    "@glimmer/tracking": "^1.1.2",
+    "ember-auto-import": "^2.4.1",
+    "ember-cli-babel": "^7.26.11",
+    "ember-cli-htmlbars": "^6.0.1"
+  },
+  "engines": {
+    "node": "12.* || 14.* || >= 16"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
+  "ember": {
+    "edition": "octane"
+  },
+  "release-it": {
+    "plugins": {
+      "release-it-lerna-changelog": {
+        "infile": "CHANGELOG.md",
+        "launchEditor": true
+      }
+    },
+    "git": {
+      "tagName": "v${version}"
+    },
+    "github": {
+      "release": true,
+      "tokenRef": "GITHUB_AUTH"
+    }
+  }
+}
