@@ -34,6 +34,18 @@
     "./*": "./dist/*.js",
     "./addon-main.js": "./addon-main.cjs"
   },
+  "scripts": {
+    "build": "rollup --config",
+    "lint": "concurrently 'npm:lint:*(!fix)' --names 'lint:'",
+    "lint:fix": "concurrently 'npm:lint:*:fix' --names 'fix:'",
+    "lint:hbs": "ember-template-lint . --no-error-on-unmatched-pattern",
+    "lint:hbs:fix": "ember-template-lint . --fix --no-error-on-unmatched-pattern",
+    "lint:js": "eslint . --cache",
+    "lint:js:fix": "eslint . --fix",
+    "prepack": "rollup --config",
+    "start": "rollup --config --watch",
+    "test": "echo 'A v2 addon does not have tests, run tests in test-app'"
+  },
   "dependencies": {
     "@ember/render-modifiers": "^2.0.2",
     "@embroider/addon-shim": "^1.0.0"
@@ -87,7 +99,10 @@
   "ember-addon": {
     "version": 2,
     "type": "addon",
-    "main": "addon-main.cjs"
+    "main": "addon-main.cjs",
+    "app-js": {
+      "./components/flash-message.js": "./dist/_app_/components/flash-message.js",
+      "./services/flash-messages.js": "./dist/_app_/services/flash-messages.js"
+    }
   }
-
 }

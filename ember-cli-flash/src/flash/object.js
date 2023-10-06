@@ -1,7 +1,7 @@
 import Evented from '@ember/object/evented';
 import EmberObject, { set } from '@ember/object';
 import { cancel, later } from '@ember/runloop';
-import { guidFor } from 'ember-cli-flash/utils/computed';
+import { guidFor } from '../utils/computed';
 
 // Note:
 // To avoid https://github.com/adopted-ember-addons/ember-cli-flash/issues/341 from happening, this class can't simply be called Object
