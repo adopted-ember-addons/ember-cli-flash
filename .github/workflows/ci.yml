@@ -15,13 +15,14 @@ jobs:
   test:
     name: "Tests"
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
       - uses: actions/checkout@v3
       - name: Install Node
         uses: actions/setup-node@v3
         with:
-          node-version: 12.x
+          node-version: 14.x
           cache: yarn
       - name: Install Dependencies
         run: yarn install --frozen-lockfile
@@ -33,12 +34,13 @@ jobs:
   floating:
     name: "Floating Dependencies"
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: 12.x
+          node-version: 14.x
           cache: yarn
       - name: Install Dependencies
         run: yarn install --no-lockfile
@@ -49,6 +51,7 @@ jobs:
     name: ${{ matrix.try-scenario }}
     runs-on: ubuntu-latest
     needs: "test"
+    timeout-minutes: 10
 
     strategy:
       fail-fast: false
@@ -56,6 +59,8 @@ jobs:
         try-scenario:
           - ember-lts-3.24
           - ember-lts-3.28
+          - ember-lts-4.4
+          - ember-lts-4.8
           - ember-release
           - ember-beta
           - ember-canary
@@ -68,7 +73,7 @@ jobs:
       - name: Install Node
         uses: actions/setup-node@v3
         with:
-          node-version: 12.x
+          node-version: 14.x
           cache: yarn
       - name: Install Dependencies
         run: yarn install --frozen-lockfile
