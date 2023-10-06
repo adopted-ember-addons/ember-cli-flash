@@ -1,5 +1,27 @@
 {
   "private": true,
-  "repository": "https://github.com/adopted-ember-addons/ember-cli-flash"
-
+  "repository": "https://github.com/adopted-ember-addons/ember-cli-flash",
+  "license": "MIT",
+  "author": "",
+  "scripts": {
+    "build": "pnpm --filter blueprinted build",
+    "lint": "pnpm --filter '*' lint",
+    "lint:fix": "pnpm --filter '*' lint:fix",
+    "prepare": "pnpm build",
+    "start": "concurrently 'npm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
+    "start:addon": "pnpm --filter blueprinted start --no-watch.clearScreen",
+    "start:test-app": "pnpm --filter test-app start",
+    "test": "pnpm --filter '*' test",
+    "test:ember": "pnpm --filter '*' test:ember"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0",
+    "prettier": "^3.0.3",
+    "prettier-plugin-ember-template-tag": "^1.1.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "@types/eslint": "^7.0.0"
+    }
+  }
 }

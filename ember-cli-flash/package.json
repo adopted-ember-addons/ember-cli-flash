@@ -29,13 +29,36 @@
       "name": "Brian Runnells"
     }
   ],
+  "exports": {
+    ".": "./dist/index.js",
+    "./*": "./dist/*.js",
+    "./addon-main.js": "./addon-main.cjs"
+  },
   "dependencies": {
     "@ember/render-modifiers": "^2.0.2",
-    "@glimmer/component": "^1.1.2",
-    "@glimmer/tracking": "^1.1.2",
-    "ember-auto-import": "^2.4.1",
-    "ember-cli-babel": "^7.26.11",
-    "ember-cli-htmlbars": "^6.0.1"
+    "@embroider/addon-shim": "^1.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.0",
+    "@babel/eslint-parser": "^7.19.1",
+    "@babel/plugin-proposal-class-properties": "^7.16.7",
+    "@babel/plugin-proposal-decorators": "^7.20.13",
+    "@babel/plugin-transform-class-static-block": "^7.20.0",
+    "@babel/runtime": "^7.17.0",
+    "@embroider/addon-dev": "^4.1.0",
+    "@rollup/plugin-babel": "^6.0.3",
+    "babel-plugin-ember-template-compilation": "^2.2.0",
+    "concurrently": "^8.0.1",
+    "ember-template-lint": "^5.11.2",
+    "eslint": "^8.33.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-ember": "^11.11.1",
+    "eslint-plugin-n": "^16.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "prettier": "^3.0.3",
+    "prettier-plugin-ember-template-tag": "^1.1.0",
+    "rollup": "^3.21.8",
+    "rollup-plugin-copy": "^3.4.0"
   },
   "engines": {
     "node": "12.* || 14.* || >= 16"
@@ -60,5 +83,11 @@
       "release": true,
       "tokenRef": "GITHUB_AUTH"
     }
+  },
+  "ember-addon": {
+    "version": 2,
+    "type": "addon",
+    "main": "addon-main.cjs"
   }
+
 }
