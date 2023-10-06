@@ -1,7 +1,8 @@
 {
   "name": "test-app",
   "version": "0.0.0",
-  "description": "Small description for test-app goes here",
+  "private": true,
+  "description": "Test app for blueprinted addon",
   "repository": "",
   "license": "MIT",
   "author": "",
@@ -27,6 +28,7 @@
     "@babel/plugin-proposal-nullish-coalescing-operator": "^7.10.4",
     "@babel/plugin-proposal-optional-chaining": "^7.6.0",
     "@ember/optional-features": "^2.0.0",
+    "@ember/string": "^3.1.1",
     "@ember/test-helpers": "^2.7.0",
     "@embroider/test-setup": "^1.6.0",
     "@glimmer/component": "^1.1.2",
@@ -34,10 +36,11 @@
     "@types/ember": "^3.1.1",
     "babel-eslint": "^10.1.0",
     "broccoli-asset-rev": "^3.0.0",
-    "ember-auto-import": "^2.4.1",
+    "ember-auto-import": "^2.6.3",
     "ember-cli": "~4.4.0",
     "ember-cli-babel": "^7.26.11",
     "ember-cli-dependency-checker": "^3.3.1",
+    "ember-cli-flash": "workspace:*",
     "ember-cli-github-pages": "0.2.2",
     "ember-cli-htmlbars": "^6.0.1",
     "ember-cli-inject-live-reload": "^2.1.0",
@@ -66,12 +69,20 @@
     "qunit-dom": "^2.0.0",
     "release-it": "^14.2.1",
     "release-it-lerna-changelog": "^3.1.0",
-    "webpack": "^5.72.1"
+    "webpack": "^5.88.2"
+  },
+  "dependenciesMeta": {
+    "ember-cli-flash": {
+      "injected": true
+    }
   },
   "engines": {
     "node": "12.* || 14.* || >= 16"
   },
   "ember": {
     "edition": "octane"
+  },
+  "volta": {
+    "node": "16.20.2"
   }
 }

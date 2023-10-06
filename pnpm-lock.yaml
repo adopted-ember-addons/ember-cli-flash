@@ -105,6 +105,9 @@ importers:
       '@ember/optional-features':
         specifier: ^2.0.0
         version: registry.npmjs.org/@ember/optional-features@2.0.0
+      '@ember/string':
+        specifier: ^3.1.1
+        version: registry.npmjs.org/@ember/string@3.1.1
       '@ember/test-helpers':
         specifier: ^2.7.0
         version: registry.npmjs.org/@ember/test-helpers@2.9.4(@babel/core@7.23.0)(ember-source@4.4.5)
@@ -127,7 +130,7 @@ importers:
         specifier: ^3.0.0
         version: registry.npmjs.org/broccoli-asset-rev@3.0.0
       ember-auto-import:
-        specifier: ^2.4.1
+        specifier: ^2.6.3
         version: registry.npmjs.org/ember-auto-import@2.6.3(webpack@5.88.2)
       ember-cli:
         specifier: ~4.4.0
@@ -138,6 +141,9 @@ importers:
       ember-cli-dependency-checker:
         specifier: ^3.3.1
         version: registry.npmjs.org/ember-cli-dependency-checker@3.3.2(ember-cli@4.4.1)
+      ember-cli-flash:
+        specifier: workspace:*
+        version: file:ember-cli-flash(@babel/core@7.23.0)(ember-source@4.4.5)
       ember-cli-github-pages:
         specifier: 0.2.2
         version: registry.npmjs.org/ember-cli-github-pages@0.2.2
@@ -223,10 +229,28 @@ importers:
         specifier: ^3.1.0
         version: registry.npmjs.org/release-it-lerna-changelog@3.1.0(release-it@14.14.3)
       webpack:
-        specifier: ^5.72.1
+        specifier: ^5.88.2
         version: registry.npmjs.org/webpack@5.88.2
+    dependenciesMeta:
+      ember-cli-flash:
+        injected: true
 
 packages:
+
+  file:ember-cli-flash(@babel/core@7.23.0)(ember-source@4.4.5):
+    resolution: {directory: ember-cli-flash, type: directory}
+    id: file:ember-cli-flash
+    name: ember-cli-flash
+    engines: {node: 12.* || 14.* || >= 16}
+    dependencies:
+      '@ember/render-modifiers': registry.npmjs.org/@ember/render-modifiers@2.1.0(@babel/core@7.23.0)(ember-source@4.4.5)
+      '@embroider/addon-shim': registry.npmjs.org/@embroider/addon-shim@1.8.6
+    transitivePeerDependencies:
+      - '@babel/core'
+      - '@glint/template'
+      - ember-source
+      - supports-color
+    dev: true
 
   registry.npmjs.org/@aashutoshrathi/word-wrap@1.2.6:
     resolution: {integrity: sha512-1Yjs2SvM8TflER/OD3cOjhWWOZb58A2t7wpE2S9XfBYTiIl+XFhQG2bjy4Pu1I+EAlCNUzRDYDdFwFYUKvXcIA==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@aashutoshrathi/word-wrap/-/word-wrap-1.2.6.tgz}
@@ -1864,7 +1888,17 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
-    dev: false
+
+  registry.npmjs.org/@ember/string@3.1.1:
+    resolution: {integrity: sha512-UbXJ+k3QOrYN4SRPHgXCqYIJ+yWWUg1+vr0H4DhdQPTy8LJfyqwZ2tc5uqpSSnEXE+/1KopHBE5J8GDagAg5cg==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@ember/string/-/string-3.1.1.tgz}
+    name: '@ember/string'
+    version: 3.1.1
+    engines: {node: 12.* || 14.* || >= 16}
+    dependencies:
+      ember-cli-babel: registry.npmjs.org/ember-cli-babel@7.26.11
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
 
   registry.npmjs.org/@ember/test-helpers@2.9.4(@babel/core@7.23.0)(ember-source@4.4.5):
     resolution: {integrity: sha512-z+Qs1NYWyIVDmrY6WdmOS5mdG1lJ5CFfzh6dRhLfs9lq45deDaDrVNcaCYhnNeJZTvUBK2XR2SvPcZm0RloXdA==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@ember/test-helpers/-/test-helpers-2.9.4.tgz}
@@ -1942,7 +1976,6 @@ packages:
       semver: registry.npmjs.org/semver@7.5.4
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   registry.npmjs.org/@embroider/core@3.3.0:
     resolution: {integrity: sha512-QkOLFB3DUuDg6DU7qNAKFNJUyzgmjWNiRLcyrhThYgWeN5h8ilatG3sl5atBN6Jh3wCIJmhjXagafkA82a0abQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@embroider/core/-/core-3.3.0.tgz}
@@ -6987,7 +7020,6 @@ packages:
       - '@glint/template'
       - supports-color
       - webpack
-    dev: false
 
   registry.npmjs.org/ember-auto-import@2.6.3(webpack@5.88.2):
     resolution: {integrity: sha512-uLhrRDJYWCRvQ4JQ1e64XlSrqAKSd6PXaJ9ZsZI6Tlms9T4DtQFxNXasqji2ZRJBVrxEoLCRYX3RTldsQ0vNGQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/ember-auto-import/-/ember-auto-import-2.6.3.tgz}
@@ -7554,7 +7586,6 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
-    dev: false
 
   registry.npmjs.org/ember-qunit@5.1.5(@ember/test-helpers@2.9.4)(qunit@2.20.0):
     resolution: {integrity: sha512-2cFA4oMygh43RtVcMaBrr086Tpdhgbn3fVZ2awLkzF/rnSN0D0PSRpd7hAD7OdBPerC/ZYRwzVyGXLoW/Zes4A==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/ember-qunit/-/ember-qunit-5.1.5.tgz}
@@ -7668,7 +7699,6 @@ packages:
       - '@glint/template'
       - supports-color
       - webpack
-    dev: false
 
   registry.npmjs.org/ember-source@4.4.5(@babel/core@7.23.0)(webpack@5.88.2):
     resolution: {integrity: sha512-5U+IYHEb2XPokrLEQBy6N2+MwbE909K4RKKQxOLQEwnThWcO2cTTLTbz7z3biYL4vyne04ygXVqzlfUtKWwVQQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/ember-source/-/ember-source-4.4.5.tgz}
