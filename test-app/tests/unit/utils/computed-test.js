@@ -1,3 +1,4 @@
+/* eslint-disable ember/no-classic-classes */
 import { htmlSafe } from '@ember/template';
 import EmberObject from '@ember/object';
 import { guidFor } from 'ember-cli-flash/utils/computed';
