@@ -75,11 +75,6 @@
     "stylelint-prettier": "^3.0.0",
     "webpack": "^5.88.2"
   },
-  "dependenciesMeta": {
-    "ember-cli-flash": {
-      "injected": true
-    }
-  },
   "peerDependencies": {
     "ember-source": "^4.0.0"
   },

@@ -149,7 +149,7 @@ importers:
         version: registry.npmjs.org/ember-cli-dependency-checker@3.3.2(ember-cli@4.12.2)
       ember-cli-flash:
         specifier: workspace:*
-        version: file:ember-cli-flash(@babel/core@7.23.0)(ember-source@4.12.3)
+        version: link:../ember-cli-flash
       ember-cli-github-pages:
         specifier: 0.2.2
         version: registry.npmjs.org/ember-cli-github-pages@0.2.2
@@ -237,26 +237,8 @@ importers:
       webpack:
         specifier: ^5.88.2
         version: registry.npmjs.org/webpack@5.88.2
-    dependenciesMeta:
-      ember-cli-flash:
-        injected: true
 
 packages:
-
-  file:ember-cli-flash(@babel/core@7.23.0)(ember-source@4.12.3):
-    resolution: {directory: ember-cli-flash, type: directory}
-    id: file:ember-cli-flash
-    name: ember-cli-flash
-    engines: {node: 12.* || 14.* || >= 16}
-    dependencies:
-      '@ember/render-modifiers': registry.npmjs.org/@ember/render-modifiers@2.1.0(@babel/core@7.23.0)(ember-source@4.12.3)
-      '@embroider/addon-shim': registry.npmjs.org/@embroider/addon-shim@1.8.6
-    transitivePeerDependencies:
-      - '@babel/core'
-      - '@glint/template'
-      - ember-source
-      - supports-color
-    dev: true
 
   registry.npmjs.org/@aashutoshrathi/word-wrap@1.2.6:
     resolution: {integrity: sha512-1Yjs2SvM8TflER/OD3cOjhWWOZb58A2t7wpE2S9XfBYTiIl+XFhQG2bjy4Pu1I+EAlCNUzRDYDdFwFYUKvXcIA==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@aashutoshrathi/word-wrap/-/word-wrap-1.2.6.tgz}
@@ -1930,6 +1912,7 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
+    dev: false
 
   registry.npmjs.org/@ember/string@3.1.1:
     resolution: {integrity: sha512-UbXJ+k3QOrYN4SRPHgXCqYIJ+yWWUg1+vr0H4DhdQPTy8LJfyqwZ2tc5uqpSSnEXE+/1KopHBE5J8GDagAg5cg==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@ember/string/-/string-3.1.1.tgz}
@@ -2018,6 +2001,7 @@ packages:
       semver: registry.npmjs.org/semver@7.5.4
     transitivePeerDependencies:
       - supports-color
+    dev: false
 
   registry.npmjs.org/@embroider/core@3.3.0:
     resolution: {integrity: sha512-QkOLFB3DUuDg6DU7qNAKFNJUyzgmjWNiRLcyrhThYgWeN5h8ilatG3sl5atBN6Jh3wCIJmhjXagafkA82a0abQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@embroider/core/-/core-3.3.0.tgz}
@@ -6854,6 +6838,7 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
+    dev: false
 
   registry.npmjs.org/ember-qunit@6.2.0(@ember/test-helpers@2.9.4)(ember-source@4.12.3)(qunit@2.20.0)(webpack@5.88.2):
     resolution: {integrity: sha512-mC+0bp8DwWzJLn8SW3GS8KDZIkl4yLsNYwMi5Dw6+aFllq7FM2crd/dfY4MuOIHK7GKdjtmWJTMGnjSpeSayaw==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/ember-qunit/-/ember-qunit-6.2.0.tgz}
