@@ -31,7 +31,10 @@
   ],
   "exports": {
     ".": "./dist/index.js",
-    "./*": "./dist/*.js",
+    "./*": {
+      "types": "./declarations/*.d.ts",
+      "default": "./dist/*.js"
+    },
     "./addon-main.js": "./addon-main.cjs"
   },
   "scripts": {
