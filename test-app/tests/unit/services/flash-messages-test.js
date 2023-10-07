@@ -6,7 +6,6 @@ import { A as emberArray } from '@ember/array';
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 import config from '../../../config/environment';
-import EmberError from '@ember/error';
 
 let SANDBOX = {};
 
@@ -244,7 +243,7 @@ module('FlashMessagesService', function (hooks) {
       () => {
         this.service.add({});
       },
-      new EmberError(
+      new Error(
         'Assertion Failed: The flash message cannot be empty when preventDuplicates is enabled.'
       ),
       'Error is thrown'
@@ -258,7 +257,7 @@ module('FlashMessagesService', function (hooks) {
       () => {
         this.service.add({ preventDuplicates: true });
       },
-      new EmberError(
+      new Error(
         'Assertion Failed: The flash message cannot be empty when preventDuplicates is enabled.'
       ),
       'Error is thrown'
