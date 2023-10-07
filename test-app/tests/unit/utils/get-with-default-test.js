@@ -14,7 +14,7 @@ module('Unit | Utility | get-with-default', function () {
   });
 
   test('it returns the target value when available', function (assert) {
-    assert.expect(1);
+    assert.expect(7);
 
     let obj = {
       truthy: true,
