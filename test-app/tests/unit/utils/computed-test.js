@@ -1,6 +1,6 @@
 import { htmlSafe } from '@ember/template';
 import EmberObject from '@ember/object';
-import { guidFor } from '../utils/computed';
+import { guidFor } from 'ember-cli-flash/utils/computed';
 import { module, test } from 'qunit';
 
 module('Unit | Utility | computed', function () {
