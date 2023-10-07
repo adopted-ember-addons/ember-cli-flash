@@ -1,3 +1,4 @@
+/* eslint-disable ember/no-computed-properties-in-native-classes */
 import { equal, sort, mapBy } from '@ember/object/computed';
 import Service from '@ember/service';
 import { typeOf, isNone } from '@ember/utils';
@@ -82,11 +83,11 @@ export default class FlashMessagesService extends Service {
   _newFlashMessage(options = {}) {
     assert(
       'The flash message cannot be empty when preventDuplicates is enabled.',
-      this.defaultPreventDuplicates ? options.message : true
+      this.defaultPreventDuplicates ? options.message : true,
     );
     assert(
       'The flash message cannot be empty when preventDuplicates is enabled.',
-      options.preventDuplicates ? options.message : true
+      options.preventDuplicates ? options.message : true,
     );
 
     const flashService = this;
@@ -168,7 +169,7 @@ export default class FlashMessagesService extends Service {
           false,
           {
             id: 'ember-cli-flash.duplicate-message',
-          }
+          },
         );
         return;
       }

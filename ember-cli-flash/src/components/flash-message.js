@@ -4,6 +4,7 @@ import { classify } from '@ember/string';
 import { htmlSafe } from '@ember/template';
 import { isPresent } from '@ember/utils';
 import { next, cancel } from '@ember/runloop';
+// eslint-disable-next-line ember/no-computed-properties-in-native-classes
 import { action, computed } from '@ember/object';
 
 /**

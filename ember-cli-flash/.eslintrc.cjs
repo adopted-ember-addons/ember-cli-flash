@@ -28,6 +28,8 @@ module.exports = {
         './.prettierrc.cjs',
         './.template-lintrc.cjs',
         './addon-main.cjs',
+        // TODO figure out what to do with this
+        'blueprints/**/*.js',
       ],
       parserOptions: {
         sourceType: 'script',

@@ -14,6 +14,7 @@ export default class FlashObject extends EmberObject.extend(Evented) {
   @(guidFor('message').readOnly())
   _guid;
 
+  // eslint-disable-next-line ember/classic-decorator-hooks
   init() {
     super.init(...arguments);
 
