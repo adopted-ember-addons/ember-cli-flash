@@ -75,9 +75,6 @@
     "rollup": "^3.21.8",
     "rollup-plugin-copy": "^3.4.0"
   },
-  "engines": {
-    "node": "12.* || 14.* || >= 16"
-  },
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
   },
