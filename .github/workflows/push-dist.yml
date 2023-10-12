@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: NullVoxPopuli/action-setup-pnpm@v2
+      - uses: wyvox/action-setup-pnpm@v3
       - uses: kategengler/put-built-npm-package-contents-on-branch@v2.0.0
         with:
           branch: dist
