@@ -26,6 +26,9 @@ importers:
       '@ember/render-modifiers':
         specifier: ^2.0.2
         version: registry.npmjs.org/@ember/render-modifiers@2.1.0(@babel/core@7.23.0)(ember-source@4.12.3)
+      '@ember/string':
+        specifier: ^3.1.1
+        version: registry.npmjs.org/@ember/string@3.1.1
       '@embroider/addon-shim':
         specifier: ^1.0.0
         version: registry.npmjs.org/@embroider/addon-shim@1.8.6
@@ -1935,7 +1938,6 @@ packages:
       ember-cli-babel: registry.npmjs.org/ember-cli-babel@7.26.11
     transitivePeerDependencies:
       - supports-color
-    dev: true
 
   registry.npmjs.org/@ember/test-helpers@2.9.4(@babel/core@7.23.0)(ember-source@4.12.3):
     resolution: {integrity: sha512-z+Qs1NYWyIVDmrY6WdmOS5mdG1lJ5CFfzh6dRhLfs9lq45deDaDrVNcaCYhnNeJZTvUBK2XR2SvPcZm0RloXdA==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@ember/test-helpers/-/test-helpers-2.9.4.tgz}
