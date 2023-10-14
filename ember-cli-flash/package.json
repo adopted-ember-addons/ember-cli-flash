@@ -50,7 +50,6 @@
     "test": "echo 'A v2 addon does not have tests, run tests in test-app'"
   },
   "dependencies": {
-    "@ember/render-modifiers": "^2.0.2",
     "@embroider/addon-shim": "^1.0.0"
   },
   "devDependencies": {
@@ -76,7 +75,8 @@
     "rollup-plugin-copy": "^3.4.0"
   },
   "peerDependencies": {
-    "@ember/string": "^3.1.1"
+    "@ember/string": "^3.1.1",
+    "ember-modifier": "^4.1.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org"

@@ -6,6 +6,7 @@ import { isPresent } from '@ember/utils';
 import { next, cancel } from '@ember/runloop';
 // eslint-disable-next-line ember/no-computed-properties-in-native-classes
 import { action, computed } from '@ember/object';
+import { modifier } from 'ember-modifier';
 
 /**
  * ARGS
@@ -112,8 +113,7 @@ export default class FlashMessage extends Component {
     this._destroyFlashMessage();
   }
 
-  @action
-  onDidInsert(element) {
+  bindEvents = modifier((element) => {
     const pendingSet = next(this, () => {
       this.active = true;
     });
@@ -122,13 +122,12 @@ export default class FlashMessage extends Component {
     this._mouseLeaveHandler = this._mouseLeave;
     element.addEventListener('mouseenter', this._mouseEnterHandler);
     element.addEventListener('mouseleave', this._mouseLeaveHandler);
-  }
 
-  @action
-  onWillDestroy(element) {
-    element.removeEventListener('mouseenter', this._mouseEnterHandler);
-    element.removeEventListener('mouseleave', this._mouseLeaveHandler);
-    cancel(this.pendingSet);
-    this._destroyFlashMessage();
-  }
+    return () => {
+      element.removeEventListener('mouseenter', this._mouseEnterHandler);
+      element.removeEventListener('mouseleave', this._mouseLeaveHandler);
+      cancel(this.pendingSet);
+      this._destroyFlashMessage();
+    };
+  });
 }

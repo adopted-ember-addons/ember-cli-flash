@@ -3,8 +3,7 @@
   role="alert"
   ...attributes
   {{on "click" this.onClick}}
-  {{did-insert this.onDidInsert}}
-  {{will-destroy this.onWillDestroy}}
+  {{this.bindEvents}}
   {{! template-lint-disable no-invalid-interactive }}
 >
   {{#if (has-block)}}
