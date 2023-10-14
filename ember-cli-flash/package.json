@@ -30,7 +30,6 @@
     }
   ],
   "exports": {
-    ".": "./dist/index.js",
     "./*": {
       "types": "./declarations/*.d.ts",
       "default": "./dist/*.js"
