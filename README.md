@@ -1,7 +1,7 @@
 # ember-cli-flash
 
 ![Download count all time](https://img.shields.io/npm/dt/ember-cli-flash.svg) [![npm version](https://badge.fury.io/js/ember-cli-flash.svg)](http://badge.fury.io/js/ember-cli-flash)
-[![Ember Observer Score](http://emberobserver.com/badges/ember-cli-flash.svg)](http://emberobserver.com/addons/ember-cli-flash) 
+[![Ember Observer Score](http://emberobserver.com/badges/ember-cli-flash.svg)](http://emberobserver.com/addons/ember-cli-flash)
 [![Code Climate](https://codeclimate.com/github/adopted-ember-addons/ember-cli-flash/badges/gpa.svg)](https://codeclimate.com/github/adopted-ember-addons/ember-cli-flash)
 
 *Simple, highly configurable flash messages for ember.*
@@ -43,7 +43,7 @@ ember install ember-cli-flash
 ```
 
 ## Compatibility
-This addon is tested against the Ember `release`, `beta` and `canary` channels, back to Ember `v3.24`. 
+This addon is tested against the Ember `release`, `beta` and `canary` channels, back to Ember `v3.28`.
 
 ## Usage
 Usage is very simple. First, add one of the [template examples](#displaying-flash-messages) to your app. Then, inject the `flashMessages` service and use one of its convenience methods:
@@ -528,5 +528,6 @@ We're grateful to these wonderful contributors who've contributed to `ember-cli-
 <a href="https://github.com/bsclifton"><img src="https://avatars.githubusercontent.com/u/4733304?v=4" title="bsclifton" width="80" height="80"></a>
 <a href="https://github.com/caseywatts"><img src="https://avatars.githubusercontent.com/u/273653?v=4" title="caseywatts" width="80" height="80"></a>
 <a href="https://github.com/cythrawll"><img src="https://avatars.githubusercontent.com/u/99422?v=4" title="cythrawll" width="80" height="80"></a>
+<a href="https://github.com/gilest"><img src="https://avatars.githubusercontent.com/u/36919?v=4" title="gilest" width="80" height="80"></a>
 
 [//]: contributor-faces
