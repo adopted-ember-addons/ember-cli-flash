@@ -24,13 +24,13 @@ importers:
   ember-cli-flash:
     dependencies:
       '@ember/string':
-        specifier: ^3.1.1
+        specifier: '>= 3.0.0'
         version: registry.npmjs.org/@ember/string@3.1.1
       '@embroider/addon-shim':
         specifier: ^1.0.0
         version: registry.npmjs.org/@embroider/addon-shim@1.8.6
       ember-modifier:
-        specifier: ^4.1.0
+        specifier: '>= 4.0.0'
         version: registry.npmjs.org/ember-modifier@4.1.0
     devDependencies:
       '@babel/core':
