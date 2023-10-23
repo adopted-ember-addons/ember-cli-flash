@@ -10,7 +10,7 @@ let flash = null;
 module('FlashMessageObject disableTimeout', function (hooks) {
   hooks.beforeEach(function () {
     disableTimeout();
-    flash = FlashMessage.create({
+    flash = new FlashMessage({
       type: 'test',
       message: 'Cool story brah',
       timeout: testTimerDuration,
@@ -24,7 +24,7 @@ module('FlashMessageObject disableTimeout', function (hooks) {
   });
 
   test('it does not create a timer', function (assert) {
-    assert.notOk(flash.get('timerTaskInstance'), 'it does not create a timer');
+    assert.notOk(flash.timerTaskInstance, 'it does not create a timer');
   });
 });
 
@@ -32,7 +32,7 @@ module('FlashMessageObject enableTimeout', function (hooks) {
   hooks.beforeEach(function () {
     disableTimeout();
     enableTimeout();
-    flash = FlashMessage.create({
+    flash = new FlashMessage({
       type: 'test',
       message: 'Cool story brah',
       timeout: testTimerDuration,
@@ -45,16 +45,13 @@ module('FlashMessageObject enableTimeout', function (hooks) {
   });
 
   test('it sets a timer after init', function (assert) {
-    assert.ok(
-      isPresent(flash.get('timerTaskInstance')),
-      'it does create a timer'
-    );
+    assert.ok(isPresent(flash.timerTaskInstance), 'it does create a timer');
   });
 });
 
 module('FlashMessageObject', function (hooks) {
   hooks.beforeEach(function () {
-    flash = FlashMessage.create({
+    flash = new FlashMessage({
       type: 'test',
       message: 'Cool story brah',
       timeout: testTimerDuration,
@@ -70,7 +67,7 @@ module('FlashMessageObject', function (hooks) {
   });
 
   test('it sets a timer after init', function (assert) {
-    assert.ok(isPresent(flash.get('timerTaskInstance')));
+    assert.ok(isPresent(flash.timerTaskInstance));
   });
 
   test('it destroys the message after the timer has elapsed', function (assert) {
@@ -78,9 +75,9 @@ module('FlashMessageObject', function (hooks) {
     const done = assert.async();
     assert.expect(3);
 
-    flash.set('onDidDestroyMessage', () => {
+    flash.onDidDestroyMessage = () => {
       result = 'foo';
-    });
+    };
 
     later(() => {
       assert.true(flash.isDestroyed, 'it sets `isDestroyed` to true');
@@ -98,7 +95,7 @@ module('FlashMessageObject', function (hooks) {
     const done = assert.async();
     assert.expect(1);
 
-    const stickyFlash = FlashMessage.create({
+    const stickyFlash = new FlashMessage({
       type: 'test',
       message: 'Cool story brah',
       timeout: testTimerDuration,
@@ -119,22 +116,22 @@ module('FlashMessageObject', function (hooks) {
       flash.destroyMessage();
     });
 
-    assert.true(flash.get('isDestroyed'));
-    assert.notOk(flash.get('timer'));
+    assert.true(flash.isDestroyed);
+    assert.notOk(flash.timer);
   });
 
   test('it sets `exiting` to true after the timer has elapsed', function (assert) {
     assert.expect(2);
     const done = assert.async();
 
-    const exitFlash = FlashMessage.create({
+    const exitFlash = new FlashMessage({
       timeout: testTimerDuration,
       extendedTimeout: testTimerDuration,
     });
 
     later(() => {
-      assert.true(exitFlash.get('exiting'), 'it sets `exiting` to true');
-      assert.notOk(exitFlash.get('timer'), 'it cancels the `timer`');
+      assert.true(exitFlash.exiting, 'it sets `exiting` to true');
+      assert.notOk(exitFlash.timer, 'it cancels the `timer`');
       done();
     }, testTimerDuration * 2);
   });
@@ -142,7 +139,7 @@ module('FlashMessageObject', function (hooks) {
   test('it calls `onDestroy` when object is destroyed', function (assert) {
     assert.expect(1);
 
-    const callbackFlash = FlashMessage.create({
+    const callbackFlash = new FlashMessage({
       sticky: true,
       onDestroy() {
         assert.ok(true, 'onDestroy is called');

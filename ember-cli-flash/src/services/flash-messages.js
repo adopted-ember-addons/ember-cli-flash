@@ -103,7 +103,7 @@ export default class FlashMessagesService extends Service {
       set(flashMessageOptions, key, option);
     }
 
-    return FlashMessage.create(flashMessageOptions);
+    return new FlashMessage(flashMessageOptions);
   }
 
   _getOptionOrDefault(key, value) {

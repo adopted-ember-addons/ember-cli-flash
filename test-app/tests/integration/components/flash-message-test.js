@@ -18,7 +18,7 @@ module('Integration | Component | flash message', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders a flash message', async function (assert) {
-    this.set('flash', FlashMessage.create({ message: 'hi', sticky: true }));
+    this.set('flash', new FlashMessage({ message: 'hi', sticky: true }));
 
     await render(hbs`
       <FlashMessage @flash={{this.flash}} as |component flash|>
@@ -34,7 +34,7 @@ module('Integration | Component | flash message', function (hooks) {
 
     this.set(
       'flash',
-      FlashMessage.create({
+      new FlashMessage({
         message: 'test',
         type: 'test',
         timeout: TIMEOUT,
@@ -68,7 +68,7 @@ module('Integration | Component | flash message', function (hooks) {
   });
 
   test('it does not error when quickly removed from the DOM', async function (assert) {
-    this.set('flash', FlashMessage.create({ message: 'hi', sticky: true }));
+    this.set('flash', new FlashMessage({ message: 'hi', sticky: true }));
     this.set('flag', true);
 
     await render(hbs`
@@ -90,7 +90,7 @@ module('Integration | Component | flash message', function (hooks) {
 
     this.set(
       'flash',
-      FlashMessage.create({
+      new FlashMessage({
         message: 'hi',
         sticky: false,
         timeout: timeoutDefault,
@@ -123,7 +123,7 @@ module('Integration | Component | flash message', function (hooks) {
   test('flash message is removed after timeout if mouse enters', async function (assert) {
     assert.expect(3);
 
-    let flashObject = FlashMessage.create({
+    let flashObject = new FlashMessage({
       message: 'hi',
       sticky: false,
       timeout: timeoutDefault,
@@ -164,7 +164,7 @@ module('Integration | Component | flash message', function (hooks) {
 
     this.set(
       'flash',
-      FlashMessage.create({
+      new FlashMessage({
         message: 'flash message content',
         sticky: true,
         destroyOnClick: false,
@@ -192,7 +192,7 @@ module('Integration | Component | flash message', function (hooks) {
 
   test('exiting class is applied for sticky messages', async function (assert) {
     assert.expect(2);
-    let flashObject = FlashMessage.create({
+    let flashObject = new FlashMessage({
       message: 'flash message content',
       sticky: true,
       extendedTimeout: 100,
@@ -213,7 +213,7 @@ module('Integration | Component | flash message', function (hooks) {
 
   test('custom message type class name prefix is applied', async function (assert) {
     assert.expect(2);
-    let flashObject = FlashMessage.create({
+    let flashObject = new FlashMessage({
       message: 'flash message content',
       type: 'test',
       sticky: true,
