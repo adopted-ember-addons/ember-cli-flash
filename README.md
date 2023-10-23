@@ -407,15 +407,9 @@ If the provided component isn't to your liking, you can easily create your own. 
 
 ## Test helpers
 
-This addon provides helper functions which enable disabling and enabling flash message timeout at any time during test runs.
+This addon provides helper functions for enabling and disabling flash message timeouts at any time during test runs.
 
-- `disableTimeout: () => void`
-
-  ```js
-  import { disableTimeout } from 'ember-cli-flash/test-support';
-  ```
-
-  Globally prevents flash messages from being removed after `timeout`.
+Timeouts are initially disabled during test runs.
 
 - `enableTimeout: () => void`
 
@@ -425,9 +419,15 @@ This addon provides helper functions which enable disabling and enabling flash m
 
   Globally enables flash messages removal after `timeout`.
 
-The recommended approach is to disable timeout for your entire test suite as described in [Installation](#installation).
+- `disableTimeout: () => void`
 
-You may also use these helpers to enable or disable timeout granularly.
+  ```js
+  import { disableTimeout } from 'ember-cli-flash/test-support';
+  ```
+
+  Globally prevents flash messages from being removed after `timeout`.
+
+These test helpers may be used to enable and disable timeouts granularly, or even for your entire test suite.
 
 ```javascript
 // tests/acceptance/foo-page-test.js
