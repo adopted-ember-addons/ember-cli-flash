@@ -11,6 +11,8 @@ export default class FlashObject extends EmberObject.extend(Evented) {
   isExitable = true;
   initializedTime = null;
 
+  // disableTimeout – Set by `disableTimeout` and `enableTimeout` in test-support.js
+
   @(guidFor('message').readOnly())
   _guid;
 
@@ -18,7 +20,7 @@ export default class FlashObject extends EmberObject.extend(Evented) {
   init() {
     super.init(...arguments);
 
-    if (this.sticky) {
+    if (this.disableTimeout || this.sticky) {
       return;
     }
     this.timerTask();

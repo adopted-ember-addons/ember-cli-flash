@@ -6,7 +6,7 @@
 
 In previous versions an install-time blueprint would add an import to consuming apps' `tests/test-helper.js` file.
 
-This was used to disable the async timer functionality when displaying flash messages. For most apps this is a sensible default.
+This was used to disable the timeout functionality where a flash message is removed after a delay. For most apps this is a sensible default.
 
 Most apps with this addon installed will have the following import in their `tests/test-helper.js`:
 
@@ -15,7 +15,7 @@ Most apps with this addon installed will have the following import in their `tes
 import './helpers/flash-message';
 ```
 
-Remove this import and replace it with the `disableTimers` helper function. This helper function _should also be invoked_ within the same file.
+Remove this import and replace it with the `disableTimeout` helper function. This helper function _should also be invoked_ within the same file.
 
 ```diff
 // tests/test-helper.js
@@ -26,9 +26,9 @@ import { setApplication } from '@ember/test-helpers';
 import { setup } from 'qunit-dom';
 import { start } from 'ember-qunit';
 - import './helpers/flash-message';
-+ import { disableTimers } from 'ember-cli-flash/test-support';
++ import { disableTimeout } from 'ember-cli-flash/test-support';
 
-+ disableTimers();
++ disableTimeout();
 
 setApplication(Application.create(config.APP));
 
@@ -37,4 +37,4 @@ setup(QUnit.assert);
 start();
 ```
 
-An `enableTimers` helper is also provided for fine-grained control at any time during test runs.
+An `enableTimeout` helper is also provided for fine-grained control at any time during test runs.

@@ -42,7 +42,7 @@ This ember addon adds a flash message service and component to your app.
 ember install ember-cli-flash
 ```
 
-It's also recommended to disable flash message timers during test runs by adding the following to `tests/test-helper.js`:
+It's also recommended to disable flash message timeout during test runs by adding the following to `tests/test-helper.js`:
 
 ```diff
 // tests/test-helper.js
@@ -52,9 +52,9 @@ import * as QUnit from 'qunit';
 import { setApplication } from '@ember/test-helpers';
 import { setup } from 'qunit-dom';
 import { start } from 'ember-qunit';
-+ import { disableTimers } from 'ember-cli-flash/test-support';
++ import { disableTimeout } from 'ember-cli-flash/test-support';
 
-+ disableTimers();
++ disableTimeout();
 
 setApplication(Application.create(config.APP));
 
@@ -430,27 +430,27 @@ If the provided component isn't to your liking, you can easily create your own. 
 
 ## Test helpers
 
-This addon provides helper functions which enable disabling and enabling flash message timers at any time during test runs.
+This addon provides helper functions which enable disabling and enabling flash message timeout at any time during test runs.
 
-- `disableTimers: () => void`
+- `disableTimeout: () => void`
 
   ```js
-  import { disableTimers } from 'ember-cli-flash/test-support';
+  import { disableTimeout } from 'ember-cli-flash/test-support';
   ```
 
   Globally prevents flash messages from being removed after `timeout`.
 
-- `enableTimers: () => void`
+- `enableTimeout: () => void`
 
   ```js
-  import { enableTimers } from 'ember-cli-flash/test-support';
+  import { enableTimeout } from 'ember-cli-flash/test-support';
   ```
 
-  Globally enables flash messages to be removed after `timeout`.
+  Globally enables flash messages removal after `timeout`.
 
-The recommended approach is to disable timers for your entire test suite as described in [Installation](#installation).
+The recommended approach is to disable timeout for your entire test suite as described in [Installation](#installation).
 
-You may also use these helpers to enable or disable timers granularly.
+You may also use these helpers to enable or disable timeout granularly.
 
 ```javascript
 // tests/acceptance/foo-page-test.js
@@ -458,20 +458,20 @@ You may also use these helpers to enable or disable timers granularly.
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { click, visit } from '@ember/test-helpers';
-import { enableTimers, disableTimers } from 'ember-cli-flash/test-support';
+import { enableTimeout, disableTimeout } from 'ember-cli-flash/test-support';
 
 module('Application | Component | foo-page', function (hooks) {
   setupApplicationTest(hooks);
 
-  module('with flash timers' function (hooks) {
+  module('with flash message timeout' function (hooks) {
     hooks.before(function () {
-      // Enable timers for tests within this module
-      enableTimers();
+      // Enable timeout for tests within this module
+      enableTimeout();
     });
 
     hooks.after(function () {
-      // Clean up by disabling timers again
-      disableTimers();
+      // Clean up by disabling timeout again
+      disableTimeout();
     })
 
     test('flash message is removed after 5 seconds', async function (assert) {

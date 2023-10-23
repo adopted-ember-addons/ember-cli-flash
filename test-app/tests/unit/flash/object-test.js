@@ -2,14 +2,14 @@ import { run, later } from '@ember/runloop';
 import { isPresent } from '@ember/utils';
 import { module, test } from 'qunit';
 import FlashMessage from 'ember-cli-flash/flash/object';
-import { disableTimers, enableTimers } from 'ember-cli-flash/test-support';
+import { disableTimeout, enableTimeout } from 'ember-cli-flash/test-support';
 
 const testTimerDuration = 50;
 let flash = null;
 
-module('FlashMessageObject disableTimers', function (hooks) {
+module('FlashMessageObject disableTimeout', function (hooks) {
   hooks.beforeEach(function () {
-    disableTimers();
+    disableTimeout();
     flash = FlashMessage.create({
       type: 'test',
       message: 'Cool story brah',
@@ -20,7 +20,7 @@ module('FlashMessageObject disableTimers', function (hooks) {
 
   hooks.afterEach(function () {
     flash = null;
-    enableTimers();
+    enableTimeout();
   });
 
   test('it does not create a timer', function (assert) {
@@ -28,10 +28,10 @@ module('FlashMessageObject disableTimers', function (hooks) {
   });
 });
 
-module('FlashMessageObject enableTimers', function (hooks) {
+module('FlashMessageObject enableTimeout', function (hooks) {
   hooks.beforeEach(function () {
-    disableTimers();
-    enableTimers();
+    disableTimeout();
+    enableTimeout();
     flash = FlashMessage.create({
       type: 'test',
       message: 'Cool story brah',

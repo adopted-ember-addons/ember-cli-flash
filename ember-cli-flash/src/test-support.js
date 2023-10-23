@@ -1,12 +1,9 @@
 import FlashObject from './flash/object';
 
-const originalInit = FlashObject.prototype.init;
-const noopInit = () => {};
-
-export function disableTimers() {
-  FlashObject.reopen({ init: noopInit });
+export function disableTimeout() {
+  FlashObject.reopen({ disableTimeout: true });
 }
 
-export function enableTimers() {
-  FlashObject.reopen({ init: originalInit });
+export function enableTimeout() {
+  FlashObject.reopen({ disableTimeout: false });
 }
