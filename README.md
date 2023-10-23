@@ -42,29 +42,6 @@ This ember addon adds a flash message service and component to your app.
 ember install ember-cli-flash
 ```
 
-It's also recommended to disable flash message timeout during test runs by adding the following to `tests/test-helper.js`:
-
-```diff
-// tests/test-helper.js
-import Application from 'example-app/app';
-import config from 'example-app/config/environment';
-import * as QUnit from 'qunit';
-import { setApplication } from '@ember/test-helpers';
-import { setup } from 'qunit-dom';
-import { start } from 'ember-qunit';
-+ import { disableTimeout } from 'ember-cli-flash/test-support';
-
-+ disableTimeout();
-
-setApplication(Application.create(config.APP));
-
-setup(QUnit.assert);
-
-start();
-```
-
-For more information about test helpers see: [Test helpers](#test-helpers)
-
 ## Compatibility
 This addon is tested against the Ember `release`, `beta` and `canary` channels, back to Ember `v3.28`.
 
