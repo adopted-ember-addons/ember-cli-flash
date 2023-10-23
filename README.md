@@ -2,7 +2,6 @@
 
 ![Download count all time](https://img.shields.io/npm/dt/ember-cli-flash.svg) [![npm version](https://badge.fury.io/js/ember-cli-flash.svg)](http://badge.fury.io/js/ember-cli-flash)
 [![Ember Observer Score](http://emberobserver.com/badges/ember-cli-flash.svg)](http://emberobserver.com/addons/ember-cli-flash)
-[![Code Climate](https://codeclimate.com/github/adopted-ember-addons/ember-cli-flash/badges/gpa.svg)](https://codeclimate.com/github/adopted-ember-addons/ember-cli-flash)
 
 *Simple, highly configurable flash messages for ember.*
 
