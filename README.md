@@ -42,7 +42,7 @@ This ember addon adds a flash message service and component to your app.
 ember install ember-cli-flash
 ```
 
-You may also want to disable flash message timers during test runs by adding the following to `tests/test-helper.js`:
+It's also recommended to disable flash message timers during test runs by adding the following to `tests/test-helper.js`:
 
 ```diff
 // tests/test-helper.js
@@ -62,6 +62,8 @@ setup(QUnit.assert);
 
 start();
 ```
+
+For more information about test helpers see: [Test helpers](#test-helpers)
 
 ## Compatibility
 This addon is tested against the Ember `release`, `beta` and `canary` channels, back to Ember `v3.28`.
@@ -426,14 +428,68 @@ If the provided component isn't to your liking, you can easily create your own. 
 {{/each}}
 ```
 
-## Acceptance / Integration tests
-When you install the addon, it should automatically generate a helper located at `tests/helpers/flash-message.js`. You can do this manually as well:
+## Test helpers
 
-```shell
-$ ember generate ember-cli-flash
+This addon provides helper functions which enable disabling and enabling flash message timers at any time during test runs.
+
+- `disableTimers: () => void`
+
+  ```js
+  import { disableTimers } from 'ember-cli-flash/test-support';
+  ```
+
+  Globally prevents flash messages from being removed after `timeout`.
+
+- `enableTimers: () => void`
+
+  ```js
+  import { enableTimers } from 'ember-cli-flash/test-support';
+  ```
+
+  Globally enables flash messages to be removed after `timeout`.
+
+The recommended approach is to disable timers for your entire test suite as described in [Installation](#installation).
+
+You may also use these helpers to enable or disable timers granularly.
+
+```javascript
+// tests/acceptance/foo-page-test.js
+
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
+import { click, visit } from '@ember/test-helpers';
+import { enableTimers, disableTimers } from 'ember-cli-flash/test-support';
+
+module('Application | Component | foo-page', function (hooks) {
+  setupApplicationTest(hooks);
+
+  module('with flash timers' function (hooks) {
+    hooks.before(function () {
+      // Enable timers for tests within this module
+      enableTimers();
+    });
+
+    hooks.after(function () {
+      // Clean up by disabling timers again
+      disableTimers();
+    })
+
+    test('flash message is removed after 5 seconds', async function (assert) {
+      assert.expect(1);
+
+      await visit('/');
+
+      await click('.button-that-opens-alert');
+
+      assert.dom('.alert.alert-success').doesNotExist(
+        'Timer was removed due to `timeout: 5_000`'
+      );
+    });
+  });
+});
 ```
 
-This also adds the helper to `tests/test-helper.js`. You won't actually need to import this into your tests, but it's good to know what the blueprint does. Basically, the helper overrides a method used to initialise the flash-message's class, so that it behaves intuitively in a testing environment.
+## Acceptance / Integration tests
 
 Some example tests below, based on qunit.
 
