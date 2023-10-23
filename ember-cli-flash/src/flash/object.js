@@ -1,4 +1,3 @@
-import Evented from '@ember/object/evented';
 import EmberObject, { set } from '@ember/object';
 import { cancel, later } from '@ember/runloop';
 import { guidFor } from '../utils/computed';
@@ -9,7 +8,7 @@ const defaultDisableTimeout = macroCondition(isTesting()) ? true : false;
 
 // Note:
 // To avoid https://github.com/adopted-ember-addons/ember-cli-flash/issues/341 from happening, this class can't simply be called Object
-export default class FlashObject extends EmberObject.extend(Evented) {
+export default class FlashObject extends EmberObject {
   exitTimer = null;
   exiting = false;
   isExitable = true;
@@ -50,7 +49,6 @@ export default class FlashObject extends EmberObject.extend(Evented) {
       return;
     }
     this.exitTimerTask();
-    this.trigger('didExitMessage');
   }
 
   willDestroy() {
@@ -129,6 +127,6 @@ export default class FlashObject extends EmberObject.extend(Evented) {
       queue.removeObject(this);
     }
     this.destroy();
-    this.trigger('didDestroyMessage');
+    this.onDidDestroyMessage?.();
   }
 }

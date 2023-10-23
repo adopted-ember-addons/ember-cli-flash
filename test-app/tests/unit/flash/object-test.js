@@ -78,7 +78,7 @@ module('FlashMessageObject', function (hooks) {
     const done = assert.async();
     assert.expect(3);
 
-    flash.on('didDestroyMessage', () => {
+    flash.set('onDidDestroyMessage', () => {
       result = 'foo';
     });
 
@@ -88,7 +88,7 @@ module('FlashMessageObject', function (hooks) {
       assert.strictEqual(
         result,
         'foo',
-        'it emits the `didDestroyMessage` hook'
+        'it called the `onDidDestroyMessage` callback'
       );
       done();
     }, testTimerDuration * 2);
