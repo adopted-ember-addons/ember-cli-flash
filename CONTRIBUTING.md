@@ -2,20 +2,20 @@
 
 ## Installation
 
-* `git clone <repository-url>`
+* `git clone git@github.com:adopted-ember-addons/ember-cli-flash.git`
 * `cd ember-cli-flash`
-* `yarn install`
+* `pnpm install`
 
 ## Linting
 
-* `yarn lint`
-* `yarn lint:fix`
+* `pnpm lint`
+* `pnpm lint:fix`
 
 ## Running tests
 
-* `ember test` – Runs the test suite on the current Ember version
-* `ember test --server` – Runs the test suite in "watch mode"
-* `ember try:each` – Runs the test suite against multiple Ember versions
+* `pnpm test:ember` – Runs the test suite on the current Ember version
+* `pnpm test:ember --server` – Runs the test suite in "watch mode"
+* `cd test-app && ember try:each` – Runs the test suite against multiple Ember versions
 
 ## Running the test application
 
