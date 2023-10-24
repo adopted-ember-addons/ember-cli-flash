@@ -1,5 +1,4 @@
 /* eslint-disable ember/no-computed-properties-in-native-classes */
-import { equal, sort, mapBy } from '@ember/object/computed';
 import Service from '@ember/service';
 import { typeOf, isNone } from '@ember/utils';
 import { warn, assert } from '@ember/debug';
@@ -13,23 +12,26 @@ import { associateDestroyableChild } from '@ember/destroyable';
 import { tracked } from '@glimmer/tracking';
 
 export default class FlashMessagesService extends Service {
-  @(equal('queue.length', 0).readOnly())
-  isEmpty;
-
-  @(mapBy('queue', '_guid').readOnly())
-  _guids;
-
-  @(sort('queue', function (a, b) {
-    if (a.priority < b.priority) {
-      return 1;
-    } else if (a.priority > b.priority) {
-      return -1;
-    }
-    return 0;
-  }).readOnly())
-  arrangedQueue;
-
   @tracked queue = [];
+
+  get arrangedQueue() {
+    return this.queue.sort(function (a, b) {
+      if (a.priority < b.priority) {
+        return 1;
+      } else if (a.priority > b.priority) {
+        return -1;
+      }
+      return 0;
+    });
+  }
+
+  get isEmpty() {
+    return this.queue.length === 0;
+  }
+
+  get _guids() {
+    return this.queue.map((flash) => flash._guid);
+  }
 
   constructor() {
     super(...arguments);
