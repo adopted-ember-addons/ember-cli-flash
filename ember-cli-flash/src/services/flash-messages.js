@@ -1,7 +1,7 @@
 import Service from '@ember/service';
 import { typeOf, isNone } from '@ember/utils';
 import { warn, assert } from '@ember/debug';
-import { set, setProperties } from '@ember/object';
+import { set } from '@ember/object';
 import { classify } from '@ember/string';
 import FlashMessage from '../flash/object';
 import objectWithout from '../utils/object-without';
@@ -145,7 +145,7 @@ export default class FlashMessagesService extends Service {
 
     this[type] = (message, options = {}) => {
       const flashMessageOptions = Object.assign({}, options);
-      setProperties(flashMessageOptions, { message, type });
+      Object.assign(flashMessageOptions, { message, type });
 
       return this.add(flashMessageOptions);
     };
