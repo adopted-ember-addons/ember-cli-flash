@@ -2,7 +2,7 @@
 import Service from '@ember/service';
 import { typeOf, isNone } from '@ember/utils';
 import { warn, assert } from '@ember/debug';
-import { set, get, setProperties, computed } from '@ember/object';
+import { set, setProperties, computed } from '@ember/object';
 import { classify } from '@ember/string';
 import FlashMessage from '../flash/object';
 import objectWithout from '../utils/object-without';
@@ -98,7 +98,7 @@ export default class FlashMessagesService extends Service {
     const flashMessageOptions = Object.assign({}, defaults, { flashService });
 
     for (let key in options) {
-      const value = get(options, key);
+      const value = options[key];
       const option = this._getOptionOrDefault(key, value);
 
       set(flashMessageOptions, key, option);
@@ -111,7 +111,7 @@ export default class FlashMessagesService extends Service {
 
   _getOptionOrDefault(key, value) {
     const defaults = this.flashMessageDefaults ?? {};
-    const defaultOption = get(defaults, key);
+    const defaultOption = defaults[key];
 
     if (typeOf(value) === 'undefined') {
       return defaultOption;
