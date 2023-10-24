@@ -5,12 +5,12 @@ import { typeOf, isNone } from '@ember/utils';
 import { warn, assert } from '@ember/debug';
 import { set, get, setProperties, computed } from '@ember/object';
 import { classify } from '@ember/string';
-import { A as emberArray } from '@ember/array';
 import FlashMessage from '../flash/object';
 import objectWithout from '../utils/object-without';
 import { getOwner } from '@ember/application';
 import flashMessageOptions from '../utils/flash-message-options';
 import { associateDestroyableChild } from '@ember/destroyable';
+import { tracked } from '@glimmer/tracking';
 
 export default class FlashMessagesService extends Service {
   @(equal('queue.length', 0).readOnly())
@@ -29,10 +29,11 @@ export default class FlashMessagesService extends Service {
   }).readOnly())
   arrangedQueue;
 
+  @tracked queue = [];
+
   constructor() {
     super(...arguments);
     this._setDefaults();
-    this.queue = emberArray();
   }
 
   willDestroy() {
@@ -47,30 +48,28 @@ export default class FlashMessagesService extends Service {
   }
 
   clearMessages() {
-    const flashes = this.queue;
-
-    if (isNone(flashes)) {
+    if (isNone(this.queue)) {
       return;
     }
 
-    flashes.forEach((flash) => flash.destroyMessage());
-    flashes.clear();
+    this.queue.forEach((flash) => flash.destroyMessage());
+    this.queue = [];
 
     return this;
   }
 
-  registerTypes(types = emberArray()) {
+  registerTypes(types = []) {
     types.forEach((type) => this._registerType(type));
 
     return this;
   }
 
   peekFirst() {
-    return this.queue.firstObject;
+    return this.queue.at(0);
   }
 
   peekLast() {
-    return this.queue.lastObject;
+    return this.queue.at(-1);
   }
 
   getFlashObject() {
@@ -136,7 +135,7 @@ export default class FlashMessagesService extends Service {
       set(this, defaultKey, defaults[key]);
     }
 
-    this.registerTypes(this.defaultTypes ?? emberArray());
+    this.registerTypes(this.defaultTypes ?? []);
   }
 
   _registerType(type) {
@@ -177,6 +176,7 @@ export default class FlashMessagesService extends Service {
       }
     }
 
-    return this.queue.pushObject(flashInstance);
+    this.queue = [...this.queue, flashInstance];
+    return this.queue;
   }
 }

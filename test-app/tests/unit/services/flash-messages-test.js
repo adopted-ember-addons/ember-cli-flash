@@ -18,7 +18,7 @@ module('FlashMessagesService', function (hooks) {
 
   hooks.afterEach(function () {
     run(() => {
-      this.service.queue.clear();
+      this.service.queue = [];
       this.service.destroy();
     });
 
@@ -233,7 +233,7 @@ module('FlashMessagesService', function (hooks) {
       customProperty: 'ohai',
     });
 
-    assert.strictEqual(this.service.queue.firstObject.customProperty, 'ohai');
+    assert.strictEqual(this.service.queue.at(0).customProperty, 'ohai');
   });
 
   test('when preventDuplicates is `true`, setting a message is required', function (assert) {
@@ -268,7 +268,7 @@ module('FlashMessagesService', function (hooks) {
     set(this, 'service.defaultPreventDuplicates', false);
     const expectedResult = emberArray(['foo', 'foo', 'bar']);
     expectedResult.forEach((message) => this.service.success(message));
-    const result = this.service.queue.mapBy('message');
+    const result = this.service.queue.map((flash) => flash.message);
 
     assert.deepEqual(
       result,
@@ -287,7 +287,7 @@ module('FlashMessagesService', function (hooks) {
     const messages = emberArray(['foo', 'foo', 'bar']);
     const expectedResult = messages.uniq();
     messages.forEach((message) => this.service.success(message));
-    const result = this.service.queue.mapBy('message');
+    const result = this.service.queue.map((flash) => flash.message);
 
     assert.deepEqual(
       result,
@@ -308,7 +308,7 @@ module('FlashMessagesService', function (hooks) {
     messages.forEach((message) =>
       this.service.success(message, { preventDuplicates: true })
     );
-    const result = this.service.queue.mapBy('message');
+    const result = this.service.queue.map((flash) => flash.message);
 
     assert.deepEqual(
       result,
@@ -329,7 +329,7 @@ module('FlashMessagesService', function (hooks) {
     messages.forEach((message) =>
       this.service.success(message, { preventDuplicates: false })
     );
-    const result = this.service.queue.mapBy('message');
+    const result = this.service.queue.map((flash) => flash.message);
 
     assert.deepEqual(
       result,
@@ -352,7 +352,7 @@ module('FlashMessagesService', function (hooks) {
     this.service.success('foo');
     this.service.success('baz', { preventDuplicates: true });
 
-    const result = this.service.queue.mapBy('message');
+    const result = this.service.queue.map((flash) => flash.message);
 
     assert.deepEqual(
       result,
@@ -374,12 +374,12 @@ module('FlashMessagesService', function (hooks) {
       .meow('bar');
 
     assert.strictEqual(
-      this.service.queue.firstObject.message,
+      this.service.queue.at(0).message,
       'foo',
       'should support chaining'
     );
     assert.strictEqual(
-      this.service.queue.lastObject.message,
+      this.service.queue.at(-1).message,
       'bar',
       'should support chaining'
     );
