@@ -10,7 +10,6 @@ import FlashMessage from '../flash/object';
 import objectWithout from '../utils/object-without';
 import { getOwner } from '@ember/application';
 import flashMessageOptions from '../utils/flash-message-options';
-import getWithDefault from '../utils/get-with-default';
 import { associateDestroyableChild } from '@ember/destroyable';
 
 export default class FlashMessagesService extends Service {
@@ -92,7 +91,7 @@ export default class FlashMessagesService extends Service {
     );
 
     const flashService = this;
-    const allDefaults = getWithDefault(this, 'flashMessageDefaults', {});
+    const allDefaults = this.flashMessageDefaults ?? {};
     const defaults = objectWithout(allDefaults, ['types', 'preventDuplicates']);
 
     const flashMessageOptions = Object.assign({}, defaults, { flashService });
@@ -110,7 +109,7 @@ export default class FlashMessagesService extends Service {
   }
 
   _getOptionOrDefault(key, value) {
-    const defaults = getWithDefault(this, 'flashMessageDefaults', {});
+    const defaults = this.flashMessageDefaults ?? {};
     const defaultOption = get(defaults, key);
 
     if (typeOf(value) === 'undefined') {
@@ -123,12 +122,12 @@ export default class FlashMessagesService extends Service {
   @computed
   get flashMessageDefaults() {
     const config = getOwner(this).resolveRegistration('config:environment');
-    const overrides = getWithDefault(config, 'flashMessageDefaults', {});
+    const overrides = config.flashMessageDefaults ?? {};
     return flashMessageOptions(overrides);
   }
 
   _setDefaults() {
-    const defaults = getWithDefault(this, 'flashMessageDefaults', {});
+    const defaults = this.flashMessageDefaults ?? {};
 
     for (let key in defaults) {
       const classifiedKey = classify(key);
@@ -137,7 +136,7 @@ export default class FlashMessagesService extends Service {
       set(this, defaultKey, defaults[key]);
     }
 
-    this.registerTypes(getWithDefault(this, 'defaultTypes', emberArray()));
+    this.registerTypes(this.defaultTypes ?? emberArray());
   }
 
   _registerType(type) {
