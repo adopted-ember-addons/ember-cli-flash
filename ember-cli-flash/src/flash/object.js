@@ -2,6 +2,10 @@ import Evented from '@ember/object/evented';
 import EmberObject, { set } from '@ember/object';
 import { cancel, later } from '@ember/runloop';
 import { guidFor } from '../utils/computed';
+import { isTesting, macroCondition } from '@embroider/macros';
+
+// Disable timeout by default when running tests
+const defaultDisableTimeout = macroCondition(isTesting()) ? true : false;
 
 // Note:
 // To avoid https://github.com/adopted-ember-addons/ember-cli-flash/issues/341 from happening, this class can't simply be called Object
@@ -11,6 +15,12 @@ export default class FlashObject extends EmberObject.extend(Evented) {
   isExitable = true;
   initializedTime = null;
 
+  // testHelperDisableTimeout – Set by `disableTimeout` and `enableTimeout` in test-support.js
+
+  get disableTimeout() {
+    return this.testHelperDisableTimeout ?? defaultDisableTimeout;
+  }
+
   @(guidFor('message').readOnly())
   _guid;
 
@@ -18,7 +28,7 @@ export default class FlashObject extends EmberObject.extend(Evented) {
   init() {
     super.init(...arguments);
 
-    if (this.sticky) {
+    if (this.disableTimeout || this.sticky) {
       return;
     }
     this.timerTask();

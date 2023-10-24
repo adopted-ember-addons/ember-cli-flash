@@ -404,14 +404,68 @@ If the provided component isn't to your liking, you can easily create your own. 
 {{/each}}
 ```
 
-## Acceptance / Integration tests
-When you install the addon, it should automatically generate a helper located at `tests/helpers/flash-message.js`. You can do this manually as well:
+## Test helpers
 
-```shell
-$ ember generate ember-cli-flash
+This addon provides helper functions for enabling and disabling flash message timeouts at any time during test runs.
+
+Timeouts are initially disabled during test runs.
+
+- `enableTimeout: () => void`
+
+  ```js
+  import { enableTimeout } from 'ember-cli-flash/test-support';
+  ```
+
+  Globally enables flash messages removal after `timeout`.
+
+- `disableTimeout: () => void`
+
+  ```js
+  import { disableTimeout } from 'ember-cli-flash/test-support';
+  ```
+
+  Globally prevents flash messages from being removed after `timeout`.
+
+These test helpers may be used to enable and disable timeouts granularly, or even for your entire test suite.
+
+```javascript
+// tests/acceptance/foo-page-test.js
+
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
+import { click, visit } from '@ember/test-helpers';
+import { enableTimeout, disableTimeout } from 'ember-cli-flash/test-support';
+
+module('Application | Component | foo-page', function (hooks) {
+  setupApplicationTest(hooks);
+
+  module('with flash message timeout' function (hooks) {
+    hooks.before(function () {
+      // Enable timeout for tests within this module
+      enableTimeout();
+    });
+
+    hooks.after(function () {
+      // Clean up by disabling timeout again
+      disableTimeout();
+    })
+
+    test('flash message is removed after 5 seconds', async function (assert) {
+      assert.expect(1);
+
+      await visit('/');
+
+      await click('.button-that-opens-alert');
+
+      assert.dom('.alert.alert-success').doesNotExist(
+        'Timer was removed due to `timeout: 5_000`'
+      );
+    });
+  });
+});
 ```
 
-This also adds the helper to `tests/test-helper.js`. You won't actually need to import this into your tests, but it's good to know what the blueprint does. Basically, the helper overrides a method used to initialise the flash-message's class, so that it behaves intuitively in a testing environment.
+## Acceptance / Integration tests
 
 Some example tests below, based on qunit.
 

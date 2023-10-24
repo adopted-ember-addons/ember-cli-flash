@@ -2,9 +2,55 @@ import { run, later } from '@ember/runloop';
 import { isPresent } from '@ember/utils';
 import { module, test } from 'qunit';
 import FlashMessage from 'ember-cli-flash/flash/object';
+import { disableTimeout, enableTimeout } from 'ember-cli-flash/test-support';
 
 const testTimerDuration = 50;
 let flash = null;
+
+module('FlashMessageObject disableTimeout', function (hooks) {
+  hooks.beforeEach(function () {
+    disableTimeout();
+    flash = FlashMessage.create({
+      type: 'test',
+      message: 'Cool story brah',
+      timeout: testTimerDuration,
+      service: {},
+    });
+  });
+
+  hooks.afterEach(function () {
+    flash = null;
+    enableTimeout();
+  });
+
+  test('it does not create a timer', function (assert) {
+    assert.notOk(flash.get('timerTaskInstance'), 'it does not create a timer');
+  });
+});
+
+module('FlashMessageObject enableTimeout', function (hooks) {
+  hooks.beforeEach(function () {
+    disableTimeout();
+    enableTimeout();
+    flash = FlashMessage.create({
+      type: 'test',
+      message: 'Cool story brah',
+      timeout: testTimerDuration,
+      service: {},
+    });
+  });
+
+  hooks.afterEach(function () {
+    flash = null;
+  });
+
+  test('it sets a timer after init', function (assert) {
+    assert.ok(
+      isPresent(flash.get('timerTaskInstance')),
+      'it does create a timer'
+    );
+  });
+});
 
 module('FlashMessageObject', function (hooks) {
   hooks.beforeEach(function () {

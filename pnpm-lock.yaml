@@ -29,6 +29,9 @@ importers:
       '@embroider/addon-shim':
         specifier: ^1.0.0
         version: registry.npmjs.org/@embroider/addon-shim@1.8.6
+      '@embroider/macros':
+        specifier: ^1.13.2
+        version: registry.npmjs.org/@embroider/macros@1.13.2
       ember-modifier:
         specifier: '>= 4.0.0'
         version: registry.npmjs.org/ember-modifier@4.1.0
@@ -2147,7 +2150,6 @@ packages:
       semver: registry.npmjs.org/semver@7.5.4
     transitivePeerDependencies:
       - supports-color
-    dev: true
 
   registry.npmjs.org/@embroider/shared-internals@2.5.0(supports-color@8.1.1):
     resolution: {integrity: sha512-7qzrb7GVIyNqeY0umxoeIvjDC+ay1b+wb2yCVuYTUYrFfLAkLEy9FNI3iWCi3RdQ9OFjgcAxAnwsAiPIMZZ3pQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@embroider/shared-internals/-/shared-internals-2.5.0.tgz}
@@ -3869,7 +3871,6 @@ packages:
     resolution: {integrity: sha512-TaTivMB6pYI1kXwrFlEhLeGfOqoDNdTxjCdwRfFFkEA30Eu+k48W34nlok2EYWJfFFzqaEmichdNM7th6M5HNw==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/assert-never/-/assert-never-1.2.1.tgz}
     name: assert-never
     version: 1.2.1
-    dev: true
 
   registry.npmjs.org/assign-symbols@1.0.0:
     resolution: {integrity: sha512-Q+JC7Whu8HhmTdBph/Tq59IoRtoy6KAm5zzPv00WdujX82lbAL8K7WVjne7vdCsAmbF4AYaDOPyO3k0kl8qIrw==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/assign-symbols/-/assign-symbols-1.0.0.tgz}
@@ -9144,7 +9145,6 @@ packages:
     dependencies:
       locate-path: registry.npmjs.org/locate-path@6.0.0
       path-exists: registry.npmjs.org/path-exists@4.0.0
-    dev: true
 
   registry.npmjs.org/find-up@6.3.0:
     resolution: {integrity: sha512-v2ZsoEuVHYy8ZIlYqwPe/39Cy+cFDzp4dXPaxNvkEuouymu+2Jbz0PxpKarJHYJTmv2HWT3O382qY8l4jMWthw==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/find-up/-/find-up-6.3.0.tgz}
@@ -11746,7 +11746,6 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       p-locate: registry.npmjs.org/p-locate@5.0.0
-    dev: true
 
   registry.npmjs.org/locate-path@7.2.0:
     resolution: {integrity: sha512-gvVijfZvn7R+2qyPX8mAuKcFGDf6Nc61GdvGafQsHL0sBIxfKzA+usWn4GFC/bk+QdwPUD4kWFJLhElipq+0VA==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/locate-path/-/locate-path-7.2.0.tgz}
@@ -13249,7 +13248,6 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       yocto-queue: registry.npmjs.org/yocto-queue@0.1.0
-    dev: true
 
   registry.npmjs.org/p-limit@4.0.0:
     resolution: {integrity: sha512-5b0R4txpzjPWVw/cXXUResoD4hb6U/x9BH08L7nw+GN1sezDzPdxeRvpc9c433fZhBan/wusjbCsqwqm4EIBIQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/p-limit/-/p-limit-4.0.0.tgz}
@@ -13293,7 +13291,6 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       p-limit: registry.npmjs.org/p-limit@3.1.0
-    dev: true
 
   registry.npmjs.org/p-locate@6.0.0:
     resolution: {integrity: sha512-wPrq66Llhl7/4AGC6I+cqxT07LhXvWL08LNXz1fENOw0Ap4sRZZ/gZpTTJ5jpurzzzfS2W/Ge9BY3LgLjCShcw==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/p-locate/-/p-locate-6.0.0.tgz}
@@ -13482,7 +13479,6 @@ packages:
     name: path-exists
     version: 4.0.0
     engines: {node: '>=8'}
-    dev: true
 
   registry.npmjs.org/path-exists@5.0.0:
     resolution: {integrity: sha512-RjhtfwJOxzcFmNOi6ltcbcu4Iu+FL3zEj83dk4kAS+fVpTxXLO1b38RvJgT/0QwvV/L3aY9TAnyv0EOqW4GoMQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/path-exists/-/path-exists-5.0.0.tgz}
@@ -17531,7 +17527,6 @@ packages:
     name: yocto-queue
     version: 0.1.0
     engines: {node: '>=10'}
-    dev: true
 
   registry.npmjs.org/yocto-queue@1.0.0:
     resolution: {integrity: sha512-9bnSc/HEW2uRy67wc+T8UwauLuPJVn28jb+GtJY16iiKWyvmYJRXVT4UamsAEGQfPohgr2q4Tq0sQbQlxTfi1g==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/yocto-queue/-/yocto-queue-1.0.0.tgz}
