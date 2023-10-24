@@ -8,6 +8,7 @@ import { getOwner } from '@ember/application';
 import flashMessageOptions from '../utils/flash-message-options';
 import { associateDestroyableChild } from '@ember/destroyable';
 import { tracked } from '@glimmer/tracking';
+import { registerDestructor } from '@ember/destroyable';
 
 export default class FlashMessagesService extends Service {
   @tracked queue = [];
@@ -34,11 +35,8 @@ export default class FlashMessagesService extends Service {
   constructor() {
     super(...arguments);
     this._setDefaults();
-  }
 
-  willDestroy() {
-    super.willDestroy(...arguments);
-    this.clearMessages();
+    registerDestructor(this, this.clearMessages.bind(this));
   }
 
   add(options = {}) {
