@@ -49,8 +49,7 @@
     "test": "echo 'A v2 addon does not have tests, run tests in test-app'"
   },
   "dependencies": {
-    "@embroider/addon-shim": "^1.0.0",
-    "@embroider/macros": "^1.13.2"
+    "@embroider/addon-shim": "^1.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.17.0",
@@ -76,6 +75,7 @@
   },
   "peerDependencies": {
     "@ember/string": ">= 3.0.0",
+    "@embroider/macros": "^1.13.2",
     "ember-modifier": ">= 4.0.0"
   },
   "publishConfig": {
