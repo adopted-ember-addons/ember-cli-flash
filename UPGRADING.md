@@ -4,22 +4,24 @@
 
 ### Test helpers
 
-In previous versions an install-time blueprint would add an import to your `tests/test-helper.js` file.
+In previous versions an install-time blueprint would add a test helper to `tests/helpers/flash-message.js` and import it in `tests/test-helper.js`.
 
-This was used to disable the timeout functionality where a flash message is removed after a delay. For most apps this is a sensible default.
+This was used to disable the timeout functionality where a flash message is removed after a delay. For most test suites this is a sensible default.
 
-Apps in which the blueprint ran will have the following import in their `tests/test-helper.js`:
+Apps in which the blueprint ran will have a `tests/helpers/flash-message.js` file.
 
-```js
-// tests/test-helper.js
-import './helpers/flash-message';
+Take note of whether this helper is present in your app.
+
+#### Helper was present
+
+You should remove the test helper and its import.
+
+```diff
+// tests/helpers/flash-message.js
+-import FlashObject from 'ember-cli-flash/flash/object';
+-
+-FlashObject.reopen({ init() {} });
 ```
-
-Take note of whether this import is present in your app's `tests/test-helper.js`.
-
-#### Import was present
-
-You may remove the helper import. Flash messages should behave as they did before in your test runs.
 
 ```diff
 // tests/test-helper.js
@@ -38,7 +40,9 @@ setup(QUnit.assert);
 start();
 ```
 
-#### Import was not present
+Flash messages should behave as they did before in your test runs.
+
+#### Helper was not present
 
 Try running your app tests. If they pass then you have nothing more to do.
 
