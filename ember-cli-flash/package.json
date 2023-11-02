@@ -18,6 +18,11 @@
   "repository": "https://github.com/adopted-ember-addons/ember-cli-flash",
   "license": "MIT",
   "author": "Lauren Tan",
+  "files": [
+    "addon-main.cjs",
+    "declarations",
+    "dist"
+  ],
   "contributors": [
     {
       "name": "Mike North"
