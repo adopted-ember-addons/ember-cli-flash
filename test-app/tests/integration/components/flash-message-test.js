@@ -4,6 +4,7 @@ import {
   click,
   find,
   render,
+  rerender,
   settled,
   triggerEvent,
 } from '@ember/test-helpers';
@@ -18,7 +19,8 @@ module('Integration | Component | flash message', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders a flash message', async function (assert) {
-    this.set('flash', new FlashMessage({ message: 'hi', sticky: true }));
+    const flash = new FlashMessage({ message: 'hi', sticky: true });
+    this.set('flash', flash);
 
     await render(hbs`
       <FlashMessage @flash={{this.flash}} as |component flash|>
@@ -26,7 +28,12 @@ module('Integration | Component | flash message', function (hooks) {
       </FlashMessage>
     `);
 
-    assert.dom('*').hasText('hi');
+    assert.dom('*').hasText('hi', 'initial message is displayed');
+
+    flash.message = 'hello';
+    await rerender();
+
+    assert.dom('*').hasText('hello', 'updated message is displayed');
   });
 
   test('it renders with the right props', async function (assert) {

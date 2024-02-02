@@ -9,6 +9,7 @@ const defaultDisableTimeout = macroCondition(isTesting()) ? true : false;
 export default class FlashObject {
   exitTimer = null;
   @tracked exiting = false;
+  @tracked message = '';
   isExitable = true;
   initializedTime = null;
   isDestroyed = false;
