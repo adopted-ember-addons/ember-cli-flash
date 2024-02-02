@@ -1,0 +1,29 @@
+{
+  "solution": {
+    "ember-cli-flash": {
+      "impact": "major",
+      "oldVersion": "4.0.0",
+      "newVersion": "5.0.0",
+      "constraints": [
+        {
+          "impact": "major",
+          "reason": "Appears in changelog section :boom: Breaking Change"
+        },
+        {
+          "impact": "minor",
+          "reason": "Appears in changelog section :rocket: Enhancement"
+        },
+        {
+          "impact": "patch",
+          "reason": "Appears in changelog section :bug: Bug Fix"
+        },
+        {
+          "impact": "patch",
+          "reason": "Appears in changelog section :house: Internal"
+        }
+      ],
+      "pkgJSONPath": "./ember-cli-flash/package.json"
+    }
+  },
+  "description": "## Release (2024-02-02)\n\nember-cli-flash 5.0.0 (major)\n\n#### :boom: Breaking Change\n* `ember-cli-flash`\n  * [#395](https://github.com/adopted-ember-addons/ember-cli-flash/pull/395) Move `@embroider/macros` to peers ([@gilest](https://github.com/gilest))\n* `ember-cli-flash`, `test-app`\n  * [#392](https://github.com/adopted-ember-addons/ember-cli-flash/pull/392) Replace blueprint with explicit test helpers ([@gilest](https://github.com/gilest))\n  * [#391](https://github.com/adopted-ember-addons/ember-cli-flash/pull/391)   Convert to V2 addon ([@gilest](https://github.com/gilest))\n\n#### :rocket: Enhancement\n* `ember-cli-flash`, `test-app`\n  * [#391](https://github.com/adopted-ember-addons/ember-cli-flash/pull/391)   Convert to V2 addon ([@gilest](https://github.com/gilest))\n* Other\n  * [#389](https://github.com/adopted-ember-addons/ember-cli-flash/pull/389) allow customization of exiting class ([@miguelcobain](https://github.com/miguelcobain))\n\n#### :bug: Bug Fix\n* `ember-cli-flash`\n  * [#398](https://github.com/adopted-ember-addons/ember-cli-flash/pull/398) Add missing `files` entry to addon package ([@gilest](https://github.com/gilest))\n\n#### :memo: Documentation\n* [#396](https://github.com/adopted-ember-addons/ember-cli-flash/pull/396) Correct test helper blueprint guide ([@gilest](https://github.com/gilest))\n* [#393](https://github.com/adopted-ember-addons/ember-cli-flash/pull/393) Update Contributing and Releasing with `pnpm` and monorepo paths ([@gilest](https://github.com/gilest))\n\n#### :house: Internal\n* `ember-cli-flash`, `test-app`\n  * [#400](https://github.com/adopted-ember-addons/ember-cli-flash/pull/400) Setup relase plan ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### Committers: 3\n- Giles Thompson ([@gilest](https://github.com/gilest))\n- Miguel Andrade ([@miguelcobain](https://github.com/miguelcobain))\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
+}
