@@ -1,5 +1,15 @@
 # Upgrading ember-cli-flash
 
+## Upgrading to v6
+
+### FlashObject is no longer an EmberObject
+
+Most apps will be unaffected by this – unless they call `getFlashObject` to access flash messages.
+
+Prior to v6 `FlashObject` extended [EmberObject](https://api.emberjs.com/ember/release/classes/emberobject/) and supported methods like `get`, `getProperties`, `set`, and `setProperties`.
+
+It's now a native class, and property access can be done using regular dot syntax, eg `flash.get('message')` should be replaced with `flash.message`.
+
 ## Upgrading to v5
 
 ### Test helpers
