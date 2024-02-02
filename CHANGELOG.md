@@ -1,6 +1,21 @@
 # Changelog
 ## Release (2024-02-02)
 
+ember-cli-flash 5.0.1 (patch)
+
+#### :bug: Bug Fix
+* `ember-cli-flash`
+  * [#404](https://github.com/adopted-ember-addons/ember-cli-flash/pull/404) Publish files ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### :house: Internal
+* `test-app`
+  * [#402](https://github.com/adopted-ember-addons/ember-cli-flash/pull/402) Bump ember-qunit in test-app ([@gilest](https://github.com/gilest))
+
+#### Committers: 2
+- Giles Thompson ([@gilest](https://github.com/gilest))
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+## Release (2024-02-02)
+
 ember-cli-flash 5.0.0 (major)
 
 #### :boom: Breaking Change
