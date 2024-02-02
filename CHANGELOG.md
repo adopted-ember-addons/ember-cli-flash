@@ -1,4 +1,37 @@
 # Changelog
+## Release (2024-02-02)
+
+ember-cli-flash 5.0.0 (major)
+
+#### :boom: Breaking Change
+* `ember-cli-flash`
+  * [#395](https://github.com/adopted-ember-addons/ember-cli-flash/pull/395) Move `@embroider/macros` to peers ([@gilest](https://github.com/gilest))
+* `ember-cli-flash`, `test-app`
+  * [#392](https://github.com/adopted-ember-addons/ember-cli-flash/pull/392) Replace blueprint with explicit test helpers ([@gilest](https://github.com/gilest))
+  * [#391](https://github.com/adopted-ember-addons/ember-cli-flash/pull/391)   Convert to V2 addon ([@gilest](https://github.com/gilest))
+
+#### :rocket: Enhancement
+* `ember-cli-flash`, `test-app`
+  * [#391](https://github.com/adopted-ember-addons/ember-cli-flash/pull/391)   Convert to V2 addon ([@gilest](https://github.com/gilest))
+* Other
+  * [#389](https://github.com/adopted-ember-addons/ember-cli-flash/pull/389) allow customization of exiting class ([@miguelcobain](https://github.com/miguelcobain))
+
+#### :bug: Bug Fix
+* `ember-cli-flash`
+  * [#398](https://github.com/adopted-ember-addons/ember-cli-flash/pull/398) Add missing `files` entry to addon package ([@gilest](https://github.com/gilest))
+
+#### :memo: Documentation
+* [#396](https://github.com/adopted-ember-addons/ember-cli-flash/pull/396) Correct test helper blueprint guide ([@gilest](https://github.com/gilest))
+* [#393](https://github.com/adopted-ember-addons/ember-cli-flash/pull/393) Update Contributing and Releasing with `pnpm` and monorepo paths ([@gilest](https://github.com/gilest))
+
+#### :house: Internal
+* `ember-cli-flash`, `test-app`
+  * [#400](https://github.com/adopted-ember-addons/ember-cli-flash/pull/400) Setup relase plan ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 3
+- Giles Thompson ([@gilest](https://github.com/gilest))
+- Miguel Andrade ([@miguelcobain](https://github.com/miguelcobain))
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
 
 The noteworthy changes made to Ember-CLI-Flash are included here. For a complete
 changelog, see the git history.
