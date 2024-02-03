@@ -16,7 +16,7 @@ export default class FlashObject {
 
   // testHelperDisableTimeout – Set by `disableTimeout` and `enableTimeout` in test-support.js
 
-  get disableTimeout() {
+  get _disableTimeout() {
     return this.testHelperDisableTimeout ?? defaultDisableTimeout;
   }
 
@@ -29,7 +29,7 @@ export default class FlashObject {
       this[key] = value;
     }
 
-    if (this.disableTimeout || this.sticky) {
+    if (this._disableTimeout || this.sticky) {
       return;
     }
     this.timerTask();
