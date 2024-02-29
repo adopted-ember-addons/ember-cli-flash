@@ -44,6 +44,13 @@
     },
     "./addon-main.js": "./addon-main.cjs"
   },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./declarations/*.d.ts"
+      ]
+    }
+  },
   "scripts": {
     "build": "rollup --config",
     "lint": "concurrently 'npm:lint:*(!fix)' --names 'lint:'",
