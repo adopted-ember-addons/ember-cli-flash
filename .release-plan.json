@@ -1,10 +1,14 @@
 {
   "solution": {
     "ember-cli-flash": {
-      "impact": "patch",
-      "oldVersion": "5.0.0",
-      "newVersion": "5.0.1",
+      "impact": "minor",
+      "oldVersion": "5.0.1",
+      "newVersion": "5.1.0",
       "constraints": [
+        {
+          "impact": "minor",
+          "reason": "Appears in changelog section :rocket: Enhancement"
+        },
         {
           "impact": "patch",
           "reason": "Appears in changelog section :bug: Bug Fix"
@@ -13,5 +17,5 @@
       "pkgJSONPath": "./ember-cli-flash/package.json"
     }
   },
-  "description": "## Release (2024-02-02)\n\nember-cli-flash 5.0.1 (patch)\n\n#### :bug: Bug Fix\n* `ember-cli-flash`\n  * [#404](https://github.com/adopted-ember-addons/ember-cli-flash/pull/404) Publish files ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### :house: Internal\n* `test-app`\n  * [#402](https://github.com/adopted-ember-addons/ember-cli-flash/pull/402) Bump ember-qunit in test-app ([@gilest](https://github.com/gilest))\n\n#### Committers: 2\n- Giles Thompson ([@gilest](https://github.com/gilest))\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
+  "description": "## Release (2024-02-29)\n\nember-cli-flash 5.1.0 (minor)\n\n#### :rocket: Enhancement\n* `ember-cli-flash`\n  * [#405](https://github.com/adopted-ember-addons/ember-cli-flash/pull/405) Add `FlashMessage` to TypeScript definitions ([@charlesfries](https://github.com/charlesfries))\n\n#### :bug: Bug Fix\n* `ember-cli-flash`\n  * [#399](https://github.com/adopted-ember-addons/ember-cli-flash/pull/399) fix(types): add typesVersions map ([@simonihmig](https://github.com/simonihmig))\n\n#### :house: Internal\n* [#407](https://github.com/adopted-ember-addons/ember-cli-flash/pull/407) Update release-plan to get the latest bugfixes ([@NullVoxPopuli](https://github.com/NullVoxPopuli))\n\n#### Committers: 3\n- Charles Fries ([@charlesfries](https://github.com/charlesfries))\n- Simon Ihmig ([@simonihmig](https://github.com/simonihmig))\n- [@NullVoxPopuli](https://github.com/NullVoxPopuli)\n"
 }

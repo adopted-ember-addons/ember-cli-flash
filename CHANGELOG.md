@@ -1,4 +1,24 @@
 # Changelog
+
+## Release (2024-02-29)
+
+ember-cli-flash 5.1.0 (minor)
+
+#### :rocket: Enhancement
+* `ember-cli-flash`
+  * [#405](https://github.com/adopted-ember-addons/ember-cli-flash/pull/405) Add `FlashMessage` to TypeScript definitions ([@charlesfries](https://github.com/charlesfries))
+
+#### :bug: Bug Fix
+* `ember-cli-flash`
+  * [#399](https://github.com/adopted-ember-addons/ember-cli-flash/pull/399) fix(types): add typesVersions map ([@simonihmig](https://github.com/simonihmig))
+
+#### :house: Internal
+* [#407](https://github.com/adopted-ember-addons/ember-cli-flash/pull/407) Update release-plan to get the latest bugfixes ([@NullVoxPopuli](https://github.com/NullVoxPopuli))
+
+#### Committers: 3
+- Charles Fries ([@charlesfries](https://github.com/charlesfries))
+- Simon Ihmig ([@simonihmig](https://github.com/simonihmig))
+- [@NullVoxPopuli](https://github.com/NullVoxPopuli)
 ## Release (2024-02-02)
 
 ember-cli-flash 5.0.1 (patch)
