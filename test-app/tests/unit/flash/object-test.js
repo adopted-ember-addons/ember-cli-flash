@@ -3,6 +3,7 @@ import { isPresent } from '@ember/utils';
 import { module, test } from 'qunit';
 import FlashMessage from 'ember-cli-flash/flash/object';
 import { disableTimeout, enableTimeout } from 'ember-cli-flash/test-support';
+import { isDestroyed } from '@ember/destroyable';
 
 const testTimerDuration = 50;
 let flash = null;
@@ -80,7 +81,7 @@ module('FlashMessageObject', function (hooks) {
     };
 
     later(() => {
-      assert.true(flash.isDestroyed, 'it sets `isDestroyed` to true');
+      assert.true(isDestroyed(flash), 'it sets `isDestroyed` to true');
       assert.notOk(flash.timer, 'it cancels the timer');
       assert.strictEqual(
         result,
@@ -104,7 +105,7 @@ module('FlashMessageObject', function (hooks) {
     });
 
     later(() => {
-      assert.false(stickyFlash.isDestroyed, 'it is not destroyed');
+      assert.false(isDestroyed(stickyFlash), 'it is not destroyed');
       done();
     }, testTimerDuration);
   });
@@ -116,7 +117,7 @@ module('FlashMessageObject', function (hooks) {
       flash.destroyMessage();
     });
 
-    assert.true(flash.isDestroyed);
+    assert.true(isDestroyed(flash));
     assert.notOk(flash.timer);
   });
 

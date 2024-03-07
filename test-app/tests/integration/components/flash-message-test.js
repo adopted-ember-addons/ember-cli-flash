@@ -11,6 +11,7 @@ import {
 import hbs from 'htmlbars-inline-precompile';
 import FlashMessage from 'ember-cli-flash/flash/object';
 import { next, later } from '@ember/runloop';
+import { isDestroyed } from '@ember/destroyable';
 
 const timeoutDefault = 1000;
 const TIMEOUT = 50;
@@ -89,7 +90,7 @@ module('Integration | Component | flash message', function (hooks) {
     this.set('flag', false);
 
     await settled();
-    assert.ok(this.flash.isDestroyed, 'Flash Object isDestroyed');
+    assert.ok(isDestroyed(this.flash), 'Flash Object isDestroyed');
   });
 
   test('flash message is removed after timeout', async function (assert) {
@@ -115,7 +116,7 @@ module('Integration | Component | flash message', function (hooks) {
       () => {
         assert.dom('*').hasText('hi');
         assert.notOk(
-          this.flash.isDestroyed,
+          isDestroyed(this.flash),
           'Flash is not destroyed immediately'
         );
       },
@@ -124,7 +125,7 @@ module('Integration | Component | flash message', function (hooks) {
 
     await settled();
 
-    assert.ok(this.flash.isDestroyed, 'Flash Object is destroyed');
+    assert.ok(isDestroyed(this.flash), 'Flash Object is destroyed');
   });
 
   test('flash message is removed after timeout if mouse enters', async function (assert) {
@@ -152,7 +153,7 @@ module('Integration | Component | flash message', function (hooks) {
 
         next(this, () => {
           assert.notOk(
-            flashObject.isDestroyed,
+            isDestroyed(flashObject),
             'Flash Object is not destroyed'
           );
           triggerEvent('#testFlash', 'mouseleave');
@@ -163,7 +164,7 @@ module('Integration | Component | flash message', function (hooks) {
 
     await settled();
 
-    assert.ok(flashObject.isDestroyed, 'Flash Object is destroyed');
+    assert.ok(isDestroyed(flashObject), 'Flash Object is destroyed');
   });
 
   test('a custom component can use the close closure action', async function (assert) {
@@ -185,14 +186,14 @@ module('Integration | Component | flash message', function (hooks) {
       </FlashMessage>
     `);
 
-    assert.notOk(this.flash.isDestroyed, 'flash has not been destroyed yet');
+    assert.notOk(isDestroyed(this.flash), 'flash has not been destroyed yet');
 
     await click('.alert');
-    assert.notOk(this.flash.isDestroyed, 'flash has not been destroyed yet');
+    assert.notOk(isDestroyed(this.flash), 'flash has not been destroyed yet');
 
     await click('.alert a');
     assert.ok(
-      this.flash.isDestroyed,
+      isDestroyed(this.flash),
       'flash is destroyed after clicking close'
     );
   });
@@ -215,7 +216,7 @@ module('Integration | Component | flash message', function (hooks) {
 
     await click('.alert');
     assert.dom('.alert').hasClass('exiting', 'exiting class is applied');
-    assert.ok(flashObject.isDestroyed, 'Flash Object is destroyed');
+    assert.ok(isDestroyed(flashObject), 'Flash Object is destroyed');
   });
 
   test('custom message type class name prefix is applied', async function (assert) {

@@ -2,6 +2,7 @@ import { cancel, later } from '@ember/runloop';
 import { isTesting, macroCondition } from '@embroider/macros';
 import { tracked } from '@glimmer/tracking';
 import { guidFor } from '@ember/object/internals';
+import { destroy, isDestroyed, registerDestructor } from '@ember/destroyable';
 
 // Disable timeout by default when running tests
 const defaultDisableTimeout = macroCondition(isTesting()) ? true : false;
@@ -12,7 +13,6 @@ export default class FlashObject {
   @tracked message = '';
   isExitable = true;
   initializedTime = null;
-  isDestroyed = false;
 
   // testHelperDisableTimeout – Set by `disableTimeout` and `enableTimeout` in test-support.js
 
@@ -28,6 +28,13 @@ export default class FlashObject {
     for (const [key, value] of Object.entries(messageOptions)) {
       this[key] = value;
     }
+
+    registerDestructor(this, () => {
+      this.onDestroy?.();
+
+      this._cancelTimer();
+      this._cancelTimer('exitTaskInstance');
+    });
 
     if (this._disableTimeout || this.sticky) {
       return;
@@ -53,17 +60,6 @@ export default class FlashObject {
     this.exitTimerTask();
     this.onDidExitMessage?.();
   }
-
-  destroy() {
-    if (this.onDestroy) {
-      this.onDestroy();
-    }
-
-    this._cancelTimer();
-    this._cancelTimer('exitTaskInstance');
-    this.isDestroyed = true;
-  }
-
   preventExit() {
     this.isExitable = false;
   }
@@ -84,7 +80,7 @@ export default class FlashObject {
   }
 
   exitTimerTask() {
-    if (this.isDestroyed) {
+    if (isDestroyed(this)) {
       return;
     }
     this.exiting = true;
@@ -129,7 +125,7 @@ export default class FlashObject {
     if (queue) {
       queue.removeObject(this);
     }
-    this.destroy();
+    destroy(this);
     this.onDidDestroyMessage?.();
   }
 }
