@@ -11,6 +11,7 @@ import objectWithout from '../utils/object-without';
 import { getOwner } from '@ember/application';
 import flashMessageOptions from '../utils/flash-message-options';
 import getWithDefault from '../utils/get-with-default';
+import { associateDestroyableChild } from '@ember/destroyable';
 
 export default class FlashMessagesService extends Service {
   @(equal('queue.length', 0).readOnly())
@@ -103,7 +104,9 @@ export default class FlashMessagesService extends Service {
       set(flashMessageOptions, key, option);
     }
 
-    return FlashMessage.create(flashMessageOptions);
+    const message = new FlashMessage(flashMessageOptions);
+    associateDestroyableChild(this, message);
+    return message;
   }
 
   _getOptionOrDefault(key, value) {

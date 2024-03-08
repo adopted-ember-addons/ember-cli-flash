@@ -1,34 +1,42 @@
-import Evented from '@ember/object/evented';
-import EmberObject, { set } from '@ember/object';
 import { cancel, later } from '@ember/runloop';
-import { guidFor } from '../utils/computed';
 import { isTesting, macroCondition } from '@embroider/macros';
+import { tracked } from '@glimmer/tracking';
+import { guidFor } from '@ember/object/internals';
+import { destroy, isDestroyed, registerDestructor } from '@ember/destroyable';
 
 // Disable timeout by default when running tests
 const defaultDisableTimeout = macroCondition(isTesting()) ? true : false;
 
-// Note:
-// To avoid https://github.com/adopted-ember-addons/ember-cli-flash/issues/341 from happening, this class can't simply be called Object
-export default class FlashObject extends EmberObject.extend(Evented) {
+export default class FlashObject {
   exitTimer = null;
-  exiting = false;
+  @tracked exiting = false;
+  @tracked message = '';
   isExitable = true;
   initializedTime = null;
 
   // testHelperDisableTimeout – Set by `disableTimeout` and `enableTimeout` in test-support.js
 
-  get disableTimeout() {
+  get _disableTimeout() {
     return this.testHelperDisableTimeout ?? defaultDisableTimeout;
   }
 
-  @(guidFor('message').readOnly())
-  _guid;
+  get _guid() {
+    return guidFor(this.message?.toString());
+  }
 
-  // eslint-disable-next-line ember/classic-decorator-hooks
-  init() {
-    super.init(...arguments);
+  constructor(messageOptions) {
+    for (const [key, value] of Object.entries(messageOptions)) {
+      this[key] = value;
+    }
 
-    if (this.disableTimeout || this.sticky) {
+    registerDestructor(this, () => {
+      this.onDestroy?.();
+
+      this._cancelTimer();
+      this._cancelTimer('exitTaskInstance');
+    });
+
+    if (this._disableTimeout || this.sticky) {
       return;
     }
     this.timerTask();
@@ -50,25 +58,14 @@ export default class FlashObject extends EmberObject.extend(Evented) {
       return;
     }
     this.exitTimerTask();
-    this.trigger('didExitMessage');
+    this.onDidExitMessage?.();
   }
-
-  willDestroy() {
-    if (this.onDestroy) {
-      this.onDestroy();
-    }
-
-    this._cancelTimer();
-    this._cancelTimer('exitTaskInstance');
-    super.willDestroy(...arguments);
-  }
-
   preventExit() {
-    set(this, 'isExitable', false);
+    this.isExitable = false;
   }
 
   allowExit() {
-    set(this, 'isExitable', true);
+    this.isExitable = true;
     this._checkIfShouldExit();
   }
 
@@ -79,19 +76,19 @@ export default class FlashObject extends EmberObject.extend(Evented) {
     const timerTaskInstance = later(() => {
       this.exitMessage();
     }, this.timeout);
-    set(this, 'timerTaskInstance', timerTaskInstance);
+    this.timerTaskInstance = timerTaskInstance;
   }
 
   exitTimerTask() {
-    if (this.isDestroyed) {
+    if (isDestroyed(this)) {
       return;
     }
-    set(this, 'exiting', true);
+    this.exiting = true;
     if (this.extendedTimeout) {
       let exitTaskInstance = later(() => {
         this._teardown();
       }, this.extendedTimeout);
-      set(this, 'exitTaskInstance', exitTaskInstance);
+      this.exitTaskInstance = exitTaskInstance;
     } else {
       this._teardown();
     }
@@ -99,7 +96,7 @@ export default class FlashObject extends EmberObject.extend(Evented) {
 
   _setInitializedTime() {
     let currentTime = new Date().getTime();
-    set(this, 'initializedTime', currentTime);
+    this.initializedTime = currentTime;
 
     return this.initializedTime;
   }
@@ -128,7 +125,7 @@ export default class FlashObject extends EmberObject.extend(Evented) {
     if (queue) {
       queue.removeObject(this);
     }
-    this.destroy();
-    this.trigger('didDestroyMessage');
+    destroy(this);
+    this.onDidDestroyMessage?.();
   }
 }

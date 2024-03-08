@@ -1,8 +1,6 @@
 declare module 'ember-cli-flash/flash/object' {
-  import EmberObject from '@ember/object';
-  import Evented from '@ember/object/evented';
-
-  class FlashObject extends EmberObject.extend(Evented) {
+  export default class FlashObject {
+    message: string;
     exiting: boolean;
     exitTimer: number;
     isExitable: boolean;
@@ -14,5 +12,4 @@ declare module 'ember-cli-flash/flash/object' {
     timerTask(): void;
     exitTimerTask(): void;
   }
-  export default FlashObject;
 }
