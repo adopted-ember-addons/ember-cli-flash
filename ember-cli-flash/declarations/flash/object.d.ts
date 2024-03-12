@@ -11,6 +11,5 @@ declare module 'ember-cli-flash/flash/object' {
     allowExit(): void;
     timerTask(): void;
     exitTimerTask(): void;
-    destroy(): void;
   }
 }
