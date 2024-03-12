@@ -4,8 +4,7 @@ import { classify } from '@ember/string';
 import { htmlSafe } from '@ember/template';
 import { isPresent } from '@ember/utils';
 import { next, cancel } from '@ember/runloop';
-// eslint-disable-next-line ember/no-computed-properties-in-native-classes
-import { action, computed } from '@ember/object';
+import { action } from '@ember/object';
 import { modifier } from 'ember-modifier';
 
 /**
@@ -39,7 +38,6 @@ export default class FlashMessage extends Component {
     return this.showProgress && this.notExiting;
   }
 
-  @computed('args.flash.exiting')
   get exiting() {
     return this.args.flash.exiting;
   }
@@ -52,25 +50,21 @@ export default class FlashMessage extends Component {
     return this.args.messageStylePrefix ?? this._defaultMessageStylePrefix;
   }
 
-  @computed('messageStyle')
   get _defaultMessageStylePrefix() {
     const isFoundation = this.messageStyle === 'foundation';
     return isFoundation ? 'alert-box ' : 'alert alert-';
   }
 
-  @computed('args.flash.type', 'messageStylePrefix')
   get alertType() {
     const flashType = this.args.flash.type || '';
     const prefix = this.messageStylePrefix;
     return `${prefix}${flashType}`;
   }
 
-  @computed('args.flash.type')
   get flashType() {
     return classify(this.args.flash.type || '');
   }
 
-  @computed('args.flash.{showProgress,timeout}')
   get progressDuration() {
     if (!this.args.flash?.showProgress) {
       return false;
