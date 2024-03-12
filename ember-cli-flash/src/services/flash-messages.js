@@ -14,7 +14,7 @@ export default class FlashMessagesService extends Service {
   @tracked queue = [];
 
   get arrangedQueue() {
-    return this.queue.sort(function (a, b) {
+    return this.queue.slice().sort(function (a, b) {
       if (a.priority < b.priority) {
         return 1;
       } else if (a.priority > b.priority) {
