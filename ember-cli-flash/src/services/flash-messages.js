@@ -63,11 +63,11 @@ export default class FlashMessagesService extends Service {
   }
 
   peekFirst() {
-    return this.queue.at(0);
+    return this.queue[0];
   }
 
   peekLast() {
-    return this.queue.at(-1);
+    return this.queue[this.queue.length - 1];
   }
 
   getFlashObject() {
