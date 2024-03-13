@@ -1,0 +1,110 @@
+{
+  "name": "ember-cli-flash",
+  "version": "5.1.0",
+  "description": "Simple, highly configurable flash messages for ember-cli",
+  "keywords": [
+    "ember-addon",
+    "ember",
+    "ember-cli",
+    "flash messages",
+    "flash",
+    "growl",
+    "toastr",
+    "notifications",
+    "notify"
+  ],
+  "homepage": "https://github.com/adopted-ember-addons/ember-cli-flash",
+  "bugs": "https://github.com/adopted-ember-addons/ember-cli-flash/issues",
+  "repository": "https://github.com/adopted-ember-addons/ember-cli-flash",
+  "license": "MIT",
+  "author": "Lauren Tan",
+  "files": [
+    "addon-main.cjs",
+    "declarations",
+    "dist"
+  ],
+  "contributors": [
+    {
+      "name": "Mike North"
+    },
+    {
+      "name": "Scott Batson"
+    },
+    {
+      "name": "Brian Runnells"
+    },
+    {
+      "name": "NullVoxPopuli"
+    }
+  ],
+  "exports": {
+    "./*": {
+      "types": "./declarations/*.d.ts",
+      "default": "./dist/*.js"
+    },
+    "./addon-main.js": "./addon-main.cjs"
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./declarations/*.d.ts"
+      ]
+    }
+  },
+  "scripts": {
+    "build": "rollup --config",
+    "lint": "concurrently 'npm:lint:*(!fix)' --names 'lint:'",
+    "lint:fix": "concurrently 'npm:lint:*:fix' --names 'fix:'",
+    "lint:hbs": "ember-template-lint . --no-error-on-unmatched-pattern",
+    "lint:hbs:fix": "ember-template-lint . --fix --no-error-on-unmatched-pattern",
+    "lint:js": "eslint . --cache",
+    "lint:js:fix": "eslint . --fix",
+    "start": "rollup --config --watch",
+    "test": "echo 'A v2 addon does not have tests, run tests in test-app'"
+  },
+  "dependencies": {
+    "@embroider/addon-shim": "^1.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.0",
+    "@babel/eslint-parser": "^7.19.1",
+    "@babel/plugin-proposal-class-properties": "^7.16.7",
+    "@babel/plugin-proposal-decorators": "^7.20.13",
+    "@babel/plugin-transform-class-static-block": "^7.20.0",
+    "@babel/runtime": "^7.17.0",
+    "@embroider/addon-dev": "^4.1.0",
+    "@rollup/plugin-babel": "^6.0.3",
+    "babel-plugin-ember-template-compilation": "^2.2.0",
+    "concurrently": "^8.0.1",
+    "ember-template-lint": "^5.11.2",
+    "eslint": "^8.33.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-ember": "^11.11.1",
+    "eslint-plugin-n": "^16.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "prettier": "^3.0.3",
+    "prettier-plugin-ember-template-tag": "^1.1.0",
+    "rollup": "^3.21.8",
+    "rollup-plugin-copy": "^3.4.0"
+  },
+  "peerDependencies": {
+    "@ember/string": ">= 3.0.0",
+    "@embroider/macros": "^1.13.2",
+    "ember-modifier": ">= 4.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
+  "ember": {
+    "edition": "octane"
+  },
+  "ember-addon": {
+    "version": 2,
+    "type": "addon",
+    "main": "addon-main.cjs",
+    "app-js": {
+      "./components/flash-message.js": "./dist/_app_/components/flash-message.js",
+      "./services/flash-messages.js": "./dist/_app_/services/flash-messages.js"
+    }
+  }
+}
