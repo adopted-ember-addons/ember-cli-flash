@@ -1,5 +1,19 @@
 # Changelog
 
+## Release (2024-03-13)
+
+ember-cli-flash 6.0.0 (major)
+
+#### :boom: Breaking Change
+* `ember-cli-flash`, `test-app`
+  * [#409](https://github.com/adopted-ember-addons/ember-cli-flash/pull/409) Modernise `FlashMessagesService` ([@gilest](https://github.com/gilest))
+  * [#394](https://github.com/adopted-ember-addons/ember-cli-flash/pull/394) Convert `FlashObject` to native class ([@gilest](https://github.com/gilest))
+* `ember-cli-flash`
+  * [#410](https://github.com/adopted-ember-addons/ember-cli-flash/pull/410) Remove computed decorators from FlashMessage component ([@gilest](https://github.com/gilest))
+
+#### Committers: 1
+- Giles Thompson ([@gilest](https://github.com/gilest))
+
 ## Release (2024-02-29)
 
 ember-cli-flash 5.1.0 (minor)
