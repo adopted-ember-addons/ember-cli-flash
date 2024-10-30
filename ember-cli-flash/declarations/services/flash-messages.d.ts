@@ -1,9 +1,8 @@
 declare module 'ember-cli-flash/services/flash-messages' {
   import Service from '@ember/service';
-  import FlashObject from 'ember-cli-flash/flash/object';
+  import { FlashObjectWithOptions as FlashObject } from 'ember-cli-flash/flash/object';
 
   export interface MessageOptions {
-    type: string;
     priority: number;
     timeout: number;
     sticky: boolean;
@@ -15,6 +14,7 @@ declare module 'ember-cli-flash/services/flash-messages' {
   }
 
   export interface CustomMessageInfo extends Partial<MessageOptions> {
+    type: string;
     message: string;
   }
 
