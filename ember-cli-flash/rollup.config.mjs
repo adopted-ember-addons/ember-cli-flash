@@ -44,7 +44,7 @@ export default {
     // By default, this will load the actual babel config from the file
     // babel.config.json.
     babel({
-      extensions: ['.js', '.gjs'],
+      extensions: ['.js', '.gjs', '.ts', '.gts'],
       babelHelpers: 'bundled',
     }),
 
@@ -53,6 +53,9 @@ export default {
 
     // Ensure that .gjs files are properly integrated as Javascript
     addon.gjs(),
+
+    // Emit .d.ts declaration files
+    addon.declarations('declarations'),
 
     // addons are allowed to contain imports of .css files, which we want rollup
     // to leave alone and keep in the published output.
