@@ -332,7 +332,7 @@ It also accepts your own template:
     <p>{{flash.message}}</p>
     {{#if component.showProgressBar}}
       <div class="alert-progress">
-        <div class="alert-progressBar" style="{{component.progressDuration}}"></div>
+        <div class="alert-progress-bar" style="{{component.progressDuration}}"></div>
       </div>
     {{/if}}
   </FlashMessage>

@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "1.0.0",
+  "packages": [
+    {
+      "name": "@embroider/addon-blueprint",
+      "version": "3.0.0",
+      "blueprints": [
+        {
+          "name": "@embroider/addon-blueprint",
+          "isBaseBlueprint": true,
+          "options": [
+            "--pnpm",
+            "--typescript",
+            "--addon-location=ember-cli-flash",
+            "--test-app-location=test-app",
+            "--test-app-name=test-app"
+          ]
+        }
+      ]
+    }
+  ]
+}

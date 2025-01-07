@@ -1,6 +1,7 @@
 import { visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
+import { setupApplicationTest } from 'test-app/tests/helpers';
+
 import config from '../../config/environment';
 
 const { timeout: defaultTimeout } = config.flashMessageDefaults;
@@ -18,7 +19,7 @@ module('Acceptance | main', function (hooks) {
       .dom('.alert.alert-success p')
       .hasText('Route transitioned successfully');
     assert
-      .dom('.alert.alert-success .alert-progressBar')
+      .dom('.alert.alert-success .alert-progress-bar')
       .hasAttribute('style', `transition-duration: ${defaultTimeout}ms`);
 
     assert.dom('.alert.alert-warning').exists();
