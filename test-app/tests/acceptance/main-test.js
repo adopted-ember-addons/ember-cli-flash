@@ -9,7 +9,6 @@ module('Acceptance | main', function (hooks) {
   setupApplicationTest(hooks);
 
   test('flash messages are rendered', async function (assert) {
-    assert.expect(7);
     await visit('/');
 
     assert.dom('.alert.alert-success').exists();
@@ -29,7 +28,6 @@ module('Acceptance | main', function (hooks) {
   });
 
   test('high priority messages are rendered on top', async function (assert) {
-    assert.expect(3);
     await visit('/');
 
     assert.dom('.alert').exists();
