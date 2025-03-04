@@ -1,6 +1,7 @@
 declare module 'ember-cli-flash/flash/object' {
+  import { CustomMessageInfo } from 'ember-cli-flash/services/flash-messages';
+
   export default class FlashObject {
-    message: string;
     exiting: boolean;
     exitTimer: number;
     isExitable: boolean;
@@ -12,4 +13,6 @@ declare module 'ember-cli-flash/flash/object' {
     timerTask(): void;
     exitTimerTask(): void;
   }
+
+  export type FlashObjectWithOptions = FlashObject & CustomMessageInfo;
 }
