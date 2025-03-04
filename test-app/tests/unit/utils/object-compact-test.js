@@ -19,7 +19,7 @@ module('Unit | Utility | object compact', function () {
     assert.deepEqual(
       result,
       expectedResult,
-      'it should not contain `null` or `undefined` elements'
+      'it should not contain `null` or `undefined` elements',
     );
   });
 });

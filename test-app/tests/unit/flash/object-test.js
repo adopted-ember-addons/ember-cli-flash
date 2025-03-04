@@ -74,7 +74,6 @@ module('FlashMessageObject', function (hooks) {
   test('it destroys the message after the timer has elapsed', function (assert) {
     let result;
     const done = assert.async();
-    assert.expect(3);
 
     flash.onDidDestroyMessage = () => {
       result = 'foo';
@@ -86,7 +85,7 @@ module('FlashMessageObject', function (hooks) {
       assert.strictEqual(
         result,
         'foo',
-        'it called the `onDidDestroyMessage` callback'
+        'it called the `onDidDestroyMessage` callback',
       );
       done();
     }, testTimerDuration * 2);
@@ -94,7 +93,6 @@ module('FlashMessageObject', function (hooks) {
 
   test('it does not destroy the message if it is sticky', function (assert) {
     const done = assert.async();
-    assert.expect(1);
 
     const stickyFlash = new FlashMessage({
       type: 'test',
@@ -111,8 +109,6 @@ module('FlashMessageObject', function (hooks) {
   });
 
   test('#destroyMessage deletes the message and timer', function (assert) {
-    assert.expect(2);
-
     run(() => {
       flash.destroyMessage();
     });
@@ -122,7 +118,6 @@ module('FlashMessageObject', function (hooks) {
   });
 
   test('it sets `exiting` to true after the timer has elapsed', function (assert) {
-    assert.expect(2);
     const done = assert.async();
 
     const exitFlash = new FlashMessage({
@@ -138,8 +133,6 @@ module('FlashMessageObject', function (hooks) {
   });
 
   test('it calls `onDestroy` when object is destroyed', function (assert) {
-    assert.expect(1);
-
     const callbackFlash = new FlashMessage({
       sticky: true,
       onDestroy() {

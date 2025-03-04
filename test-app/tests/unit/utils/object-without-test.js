@@ -19,7 +19,7 @@ module('Unit | Utility | object without', function () {
     assert.deepEqual(
       result,
       expectedResult,
-      'it returns an object without the specified keys'
+      'it returns an object without the specified keys',
     );
   });
 });

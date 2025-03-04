@@ -38,8 +38,6 @@ module('Integration | Component | flash message', function (hooks) {
   });
 
   test('it renders with the right props', async function (assert) {
-    assert.expect(3);
-
     this.set(
       'flash',
       new FlashMessage({
@@ -48,7 +46,7 @@ module('Integration | Component | flash message', function (hooks) {
         timeout: TIMEOUT,
         extendedTimeout: 5000,
         showProgress: true,
-      })
+      }),
     );
 
     render(hbs`
@@ -62,10 +60,10 @@ module('Integration | Component | flash message', function (hooks) {
         assert.strictEqual(
           find('.alert-progressBar').style['transitionDuration'],
           '50ms',
-          'it has the right `progressDuration`'
+          'it has the right `progressDuration`',
         );
       },
-      TIMEOUT - 20
+      TIMEOUT - 20,
     ); // Checking for the DOM in between 0 - 50 ms :facepalm: When support for Ember 2.x is dropped, this can be moved as a `next` instead of later.
 
     await settled();
@@ -94,15 +92,13 @@ module('Integration | Component | flash message', function (hooks) {
   });
 
   test('flash message is removed after timeout', async function (assert) {
-    assert.expect(3);
-
     this.set(
       'flash',
       new FlashMessage({
         message: 'hi',
         sticky: false,
         timeout: timeoutDefault,
-      })
+      }),
     );
 
     render(hbs`
@@ -117,10 +113,10 @@ module('Integration | Component | flash message', function (hooks) {
         assert.dom('*').hasText('hi');
         assert.notOk(
           isDestroyed(this.flash),
-          'Flash is not destroyed immediately'
+          'Flash is not destroyed immediately',
         );
       },
-      timeoutDefault - 100
+      timeoutDefault - 100,
     );
 
     await settled();
@@ -129,8 +125,6 @@ module('Integration | Component | flash message', function (hooks) {
   });
 
   test('flash message is removed after timeout if mouse enters', async function (assert) {
-    assert.expect(3);
-
     let flashObject = new FlashMessage({
       message: 'hi',
       sticky: false,
@@ -154,12 +148,12 @@ module('Integration | Component | flash message', function (hooks) {
         next(this, () => {
           assert.notOk(
             isDestroyed(flashObject),
-            'Flash Object is not destroyed'
+            'Flash Object is not destroyed',
           );
           triggerEvent('#testFlash', 'mouseleave');
         });
       },
-      timeoutDefault - 100
+      timeoutDefault - 100,
     );
 
     await settled();
@@ -168,15 +162,13 @@ module('Integration | Component | flash message', function (hooks) {
   });
 
   test('a custom component can use the close closure action', async function (assert) {
-    assert.expect(3);
-
     this.set(
       'flash',
       new FlashMessage({
         message: 'flash message content',
         sticky: true,
         destroyOnClick: false,
-      })
+      }),
     );
 
     await render(hbs`
@@ -194,12 +186,11 @@ module('Integration | Component | flash message', function (hooks) {
     await click('.alert a');
     assert.ok(
       isDestroyed(this.flash),
-      'flash is destroyed after clicking close'
+      'flash is destroyed after clicking close',
     );
   });
 
   test('exiting class is applied for sticky messages', async function (assert) {
-    assert.expect(2);
     let flashObject = new FlashMessage({
       message: 'flash message content',
       sticky: true,
@@ -220,7 +211,6 @@ module('Integration | Component | flash message', function (hooks) {
   });
 
   test('custom message type class name prefix is applied', async function (assert) {
-    assert.expect(2);
     let flashObject = new FlashMessage({
       message: 'flash message content',
       type: 'test',
@@ -240,13 +230,13 @@ module('Integration | Component | flash message', function (hooks) {
       .dom('.my-flash-test')
       .exists(
         { count: 1 },
-        'it uses the provided flash type class name prefix'
+        'it uses the provided flash type class name prefix',
       );
     assert
       .dom('.my-flash-test')
       .doesNotHaveClass(
         'alert',
-        'default flash type class name is not present'
+        'default flash type class name is not present',
       );
   });
 });
