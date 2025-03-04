@@ -25,6 +25,8 @@ module.exports = {
     'ember/no-classic-classes': 'warn',
     'ember/no-computed-properties-in-native-classes': 'warn',
     'ember/classic-decorator-hooks': 'warn',
+    // TODO
+    'ember/no-runloop': 'warn',
   },
   overrides: [
     // node files

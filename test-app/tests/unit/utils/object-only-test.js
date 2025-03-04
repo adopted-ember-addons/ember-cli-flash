@@ -19,7 +19,7 @@ module('Unit | Utility | object only', function () {
     assert.deepEqual(
       result,
       expectedResult,
-      'it returns an object with only the specified keys'
+      'it returns an object with only the specified keys',
     );
   });
 });
