@@ -1,5 +1,28 @@
 # Changelog
 
+## Release (2025-03-04)
+
+ember-cli-flash 6.0.0 (major)
+
+#### :boom: Breaking Change
+* `ember-cli-flash`, `test-app`
+  * [#409](https://github.com/adopted-ember-addons/ember-cli-flash/pull/409) Modernise `FlashMessagesService` ([@gilest](https://github.com/gilest))
+  * [#394](https://github.com/adopted-ember-addons/ember-cli-flash/pull/394) Convert `FlashObject` to native class ([@gilest](https://github.com/gilest))
+* `ember-cli-flash`
+  * [#410](https://github.com/adopted-ember-addons/ember-cli-flash/pull/410) Remove computed decorators from FlashMessage component ([@gilest](https://github.com/gilest))
+
+#### :rocket: Enhancement
+* `ember-cli-flash`
+  * [#411](https://github.com/adopted-ember-addons/ember-cli-flash/pull/411) fix: add type for spreaded `FlashObject` options ([@charlesfries](https://github.com/charlesfries))
+
+#### :house: Internal
+* `test-app`
+  * [#415](https://github.com/adopted-ember-addons/ember-cli-flash/pull/415) Upgrade test-app to v5 app blueprint ([@gilest](https://github.com/gilest))
+
+#### Committers: 2
+- Charles Fries ([@charlesfries](https://github.com/charlesfries))
+- Giles Thompson ([@gilest](https://github.com/gilest))
+
 ## Release (2024-02-29)
 
 ember-cli-flash 5.1.0 (minor)
