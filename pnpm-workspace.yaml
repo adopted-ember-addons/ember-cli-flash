@@ -1,3 +1,15 @@
-packages:
-  - 'ember-cli-flash'
-  - 'test-app'
+# Docs: https://pnpm.io/settings
+# https://github.com/emberjs/rfcs/pull/907
+
+# we don't want addons to be bad citizens of the ecosystem
+autoInstallPeers: false
+
+# we want true isolation,
+# if a dependency is not declared, we want an error
+resolvePeersFromWorkspaceRoot: false
+
+verifyDepsBeforeRun: install # always verify deps before running any scripts
+
+peerDependencyRules:
+  ignoreMissing:
+    - '@popperjs/core' # we don't need to install this for bootstrap (no dropdowns/popovers used)
