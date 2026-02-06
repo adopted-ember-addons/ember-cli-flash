@@ -9,47 +9,75 @@ This ember addon adds a flash message service and component to your app.
 
 ## Table of Contents
 <!-- toc -->
-- [Installation](#installation)
-- [Compatibility](#compatibility)
-- [Usage](#usage)
-  * [Convenience methods (Bootstrap / Foundation alerts)](#convenience-methods-bootstrap--foundation-alerts)
-    + [Bootstrap](#bootstrap)
-    + [Foundation](#foundation)
-  * [Custom messages](#custom-messages)
-    + [Custom messages API](#custom-messages-api)
-  * [Animated example](#animated-example)
-  * [Arbitrary options](#arbitrary-options)
-    + [Example use case](#example-use-case)
-  * [Clearing all messages on screen](#clearing-all-messages-on-screen)
-  * [Returning flash object](#returning-flash-object)
-- [Service defaults](#service-defaults)
-- [Displaying flash messages](#displaying-flash-messages)
-  * [Custom `close` action](#custom-close-action)
-  * [Styling with Foundation or Bootstrap](#styling-with-foundation-or-bootstrap)
-  * [Sort messages by priority](#sort-messages-by-priority)
-  * [Rounded corners (Foundation)](#rounded-corners-foundation)
-  * [Custom flash message component](#custom-flash-message-component)
-- [Acceptance / Integration tests](#acceptance--integration-tests)
-- [Unit testing](#unit-testing)
-- [Styling](#styling)
-- [License](#license)
-- [Contributors](#contributors)
+- [ember-cli-flash](#ember-cli-flash)
+  - [Table of Contents](#table-of-contents)
+  - [Installation](#installation)
+  - [Compatibility](#compatibility)
+  - [Usage](#usage)
+    - [Convenience methods (Bootstrap / Foundation alerts)](#convenience-methods-bootstrap--foundation-alerts)
+      - [Bootstrap](#bootstrap)
+      - [Foundation](#foundation)
+    - [Custom messages](#custom-messages)
+      - [Custom messages API](#custom-messages-api)
+    - [Animated example](#animated-example)
+    - [Arbitrary options](#arbitrary-options)
+      - [Example use case](#example-use-case)
+    - [Clearing all messages on screen](#clearing-all-messages-on-screen)
+    - [Returning flash object](#returning-flash-object)
+    - [Finding and removing messages by custom fields](#finding-and-removing-messages-by-custom-fields)
+  - [Service defaults](#service-defaults)
+  - [TypeScript](#typescript)
+    - [Basic Usage](#basic-usage)
+    - [Custom Fields with Generics](#custom-fields-with-generics)
+  - [Displaying flash messages](#displaying-flash-messages)
+    - [Custom `close` action](#custom-close-action)
+    - [Styling with Foundation or Bootstrap](#styling-with-foundation-or-bootstrap)
+    - [Styling with user-specified message type class prefix](#styling-with-user-specified-message-type-class-prefix)
+    - [Sort messages by priority](#sort-messages-by-priority)
+    - [Rounded corners (Foundation)](#rounded-corners-foundation)
+    - [Custom flash message component](#custom-flash-message-component)
+  - [Test helpers](#test-helpers)
+  - [Testing](#testing)
+  - [Styling](#styling)
+  - [Upgrading](#upgrading)
+  - [License](#license)
+  - [Contributors](#contributors)
 <!-- tocstop -->
 
 ## Installation
-```
+
+```shell
 ember install ember-cli-flash
 ```
 
 ## Compatibility
-This addon is tested against the Ember `release`, `beta` and `canary` channels, back to Ember `v3.28`.
+
+- Ember.js v4.12 or above
+- Embroider or ember-auto-import v2
+- TypeScript 5.x (optional)
+
+This addon is tested against the Ember `release`, `beta` and `canary` channels.
 
 ## Usage
+
 Usage is very simple. First, add one of the [template examples](#displaying-flash-messages) to your app. Then, inject the `flashMessages` service and use one of its convenience methods:
+
+```typescript
+import Component from '@glimmer/component';
+import { service } from '@ember/service';
+
+import type { FlashMessagesService } from 'ember-cli-flash';
+
+export default class MyComponent extends Component {
+  @service declare flashMessages: FlashMessagesService;
+}
+```
+
+Or in JavaScript:
 
 ```javascript
 import Component from '@glimmer/component';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 
 export default class MyComponent extends Component {
   @service flashMessages;
@@ -57,15 +85,18 @@ export default class MyComponent extends Component {
 ```
 
 ### Convenience methods (Bootstrap / Foundation alerts)
+
 You can quickly add flash messages using these methods from the service:
 
 #### Bootstrap
+
 - `.success`
 - `.warning`
 - `.info`
 - `.danger`
 
 #### Foundation
+
 - `.success`
 - `.warning`
 - `.info`
@@ -83,23 +114,42 @@ this.flashMessages.success('Success!');
 You can take advantage of Promises, and their `.then` and `.catch` methods. To add a flash message after saving a model (or when it fails):
 
 ```javascript
-@action saveFoo() {
-  const flashMessages = this.flashMessages;
+import { action } from '@ember/object';
 
+// In your component or controller class...
+@action
+saveFoo() {
   this.model
     .save()
     .then((res) => {
-      flashMessages.success('Successfully saved!');
+      this.flashMessages.success('Successfully saved!');
       doSomething(res);
     })
     .catch((err) => {
-      flashMessages.danger('Something went wrong!');
+      this.flashMessages.danger('Something went wrong!');
       handleError(err);
     });
 }
 ```
 
+Or with async/await:
+
+```javascript
+@action
+async saveFoo() {
+  try {
+    const res = await this.model.save();
+    this.flashMessages.success('Successfully saved!');
+    doSomething(res);
+  } catch (err) {
+    this.flashMessages.danger('Something went wrong!');
+    handleError(err);
+  }
+}
+```
+
 ### Custom messages
+
 If the convenience methods don't fit your needs, you can add custom messages with `add`:
 
 ```javascript
@@ -109,6 +159,7 @@ this.flashMessages.add({
 ```
 
 #### Custom messages API
+
 You can also pass in options to custom messages:
 
 ```javascript
@@ -187,19 +238,17 @@ this.flashMessages.success('This is amazing', {
   A function to be called when the flash message is destroyed.
 
 ### Animated example
-To animate messages, set `extendedTimeout` to something higher than zero. Here we've chosen 500ms.
+
+To animate messages, set `extendedTimeout` to something higher than zero when adding flash messages:
 
 ```javascript
-module.exports = function (environment) {
-  let ENV = {
-    flashMessageDefaults: {
-      extendedTimeout: 500,
-    },
-  };
-}
+this.flashMessages.success('Saved!', {
+  extendedTimeout: 500,
+});
 ```
 
 Then animate using CSS transitions, using the `.active` and `.active.exiting` classes.
+
 ```scss
 .alert {
   opacity: 0;
@@ -221,6 +270,7 @@ Then animate using CSS transitions, using the `.active` and `.active.exiting` cl
 ```
 
 ### Arbitrary options
+
 You can also add arbitrary options to messages:
 
 ```javascript
@@ -237,22 +287,34 @@ this.flashMessages.add({
 ```
 
 #### Example use case
+
 This makes use of the [component helper](http://emberjs.com/blog/2015/03/27/ember-1-11-0-released.html#toc_component-helper), allowing the template that ultimately renders the flash to be dynamic:
 
-```handlebars
-{{#each this.flashMessages.queue as |flash|}}
-  <FlashMessage @flash={{flash}} as |component flash|>
-    {{#if flash.componentName}}
-      {{component flash.componentName content=flash.content}}
-    {{else}}
-      <h6>{{component.flashType}}</h6>
-      <p>{{flash.message}}</p>
-    {{/if}}
-  </FlashMessage>
-{{/each}}
+```gjs
+import Component from '@glimmer/component';
+import { service } from '@ember/service';
+import { FlashMessage } from 'ember-cli-flash';
+
+export default class MyComponent extends Component {
+  @service flashMessages;
+
+  <template>
+    {{#each this.flashMessages.queue as |flash|}}
+      <FlashMessage @flash={{flash}} as |component flash|>
+        {{#if flash.componentName}}
+          {{component flash.componentName content=flash.content}}
+        {{else}}
+          <h6>{{component.flashType}}</h6>
+          <p>{{flash.message}}</p>
+        {{/if}}
+      </FlashMessage>
+    {{/each}}
+  </template>
+}
 ```
 
 ### Clearing all messages on screen
+
 It's best practice to use flash messages sparingly, only when you need to notify the user of something. If you're sending too many messages, and need a way for your users to clear all messages from screen, you can use this method:
 
 ```javascript
@@ -260,6 +322,7 @@ this.flashMessages.clearMessages();
 ```
 
 ### Returning flash object
+
 The flash message service is designed to be Fluent, allowing you to chain methods on the service easily. The service should handle most cases but if you want to access the flash object directly, you can use the `getFlashObject` method:
 
 ```javascript
@@ -271,13 +334,44 @@ const flashObject = this.flashMessages.add({
 
 You can then manipulate the `flashObject` directly. Note that `getFlashObject` must be the last method in your chain as it returns the flash object directly.
 
-## Service defaults
-In `config/environment.js`, you can override service defaults in the `flashMessageDefaults` object:
+### Finding and removing messages by custom fields
 
-```javascript
-module.exports = function(environment) {
-  let ENV = {
-    flashMessageDefaults: {
+If you need to track and manage flash messages by a custom identifier (e.g., for notifications that need to be updated or dismissed programmatically), you can use `findBy` and `removeBy`:
+
+```typescript
+// Add a flash with a custom id
+this.flashMessages.success('Processing...', {
+  id: 'upload-progress',
+});
+
+// Later, find and update or remove it
+const flash = this.flashMessages.findBy('id', 'upload-progress');
+if (flash) {
+  flash.destroyMessage();
+}
+
+// Or use removeBy for a simpler one-liner
+this.flashMessages.removeBy('id', 'upload-progress');
+```
+
+This is useful for scenarios like:
+
+- Dismissing a specific notification when an action completes
+- Replacing a "loading" message with a "success" message
+- Managing notifications by category or source
+
+## Service defaults
+
+To customize default values, extend the service and override the `flashMessageDefaults` getter:
+
+```typescript
+// app/services/flash-messages.ts
+import { FlashMessagesService } from 'ember-cli-flash';
+
+export default class MyFlashMessages extends FlashMessagesService {
+  get flashMessageDefaults() {
+    return {
+      ...super.flashMessageDefaults,
       // flash message defaults
       timeout: 5000,
       extendedTimeout: 0,
@@ -287,10 +381,33 @@ module.exports = function(environment) {
 
       // service defaults
       type: 'alpaca',
-      types: [ 'alpaca', 'notice', 'foobar' ],
+      types: ['alpaca', 'notice', 'foobar'],
       preventDuplicates: false,
-    },
-  };
+    };
+  }
+}
+```
+
+Or in JavaScript:
+
+```javascript
+// app/services/flash-messages.js
+import { FlashMessagesService } from 'ember-cli-flash';
+
+export default class MyFlashMessages extends FlashMessagesService {
+  get flashMessageDefaults() {
+    return {
+      ...super.flashMessageDefaults,
+      timeout: 5000,
+      extendedTimeout: 0,
+      priority: 200,
+      sticky: true,
+      showProgress: true,
+      type: 'alpaca',
+      types: ['alpaca', 'notice', 'foobar'],
+      preventDuplicates: false,
+    };
+  }
 }
 ```
 
@@ -314,94 +431,218 @@ See the [options](#custom-messages-api) section for information about flash mess
 
   If `true`, only 1 instance of a flash message (based on its `message`) can be added at a time. For example, adding two flash messages with the message `"Great success!"` would only add the first instance into the queue, and the second is ignored.
 
-## Displaying flash messages
-Then, to display somewhere in your app, add this to your template:
+## TypeScript
 
-```handlebars
-{{#each this.flashMessages.queue as |flash|}}
-  <FlashMessage @flash={{flash}} />
-{{/each}}
+This addon is fully typed and supports TypeScript out of the box.
+
+### Basic Usage
+
+The service and components work seamlessly with TypeScript:
+
+```typescript
+import Component from '@glimmer/component';
+import { service } from '@ember/service';
+import type { FlashMessagesService } from 'ember-cli-flash';
+
+export default class MyComponent extends Component {
+  @service declare flashMessages: FlashMessagesService;
+
+  showNotification() {
+    this.flashMessages.success('Operation completed!');
+  }
+}
+```
+
+### Custom Fields with Generics
+
+If your app adds custom fields to flash messages (like `id`, `category`, or `action`), you can get full type safety by using generics:
+
+```typescript
+// app/services/flash-messages.ts
+import { FlashMessagesService } from 'ember-cli-flash';
+
+interface CustomFlashFields {
+  id?: string;
+  category?: 'system' | 'user' | 'background';
+  action?: () => void;
+}
+
+export default class MyFlashMessages extends FlashMessagesService<CustomFlashFields> {
+  get flashMessageDefaults() {
+    return {
+      ...super.flashMessageDefaults,
+      timeout: 5000,
+    };
+  }
+}
+
+// Don't forget to re-export the type
+declare module '@ember/service' {
+  interface Registry {
+    'flash-messages': MyFlashMessages;
+  }
+}
+```
+
+Now you get type checking for your custom fields:
+
+```typescript
+// Type-safe custom fields
+this.flashMessages.success('File uploaded', {
+  id: 'upload-123',
+  category: 'user',
+});
+
+// TypeScript will catch typos
+this.flashMessages.success('Oops', {
+  categroy: 'user', // Error: Did you mean 'category'?
+});
+```
+
+## Displaying flash messages
+
+Then, to display somewhere in your app, add this to your component:
+
+```gjs
+import Component from '@glimmer/component';
+import { service } from '@ember/service';
+import { FlashMessage } from 'ember-cli-flash';
+
+export default class MyComponent extends Component {
+  @service flashMessages;
+
+  <template>
+    {{#each this.flashMessages.queue as |flash|}}
+      <FlashMessage @flash={{flash}} />
+    {{/each}}
+  </template>
+}
 ```
 
 It also accepts your own template:
 
-```handlebars
-{{#each this.flashMessages.queue as |flash|}}
-  <FlashMessage @flash={{flash}} as |component flash|>
-    <h6>{{component.flashType}}</h6>
-    <p>{{flash.message}}</p>
-    {{#if component.showProgressBar}}
-      <div class="alert-progress">
-        <div class="alert-progressBar" style="{{component.progressDuration}}"></div>
-      </div>
-    {{/if}}
-  </FlashMessage>
-{{/each}}
+```gjs
+import Component from '@glimmer/component';
+import { service } from '@ember/service';
+import { FlashMessage } from 'ember-cli-flash';
+
+export default class MyComponent extends Component {
+  @service flashMessages;
+
+  <template>
+    {{#each this.flashMessages.queue as |flash|}}
+      <FlashMessage @flash={{flash}} as |component flash|>
+        <h6>{{component.flashType}}</h6>
+        <p>{{flash.message}}</p>
+        {{#if component.showProgressBar}}
+          <div class="alert-progress">
+            <div class="alert-progressBar" style={{component.progressDuration}}></div>
+          </div>
+        {{/if}}
+      </FlashMessage>
+    {{/each}}
+  </template>
+}
 ```
 
 ### Custom `close` action
+
 The `close` action is always passed to the component whether it is used or not. It can be used to implement your own close button, such as an `x` in the top-right corner.
 
 When using a custom `close` action, you will want to set `destroyOnClick=false` to override the default (`destroyOnClick=true`). You could do this globally in `flashMessageDefaults`.
 
-```handlebars
-{{#each this.flashMessages.queue as |flash|}}
-  <FlashMessage @flash={{flash}} as |component flash close|>
-    {{flash.message}}
-    <span role="button" {{on "click" close}}>x</span>
-  </FlashMessage>
-{{/each}}
+```gjs
+import { on } from '@ember/modifier';
+import { FlashMessage } from 'ember-cli-flash';
+
+<template>
+  {{#each @flashMessages.queue as |flash|}}
+    <FlashMessage @flash={{flash}} as |component flash close|>
+      {{flash.message}}
+      <span role="button" {{on "click" close}}>x</span>
+    </FlashMessage>
+  {{/each}}
+</template>
 ```
 
 ### Styling with Foundation or Bootstrap
+
 By default, flash messages will have Bootstrap style class names. If you want to use Foundation, simply specify the `messageStyle` on the component:
 
-```handlebars
-{{#each this.flashMessages.queue as |flash|}}
-  <FlashMessage @flash={{flash}} @messageStyle='foundation' />
-{{/each}}
+```gjs
+import { FlashMessage } from 'ember-cli-flash';
+
+<template>
+  {{#each @flashMessages.queue as |flash|}}
+    <FlashMessage @flash={{flash}} @messageStyle="foundation" />
+  {{/each}}
+</template>
 ```
 
 ### Styling with user-specified message type class prefix
+
 If you don't wish to use the class names associated with Bootstrap / Foundation, specify the `messageStylePrefix` on the component. This will override the class name prefixes with your own. For example, `messageStylePrefix='special-alert-'` would create flash messages with the class `special-alert-succcess`
 
-```handlebars
-{{#each this.flashMessages.queue as |flash|}}
-  <FlashMessage @flash={{flash}} @messageStylePrefix='special-alert-' />
-{{/each}}
+```gjs
+import { FlashMessage } from 'ember-cli-flash';
+
+<template>
+  {{#each @flashMessages.queue as |flash|}}
+    <FlashMessage @flash={{flash}} @messageStylePrefix="special-alert-" />
+  {{/each}}
+</template>
 ```
 
 ### Sort messages by priority
-To display messages sorted by priority, add this to your template:
 
-```handlebars
-{{#each this.flashMessages.arrangedQueue as |flash|}}
-  <FlashMessage @flash={{flash}} />
-{{/each}}
+To display messages sorted by priority, use `arrangedQueue` instead of `queue`:
+
+```gjs
+import { FlashMessage } from 'ember-cli-flash';
+
+<template>
+  {{#each @flashMessages.arrangedQueue as |flash|}}
+    <FlashMessage @flash={{flash}} />
+  {{/each}}
+</template>
 ```
 
 ### Rounded corners (Foundation)
+
 To add `radius` or `round` type corners in Foundation:
 
-```handlebars
-{{#each this.flashMessages.arrangedQueue as |flash|}}
-  <FlashMessage @flash={{flash}} @messageStyle='foundation' class='radius' />
-{{/each}}
+```gjs
+import { FlashMessage } from 'ember-cli-flash';
+
+<template>
+  {{#each @flashMessages.arrangedQueue as |flash|}}
+    <FlashMessage @flash={{flash}} @messageStyle="foundation" class="radius" />
+  {{/each}}
+</template>
 ```
 
-```handlebars
-{{#each this.flashMessages.arrangedQueue as |flash|}}
-  <FlashMessage @flash={{flash}} @messageStyle='foundation' class='round' />
-{{/each}}
+```gjs
+import { FlashMessage } from 'ember-cli-flash';
+
+<template>
+  {{#each @flashMessages.arrangedQueue as |flash|}}
+    <FlashMessage @flash={{flash}} @messageStyle="foundation" class="round" />
+  {{/each}}
+</template>
 ```
 
 ### Custom flash message component
+
 If the provided component isn't to your liking, you can easily create your own. All you need to do is pass in the `flash` object to that component:
 
-```handlebars
-{{#each this.flashMessages.queue as |flash|}}
-  <CustomComponent @flash={{flash}} />
-{{/each}}
+```gjs
+import CustomComponent from './custom-component';
+
+<template>
+  {{#each @flashMessages.queue as |flash|}}
+    <CustomComponent @flash={{flash}} />
+  {{/each}}
+</template>
 ```
 
 ## Test helpers
@@ -465,9 +706,9 @@ module('Application | Component | foo-page', function (hooks) {
 });
 ```
 
-## Acceptance / Integration tests
+## Testing
 
-Some example tests below, based on qunit.
+Some example tests below, based on QUnit.
 
 An example acceptance test:
 
@@ -507,45 +748,49 @@ module('Integration | Component | x-foo', function (hooks) {
   setupRenderingTest(hooks);
 
   hooks.beforeEach(function () {
-    // We have to register any types we expect to use in this component
+    // Register any types you expect to use in this component
     const typesUsed = ['info', 'warning', 'success'];
     this.owner.lookup('service:flash-messages').registerTypes(typesUsed);
   });
 
-  test('it renders', function (assert) {
+  test('it renders', async function (assert) {
     await render(hbs`<XFoo/>`);
-    ...
+    // ...
   });
 });
 ```
 
-## Unit testing
-For unit tests that require the `flashMessages` service, you'll need to do a small bit of setup:
+For unit tests that require the `flashMessages` service:
 
 ```js
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 
-module('Container | Route | foo', function (hooks) {
+module('Unit | Route | foo', function (hooks) {
   setupTest(hooks);
 
   hooks.beforeEach(function () {
-    // We have to register any types we expect to use in this component
     const typesUsed = ['info', 'warning', 'success'];
     this.owner.lookup('service:flash-messages').registerTypes(typesUsed);
   });
 
-  test('it does the thing it should do', function (assert) {
+  test('it does the thing', function (assert) {
     const subject = this.owner.lookup('route:foo');
-    ...
+    // ...
   });
 });
 ```
 
 ## Styling
+
 This addon is minimal and does not currently ship with a stylesheet. You can style flash messages by targeting the appropriate alert classes in your CSS.
 
+## Upgrading
+
+See [UPGRADING.md](UPGRADING.md) for migration guides between major versions.
+
 ## License
+
 [MIT](LICENSE.md)
 
 ## Contributors
