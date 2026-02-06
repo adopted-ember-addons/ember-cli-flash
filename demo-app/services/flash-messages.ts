@@ -1,5 +1,7 @@
 import FlashMessagesService from '#src/services/flash-messages.ts';
 
+import type { FlashObjectOptions } from '#src/flash/object.ts';
+
 /**
  * Custom fields interface for our flash messages.
  * This demonstrates TypeScript generics support.
@@ -15,13 +17,24 @@ export interface CustomFlashFields {
   onAction?: () => void;
 }
 
+/** Options type combining flash options with custom fields */
+type Options = FlashObjectOptions<CustomFlashFields> & CustomFlashFields;
+
 /**
  * Extended FlashMessages service demonstrating:
  * - TypeScript generics for custom fields
  * - Custom default configuration
  * - Custom convenience methods
+ * - Dynamically registered custom types
  */
 export default class MyFlashMessagesService extends FlashMessagesService<CustomFlashFields> {
+  /**
+   * Declare custom types not in the base class.
+   * Base class already declares: success, info, warning, danger, alert, secondary
+   */
+  declare error: (message: string, options?: Options) => this;
+  declare notice: (message: string, options?: Options) => this;
+
   /**
    * Override defaults to customize behavior
    */
@@ -30,6 +43,17 @@ export default class MyFlashMessagesService extends FlashMessagesService<CustomF
       ...super.flashMessageDefaults,
       timeout: 4000,
       showProgress: false,
+      // Add custom types (base types are included automatically)
+      types: [
+        'success',
+        'info',
+        'warning',
+        'danger',
+        'alert',
+        'secondary',
+        'error',
+        'notice',
+      ],
     };
   }
 

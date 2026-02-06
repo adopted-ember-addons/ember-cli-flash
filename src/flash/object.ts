@@ -42,8 +42,8 @@ export default class FlashObject<
   // Defaults to true in test environment via @embroider/macros
   static isTimeoutDisabled = defaultDisableTimeout;
 
-  // Index signature for custom properties from T
-  [key: string]: unknown;
+  // Note: Custom properties from T are copied at runtime in constructor
+  // TypeScript sees them via FlashObject<T> & T intersection in service/component
 
   @tracked exiting = false;
 
