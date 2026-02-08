@@ -76,6 +76,19 @@ export default class DemoExamples extends Component {
     });
   };
 
+  // Custom typed methods (declared in service)
+  showError = () => {
+    this.flashMessages.error('Something went wrong!', {
+      category: 'system',
+    });
+  };
+
+  showNotice = () => {
+    this.flashMessages.notice('Did you know? This is a custom notice type.', {
+      timeout: 5000,
+    });
+  };
+
   // Custom fields with generics
   showWithCustomFields = () => {
     this.flashMessages.success('Message with custom fields', {
@@ -319,17 +332,35 @@ export default class DemoExamples extends Component {
       <p class="text-muted small mb-3">
         Use
         <code>add()</code>
-        with any Bootstrap alert type or your own custom types
+        with any Bootstrap alert type, or declare custom types in your service
       </p>
-      <button
-        type="button"
-        class="btn btn-secondary"
-        {{on "click" this.showCustomType}}
-      >
-        Show Secondary Type
-      </button>
-      <pre><code>this.flashMessages.add({ message: 'Custom type message', type:
-          'secondary', timeout: 4000, });</code></pre>
+      <div class="btn-group-example mb-2">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          {{on "click" this.showCustomType}}
+        >
+          Secondary (via add)
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          {{on "click" this.showError}}
+        >
+          Error (custom type)
+        </button>
+        <button
+          type="button"
+          class="btn btn-light"
+          {{on "click" this.showNotice}}
+        >
+          Notice (custom type)
+        </button>
+      </div>
+      <pre><code>// Custom types declared in service: // declare error:
+          (message: string, options?: Options) => this;
+          this.flashMessages.error('Something went wrong!');
+          this.flashMessages.notice('Did you know?');</code></pre>
     </section>
 
     {{! TypeScript Generics }}

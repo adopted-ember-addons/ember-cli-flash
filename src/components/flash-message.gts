@@ -8,20 +8,28 @@ import { modifier } from 'ember-modifier';
 import type { Timer } from '@ember/runloop';
 import type FlashObject from '../flash/object.ts';
 
-export interface FlashMessageSignature {
+// FlashObject with custom properties from T accessible in yielded block
+type FlashWithCustomProps<T extends Record<string, unknown>> = FlashObject<T> &
+  T;
+
+export interface FlashMessageSignature<
+  T extends Record<string, unknown> = Record<string, unknown>,
+> {
   Args: {
-    flash: FlashObject;
+    flash: FlashObject<T>;
     messageStyle?: 'bootstrap' | 'foundation';
     messageStylePrefix?: string;
     exitingClass?: string;
   };
   Element: HTMLDivElement;
   Blocks: {
-    default: [FlashMessage, FlashObject, onClose: () => void];
+    default: [FlashMessage<T>, FlashWithCustomProps<T>, onClose: () => void];
   };
 }
 
-export default class FlashMessage extends Component<FlashMessageSignature> {
+export default class FlashMessage<
+  T extends Record<string, unknown> = Record<string, unknown>,
+> extends Component<FlashMessageSignature<T>> {
   @tracked active = false;
   @tracked pendingSet: Timer | undefined;
   @tracked _mouseEnterHandler: ((event?: Event) => void) | undefined;
@@ -29,6 +37,11 @@ export default class FlashMessage extends Component<FlashMessageSignature> {
 
   get messageStyle() {
     return this.args.messageStyle ?? 'bootstrap';
+  }
+
+  // Expose flash with custom properties typed (for yielding to blocks)
+  get flash(): FlashWithCustomProps<T> {
+    return this.args.flash as FlashWithCustomProps<T>;
   }
 
   get showProgress() {
@@ -167,7 +180,7 @@ export default class FlashMessage extends Component<FlashMessageSignature> {
       {{this.bindEvents}}
     >
       {{#if (has-block)}}
-        {{yield this @flash this.onClose}}
+        {{yield this this.flash this.onClose}}
       {{else}}
         {{@flash.message}}
         {{#if this.showProgressBar}}

@@ -257,4 +257,33 @@ module('Integration | Component | flash message', function (hooks) {
         'default flash type class name is not present',
       );
   });
+
+  test('custom fields are accessible on flash object', async function (assert) {
+    // Create a flash with custom fields
+    interface CustomFields extends Record<string, unknown> {
+      category: string;
+      notificationId: string;
+    }
+
+    const flash = new FlashMessageObject<CustomFields>({
+      message: 'Custom notification',
+      sticky: true,
+      category: 'system',
+      notificationId: 'notif-123',
+    });
+
+    await render(
+      <template>
+        <FlashMessage @flash={{flash}} as |component flashData|>
+          <span data-test-message>{{flashData.message}}</span>
+          <span data-test-category>{{flashData.category}}</span>
+          <span data-test-id>{{flashData.notificationId}}</span>
+        </FlashMessage>
+      </template>,
+    );
+
+    assert.dom('[data-test-message]').hasText('Custom notification');
+    assert.dom('[data-test-category]').hasText('system');
+    assert.dom('[data-test-id]').hasText('notif-123');
+  });
 });

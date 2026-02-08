@@ -16,7 +16,17 @@ export default class FlashContainer extends Component {
           <div class="d-flex justify-content-between align-items-start">
             <div>
               <strong>{{component.flashType}}</strong>
-              <p class="mb-0 mt-1">{{flashData.message}}</p>
+              {{#if flashData.category}}
+                <span class="badge bg-secondary ms-2">
+                  {{flashData.category}}
+                </span>
+              {{/if}}
+              <p class="mb-0 mt-1">
+                {{flashData.message}}
+              </p>
+              {{#if flashData.id}}
+                <small class="text-muted">ID: {{flashData.id}}</small>
+              {{/if}}
             </div>
             <button
               type="button"

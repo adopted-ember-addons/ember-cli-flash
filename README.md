@@ -29,6 +29,7 @@ This ember addon adds a flash message service and component to your app.
   - [TypeScript](#typescript)
     - [Basic Usage](#basic-usage)
     - [Custom Fields with Generics](#custom-fields-with-generics)
+    - [Typing Dynamically Registered Methods](#typing-dynamically-registered-methods)
   - [Displaying flash messages](#displaying-flash-messages)
     - [Custom `close` action](#custom-close-action)
     - [Styling with Foundation or Bootstrap](#styling-with-foundation-or-bootstrap)
@@ -498,6 +499,58 @@ this.flashMessages.success('Oops', {
   categroy: 'user', // Error: Did you mean 'category'?
 });
 ```
+
+Custom fields are also type-safe in templates. The `FlashMessage` component exposes the properly typed flash object with your custom fields:
+
+```gjs
+import { FlashMessage } from 'ember-cli-flash';
+
+<template>
+  {{#each this.flashMessages.queue as |flash|}}
+    <FlashMessage @flash={{flash}} as |component flash close|>
+      {{flash.message}}
+      {{flash.category}}  {{! ✓ Typed as 'system' | 'user' | 'background' | undefined }}
+      {{#if flash.action}}
+        <button type="button" {{on "click" flash.action}}>Action</button>
+      {{/if}}
+    </FlashMessage>
+  {{/each}}
+</template>
+```
+
+### Typing Dynamically Registered Methods
+
+When you configure custom `types` in `flashMessageDefaults`, the service dynamically creates convenience methods for each type at runtime. The base class already declares types for the default methods (`success`, `info`, `warning`, `danger`, `alert`, `secondary`), but TypeScript doesn't automatically recognize any custom types you add.
+
+To get type safety for custom type methods, declare them explicitly in your service subclass:
+
+```typescript
+import { FlashMessagesService } from 'ember-cli-flash';
+import type { FlashObjectOptions } from 'ember-cli-flash';
+
+interface CustomFlashFields {
+  id?: string;
+  category?: string;
+}
+
+type Options = FlashObjectOptions & CustomFlashFields;
+
+export default class MyFlashMessages extends FlashMessagesService<CustomFlashFields> {
+  // Only declare custom types not in the base class
+  // (success, info, warning, danger, alert, secondary are already typed)
+  declare error: (message: string, options?: Options) => this;
+  declare custom: (message: string, options?: Options) => this;
+
+  get flashMessageDefaults() {
+    return {
+      ...super.flashMessageDefaults,
+      types: ['error', 'success', 'warning', 'custom'],
+    };
+  }
+}
+```
+
+This pattern uses TypeScript's `declare` keyword to inform the type system about methods that exist at runtime but aren't defined in the base class types.
 
 ## Displaying flash messages
 
