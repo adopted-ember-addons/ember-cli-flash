@@ -132,8 +132,14 @@ Register custom types for your application:
 ```typescript
 // app/services/flash-messages.ts
 import { FlashMessagesService } from 'ember-cli-flash';
+import type { FlashObjectOptions } from 'ember-cli-flash';
 
 export default class FlashMessages extends FlashMessagesService {
+  // Declare custom types for TypeScript (base types like success, warning are already typed)
+  declare notice: (message: string, options?: FlashObjectOptions) => this;
+  declare error: (message: string, options?: FlashObjectOptions) => this;
+  declare system: (message: string, options?: FlashObjectOptions) => this;
+
   get flashMessageDefaults() {
     return {
       ...super.flashMessageDefaults,
@@ -245,6 +251,17 @@ this.flashMessages.success('Saved!', {
 // Find and remove by custom field
 const flash = this.flashMessages.findBy('id', 'save-notification');
 this.flashMessages.removeBy('userId', 123);
+```
+
+The `FlashMessage` component is also generic and infers the type from the `@flash` arg, giving you type-safe access to custom fields in templates:
+
+```gjs
+{{#each this.flashMessages.queue as |flash|}}
+  <FlashMessage @flash={{flash}} as |component flash close|>
+    {{flash.message}}
+    {{flash.actionUrl}}  {{! ✓ Typed as string | undefined }}
+  </FlashMessage>
+{{/each}}
 ```
 
 ### New Methods: `findBy` and `removeBy`
