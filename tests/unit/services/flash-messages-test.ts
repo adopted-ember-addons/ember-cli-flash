@@ -567,6 +567,30 @@ module('Unit | Service | flash-messages', function (hooks) {
     assert.strictEqual(service.queue.length, 0, 'it removes the message');
   });
 
+  test('#removeBy immediately removes from queue even with extendedTimeout', function (assert) {
+    const service = this.owner.lookup(
+      'service:flash-messages',
+    ) as FlashMessagesService<{ id: string }>;
+
+    service.add({
+      message: 'system-notification',
+      id: 'test-notification',
+      sticky: true,
+      extendedTimeout: 5000,
+    });
+
+    assert.strictEqual(service.queue.length, 1, 'message is in queue');
+
+    const removed = service.removeBy('id', 'test-notification');
+
+    assert.true(removed, 'removeBy returns true');
+    assert.strictEqual(
+      service.queue.length,
+      0,
+      'message is immediately removed from queue without waiting for extendedTimeout',
+    );
+  });
+
   test('it supports custom fields via generics', function (assert) {
     const service = this.owner.lookup(
       'service:flash-messages',

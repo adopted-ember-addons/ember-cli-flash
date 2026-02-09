@@ -344,4 +344,71 @@ module('Unit | Flash | object', function (hooks) {
 
     assert.notOk(flash.timerTaskInstance, 'no timer when timeout is undefined');
   });
+
+  test('custom properties starting with "on" are preserved', function (assert) {
+    interface CustomFields extends Record<string, unknown> {
+      onAction: () => void;
+      onRetry: () => void;
+    }
+
+    let actionCalled = false;
+    let retryCalled = false;
+
+    const flash = new FlashMessage<CustomFields>({
+      message: 'test',
+      sticky: true,
+      onAction: () => {
+        actionCalled = true;
+      },
+      onRetry: () => {
+        retryCalled = true;
+      },
+    });
+
+    const typedFlash = flash as FlashMessage<CustomFields> & CustomFields;
+
+    assert.strictEqual(
+      typeof typedFlash.onAction,
+      'function',
+      'onAction is preserved on the flash object',
+    );
+    assert.strictEqual(
+      typeof typedFlash.onRetry,
+      'function',
+      'onRetry is preserved on the flash object',
+    );
+
+    typedFlash.onAction();
+    typedFlash.onRetry();
+
+    assert.true(actionCalled, 'onAction callback is callable');
+    assert.true(retryCalled, 'onRetry callback is callable');
+  });
+
+  test('internal callbacks are not duplicated as custom properties', function (assert) {
+    let destroyCallCount = 0;
+
+    const flash = new FlashMessage({
+      message: 'test',
+      sticky: true,
+      onDestroy: () => {
+        destroyCallCount++;
+      },
+    });
+
+    // onDestroy should be set as the class property, not duplicated
+    assert.strictEqual(
+      typeof flash.onDestroy,
+      'function',
+      'onDestroy is set as class callback',
+    );
+
+    // Verify the callback works
+    flash.onDestroy?.();
+    assert.strictEqual(
+      destroyCallCount,
+      1,
+      'onDestroy callback works correctly',
+    );
+  });
 });

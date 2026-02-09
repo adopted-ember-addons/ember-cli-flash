@@ -214,6 +214,11 @@ export default class FlashMessagesService<
   ): boolean {
     const message = this.findBy(key, value);
     if (message) {
+      // Remove from queue immediately so the message disappears from the UI
+      // without waiting for the extendedTimeout exit-animation delay.
+      // destroyMessage() still handles timer cleanup and destroyable teardown.
+      this.queue = this.queue.filter((flash) => flash !== message);
+      this.#guidSet.delete(message._guid);
       message.destroyMessage();
       return true;
     }
