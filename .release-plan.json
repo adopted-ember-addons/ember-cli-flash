@@ -1,21 +1,18 @@
 {
   "solution": {
     "ember-cli-flash": {
-      "impact": "major",
-      "oldVersion": "5.1.0",
-      "newVersion": "6.0.0",
+      "impact": "minor",
+      "oldVersion": "6.0.0",
+      "newVersion": "6.1.0",
+      "tagName": "latest",
       "constraints": [
-        {
-          "impact": "major",
-          "reason": "Appears in changelog section :boom: Breaking Change"
-        },
         {
           "impact": "minor",
           "reason": "Appears in changelog section :rocket: Enhancement"
         }
       ],
-      "pkgJSONPath": "./ember-cli-flash/package.json"
+      "pkgJSONPath": "./package.json"
     }
   },
-  "description": "## Release (2025-03-04)\n\nember-cli-flash 6.0.0 (major)\n\n#### :boom: Breaking Change\n* `ember-cli-flash`, `test-app`\n  * [#409](https://github.com/adopted-ember-addons/ember-cli-flash/pull/409) Modernise `FlashMessagesService` ([@gilest](https://github.com/gilest))\n  * [#394](https://github.com/adopted-ember-addons/ember-cli-flash/pull/394) Convert `FlashObject` to native class ([@gilest](https://github.com/gilest))\n* `ember-cli-flash`\n  * [#410](https://github.com/adopted-ember-addons/ember-cli-flash/pull/410) Remove computed decorators from FlashMessage component ([@gilest](https://github.com/gilest))\n\n#### :rocket: Enhancement\n* `ember-cli-flash`\n  * [#411](https://github.com/adopted-ember-addons/ember-cli-flash/pull/411) fix: add type for spreaded `FlashObject` options ([@charlesfries](https://github.com/charlesfries))\n\n#### :house: Internal\n* `test-app`\n  * [#415](https://github.com/adopted-ember-addons/ember-cli-flash/pull/415) Upgrade test-app to v5 app blueprint ([@gilest](https://github.com/gilest))\n\n#### Committers: 2\n- Charles Fries ([@charlesfries](https://github.com/charlesfries))\n- Giles Thompson ([@gilest](https://github.com/gilest))\n"
+  "description": "## Release (2026-02-09)\n\n* ember-cli-flash 6.1.0 (minor)\n\n#### :rocket: Enhancement\n* `ember-cli-flash`\n  * [#418](https://github.com/adopted-ember-addons/ember-cli-flash/pull/418) Add generic type parameter to FlashMessage component ([@aklkv](https://github.com/aklkv))\n\n#### Committers: 1\n- Alexey Kulakov ([@aklkv](https://github.com/aklkv))\n"
 }
