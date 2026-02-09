@@ -1,5 +1,16 @@
 # Changelog
 
+## Release (2026-02-09)
+
+* ember-cli-flash 6.1.0 (minor)
+
+#### :rocket: Enhancement
+* `ember-cli-flash`
+  * [#418](https://github.com/adopted-ember-addons/ember-cli-flash/pull/418) Add generic type parameter to FlashMessage component ([@aklkv](https://github.com/aklkv))
+
+#### Committers: 1
+- Alexey Kulakov ([@aklkv](https://github.com/aklkv))
+
 ## Release (2025-03-04)
 
 ember-cli-flash 6.0.0 (major)
