@@ -2,7 +2,11 @@
 
 ## Release (2026-02-09)
 
-* ember-cli-flash 6.1.0 (minor)
+* ember-cli-flash 7.0.0 (major)
+
+#### :boom: Breaking Change
+* `ember-cli-flash`
+  * [#417](https://github.com/adopted-ember-addons/ember-cli-flash/pull/417) Remove global config, convert FlashObject to native class, _destroyLater -> destroyMessage ([@aklkv](https://github.com/aklkv))
 
 #### :rocket: Enhancement
 * `ember-cli-flash`
@@ -11,9 +15,15 @@
 #### Committers: 1
 - Alexey Kulakov ([@aklkv](https://github.com/aklkv))
 
+## Release (2026-02-09)
+
+* ember-cli-flash 6.1.0 (minor)
+
+#### Accidentally published as minor, should have been major.
+
 ## Release (2025-03-04)
 
-ember-cli-flash 6.0.0 (major)
+* ember-cli-flash 6.0.0 (major)
 
 #### :boom: Breaking Change
 * `ember-cli-flash`, `test-app`
