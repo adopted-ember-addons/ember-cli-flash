@@ -1,6 +1,6 @@
 # Changelog
 
-## Release (2026-02-09)
+## Release (2026-02-10)
 
 * ember-cli-flash 7.0.0 (major)
 
@@ -11,6 +11,10 @@
 #### :rocket: Enhancement
 * `ember-cli-flash`
   * [#418](https://github.com/adopted-ember-addons/ember-cli-flash/pull/418) Add generic type parameter to FlashMessage component ([@aklkv](https://github.com/aklkv))
+
+#### :bug: Bug Fix
+* `ember-cli-flash`
+  * [#422](https://github.com/adopted-ember-addons/ember-cli-flash/pull/422) fix: allow custom `on*` properties and make `removeBy()` immediate ([@aklkv](https://github.com/aklkv))
 
 #### Committers: 1
 - Alexey Kulakov ([@aklkv](https://github.com/aklkv))

@@ -1,18 +1,22 @@
 {
   "solution": {
     "ember-cli-flash": {
-      "impact": "minor",
-      "oldVersion": "6.0.0",
-      "newVersion": "6.1.0",
+      "impact": "major",
+      "oldVersion": "6.1.0",
+      "newVersion": "7.0.0",
       "tagName": "latest",
       "constraints": [
         {
-          "impact": "minor",
-          "reason": "Appears in changelog section :rocket: Enhancement"
+          "impact": "major",
+          "reason": "Appears in changelog section :boom: Breaking Change"
+        },
+        {
+          "impact": "patch",
+          "reason": "Appears in changelog section :bug: Bug Fix"
         }
       ],
       "pkgJSONPath": "./package.json"
     }
   },
-  "description": "## Release (2026-02-09)\n\n* ember-cli-flash 6.1.0 (minor)\n\n#### :rocket: Enhancement\n* `ember-cli-flash`\n  * [#418](https://github.com/adopted-ember-addons/ember-cli-flash/pull/418) Add generic type parameter to FlashMessage component ([@aklkv](https://github.com/aklkv))\n\n#### Committers: 1\n- Alexey Kulakov ([@aklkv](https://github.com/aklkv))\n"
+  "description": "## Release (2026-02-10)\n\n* ember-cli-flash 7.0.0 (major)\n\n#### :boom: Breaking Change\n* `ember-cli-flash`\n  * [#420](https://github.com/adopted-ember-addons/ember-cli-flash/pull/420) Fix changelog version ([@RobbieTheWagner](https://github.com/RobbieTheWagner))\n\n#### :bug: Bug Fix\n* `ember-cli-flash`\n  * [#422](https://github.com/adopted-ember-addons/ember-cli-flash/pull/422) fix: allow custom `on*` properties and make `removeBy()` immediate ([@aklkv](https://github.com/aklkv))\n\n#### Committers: 2\n- Alexey Kulakov ([@aklkv](https://github.com/aklkv))\n- Robbie Wagner ([@RobbieTheWagner](https://github.com/RobbieTheWagner))\n"
 }
