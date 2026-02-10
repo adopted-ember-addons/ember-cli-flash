@@ -1,5 +1,21 @@
 # Changelog
 
+## Release (2026-02-10)
+
+* ember-cli-flash 7.0.0 (major)
+
+#### :boom: Breaking Change
+* `ember-cli-flash`
+  * [#420](https://github.com/adopted-ember-addons/ember-cli-flash/pull/420) Fix changelog version ([@RobbieTheWagner](https://github.com/RobbieTheWagner))
+
+#### :bug: Bug Fix
+* `ember-cli-flash`
+  * [#422](https://github.com/adopted-ember-addons/ember-cli-flash/pull/422) fix: allow custom `on*` properties and make `removeBy()` immediate ([@aklkv](https://github.com/aklkv))
+
+#### Committers: 2
+- Alexey Kulakov ([@aklkv](https://github.com/aklkv))
+- Robbie Wagner ([@RobbieTheWagner](https://github.com/RobbieTheWagner))
+
 ## Release (2026-02-09)
 
 * ember-cli-flash 7.0.0 (major)
