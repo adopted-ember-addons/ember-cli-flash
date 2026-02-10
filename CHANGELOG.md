@@ -6,29 +6,17 @@
 
 #### :boom: Breaking Change
 * `ember-cli-flash`
-  * [#420](https://github.com/adopted-ember-addons/ember-cli-flash/pull/420) Fix changelog version ([@RobbieTheWagner](https://github.com/RobbieTheWagner))
-
-#### :bug: Bug Fix
-* `ember-cli-flash`
-  * [#422](https://github.com/adopted-ember-addons/ember-cli-flash/pull/422) fix: allow custom `on*` properties and make `removeBy()` immediate ([@aklkv](https://github.com/aklkv))
-
-#### Committers: 2
-- Alexey Kulakov ([@aklkv](https://github.com/aklkv))
-- Robbie Wagner ([@RobbieTheWagner](https://github.com/RobbieTheWagner))
-
-## Release (2026-02-09)
-
-* ember-cli-flash 7.0.0 (major)
-
-#### :boom: Breaking Change
-* `ember-cli-flash`
   * [#417](https://github.com/adopted-ember-addons/ember-cli-flash/pull/417) Remove global config, convert FlashObject to native class, _destroyLater -> destroyMessage ([@aklkv](https://github.com/aklkv))
 
 #### :rocket: Enhancement
 * `ember-cli-flash`
   * [#418](https://github.com/adopted-ember-addons/ember-cli-flash/pull/418) Add generic type parameter to FlashMessage component ([@aklkv](https://github.com/aklkv))
 
-#### Committers: 1
+#### :bug: Bug Fix
+* `ember-cli-flash`
+  * [#422](https://github.com/adopted-ember-addons/ember-cli-flash/pull/422) fix: allow custom `on*` properties and make `removeBy()` immediate ([@aklkv](https://github.com/aklkv))
+
+#### Committers: 2
 - Alexey Kulakov ([@aklkv](https://github.com/aklkv))
 
 ## Release (2026-02-09)
