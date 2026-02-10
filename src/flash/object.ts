@@ -35,6 +35,18 @@ export type FlashObjectOptions<
   onDidExitMessage?: () => void;
 } & T;
 
+const INTERNAL_KEYS = new Set([
+  // Lifecycle callbacks — already assigned to `this` above the loop, but
+  // listed here as a safety net in case future refactors change that order.
+  'onDestroy',
+  'onDidDestroyMessage',
+  'onDidExitMessage',
+  // Options consumed by the constructor but not stored as class properties.
+  'testHelperDisableTimeout',
+  // Stored in a private field (#flashService), so `key in this` won't catch it.
+  'flashService',
+]);
+
 export default class FlashObject<
   T extends Record<string, unknown> = Record<string, unknown>,
 > {
@@ -99,7 +111,7 @@ export default class FlashObject<
 
     // Copy any custom properties from T
     for (const [key, value] of Object.entries(options)) {
-      if (!(key in this) && key !== 'flashService' && !key.startsWith('on')) {
+      if (!(key in this) && !INTERNAL_KEYS.has(key)) {
         (this as Record<string, unknown>)[key] = value;
       }
     }
