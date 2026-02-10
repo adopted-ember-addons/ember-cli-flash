@@ -16,7 +16,7 @@
 * `ember-cli-flash`
   * [#422](https://github.com/adopted-ember-addons/ember-cli-flash/pull/422) fix: allow custom `on*` properties and make `removeBy()` immediate ([@aklkv](https://github.com/aklkv))
 
-#### Committers: 2
+#### Committers: 1
 - Alexey Kulakov ([@aklkv](https://github.com/aklkv))
 
 ## Release (2026-02-09)
