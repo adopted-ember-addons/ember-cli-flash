@@ -13,7 +13,6 @@ export type Message = string | SafeString;
 
 interface FlashService<T extends Record<string, unknown>> {
   queue?: FlashObject<T>[];
-  removeFromGuidSet?(guid: string): void;
 }
 
 export type FlashObjectOptions<
@@ -235,17 +234,12 @@ export default class FlashObject<
   }
 
   #teardown() {
-    const guid = this._guid;
-
     // Remove from service queue
     if (this.#flashService?.queue) {
       this.#flashService.queue = this.#flashService.queue.filter(
         (flash) => flash !== this,
       );
     }
-
-    // Remove from guid set for duplicate tracking
-    this.#flashService?.removeFromGuidSet?.(guid);
 
     destroy(this);
     this.onDidDestroyMessage?.();
