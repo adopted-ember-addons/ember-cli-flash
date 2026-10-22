@@ -337,6 +337,25 @@ module('Unit | Service | flash-messages', function (hooks) {
     );
   });
 
+  test('duplicate tracking follows a message that changes after enqueue', function (assert) {
+    const service = this.owner.lookup(
+      'service:flash-messages',
+    ) as FlashMessagesService;
+    service.defaultPreventDuplicates = true;
+    service.success('original');
+
+    service.peekFirst()!.message = 'updated';
+    service.success('original');
+    service.success('updated');
+
+    assert.deepEqual(
+      service.queue.map((flash) => flash.message),
+      ['updated', 'original'],
+      'tracks current message values when checking duplicates',
+    );
+    assert.deepEqual(service._guids, ['updated', 'original']);
+  });
+
   test('flashInstance preventDuplicates prefers instance preventDuplicates over global', function (assert) {
     const service = this.owner.lookup(
       'service:flash-messages',

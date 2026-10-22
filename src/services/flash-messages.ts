@@ -68,9 +68,6 @@ export default class FlashMessagesService<
 > extends Service {
   @tracked queue: FlashMessageInstance<T>[] = [];
 
-  // Set for O(1) duplicate checking
-  #guidSet = new Set<string>();
-
   // Default message type methods (registered dynamically)
   declare success: FlashTypeFunction<T>;
   declare info: FlashTypeFunction<T>;
@@ -138,7 +135,7 @@ export default class FlashMessagesService<
    * For backward compatibility - returns array of message guids
    */
   get _guids() {
-    return [...this.#guidSet];
+    return [...new Set(this.queue.map((flash) => flash._guid))];
   }
 
   constructor(owner: Owner) {
@@ -167,7 +164,6 @@ export default class FlashMessagesService<
 
     this.queue.forEach((flash) => flash.destroyMessage());
     this.queue = [];
-    this.#guidSet.clear();
 
     return this;
   }
@@ -218,7 +214,6 @@ export default class FlashMessagesService<
       // without waiting for the extendedTimeout exit-animation delay.
       // destroyMessage() still handles timer cleanup and destroyable teardown.
       this.queue = this.queue.filter((flash) => flash !== message);
-      this.#guidSet.delete(message._guid);
       message.destroyMessage();
       return true;
     }
@@ -290,7 +285,7 @@ export default class FlashMessagesService<
 
     const guid = flashInstance._guid;
 
-    if (preventDuplicates && this.#guidSet.has(guid)) {
+    if (preventDuplicates && this.queue.some((flash) => flash._guid === guid)) {
       warn(
         'Attempting to add a duplicate message to the Flash Messages Service',
         false,
@@ -299,15 +294,6 @@ export default class FlashMessagesService<
       return;
     }
 
-    // Always track guid for _guids getter
-    this.#guidSet.add(guid);
     this.queue = [...this.queue, flashInstance];
-  }
-
-  /**
-   * Called by FlashObject when it's destroyed to remove from guid set
-   */
-  removeFromGuidSet(guid: string) {
-    this.#guidSet.delete(guid);
   }
 }
