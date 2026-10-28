@@ -1,5 +1,10 @@
 # Changelog
 
+
+
+
+
+
 ## Release (2026-02-10)
 
 * ember-cli-flash 7.0.0 (major)
